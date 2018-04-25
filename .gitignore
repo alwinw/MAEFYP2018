@@ -1,8 +1,7 @@
 
 *.fld
 
-*.dump
-.Rproj.user
+*.flddump
 
 R/*.Rproj.user
 

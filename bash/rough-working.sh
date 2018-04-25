@@ -41,7 +41,7 @@ for sessionfile in $sessionfiles; do
     # Convert to ascii
     convert "$f.vfld" > "$f.dump"           && echo "   Convert Finished"   &&
     # Split the output file
-    csplit -z "$f.dump" /Session/ {*}       && echo "   Split Finished"     &&
+    csplit -z "$f.flddump" /Session/ {*}       && echo "   Split Finished"     &&
     # Rename split files
     for i in [xx]*; do 
       mv $i "$f-${i#*xx}.dump"; done         && echo "   Renamed Finished"
