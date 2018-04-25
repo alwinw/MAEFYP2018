@@ -11,13 +11,30 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # Requres devtools, 
 #--- Source Required Scripts ----
 # Call libraries and install missing ones
 source("src_library-manager.R")
+# Read data
+source("src_read-files.R")
+# Preprocess read files
 
-
-
-
-#--- Load File to Analyse ----
+#--- Load and Pre-process Data ----
+# Location
 # dir("../session-files/NACA0012-AoA04")
+bndry = "bndry_prf"
 folder = "../session-files/NACA0012-AoA04/"
-file = "RE-10000-sine-0.001-2000-02.dump"
+seshname = "RE-10000-sine-0.001-2000"
+seshpath = paste0(folder, seshname)
+# Keywords to load
+keywords <- list(
+  c("NODES", "nnum", "x", "y", "z"),
+  c("ELEMENTS", "enum", "shapetag", "n1", "n2", "n3", "n4", "junk"),
+  c("SURFACES", "snum", "element", "side", "bctag", "bc", "junk"),
+  c("CURVES", "cnum", "element", "side", "curvetag", "curvedata", "junk")
+)
+# Load airfoil surface
 
-temp = readLines(paste0(folder,file))
+# Load mesh files
+mesh <- LoadMesh(seshpath)
+wallmsh <- LoadWallmsh(seshpath)
+# Load session file
+session <- LoadSeshFile(seshpath, keywords)
+list2env(session, envir = .GlobalEnv)
+

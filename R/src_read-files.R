@@ -3,24 +3,51 @@
 # Alwin Wang
 #----------------------------
 
-# Temp Variables
-folder = "../session-files/NACA0012-AoA04/"
-seshname = "RE-10000-sine-0.001-2000"
-seshpath = paste0(folder, seshname)
+# Dev Temp Variables
+# folder = "../session-files/NACA0012-AoA04/"
+# seshname = "RE-10000-sine-0.001-2000"
+# seshpath = paste0(folder, seshname)
+# 
+# bndry = "bndry_prf"
+# 
+# keywords <- list(
+#   c("NODES", "nnum", "x", "y", "z"),
+#   c("ELEMENTS", "enum", "shapetag", "n1", "n2", "n3", "n4", "junk"),
+#   c("SURFACES", "snum", "element", "side", "bctag", "bc", "junk"),
+#   c("CURVES", "cnum", "element", "side", "curvetag", "curvedata", "junk")
+# )
+# str(keywords)
 
-bndry = "bndry_prf"
+#--- Load Airfoil Surface Files ----
 
-keywords <- list(
-  c("NODES", "nnum", "x", "y", "z"),
-  c("ELEMENTS", "enum", "shapetag", "n1", "n2", "n3", "n4", "junk"),
-  c("SURFACES", "snum", "element", "side", "bctag", "bc", "junk"),
-  c("CURVES", "cnum", "element", "side", "curvetag", "curvedata", "junk")
-)
-str(keywords)
+#---- Load Mesh Files ----
+# Mesh file are updated per airfoil (assuming N-order same)
+# Load Mesh file generated from N order poly on mesh
+LoadMesh <- function(seshpath) {
+  # Session file name
+  file = paste0(seshpath,".msh")
+  # Read mesh file
+  mesh <- read.table(file, skip = 1)
+  # Set column names
+  colnames(mesh) <- c("x", "y")
+  # Return mesh
+  return(mesh)    # Data.frame
+}
 
-#--- Load Boundary Files ----
+# Load Mesh file generated from N order poly on mesh
+LoadWallmsh <- function(seshpath) {
+  # Session file name
+  file = paste0(seshpath,".wallmsh")
+  # Read mesh file
+  wallmesh <- read.table(file, skip = 1)
+  # Set column names
+  colnames(wallmesh) <- c("x", "y")
+  # Return mesh
+  return(wallmesh)    # Data.frame
+}
 
 #--- Load Session File ----
+# Session files are updated per session-
 # Function to load keywords from the session file
 LoadKeyword <- function(keyword, filelines, file) {
   # Find the line number the keyword appears in
@@ -36,7 +63,7 @@ LoadKeyword <- function(keyword, filelines, file) {
   colnames(table) <- keyword[2:length(keyword)]
   # Remove any junk
   table$junk <- NULL
-  return(table)     # Datatable
+  return(table)     # Data.fable
 }
 
 # Function to load a list of keywords and colnames
@@ -54,5 +81,5 @@ LoadSeshFile <- function(seshpath, keywords) {
   return(sessionfile)   # List
 }
 
-#---- Combine Data ----
+
 
