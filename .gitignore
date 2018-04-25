@@ -7,3 +7,6 @@
 R/*.Rproj.user
 
 R/*.Rhistory
+
+R/.Rproj.user/*
+
