@@ -39,13 +39,15 @@ for sessionfile in $sessionfiles; do
     # Note: new field file CANNOT be the same as the original one (else 0)
     addfield -v -s $f "$f.fld" > "$f.vfld"  && echo "   Vorticity Added"    &&
     # Convert to ascii
-    convert "$f.vfld" > "$f.dump"           && echo "   Convert Finished"   &&
+    convert "$f.vfld" > "$f.flddump"        && echo "   Convert Finished"   &&
     # Split the output file
-    csplit -z "$f.flddump" /Session/ {*}       && echo "   Split Finished"     &&
+    csplit -z "$f.flddump" /Session/ {*}    && echo "   Split Finished"     &&
     # Rename split files
     for i in [xx]*; do 
-      mv $i "$f-${i#*xx}.dump"; done         && echo "   Renamed Finished"
+      mv $i "$f-${i#*xx}.dump"; done        && echo "   Renamed Finished"
 done
 
 # Return to previous wd
 cd $oldpwd
+
+# Call to R script
