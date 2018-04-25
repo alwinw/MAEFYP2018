@@ -44,7 +44,7 @@ for sessionfile in $sessionfiles; do
     csplit -z "$f.dump" /Session/ {*}       && echo "   Split Finished"     &&
     # Rename split files
     for i in [xx]*; do 
-      mv $i "$f${i#*xx}-.dump"; done         && echo "   Renamed Finished"
+      mv $i "$f-${i#*xx}.dump"; done         && echo "   Renamed Finished"
 done
 
 # Return to previous wd
