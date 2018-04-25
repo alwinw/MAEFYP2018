@@ -2,3 +2,6 @@
 *.fld
 
 *.dump
+.Rproj.user
+
+R/*.Rproj.user
