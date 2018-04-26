@@ -12,6 +12,7 @@
 # List of packages required
 packages <- c(
   "stats",      # For statistical analysis, Part of R Core
+  "pracma",     # https://www.rdocumentation.org/packages/pracma/versions/1.9.9
   "ggplot2",    # Great for visualising data, by Adj. Prof Hadley Wickham
   "dplyr",      # Great for manipulating data, by Adj. Prof Hadley Wickham
   "tidyr",      # Great for tidying data, by Adj. Prof Hadley Wickham

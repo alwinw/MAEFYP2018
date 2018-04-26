@@ -8,7 +8,7 @@
 # Check that all elements are quadrangles
 if (as.logical(sum(elements$shapetag != "<Q>"))) warning("Not all elements are Quadrangles") 
 # Manipulate data
-meshlongdata <- elements %>%
+long_meshdata <- elements %>%
   # Remove shape tag since checked shape already
   select(-shapetag) %>%
   # Gather nodes 1-5 into a single column
@@ -29,8 +29,31 @@ meshlongdata <- elements %>%
 #--- Mesh ----
 # Combine the mesh (N order poly) with original elements
 mesh$mnum = 1:nrow(mesh)
-temp <- left_join(mesh, meshlongdata, by = c("x", "y"))
+temp <- left_join(mesh, long_meshdata, by = c("x", "y"))
 # NOTE: THERE WILL BE MANY DUPLICATES e.g. five elements meet at one node
-nrow(filter(temp, is.na(ncorner))) + nrow(sessionlongdata) - nrow(mesh)
+nrow(filter(temp, is.na(ncorner))) + nrow(long_meshdata) - nrow(mesh)
 
 #--- Airfoil Surface ----
+# Clean up wall mesh
+wallmsh$wnum = 1:nrow(wallmsh)
+# Determine the chord line
+chordlm = lm(y~x, chord)    # class lm
+# Determine upper and lower surfaces
+wallmsh$up = wallmsh$y >= predict(chordlm, wallmsh)
+# Order wall file
+wallmsh <- arrange(wallmsh, up, x * (up * 2 -1))
+wallmsh$wsnum = 1:nrow(wallmsh)
+# Make the same number of columns for bndry
+bndry$wnum <- NA
+bndry$wsnum <- NA
+bndry$up = bndry$y >= predict(chordlm, bndry)
+# Combine wall and bndry files
+long_bndry <- rbind(wallmsh, bndry) %>%
+  arrange(-up, -x * (up * 2 -1))
+long_bndry$snum = 1:nrow(long_bndry)
+ggplot(long_bndry, aes(x, y, color = snum)) + geom_path() + geom_point(aes(shape=up))
+
+#--- Spline Length s ----
+
+
+# Eventually compare spline length to XFOIL output
