@@ -19,6 +19,29 @@
 # str(keywords)
 
 #--- Load Airfoil Surface Files ----
+# Airfoil file should only be updated once per airfoil
+# Load the wall boundary (airfoil.dat)
+LoadBndry<- function(bndrypath) {
+  # Session bndry name
+  file = paste0(bndrypath,".dat")
+  # Read bndry file
+  bndry <- read.table(file)
+  # Set column names
+  colnames(bndry) <- c("x", "y")
+  # Return bndry
+  return(bndry)    # Data.frame
+}
+# Load the chord line
+LoadChord<- function(bndrypath) {
+  # Session bndry name
+  file = paste0(bndrypath,"_chord.dat")
+  # Read bndry file
+  bndry <- read.table(file)
+  # Set column names
+  colnames(bndry) <- c("x", "y")
+  # Return bndry
+  return(bndry)    # Data.frame
+}
 
 #---- Load Mesh Files ----
 # Mesh file are updated per airfoil (assuming N-order same)

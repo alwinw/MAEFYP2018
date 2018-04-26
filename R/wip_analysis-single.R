@@ -18,10 +18,11 @@ source("src_read-files.R")
 #--- Load and Pre-process Data ----
 # Location
 # dir("../session-files/NACA0012-AoA04")
-bndry = "bndry_prf"
 folder = "../session-files/NACA0012-AoA04/"
 seshname = "RE-10000-sine-0.001-2000"
 seshpath = paste0(folder, seshname)
+bndryname = "bndry_prf"
+bndrypath = paste0(folder,bndryname)
 # Keywords to load
 keywords <- list(
   c("NODES", "nnum", "x", "y", "z"),
@@ -30,6 +31,8 @@ keywords <- list(
   c("CURVES", "cnum", "element", "side", "curvetag", "curvedata", "junk")
 )
 # Load airfoil surface
+bndry <- LoadBndry(bndrypath)
+chord <- LoadChord(bndrypath)
 
 # Load mesh files
 mesh <- LoadMesh(seshpath)
