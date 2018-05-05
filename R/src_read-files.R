@@ -129,6 +129,19 @@ LoadSeshBCEqs <- function(seshpath, bctext, bcfuncname = NULL) {
 }
 
 
+#--- Load History File ----
+# Load history file
+LostHist <- function(seshpath) {
+  # Session file name
+  file = paste0(seshpath,".his")
+  # Read history file
+  his <- read.table(file)
+  # Set column names
+  colnames(mesh) <- c("x", "y")
+  # Return mesh
+  return(mesh)    # Data.frame
+}
+
 #--- Load Dump File ----
 # List dump files in directory
 ListDump <- function(folder, seshname) {

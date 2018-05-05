@@ -3,6 +3,12 @@
 # Alwin Wang
 #----------------------------
 
+#--- Structure ----
+# - Intial set up
+# - Run once per folder (airfoil)
+# - Run once per session file (Reynolds number)
+# - Run once per dump file (time step)
+
 theme_set(theme_bw())
 
 #--- Set Working Directory ----
