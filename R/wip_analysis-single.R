@@ -45,3 +45,15 @@ wallmsh <- LoadWallmsh(seshpath)
 sessionkey <- LoadSeshFileKeywords(seshpath, keywords)
 list2env(sessionkey, envir = .GlobalEnv)
 LoadSeshBCEqs(seshpath, "MOD_ALPHA_X")
+# Load dump file
+dumplist <- ListDump(folder, seshname)
+dumpfile <- LoadDump(folder, dumplist[4])
+# Pre-process Data
+source("src_pre-processing.R")
+
+
+# Determine acceleration field along the airfoil surface
+
+# Determine pressure gradients
+
+# Determine circulation/vorticity (separate branch)
