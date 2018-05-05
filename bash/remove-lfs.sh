@@ -36,3 +36,17 @@ for file in $(git ls-files | xargs git check-attr filter | grep "filter: lfs" | 
 done' --tag-name-filter cat -- --all
 
 git filter-branch --prune-empty --index-filter 'git rm --ignore-unmatch --cached "*.mov"'
+
+
+git filter-branch --prune-empty --tree-filter '
+git lfs untrack "*.dump"
+git add .gitattributes .gitconfig
+
+for file in $(git ls-files | xargs git check-attr filter | grep "filter: lfs" | sed -r "s/(.*): filter: lfs/\1/"); do
+  echo "Processing ${file}"
+
+  git rm -f --cached ${file}
+  echo "Unadding $file lfs style"
+  git add ${file}
+done' --tag-name-filter cat -- --all
+
