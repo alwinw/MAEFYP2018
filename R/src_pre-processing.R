@@ -23,8 +23,10 @@ long_meshdata <- elements %>%
     elaby = mean(y)) %>%
   # Close the loop (without effecting mean)
   rbind(., mutate(filter(., ncorner=="n1"), ncorner = "n5")) %>%
-  arrange(enum, ncorner)
+  arrange(enum, ncorner) %>% 
   # Calculate area later
+  mutate(area = x*lead(y) - lead(x)*y) %>%
+  mutate(area = 1/2*abs(sum(ifelse(is.na(area), 0, area))))
 
 #--- Mesh ----
 # Combine the mesh (N order poly) with original elements
