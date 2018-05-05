@@ -48,11 +48,11 @@ LoadChord<- function(bndrypath) {
 # Load Mesh file generated from N order poly on mesh
 LoadMesh <- function(seshpath) {
   # Session file name
-  file = paste0(seshpath,".msh")
+  file = paste0(seshpath,".mshi")
   # Read mesh file
   mesh <- read.table(file, skip = 1)
   # Set column names
-  colnames(mesh) <- c("x", "y")
+  colnames(mesh) <- c("x", "y", "ID", "j")
   # Return mesh
   return(mesh)    # Data.frame
 }

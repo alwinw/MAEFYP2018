@@ -32,3 +32,17 @@ long_meshplot + # TE
   coord_fixed(
     xlim = c(0.5, 0.65),
     ylim = c(-0.1, 0.02))
+
+#--- Determine mesh layout ----
+ggplot() +
+  # Element edges
+  geom_path(aes(x, y, colour = enum, group = enum), data = long_meshdata) +
+  # Element labels
+  geom_text(aes(x = elabx, y = elaby, label = enum, size = area), alpha = 0.5, data = long_meshdata) +
+  # Node labels
+  geom_text(aes(x = x, y = y, label = nnum, size = area*0.2), 
+            data = long_meshdata %>% ungroup() %>% group_by(nnum) %>% top_n(-1, area)) +
+  scale_size(guide="none") + 
+  geom_text(aes(x = x, y = y, label = j), data = mesh) +
+  # Labels
+  xlab("x") + ylab("y")
