@@ -3,6 +3,10 @@
 # Alwin Wang
 #----------------------------
 
+#--- Required Functions ----
+# Heavyside function (step function)
+heav <- function(t) ifelse(t>0,1,0)
+
 #--- Cubic Spline Calculus ----
 # Determine derivatives and antiderivatives of cubic splines
 CubicSplineCalc <- function(cs, order = 0) {

@@ -104,6 +104,27 @@ LoadSeshFileKeywords <- function(seshpath, keywords) {
   return(sessionfile)   # List
 }
 
+# Dev temp variables
+# bctext = "MOD_ALPHA_X"
 # Function to read in BC equations
-
+# Note: This cannot handle the inflow_u condition yet...
+LoadSeshBCEqs <- function(seshpath, bctext, bcfuncname = NULL) {
+  # Determine function name
+  if (is.null(bcfuncname)) bcfuncname = bctext
+  # Session file name
+  file = paste0(seshpath,".sesh")
+  # Read the session file to grep lines later
+  filelines <- readLines(file)
+  # Select line of interest
+  bc <- filelines[grep(bctext, filelines)]
+  # Clean up line
+  bc %<>% gsub(bctext, "", .) %>%
+    gsub("\t", "", .) %>%
+    gsub("=", "", .) %>%
+    gsub("PI", "pi", .)
+  # Create the required bc function
+  eval(parse(text = paste0(
+    "BC_", tolower(bctext), " <- function(t) ", bc)),
+    envir = .GlobalEnv)
+}
 

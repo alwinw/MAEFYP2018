@@ -44,4 +44,4 @@ wallmsh <- LoadWallmsh(seshpath)
 # Load session file
 sessionkey <- LoadSeshFileKeywords(seshpath, keywords)
 list2env(sessionkey, envir = .GlobalEnv)
-
+LoadSeshBCEqs(seshpath, "MOD_ALPHA_X")
