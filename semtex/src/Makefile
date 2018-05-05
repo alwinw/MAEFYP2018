@@ -134,15 +134,15 @@ endif
 endif
 
 ifeq ($(ARCH),Linux-x86_64)             # -- Linux for AMD Opteron
-CXX      = g++44
-LD       = g++44
-CC       = gcc44
-FC       = gcc44
+#CXX      = g++44
+#LD       = g++44
+#CC       = gcc44
+#FC       = gcc44
 # -- use these with fastblas:
-#CXX      = g++
-#LD       = g++
-#CC       = gcc
-#FC       = gfortran
+CXX      = g++
+LD       = g++
+CC       = gcc
+FC       = gfortran
 ifdef DEBUG
   OPT    = -gstabs+
 else
@@ -151,9 +151,9 @@ endif
 CFLAGS   = $(DEFINES) $(OPT)
 FFLAGS   = $(DEFINES) $(OPT)
 CXXFLAGS = $(DEFINES) $(OPT) -Wno-deprecated
-F77LIBS  = -lacml -lacml_mv -lgfortran
+#F77LIBS  = -lacml -lacml_mv -lgfortran
 # -- fastblas = GotoBLAS2. Does not work on AMD 6200 series CPUs
-#F77LIBS  = -lfastblas -lgfortran
+F77LIBS  = -lopenblas -lgfortran
 # -- this works reliably with either compiler suite but is slow on AMD/Opteron
 #F77LIBS  = -llapack -lgfortran
 LDFLAGS  = $(OPT) $(LIBDIR)

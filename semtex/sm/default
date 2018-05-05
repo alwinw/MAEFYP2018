@@ -3,10 +3,10 @@
 startup2        # Macro executed whenever SM starts
 		ptype 1 0
 		define my_macros { sta ld modal }
-		define sm_home   "/home/hmb/lib/sm"
+		define sm_home   "$HOME/FYP/semtex/sm"
 		foreach v { $!!my_macros } { macro read "$!sm_home/$!v.sm" }
 		define prism_macros { his hspec meshbox meshnum meshplot }
-		define prism_home "/home/hmb/lib/sm"
+		define prism_home "$HOME/FYP/semtex/sm"
 		#define prism_home "/home/hmb/src/prism/sm"
 		foreach v { $!!prism_macros } { macro read "$!prism_home/$!v.sm" }
 status          # show current values of various things
@@ -87,3 +87,4 @@ NextPlot  1	# This should be reasonably generic. It pauses if invoked with
 		   erase
 		}
 		delete 0_junk_XX
+device  x11 -focus

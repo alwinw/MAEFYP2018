@@ -33,7 +33,7 @@
 #include <time.h>
 
 #if defined(MPI)
-#include <mpi.h>
+#include </usr/lib/openmpi/include/mpi.h>
 #endif
 
 #include <cfemdef.h>
