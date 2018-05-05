@@ -1,8 +1,4 @@
 
-*.fld
-
-*.flddump
-
 R/*.Rproj.user
 
 R/*.Rhistory
@@ -10,3 +6,11 @@ R/*.Rhistory
 R/.Rproj.user/*
 
 .Rproj.user
+
+*.dump
+
+*.fld
+
+*.flddump
+
+*.vfld
