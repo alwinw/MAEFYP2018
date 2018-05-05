@@ -56,8 +56,8 @@ using namespace std;
 #include "mesh.h"
 
 static char prog[] = "meshpr";
-static void getargs (int_t, char**, char*&, int_t&, bool&, bool&,
-		     int_t&, int_t&, bool&, int_t&, real_t&);
+static void getargs (int_t, char**, char*&, int_t&, bool&, bool&, 
+		     int_t&, int_t&, bool&, bool&, int_t&, real_t&);
 
 int main (int    argc,
 	  char** argv)
@@ -74,10 +74,10 @@ int main (int    argc,
          nz      = 0,
          basis   = GLJ;
   real_t beta    = -1.;
-  bool   check = true, surf = false, threed = false;
+  bool   check = true, surf = false, threed = false, extrainfo = false;
 
   Femlib::initialize (&argc, &argv);
-  getargs (argc, argv, session, verb, check, surf, np, nz, threed, basis, beta);
+  getargs (argc, argv, session, verb, check, surf, np, nz, threed, extrainfo, basis, beta);
 
   // -- Set up to read from file, initialize Femlib parsing.
 
@@ -145,7 +145,11 @@ int main (int    argc,
       for (ID = 0; ID < NEL; ID++) {
 	M.meshElmt (ID, np, zero_r, zero_r, &x[0], &y[0]);
 	for (j = 0; j < NTOT; j++)
-	  cout << setw(20) << x[j] << setw(24) << y[j] << endl;
+	  if (extrainfo) {
+      cout << setw(20) << x[j] << setw(24) << y[j] << setw(10) << ID << setw(10) << j << endl;
+    } else {
+      cout << setw(20) << x[j] << setw(24) << y[j] << endl;
+    }
       }
 
       // -- Print_t out z-mesh.
@@ -168,6 +172,7 @@ static void getargs (int     argc   ,
 		     int_t&  np     ,
 		     int_t&  nz     ,
 		     bool&   threed ,
+         bool&   extrainfo,
 		     int_t&  basis  ,
 		     real_t& beta   )
 // ---------------------------------------------------------------------------
@@ -184,7 +189,8 @@ static void getargs (int     argc   ,
     "  -3       ... produce 3D mesh output: Np*Np*Nz*Nel*(x y z)\n"
     "  -n <num> ... override number of element knots to be num\n"
     "  -z <num> ... override number of planes to be num\n"
-    "  -b <num> ... override wavenumber beta to be <num> (3D)\n";
+    "  -b <num> ... override wavenumber beta to be <num> (3D)\n"
+    "  -i       ... print mesh information (2D only)\n";
   char err[StrMax], c;
 
   while (--argc && **++argv == '-')
@@ -212,6 +218,9 @@ static void getargs (int     argc   ,
       break;
     case '3':
       threed = true;
+      break;
+    case 'i':
+      extrainfo = true;
       break;
     case 'n':
       if (*++argv[0]) np = atoi (*argv);
