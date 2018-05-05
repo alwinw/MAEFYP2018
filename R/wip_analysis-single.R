@@ -51,6 +51,8 @@ wallmsh <- LoadWallmsh(seshpath)
 sessionkey <- LoadSeshFileKeywords(seshpath, keywords)
 list2env(sessionkey, envir = .GlobalEnv)
 LoadSeshBCEqs(seshpath, "MOD_ALPHA_X")
+# Load history file
+his <- LoadHist(seshpath)
 # Load dump file
 dumplist <- ListDump(folder, seshname)
 dumpfile <- LoadDump(folder, dumplist[4])

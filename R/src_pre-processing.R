@@ -46,9 +46,11 @@ wallmsh$up = wallmsh$y >= predict(chordlm, wallmsh)
 wallmsh <- arrange(wallmsh, up, x * (up * 2 -1))
 wallmsh$wsnum = 1:nrow(wallmsh)
 # Make the same number of columns for bndry
-bndry$wnum <- NA
-bndry$wsnum <- NA
-bndry$up = bndry$y >= predict(chordlm, bndry)
+bndry$wnum = NA
+bndry$wsnum = NA
+bndry$bnum = 1:nrow(bndry)
+wallmsh$bnum = NA
+bndry$up = bndry$y >= predict(chordlm, bndry) - sqrt(.Machine$double.eps)
 # Combine wall and bndry files
 long_bndry <- rbind(wallmsh, bndry) %>%
   arrange(-up, -x * (up * 2 -1))
@@ -60,5 +62,17 @@ long_bndry <- CalcSpline(long_bndry)
 
 # Eventually compare spline length to XFOIL output
 
+#--- History File ----
+long_his <- left_join(his, long_bndry, by = "bnum")
+
+myPalette <- colorRampPalette(rev(brewer.pal(11, "Spectral")))
+ggplot(long_his, aes(s, p, group = t, colour = t)) + geom_line() +
+  scale_colour_gradientn(colours = myPalette(100))
+ggplot(long_his, aes(s, t, group = t, colour = p)) + geom_line() +
+  scale_colour_gradientn(colours = myPalette(100))
+
 #--- Step Variables ----
 # acceleration value
+
+
+# Pressue
