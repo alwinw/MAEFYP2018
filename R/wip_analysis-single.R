@@ -3,6 +3,8 @@
 # Alwin Wang
 #----------------------------
 
+theme_set(theme_bw())
+
 #--- Set Working Directory ----
 # Use rstudioapi to get saved location of this file
 # and set it as the working directory
