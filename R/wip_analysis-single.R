@@ -13,6 +13,8 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # Requres devtools, 
 #--- Source Required Scripts ----
 # Call libraries and install missing ones
 source("src_library-manager.R")
+# Load custom numerical methods
+source("src_numerical-methods.R")
 # Read data
 source("src_read-files.R")
 # Preprocess read files

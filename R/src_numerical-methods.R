@@ -3,7 +3,6 @@
 # Alwin Wang
 #----------------------------
 
-
 #--- Cubic Spline Calculus ----
 # Determine derivatives and antiderivatives of cubic splines
 CubicSplineCalc <- function(cs, order = 0) {
@@ -80,8 +79,17 @@ CalcSpline <- function(rawdata, x = "x", y = "y") {
   dydt <- ppval(dcsy, data$t)
   dydx <- dydt/dxdt
   # Plot
-  plot <- data.frame(t = data$t, dydx = dydx, x = data$x, y = data$y)
-  myPalette <- colorRampPalette(rev(brewer.pal(11, "Spectral")))
-  ggplot(plot, aes(x = x, y = y, colour = ifelse(abs(dydx)>0.5,0.5*sign(dydx),dydx))) + geom_path() +
-    scale_colour_gradientn(colours = myPalette(100)) + geom_point(shape=as.logical(sign(dydx)/2+1/2)) 
+  # plot <- data.frame(t = data$t, dydx = dydx, x = data$x, y = data$y)
+  # myPalette <- colorRampPalette(rev(brewer.pal(11, "Spectral")))
+  # ggplot(plot, aes(x = x, y = y, colour = ifelse(abs(dydx)>0.5,0.5*sign(dydx),dydx))) + geom_path() +
+  #   scale_colour_gradientn(colours = myPalette(100)) + geom_point(shape=as.logical(sign(dydx)/2+1/2)) 
+  # Perhaps add a basic check of dy/dx vs y2-y1/x2-x1 and s vs t
+  # Combine results with data
+  data$s = s
+  data$dydx = dydx
+  data$t <- NULL
+  # Combine data back with rawdata
+  colnames(data) <- c(x, y, colnames(data)[3:ncol(data)])
+  rawdata <- full_join(rawdata, data, by = c(x, y))
+  return(rawdata)
 }

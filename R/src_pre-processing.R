@@ -53,8 +53,7 @@ long_bndry <- rbind(wallmsh, bndry) %>%
 long_bndry$snum = 1:nrow(long_bndry)
 ggplot(long_bndry, aes(x, y, color = up)) + geom_path() + geom_point(aes(shape=up)) +
   coord_cartesian(xlim = c(-0.4, -0.3), ylim = c(0.0, 0.08))
-
-#--- Spline Length s ----
-
+# Calculte spline length and dy/dx
+long_bndry <- CalcSpline(long_bndry)
 
 # Eventually compare spline length to XFOIL output
