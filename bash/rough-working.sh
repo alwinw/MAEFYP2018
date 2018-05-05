@@ -26,6 +26,8 @@ for sessionfile in $sessionfiles; do
     cp $sessionfile "$f"                    && echo "   Copy Made"          &&
     # Generate the mesh
     meshpr $f > "$f.msh"                    && echo "   Meshpr Finished"    &&
+    # Add extra mesh info
+    meshpr -i $f > "$f.mshi"                && echo "   Meshpr -i Finished" &&
     # Enumerate
     enumerate $f > "$f.num"                 && echo "   Enumerate Finished" &&
     # Compare
