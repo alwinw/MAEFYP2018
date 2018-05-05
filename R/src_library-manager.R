@@ -20,7 +20,8 @@ packages <- c(
   "lubridate",  # Great for working with dates, by Adj. Prof Hadley Wickham
   "readxl",     # Great for reading .xls, .xlsx, by Adj. Prof Hadley Wickham 
   "devtools",   # Great for developing, by Adj. Prof Hadley Wickham 
-  "rstudioapi"  # For setting working directory
+  "rstudioapi", # For setting working directory
+  "RColorBrewer"  # For ggplot2 colours 
 )
 
 #--- Install Missing Packages ----

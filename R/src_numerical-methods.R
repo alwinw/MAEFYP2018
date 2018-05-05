@@ -59,8 +59,8 @@ CalcSpline <- function(rawdata, x = "x", y = "y") {
   names[names == y] = "y"
   colnames(data) <- names
   # Use the path distance from the first point as the parametric variable, t
-  data$eucdist = c(0, sqrt((data$x - lag(data$x))^2 + (data$y - lag(data$y))^2)[-1])
-  data$t = cumsum(data$eucdist)
+  data$t = c(0, sqrt((data$x - lag(data$x))^2 + (data$y - lag(data$y))^2)[-1])
+  data$t = cumsum(data$t)
   # Cublic spline
   csx <- cubicspline(data$t, data$x)
   csy <- cubicspline(data$t, data$y)
@@ -70,29 +70,18 @@ CalcSpline <- function(rawdata, x = "x", y = "y") {
   # Integral of cubic splines
   # icsx = CubicSplineCalc(csx, 1)
   # icsy = CubicSplineCalc(csy, 1)
-  # Spline Length
-  
-  ds <- function(t) sqrt(ppval(dcsx, t)^2 + ppval(dcsy, t)^2)
-  s = integral(ds, data$t[1], data$t[nrow(data)])
-  
-  system.time(integral(ds, data$t[1], data$t[nrow(data)]))
-  
-  length <- function(tval) integral(function(t) sqrt(ppval(dcsx, t)^2 + ppval(dcsy, t)^2), 0, tval)
-  
-  system.time(sapply(data$t, length))
-  
-  ptm <- proc.time()
-  test <- vapply(data$t, length, 1)
-  proc.time() - ptm
-  
+  # Spline Length, s = int sqrt(dx/dt^2 + dy/dt^2) dt
   length2 <- function(tvec) integral(function(t) sqrt(ppval(dcsx, t)^2 + ppval(dcsy, t)^2), tvec[1], tvec[2])
-  
-  ptm <- proc.time()
-  test2 <- cbind(data$t, lead(data$t))[-nrow(data),]
-  test2 <- apply(test2, 1, length2)
-  test2 <- c(0, cumsum(test2))
-  proc.time() - ptm
-  
-  hist((test - test2)/sqrt(.Machine$double.eps))
-  hist(log10(abs(test - test2)))
+  s <- cbind(data$t, lead(data$t))[-nrow(data),]
+  s <- apply(s, 1, length2)
+  s <- c(0, cumsum(s))
+  # Derivative dy/dx = dy/dt * dt/dx
+  dxdt <- ppval(dcsx, data$t)
+  dydt <- ppval(dcsy, data$t)
+  dydx <- dydt/dxdt
+  # Plot
+  plot <- data.frame(t = data$t, dydx = dydx, x = data$x, y = data$y)
+  myPalette <- colorRampPalette(rev(brewer.pal(11, "Spectral")))
+  ggplot(plot, aes(x = x, y = y, colour = ifelse(abs(dydx)>0.5,0.5*sign(dydx),dydx))) + geom_path() +
+    scale_colour_gradientn(colours = myPalette(100)) + geom_point(shape=as.logical(sign(dydx)/2+1/2)) 
 }
