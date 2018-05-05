@@ -90,7 +90,7 @@ LoadKeyword <- function(keyword, filelines, file) {
 }
 
 # Function to load a list of keywords and colnames
-LoadSeshFile <- function(seshpath, keywords) {
+LoadSeshFileKeywords <- function(seshpath, keywords) {
   # Session file name
   file = paste0(seshpath,".sesh")
   # Read the session file to grep lines later
@@ -104,5 +104,6 @@ LoadSeshFile <- function(seshpath, keywords) {
   return(sessionfile)   # List
 }
 
+# Function to read in BC equations
 
 

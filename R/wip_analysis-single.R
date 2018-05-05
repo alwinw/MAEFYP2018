@@ -42,6 +42,6 @@ chord <- LoadChord(bndrypath)
 mesh <- LoadMesh(seshpath)
 wallmsh <- LoadWallmsh(seshpath)
 # Load session file
-session <- LoadSeshFile(seshpath, keywords)
-list2env(session, envir = .GlobalEnv)
+sessionkey <- LoadSeshFileKeywords(seshpath, keywords)
+list2env(sessionkey, envir = .GlobalEnv)
 
