@@ -3,6 +3,33 @@
 # Alwin Wang
 #----------------------------
 
+#--- Airfoil Surface ----
+# Clean up wall mesh
+wallmsh$wnum = 1:nrow(wallmsh)
+# Determine the chord line
+chordlm = lm(y~x, chord)    # class lm
+# Determine upper and lower surfaces
+wallmsh$up = wallmsh$y >= predict(chordlm, wallmsh)
+# Order wall file
+wallmsh <- arrange(wallmsh, up, x * (up * 2 -1))
+wallmsh$wsnum = 1:nrow(wallmsh)
+# Make the same number of columns for bndry
+bndry$wnum = NA
+bndry$wsnum = NA
+bndry$bnum = 1:nrow(bndry)
+wallmsh$bnum = NA
+bndry$up = bndry$y >= predict(chordlm, bndry) - sqrt(.Machine$double.eps)
+# Combine wall and bndry files
+long_bndry <- rbind(wallmsh, bndry) %>%
+  arrange(-up, -x * (up * 2 -1))
+long_bndry$snum = 1:nrow(long_bndry)
+# ggplot(long_bndry, aes(x, y, color = up)) + geom_path() + geom_point(aes(shape=up)) +
+# coord_cartesian(xlim = c(-0.4, -0.3), ylim = c(0.0, 0.08))
+# Calculte spline length and dy/dx
+long_bndry <- CalcSpline(long_bndry)
+
+# Eventually compare spline length to XFOIL output
+
 #---- Elements ----
 # Determine node points for the elements
 # Check that all elements are quadrangles
@@ -50,15 +77,18 @@ mesh$mnum = 1:nrow(long_meshdata)
 # Determine which mesh nodes are wall mesh nodes
 # In wall mesh, the 5th node of the 1st element = 1st node of the 2nd element
 # To join over (x, y), these duplicate coordinates need to be removed!
-unixy_wallmsh <- wallmsh[!duplicated(select(wallmsh, x, y)),]
+unixy_wallmsh <- wallmsh %>%
+  filter(!is.na(wnum)) %>% select(-bnum)
+unixy_wallmsh <- unixy_wallmsh[!duplicated(select(unixy_wallmsh, x, y)),]
 # Join with unique (x, y) for temp_wallmsh
 long_meshdata <- left_join(mesh, unixy_wallmsh, by = c("x", "y"))
+long_meshdata$wall = !is.na(long_meshdata$wnum)
 # Check the number of rows has not changed
 if (nrow(long_meshdata) != nrow(mesh)) {
   warning("Number of nodes has changed!")}
 # Check that all wall mesh nodes were found
 if (nrow(unixy_wallmsh) != 
-    nrow(long_meshdata %>% select(wnum) %>% filter(!is.na(wnum)) %>% unique())) {
+    nrow(long_meshdata %>% filter(wall) %>% select(wnum) %>% unique())) {
   # Note: need unique because there are duplicate (x, y) points in the mesh file
   #       since it is a print out for each element and N x N
   warning("Not all wall mesh nodes found")}
@@ -77,37 +107,6 @@ if (nrow(filter(long_seshdata, ncorner != "n5")) !=
 # if (sum(long_meshdata$error) != 0) {
 #   warning("Node spacing not as expected")}
 
-  
-  
-  
-# why is unique needed? surely no double ups...
-
-#--- Airfoil Surface ----
-# Clean up wall mesh
-wallmsh$wnum = 1:nrow(wallmsh)
-# Determine the chord line
-chordlm = lm(y~x, chord)    # class lm
-# Determine upper and lower surfaces
-wallmsh$up = wallmsh$y >= predict(chordlm, wallmsh)
-# Order wall file
-wallmsh <- arrange(wallmsh, up, x * (up * 2 -1))
-wallmsh$wsnum = 1:nrow(wallmsh)
-# Make the same number of columns for bndry
-bndry$wnum = NA
-bndry$wsnum = NA
-bndry$bnum = 1:nrow(bndry)
-wallmsh$bnum = NA
-bndry$up = bndry$y >= predict(chordlm, bndry) - sqrt(.Machine$double.eps)
-# Combine wall and bndry files
-long_bndry <- rbind(wallmsh, bndry) %>%
-  arrange(-up, -x * (up * 2 -1))
-long_bndry$snum = 1:nrow(long_bndry)
-# ggplot(long_bndry, aes(x, y, color = up)) + geom_path() + geom_point(aes(shape=up)) +
-  # coord_cartesian(xlim = c(-0.4, -0.3), ylim = c(0.0, 0.08))
-# Calculte spline length and dy/dx
-long_bndry <- CalcSpline(long_bndry)
-
-# Eventually compare spline length to XFOIL output
 
 #--- History File ----
 long_his <- left_join(his, long_bndry, by = "bnum")

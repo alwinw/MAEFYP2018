@@ -52,7 +52,10 @@ ggplot() +
 
 ggplot(mesh, aes(x, y, group = enum, colour = jnum)) +
   geom_path() +
-  geom_point()
+  geom_point() + # LE
+  coord_fixed(
+    xlim = c(-0.4, -0.3),
+    ylim = c(-0.04, 0.08))
 
 #--- Boundary ----
 ggplot(long_bndry, aes(x = snum, y = c(0, diff(s)), group = is.na(wsnum), colour = s)) +
