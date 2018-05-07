@@ -52,7 +52,7 @@ LoadMesh <- function(seshpath) {
   # Read mesh file
   mesh <- read.table(file, skip = 1)
   # Set column names
-  colnames(mesh) <- c("x", "y", "ID", "j")
+  colnames(mesh) <- c("x", "y", "enum", "jnum")
   # Return mesh
   return(mesh)    # Data.frame
 }

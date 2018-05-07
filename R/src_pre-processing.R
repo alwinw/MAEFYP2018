@@ -8,7 +8,7 @@
 # Check that all elements are quadrangles
 if (as.logical(sum(elements$shapetag != "<Q>"))) warning("Not all elements are Quadrangles") 
 # Manipulate data
-long_meshdata <- elements %>%
+long_seshdata <- elements %>%
   # Remove shape tag since checked shape already
   select(-shapetag) %>%
   # Gather nodes 1-5 into a single column
@@ -30,10 +30,57 @@ long_meshdata <- elements %>%
 
 #--- Mesh ----
 # Combine the mesh (N order poly) with original elements
-mesh$mnum = 1:nrow(mesh)
-temp <- left_join(mesh, long_meshdata, by = c("x", "y"))
+# mesh$mnum = 1:nrow(mesh)
+# temp <- left_join(mesh, long_seshdata, by = c("x", "y"))
 # NOTE: THERE WILL BE MANY DUPLICATES e.g. five elements meet at one node
-nrow(filter(temp, is.na(ncorner))) + nrow(long_meshdata) - nrow(mesh)
+# nrow(filter(temp, is.na(ncorner))) + nrow(long_seshdata) - nrow(mesh)
+
+# Determine which mesh data belong to which
+mesh$mnum = 1:nrow(long_meshdata)
+
+# temp_seshdata <- long_seshdata %>%
+#   filter(ncorner != "n5") %>%
+#   gather(id, value, -enum, -ncorner, -elabx, -elaby, -area) %>%
+#   mutate(id = paste(ncorner, id, sep = ".")) %>%
+#   select(-ncorner) %>%
+#   spread(id, value)
+# long_meshdata %<>% left_join(., temp_seshdata, by = "enum") %>%
+#   group_by(enum)
+
+# Determine which mesh nodes are wall mesh nodes
+# In wall mesh, the 5th node of the 1st element = 1st node of the 2nd element
+# To join over (x, y), these duplicate coordinates need to be removed!
+unixy_wallmsh <- wallmsh[!duplicated(select(wallmsh, x, y)),]
+# Join with unique (x, y) for temp_wallmsh
+long_meshdata <- left_join(mesh, unixy_wallmsh, by = c("x", "y"))
+# Check the number of rows has not changed
+if (nrow(long_meshdata) != nrow(mesh)) {
+  warning("Number of nodes has changed!")}
+# Check that all wall mesh nodes were found
+if (nrow(unixy_wallmsh) != 
+    nrow(long_meshdata %>% select(wnum) %>% filter(!is.na(wnum)) %>% unique())) {
+  # Note: need unique because there are duplicate (x, y) points in the mesh file
+  #       since it is a print out for each element and N x N
+  warning("Not all wall mesh nodes found")}
+
+# Determine which mesh nodes are session node numbers
+long_meshdata <- left_join(long_meshdata, filter(long_seshdata, ncorner != "n5"), by = c("enum", "x", "y"))
+if (nrow(filter(long_seshdata, ncorner != "n5")) !=
+    nrow(long_meshdata %>% select(enum, ncorner) %>% filter(!is.na(ncorner)) %>% unique())) {
+  warning("Not all mesh nodes found")}
+# Double check mesh node order correct (ONLY IF N = 5 FOR SPACE SPACING)
+# long_meshdata %<>% cbind(., data.frame(
+#     check = rep(c("n1", rep(NA,3), "n2", rep(NA, 15), "n4", rep(NA, 3), "n3"), nrow(long_meshdata)/25))) %>%
+#   mutate(check = as.character(check)) %>%
+#   mutate(error = is.na(check) & is.na(ncorner)) %>%
+#   mutate(error = ifelse(is.na(check), FALSE, ncorner != check))
+# if (sum(long_meshdata$error) != 0) {
+#   warning("Node spacing not as expected")}
+
+  
+  
+  
+# why is unique needed? surely no double ups...
 
 #--- Airfoil Surface ----
 # Clean up wall mesh
