@@ -21,7 +21,9 @@ packages <- c(
   "readxl",     # Great for reading .xls, .xlsx, by Adj. Prof Hadley Wickham 
   "devtools",   # Great for developing, by Adj. Prof Hadley Wickham 
   "rstudioapi", # For setting working directory
-  "RColorBrewer"  # For ggplot2 colours 
+  "RColorBrewer",  # For ggplot2 colours 
+  "pbapply",
+  "parallel"
 )
 
 #--- Install Missing Packages ----

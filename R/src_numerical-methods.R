@@ -76,7 +76,8 @@ CalcSpline <- function(rawdata, x = "x", y = "y") {
   # Spline Length, s = int sqrt(dx/dt^2 + dy/dt^2) dt
   length2 <- function(tvec) integral(function(t) sqrt(ppval(dcsx, t)^2 + ppval(dcsy, t)^2), tvec[1], tvec[2])
   s <- cbind(data$t, lead(data$t))[-nrow(data),]
-  s <- apply(s, 1, length2)
+  cat("Determining spline distance\n")
+  s <- pbapply(s, 1, length2)
   s <- c(0, cumsum(s))
   # Derivative dy/dx = dy/dt * dt/dx
   # !! Maybe consider refitting the cubic polynomials on s rather than t
