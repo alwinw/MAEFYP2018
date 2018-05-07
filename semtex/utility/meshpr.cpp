@@ -146,7 +146,7 @@ int main (int    argc,
 	M.meshElmt (ID, np, zero_r, zero_r, &x[0], &y[0]);
 	for (j = 0; j < NTOT; j++)
 	  if (extrainfo) {
-      cout << setw(20) << x[j] << setw(24) << y[j] << setw(10) << ID << setw(10) << j << endl;
+      cout << setw(24) << x[j] << setw(24) << y[j] << setw(10) << ID+1 << setw(10) << j+1 << endl;
     } else {
       cout << setw(20) << x[j] << setw(24) << y[j] << endl;
     }
