@@ -51,7 +51,7 @@ CubicSplineCalc <- function(cs, order = 0) {
 #--- Splines ----
 # Calculations on closed simpled looped splines
 # e.g. rawdata = long_bndry; colnames(rawdata) <- c("hi", "bye", "up", "wnum", "wsnum", "snum"); x = "hi"; y = "bye"
-CalcSpline <- function(rawdata, x = "x", y = "y") {
+AirfoilSpline <- function(rawdata, x = "x", y = "y") {
   # Take only columns of interest
   data = rawdata[,colnames(rawdata) %in% c(x, y)]
   # Remove duplicate rows or else cubic spline will give NaN
@@ -97,4 +97,41 @@ CalcSpline <- function(rawdata, x = "x", y = "y") {
   colnames(data) <- c(x, y, colnames(data)[3:ncol(data)])
   rawdata <- full_join(rawdata, data, by = c(x, y))
   return(rawdata)
+}
+
+# Airfoil field to interpolate
+AirfoilLocalMesh <- function(long_bndry, dist = 0.005, nsteps = 5) {
+  # This part may be hard coded to only work if the upper surface is 1 -> n and lower surface is n --> end
+  # long_bndry %<>% mutate(dir = lead(x) - x) %>%
+    # fill(dir)
+  test <- long_bndry %>%
+    mutate(dely = 0.1*(-up*2 + 1),
+      xdash = dely/dydx + x,
+      ydash = -dely + y,
+      distdas = sqrt((xdash-x)^2 + (ydash-y)^2)) %>%
+    mutate(
+      xdash = (xdash-x)/sqrt((xdash-x)^2 + (ydash-y)^2) + x,
+      ydash = (ydash-y)/sqrt((xdash-x)^2 + (ydash-y)^2) + y,
+      distdas = sqrt((xdash-x)^2 + (ydash-y)^2))
+  
+  ggplot(test, aes(colour = s)) + 
+    geom_point(aes(x, y)) + geom_path(aes(x, y)) + 
+    geom_point(aes(xdash, ydash)) + geom_path(aes(xdash, ydash)) + 
+    coord_fixed(xlim = c(-3,3))
+  
+  test <- long_bndry %>%
+    mutate(dely = 0.1,
+           delx = dely*(-1)*dydx, # Needed the normal gradient
+           deldist = sqrt(delx^2 + dely^2)) %>%
+    mutate(delx = delx/deldist,
+           dely = dely/deldist,
+           deldist = sqrt(delx^2 + dely^2)) %>%
+    mutate(xdash = x + delx*(up*2-1),
+           ydash = y + dely *(up*2-1))
+  
+  test_plot <- rbind(
+    test %>% select(-xdash, -ydash),
+    test %>% select(-x, -y) %>% rename(x = xdash, y = ydash))
+  ggplot(test_plot, aes(x, y, colour = s, group = snum)) +
+    geom_path()
 }
