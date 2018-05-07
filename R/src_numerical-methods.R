@@ -79,6 +79,7 @@ CalcSpline <- function(rawdata, x = "x", y = "y") {
   s <- apply(s, 1, length2)
   s <- c(0, cumsum(s))
   # Derivative dy/dx = dy/dt * dt/dx
+  # !! Maybe consider refitting the cubic polynomials on s rather than t
   dxdt <- ppval(dcsx, data$t)
   dydt <- ppval(dcsy, data$t)
   dydx <- dydt/dxdt
