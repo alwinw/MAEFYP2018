@@ -28,6 +28,12 @@ long_bndry$snum = 1:nrow(long_bndry)
 # Calculte spline length and dy/dx
 long_bndry <- CalcSpline(long_bndry)
 
+# In wall mesh, the 5th node of the 1st element = 1st node of the 2nd element
+# To join over (x, y), these duplicate coordinates need to be removed!
+unixy_wallmsh <- wallmsh %>%
+  filter(!is.na(wnum)) %>% select(-bnum)
+unixy_wallmsh <- unixy_wallmsh[!duplicated(select(unixy_wallmsh, x, y)),]
+
 # Eventually compare spline length to XFOIL output
 
 #---- Elements ----
@@ -51,9 +57,13 @@ long_seshdata <- elements %>%
   # Close the loop (without effecting mean)
   rbind(., mutate(filter(., ncorner=="n1"), ncorner = "n5")) %>%
   arrange(enum, ncorner) %>% 
-  # Calculate area later
+  # Calculate area
   mutate(area = x*lead(y) - lead(x)*y) %>%
-  mutate(area = 1/2*abs(sum(ifelse(is.na(area), 0, area))))
+  mutate(area = 1/2*abs(sum(ifelse(is.na(area), 0, area)))) %>%
+  # Join with wall mesh
+  left_join(., unixy_wallmsh, by = c("x", "y")) %>%
+  mutate(wall = !is.na(wnum)) %>%
+  filter(ncorner != "n5")
 
 #--- Mesh ----
 # Combine the mesh (N order poly) with original elements
@@ -63,23 +73,8 @@ long_seshdata <- elements %>%
 # nrow(filter(temp, is.na(ncorner))) + nrow(long_seshdata) - nrow(mesh)
 
 # Determine which mesh data belong to which
-mesh$mnum = 1:nrow(long_meshdata)
-
-# temp_seshdata <- long_seshdata %>%
-#   filter(ncorner != "n5") %>%
-#   gather(id, value, -enum, -ncorner, -elabx, -elaby, -area) %>%
-#   mutate(id = paste(ncorner, id, sep = ".")) %>%
-#   select(-ncorner) %>%
-#   spread(id, value)
-# long_meshdata %<>% left_join(., temp_seshdata, by = "enum") %>%
-#   group_by(enum)
-
+mesh$mnum = 1:nrow(mesh)
 # Determine which mesh nodes are wall mesh nodes
-# In wall mesh, the 5th node of the 1st element = 1st node of the 2nd element
-# To join over (x, y), these duplicate coordinates need to be removed!
-unixy_wallmsh <- wallmsh %>%
-  filter(!is.na(wnum)) %>% select(-bnum)
-unixy_wallmsh <- unixy_wallmsh[!duplicated(select(unixy_wallmsh, x, y)),]
 # Join with unique (x, y) for temp_wallmsh
 long_meshdata <- left_join(mesh, unixy_wallmsh, by = c("x", "y"))
 long_meshdata$wall = !is.na(long_meshdata$wnum)
@@ -94,8 +89,9 @@ if (nrow(unixy_wallmsh) !=
   warning("Not all wall mesh nodes found")}
 
 # Determine which mesh nodes are session node numbers
-long_meshdata <- left_join(long_meshdata, filter(long_seshdata, ncorner != "n5"), by = c("enum", "x", "y"))
-if (nrow(filter(long_seshdata, ncorner != "n5")) !=
+long_meshdata <- left_join(long_meshdata, filter(long_seshdata), by = c("enum", "x", "y"))
+long_meshdata$node = !is.na(long_meshdata$nnum)
+if (nrow(filter(long_seshdata)) !=
     nrow(long_meshdata %>% select(enum, ncorner) %>% filter(!is.na(ncorner)) %>% unique())) {
   warning("Not all mesh nodes found")}
 # Double check mesh node order correct (ONLY IF N = 5 FOR SPACE SPACING)

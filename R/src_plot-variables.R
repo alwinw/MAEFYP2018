@@ -9,7 +9,7 @@ theme_set(theme_bw())
 #--- Sample plot of long_seshdata ----
 long_meshplot <- ggplot(long_seshdata, aes(x, y, colour = enum)) +
   # Element edges
-  geom_path(aes(group = enum)) +
+  geom_polygon(aes(group = enum), fill = NA) +
   # Element labels
   geom_text(aes(x = elabx, y = elaby, label = enum, size = area), alpha = 0.5) +
   # Node labels
