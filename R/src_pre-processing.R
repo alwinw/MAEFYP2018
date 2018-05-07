@@ -74,5 +74,4 @@ ggplot(long_his, aes(s, t, group = t, colour = p)) + geom_line() +
 #--- Step Variables ----
 # acceleration value
 
-
 # Pressue

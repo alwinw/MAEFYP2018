@@ -3,6 +3,9 @@
 # Alwin Wang
 #----------------------------
 
+myPalette <- colorRampPalette(rev(brewer.pal(11, "Spectral")))
+theme_set(theme_bw())
+
 #--- Sample plot of long_meshdata ----
 long_meshplot <- ggplot(long_meshdata, aes(x, y, colour = enum)) +
   # Element edges
@@ -46,3 +49,21 @@ ggplot() +
   geom_text(aes(x = x, y = y, label = j), data = mesh) +
   # Labels
   xlab("x") + ylab("y")
+
+
+#--- Dump Files ----
+dumpfileplot <- filter(dumpfile$flowfield)
+dumpfileplot <- cbind(dumpfileplot, mesh)
+# Plot
+ggplot(dumpfileplot, aes(x, y)) +
+  geom_point(aes(colour = p)) +
+  coord_fixed() +
+  scale_colour_gradientn(colours = myPalette(100))
+
+ggplot(dumpfileplot, aes(x, y)) +
+  geom_point(aes(colour = t, alpha = abs(t))) +
+  coord_fixed(
+    xlim = c(-0.55, 0.65),
+    ylim = c(-0.3, 0.3)) +
+  scale_colour_gradientn(colours = myPalette(100))
+
