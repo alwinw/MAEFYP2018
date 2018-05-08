@@ -93,6 +93,14 @@ AirfoilSpline <- function(rawdata, x = "x", y = "y") {
   data$s = s
   data$dydx = dydx
   data$t <- NULL
+  # Cublic spline
+  csx <- cubicspline(data$s, data$x)
+  csy <- cubicspline(data$s, data$y)
+  # Derivative of cubic splines
+  dcsx = CubicSplineCalc(csx, -1)
+  dcsy = CubicSplineCalc(csy, -1)
+  data$dxds <- ppval(dcsx, data$s)
+  data$dyds <- ppval(dcsy, data$s)
   # Combine data back with rawdata
   colnames(data) <- c(x, y, colnames(data)[3:ncol(data)])
   rawdata <- full_join(rawdata, data, by = c(x, y))
@@ -104,34 +112,31 @@ AirfoilLocalMesh <- function(long_bndry, dist = 0.005, nsteps = 5) {
   # This part may be hard coded to only work if the upper surface is 1 -> n and lower surface is n --> end
   # long_bndry %<>% mutate(dir = lead(x) - x) %>%
     # fill(dir)
-  test <- long_bndry %>%
-    mutate(dely = 0.1*(-up*2 + 1),
-      xdash = dely/dydx + x,
-      ydash = -dely + y,
-      distdas = sqrt((xdash-x)^2 + (ydash-y)^2)) %>%
-    mutate(
-      xdash = (xdash-x)/sqrt((xdash-x)^2 + (ydash-y)^2) + x,
-      ydash = (ydash-y)/sqrt((xdash-x)^2 + (ydash-y)^2) + y,
-      distdas = sqrt((xdash-x)^2 + (ydash-y)^2))
-  
-  ggplot(test, aes(colour = s)) + 
-    geom_point(aes(x, y)) + geom_path(aes(x, y)) + 
-    geom_point(aes(xdash, ydash)) + geom_path(aes(xdash, ydash)) + 
-    coord_fixed(xlim = c(-3,3))
   
   test <- long_bndry %>%
-    mutate(dely = 0.1,
-           delx = dely*(-1)*dydx, # Needed the normal gradient
-           deldist = sqrt(delx^2 + dely^2)) %>%
-    mutate(delx = delx/deldist,
-           dely = dely/deldist,
-           deldist = sqrt(delx^2 + dely^2)) %>%
-    mutate(xdash = x + delx*(up*2-1),
-           ydash = y + dely *(up*2-1))
+    # mutate(dely = 0.1,
+    #        delx = dely*(-1)*dydx, # Needed the normal gradient
+    #        deldist = sqrt(delx^2 + dely^2)) %>%
+    # mutate(delx = delx/deldist,
+    #        dely = dely/deldist,
+    #        deldist = sqrt(delx^2 + dely^2)) %>%
+    # Use cross product
+    mutate(dirx = dyds*1 - 0*0,
+           diry = -(dxds*1 - 0*0),
+           dirdist = sqrt(dirx^2 + diry^2),
+           dirx = dirx/dirdist,
+           diry = diry/dirdist) %>%
+    mutate(xdash = x + dirx,
+           ydash = y + diry)
   
   test_plot <- rbind(
     test %>% select(-xdash, -ydash),
     test %>% select(-x, -y) %>% rename(x = xdash, y = ydash))
   ggplot(test_plot, aes(x, y, colour = s, group = snum)) +
     geom_path()
+  
+  ggplot(long_bndry, aes(x = s)) + 
+    geom_point(aes(y = dxds))
+  
+  # Need to redo airfoil point order and up/down classification, non-continuous gradients
 }
