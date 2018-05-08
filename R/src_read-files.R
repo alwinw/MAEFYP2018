@@ -3,20 +3,18 @@
 # Alwin Wang
 #----------------------------
 
-# Dev Temp Variables
-# folder = "../session-files/NACA0012-AoA04/"
-# seshname = "RE-10000-sine-0.001-2000"
-# seshpath = paste0(folder, seshname)
-# 
-# bndry = "bndry_prf"
-# 
-# keywords <- list(
-#   c("NODES", "nnum", "x", "y", "z"),
-#   c("ELEMENTS", "enum", "shapetag", "n1", "n2", "n3", "n4", "junk"),
-#   c("SURFACES", "snum", "element", "side", "bctag", "bc", "junk"),
-#   c("CURVES", "cnum", "element", "side", "curvetag", "curvedata", "junk")
-# )
-# str(keywords)
+#--- List Session Files ----
+ListSesh <- function(batchfolder) {
+  # List of files in folder (should be made more robust later)
+  batchlist <- list.files(batchfolder, pattern = ".sesh", recursive = TRUE)
+  # Convert character to dataframe
+  batchlist <- data.frame(path = unlist(strsplit(batchlist, "*.sesh"))) %>%
+    mutate(seshpath = path) %>%
+    separate(path, c("folder", "seshname"), sep = "/") %>%
+    mutate(folder = paste0(batchfolder, "/", folder, "/"))
+  # Return list of session files
+  return(batchlist)
+}
 
 #--- Load Airfoil Surface Files ----
 # Airfoil file should only be updated once per airfoil
