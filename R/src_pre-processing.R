@@ -26,7 +26,7 @@ long_bndry$snum = 1:nrow(long_bndry)
 # ggplot(long_bndry, aes(x, y, color = up)) + geom_path() + geom_point(aes(shape=up)) +
 # coord_cartesian(xlim = c(-0.4, -0.3), ylim = c(0.0, 0.08))
 # Calculte spline length and dy/dx
-long_bndry <- CalcSpline(long_bndry)
+long_bndry <- AirfoilSpline(long_bndry)
 
 # In wall mesh, the 5th node of the 1st element = 1st node of the 2nd element
 # To join over (x, y), these duplicate coordinates need to be removed!
@@ -89,7 +89,7 @@ if (nrow(unixy_wallmsh) !=
   warning("Not all wall mesh nodes found")}
 
 # Determine which mesh nodes are session node numbers
-long_meshdata <- left_join(long_meshdata, filter(long_seshdata), by = c("enum", "x", "y"))
+long_meshdata <- left_join(long_meshdata, long_seshdata, by = c("enum", "x", "y"))
 long_meshdata$node = !is.na(long_meshdata$nnum)
 if (nrow(filter(long_seshdata)) !=
     nrow(long_meshdata %>% select(enum, ncorner) %>% filter(!is.na(ncorner)) %>% unique())) {
