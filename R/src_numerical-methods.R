@@ -8,7 +8,7 @@
 heav <- function(t) ifelse(t>0,1,0)
 
 # Distance function
-EucDist <- function(x, y) sqrt((lag(x) - x)^2 + (lag(y) - y)^2)
+EucDist <- function(x, y) sqrt((x - lag(x))^2 + (y - lag(y))^2)
 
 #--- Cubic Spline Calculus ----
 # Determine derivatives and antiderivatives of cubic splines
