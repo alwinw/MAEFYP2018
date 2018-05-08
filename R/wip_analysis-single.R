@@ -9,8 +9,6 @@
 # - Run once per session file (Reynolds number)
 # - Run once per dump file (time step)
 
-theme_set(theme_bw())
-
 #--- Set Working Directory ----
 # Use rstudioapi to get saved location of this file
 # and set it as the working directory
@@ -24,6 +22,8 @@ source("src_numerical-methods.R")
 # Read data
 source("src_read-files.R")
 # Preprocess read files
+
+theme_set(theme_bw())
 
 #--- Load and Pre-process Data ----
 # Location
@@ -58,6 +58,8 @@ dumplist <- ListDump(folder, seshname)
 dumpfile <- LoadDump(folder, dumplist[4])
 # Pre-process Data
 source("src_pre-processing.R")
+
+# Dump File
 
 
 # Determine acceleration field along the airfoil surface
