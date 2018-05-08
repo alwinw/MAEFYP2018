@@ -3,13 +3,13 @@
 # Alwin Wang
 #----------------------------
 
-#--- Generate long_bndry ----
-# Create long_bndry
+#--- Generate combined long_bndry ----
+# Create combined long_bndry
 AirfoilLongBndry <- function(bndry, wallmsh) {
   # Determine trailing edge
-  te = bndry[1,]
+  te = bndry[1,1:2]
   # Determine leading edge point
-  le = rbind(bndry, wallmsh) %>% 
+  le  <-  rbind(bndry, wallmsh) %>% 
     mutate(dist = sqrt((x - te$x)^2 + (y - te$y)^2)) %>%
     arrange(-dist)
   le = le[1,1:2]
@@ -31,8 +31,8 @@ AirfoilLongBndry <- function(bndry, wallmsh) {
     mutate(up = theta <= pi,
            snum = row_number())
   # Check that the trailing edge closes 
-  # NOTE: indentical is too strong condition, all_equal could have been used
-  if (!all_equal(long_bndry[1, 1:2], long_bndry[nrow(long_bndry), 1:2])) {
+  # NOTE: indentical is too strong condition, all.equal could have been used
+  if (!isTRUE(all_equal(long_bndry[1, 1:2], long_bndry[nrow(long_bndry), 1:2]))) {
     warning("Trailing edge not closed")}
   # Patch LE if necessary
   lepatch <- filter(long_bndry, x == le$x, y == le$y)
@@ -62,13 +62,63 @@ AirfoilLongBndry <- function(bndry, wallmsh) {
   return(long_bndry)
 }
 
-
+#--- Generate SINGLE long_wall ----
+AirfoilLongWall <- function(wallmsh) {
+  # Determine trailing edge (most right point)
+  te = wallmsh[which.max(wallmsh$x),1:2]
+  # Determine leading edge point
+  le <-  wallmsh %>% 
+    mutate(dist = sqrt((x - te$x)^2 + (y - te$y)^2)) %>%
+    arrange(-dist)
+  le = le[1,1:2]
+  # Determine centre point
+  cp = (le + te)/2
+  tetheta = atan2(te$y - cp$y, te$x - cp$x)
+  # Number files
+  wallmsh$wnum = 1:nrow(wallmsh)
+  # Combine into long_wall
+  long_wall <- wallmsh %>%
+    mutate(theta = atan2(y - cp$y, x - cp$x) - tetheta) %>%
+    mutate(theta = theta + ifelse(theta < 0, 2*pi, 0)) %>% # CANNOT use sign(theta) since theta can be zero
+    arrange(theta, wnum)
+  # Patch TE 
+  # Note: It would be nice to decide if the first OR the second row should be used based on tail(...)
+  long_wall$theta[1] = long_wall$theta[1] + 2*pi
+  long_wall <- long_wall  %>%
+    arrange(theta, wnum) %>%
+    mutate(up = theta <= pi)
+  # Patch LE if necessary
+  lepatch <- filter(long_wall, x == le$x, y == le$y)
+  if (nrow(lepatch) == 1) {
+    # Add an extra LE row in 
+    lepatch$bnum = NA; lepatch$wnum = NA
+    lepatch$up = FALSE
+    long_wall <- rbind(long_wall, lepatch) %>% arrange(theta)
+  } else {
+    long_wall$up <- ifelse(long_wall$wnum == max(lepatch$wnum), FALSE, long_wall$up)
+  }
+  # Add helpful variables
+  long_wall <- mutate(long_wall, wall = !is.na(wnum))
+  # Renumber long_wall
+  long_wall$snum = 1:nrow(long_wall)
+  
+  # Plot
+  ggplot(long_wall, aes(x, y, colour = up)) + #geom_path() + 
+    geom_path() + 
+    # geom_point(aes(size = !is.na(wnum))) + 
+    # coord_cartesian(xlim = c(0.599, 0.60478), ylim = c(-0.045, -0.04))
+    coord_cartesian(xlim = c(0.60476, 0.60478), ylim = c(-0.042297, -0.042288))
+  #--- RESULT ----
+  # Satisfactory
+  # Return result
+  return(long_wall)
+}
 
 #--- Airfoil Spline ----
 # Calculations on closed simpled looped splines
-AirfoilSpline <- function(long_bndry, x = "x", y = "y") {
+AirfoilSpline <- function(long_wall, x = "x", y = "y") {
   # Take only columns of interest
-  data = long_bndry[,colnames(long_bndry) %in% c(x, y)]
+  data = long_wall[,colnames(long_wall) %in% c(x, y)]
   # Remove duplicate rows or else cubic spline will give NaN
   data = unique(data)
   # Rename columns of interest to be x and y
@@ -85,7 +135,7 @@ AirfoilSpline <- function(long_bndry, x = "x", y = "y") {
   length2 <- function(tvec) {
     integral(function(t) sqrt(ppval(dcsx, t)^2 + ppval(dcsy, t)^2), tvec[1], tvec[2])}
   # Loop
-  while (abs(error) > 0.01) {
+  while (abs(error) > 0.001) {
     # Cublic spline
     csx <- cubicspline(data$s, data$x)
     csy <- cubicspline(data$s, data$y)
@@ -101,6 +151,7 @@ AirfoilSpline <- function(long_bndry, x = "x", y = "y") {
     s <- c(0, cumsum(s))
     # Report back error (loop variable)
     error = sum(data$s - s)
+    print(error)
     # Update the loop
     data$s = s
   }
@@ -113,8 +164,8 @@ AirfoilSpline <- function(long_bndry, x = "x", y = "y") {
   data$dxds <- ppval(dcsx, data$s)
   data$dyds <- ppval(dcsy, data$s)
   data$dydx <- data$dyds/data$dxds
-  # Combine data back with long_bndry
+  # Combine data back with long_wall
   colnames(data) <- c(x, y, colnames(data)[3:ncol(data)])
-  long_bndry <- full_join(long_bndry, data, by = c(x, y))
-  return(long_bndry)
+  long_wall <- full_join(long_wall, data, by = c(x, y))
+  return(long_wall)
 }
