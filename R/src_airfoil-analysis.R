@@ -101,30 +101,24 @@ AirfoilLongWall <- function(wallmsh) {
   long_wall <- mutate(long_wall, wall = !is.na(wnum))
   # Renumber long_wall
   long_wall$snum = 1:nrow(long_wall)
-  
-  # Plot
-  ggplot(long_wall, aes(x, y, colour = up)) + #geom_path() + 
-    geom_path() + 
-    # geom_point(aes(size = !is.na(wnum))) + 
-    # coord_cartesian(xlim = c(0.599, 0.60478), ylim = c(-0.045, -0.04))
-    coord_cartesian(xlim = c(0.60476, 0.60478), ylim = c(-0.042297, -0.042288))
-  #--- RESULT ----
-  # Satisfactory
   # Return result
   return(long_wall)
 }
 
 #--- Airfoil Spline ----
 # Calculations on closed simpled looped splines
-AirfoilSpline <- function(long_wall, x = "x", y = "y") {
-  # Take only columns of interest
-  data = long_wall[,colnames(long_wall) %in% c(x, y)]
+AirfoilSpline <- function(long_wall, x = "x", y = "y", theta = "theta") {
+  # Take only columns of interest, maybe consider making theta optional
+  data = long_wall[,colnames(long_wall) %in% c(x, y, theta)]
+  originalnrow = nrow(long_wall)
   # Remove duplicate rows or else cubic spline will give NaN
+  # Note: spline is closed by repeated the first point, need a robust method for TE
   data = unique(data)
   # Rename columns of interest to be x and y
   oldnames <- colnames(data); names = oldnames
   names[names == x] = "x"
   names[names == y] = "y"
+  names[names == theta] = "theta"
   colnames(data) <- names
   # Iterate to find the best spline distance
   data$s = c(0, EucDist(data$x, data$y)[-1])
@@ -165,7 +159,41 @@ AirfoilSpline <- function(long_wall, x = "x", y = "y") {
   data$dyds <- ppval(dcsy, data$s)
   data$dydx <- data$dyds/data$dxds
   # Combine data back with long_wall
-  colnames(data) <- c(x, y, colnames(data)[3:ncol(data)])
-  long_wall <- full_join(long_wall, data, by = c(x, y))
-  return(long_wall)
+  colnames(data) <- c(x, y, theta, colnames(data)[4:ncol(data)])
+  long_wall <- full_join(long_wall, data, by = c(x, y, theta))
+  # Check the number of rows has not increased
+  if (originalnrow != nrow(long_wall)) {
+    warning("Merge Failed")}
+  # Return result
+  return(long_wall)   # Data.frame
+}
+
+#--- Airfoil Offset ----
+# Calculate distances from the surfaces (maybe requires analysis of one airfoil mesh)
+AirfoilOffset <- function(long_wall, totdist = 0.005, nsteps = 5) {
+  # Use the cross product to determine the outward normal
+  long_wall <- long_wall %>%
+    mutate(dirx = dyds*1 - 0*0,
+           diry = -(dxds*1 - 0*0),
+           dirdist = sqrt(dirx^2 + diry^2),
+           dirx = dirx/dirdist,
+           diry = diry/dirdist)
+  # Repeat for 1:nsteps
+  long_wall <- slice(long_wall, rep(1:n(), each = 5))
+  long_wall$nstep = rep(1:nsteps, length.out = nrow(long_wall)) # Length.out since nrow*5 already
+  # Determine each of the distances
+  long_wall <- long_wall %>%
+    mutate(xdash = x + totdist*dirx*nstep/nsteps,
+           ydash = y + totdist*diry*nstep/nsteps)
+  # Plot
+  # test_plot <- rbind(
+  #   long_wall %>% select(-xdash, -ydash),
+  #   long_wall %>% select(-x, -y) %>% rename(x = xdash, y = ydash))
+  # ggplot(test_plot, aes(x, y, colour = s, group = snum)) +
+  #   geom_path() +
+  #   geom_point(shape = 'o') +
+  #   coord_fixed()
+  # Later: Best output formate? long?
+  # Return
+  return(long_wall)   # Data.frame
 }

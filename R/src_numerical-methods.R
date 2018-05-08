@@ -54,7 +54,7 @@ CubicSplineCalc <- function(cs, order = 0) {
 #--- Splines ----
 # Calculations on closed simpled looped splines
 # e.g. rawdata = long_bndry; colnames(rawdata) <- c("hi", "bye", "up", "wnum", "wsnum", "snum"); x = "hi"; y = "bye"
-AirfoilSpline <- function(rawdata, x = "x", y = "y") {
+CalcSpline <- function(rawdata, x = "x", y = "y") {
   # Take only columns of interest
   data = rawdata[,colnames(rawdata) %in% c(x, y)]
   # Remove duplicate rows or else cubic spline will give NaN
