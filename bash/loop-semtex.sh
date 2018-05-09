@@ -26,13 +26,13 @@ cd $folder
 # Airfoil folders
 airfoils=*/
 # Loop over airfoils
-for airfoil in airfoils; do
+for airfoil in $airfoils; do
   echo
   echo "#============================"
   # Echo airfoil name
   echo " Found $airfoil"
   # Navigate into folder
-  cd $airfoils
+  cd $airfoil
   echo " > Entering $(pwd)"
   #--- Loop Over Files in Folder ----
   # Session files
