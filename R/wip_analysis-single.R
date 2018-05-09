@@ -62,7 +62,7 @@ long_wall <- AirfoilLongWall(wallmsh)
 long_wall <- AirfoilSpline(long_wall)
 # Eventually compare spline length to XFOIL output
 
-long_walloffset<- AirfoilOffset(long_wall)
+long_walloffset<- AirfoilOffset(long_wall, totdist = 0.006)
 
 # source("src_pre-processing.R")
 

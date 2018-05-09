@@ -11,19 +11,20 @@
 #--- List of  Required Packages ----
 # List of packages required
 packages <- c(
-  "stats",      # For statistical analysis, Part of R Core
-  "pracma",     # https://www.rdocumentation.org/packages/pracma/versions/1.9.9
-  "ggplot2",    # Great for visualising data, by Adj. Prof Hadley Wickham
-  "dplyr",      # Great for manipulating data, by Adj. Prof Hadley Wickham
-  "tidyr",      # Great for tidying data, by Adj. Prof Hadley Wickham
-  "stringr",    # Great for woking with strings, by Adj. Prof Hadley Wickham
-  "lubridate",  # Great for working with dates, by Adj. Prof Hadley Wickham
-  "readxl",     # Great for reading .xls, .xlsx, by Adj. Prof Hadley Wickham 
-  "devtools",   # Great for developing, by Adj. Prof Hadley Wickham 
-  "rstudioapi", # For setting working directory
-  "RColorBrewer",  # For ggplot2 colours 
-  "pbapply",
-  "parallel"
+  "stats",            # For statistical analysis, Part of R Core
+  "pracma",           # https://www.rdocumentation.org/packages/pracma/versions/1.9.9
+  "ggplot2",          # Great for visualising data, by Adj. Prof Hadley Wickham
+  "dplyr",            # Great for manipulating data, by Adj. Prof Hadley Wickham
+  "tidyr",            # Great for tidying data, by Adj. Prof Hadley Wickham
+  "stringr",          # Great for woking with strings, by Adj. Prof Hadley Wickham
+  "lubridate",        # Great for working with dates, by Adj. Prof Hadley Wickham
+  "readxl",           # Great for reading .xls, .xlsx, by Adj. Prof Hadley Wickham 
+  "devtools",         # Great for developing, by Adj. Prof Hadley Wickham 
+  "rstudioapi",       # For setting working directory
+  "RColorBrewer",     # For custom colour palettes
+  "pbapply",          # Progress bar wrapper for apply-style functions
+  "parallel",         # Parallel apply-style functions, Part of R Core
+  "akima"             # For interpolation, method published by Hiroshi Akima
 )
 
 #--- Install Missing Packages ----
