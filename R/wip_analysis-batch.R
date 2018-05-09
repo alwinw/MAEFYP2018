@@ -35,19 +35,16 @@ batchlist <- ListSesh(batchfolder, listout = FALSE)
 # logfile = paste0(format(Sys.time(), "%Y-%m-%dT%H.%M.%S"), ".txt")
 
 
-#--- Aircoil Calculation ----
+#--- Airfoil Calculation ----
 # Determine unique airfoil types
 airfoillist <- split(batchlist, batchlist$airfoil)
 airfoillist <- lapply(airfoillist, function(x) x[1,])
-
-LoadAirfoil <- function(airfoillist) {
-  # Print airfoil name
-  print(airfoillist$airfoil)
+# Function to load airfoil data
+BatchLoadAirfoil <- function(airfoillist) {
   # Source required functions
   source("src_read-files.R")
   # Read the bndry file
   bndrypath = paste0(airfoillist$folder, "bndry_prf")
-  print(bndrypath)
   bndry <- LoadBndry(bndrypath)
   # Read the wallmesh file
   wallmsh <- LoadWallmsh(airfoillist$seshpath)
@@ -57,31 +54,49 @@ LoadAirfoil <- function(airfoillist) {
   # Return the output as a list
   return(list(airfoil = airfoillist, bndry = bndry, long_wall = long_wall))
 }
-
-airfoillist <- lapply(airfoillist, LoadAirfoil)
-
-MatchAirfoil <- function(batchlist, airfoillist) {
-  print(batchlist$airfoil)
-  airfoil_data = airfoillist[batchlist$airfoil]
-  return(list(batchlist = batchlist, airfoil_data = airfoil_data[[1]]))
-}
-
-threadlist <- split(batchlist, batchlist$seshpath)
-
-temp2 <- lapply(threadlist, MatchAirfoil, airfoillist)
-
-str(temp2[[1]])
+# Iterate over list of airfoils list to load data
+airfoillist <- lapply(airfoillist, BatchLoadAirfoil)
 
 # Start the cluster
 cl <- makeCluster(detectCores())
 # Export objects into the cluster
 clusterExport(cl, c("airfoillist"))
 # Function to be applied across the list
-
-
-
-temp <- pbapply(airfoillist, 1, tempfunc, cl = cl)
-
-
+#    pblappy here
 # Stop cluster
 stopCluster(cl)
+
+
+#---- Dump File List ----
+# Determine dump list
+dumplist <- batchlist %>%
+  rowwise() %>% 
+  do(data.frame(., dumpfile = ListDump(.$folder, .$seshname))) %>%
+  mutate(dumppath = paste0(folder, "/", dumpfile))
+# Create thread list
+threadlist <- split(dumplist, dumplist$dumppath)  # List
+
+#--- Main Apply Function ----
+# Function for each each threadval = threadlist[[1]]
+BatchThread <- function(threadval, airfoillist) {
+  print(threadval$dumppath)
+  # Collect airfoil data
+  airfoildata = airfoillist[[threadval$airfoil]]
+  # Collect dump file
+  dumpfile = LoadDump(threadval$folder, threadval$dumpfile)
+}
+
+
+
+# Function to match airfoil data to batch list -- PUT IN MAIN LOOP
+BatchDumpFile <- function(dumplist, airfoillist) {
+  print(dumplist$airfoil)
+  airfoildata = airfoillist[dumplist$airfoil]
+  # dumpfile = LoadDump(dumplist$folder, dumplist$dumpfile)   # read dump file in the main lapply loop or too much RAM
+  return(list(dumplist = dumplist, airfoildata = airfoildata[[1]]))
+}
+# Iterate over batch list
+threadlist <- split(dumplist, dumplist$seshpath)
+threadlist <- lapply(threadlist, MatchAirfoil, airfoillist)
+
+str(threadlist[[1]])
