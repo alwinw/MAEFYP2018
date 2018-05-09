@@ -4,14 +4,19 @@
 #----------------------------
 
 #--- List Session Files ----
-ListSesh <- function(batchfolder) {
+ListSesh <- function(batchfolder, listout = FALSE) {
   # List of files in folder (should be made more robust later)
   batchlist <- list.files(batchfolder, pattern = ".sesh", recursive = TRUE)
   # Convert character to dataframe
   batchlist <- data.frame(path = unlist(strsplit(batchlist, "*.sesh"))) %>%
     mutate(seshpath = path) %>%
-    separate(path, c("folder", "seshname"), sep = "/") %>%
-    mutate(folder = paste0(batchfolder, "/", folder, "/"))
+    separate(path, c("airfoil", "seshname"), sep = "/") %>%
+    mutate(folder = paste0(batchfolder, "/", airfoil, "/"))
+  # Convert to list if required
+  if (listout) {
+    # Split the list into airfoil names
+    batchlist <- split(batchlist, batchlist$airfoil)
+  }
   # Return list of session files
   return(batchlist)
 }

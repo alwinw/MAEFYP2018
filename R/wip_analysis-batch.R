@@ -21,7 +21,7 @@ theme_set(theme_bw())
 #--- Load List of Session FIles ----
 # Compile a list of the various session files
 batchfolder = "../session-files"
-batchlist <- ListSesh(batchfolder)
+batchlist <- ListSesh(batchfolder, listout = TRUE)
 
 # Check if all file types exist, if not then call bash script
 
@@ -35,7 +35,23 @@ batchlist <- ListSesh(batchfolder)
 
 #--- Aircoil Calculation ----
 # Determine unique airfoil types
-airfoillist <- batchlist %>% group_by(folder) %>% top_n(1, seshname)
+airfoillist <- lapply(batchlist, function(x) x[1,])
+
+tempfunc2 <- function(airfoillist) {
+  # Print airfoil name
+  print(airfoillist$airfoil)
+  # Source required functions
+  source("src_read-files.R")
+  bndrypath = paste0(airfoillist$folder, "bndry_prf")
+  print(bndrypath)
+  bndry <- LoadBndry(bndrypath)
+  return(bndry)
+}
+
+temp <- lapply(airfoillist, tempfunc2)
+
+
+
 # Start the cluster
 cl <- makeCluster(detectCores())
 # Export objects into the cluster
