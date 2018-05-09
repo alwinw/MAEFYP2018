@@ -3,38 +3,10 @@
 # Alwin Wang
 #----------------------------
 
-#--- Airfoil Surface ----
-# Clean up wall mesh
-wallmsh$wnum = 1:nrow(wallmsh)
-# Determine the chord line
-chordlm = lm(y~x, chord)    # class lm
-# Determine upper and lower surfaces
-wallmsh$up = wallmsh$y >= predict(chordlm, wallmsh)
-# Order wall file
-wallmsh <- arrange(wallmsh, up, x * (up * 2 -1))
-wallmsh$wsnum = 1:nrow(wallmsh)
-# Make the same number of columns for bndry
-bndry$wnum = NA
-bndry$wsnum = NA
-bndry$bnum = 1:nrow(bndry)
-wallmsh$bnum = NA
-bndry$up = bndry$y >= predict(chordlm, bndry) - sqrt(.Machine$double.eps)
-# Combine wall and bndry files
-long_bndry <- rbind(wallmsh, bndry) %>%
-  arrange(-up, -x * (up * 2 -1))
-long_bndry$snum = 1:nrow(long_bndry)
-# ggplot(long_bndry, aes(x, y, color = up)) + geom_path() + geom_point(aes(shape=up)) +
-# coord_cartesian(xlim = c(-0.4, -0.3), ylim = c(0.0, 0.08))
-# Calculte spline length and dy/dx
-long_bndry <- AirfoilSpline(long_bndry)
-
 # In wall mesh, the 5th node of the 1st element = 1st node of the 2nd element
 # To join over (x, y), these duplicate coordinates need to be removed!
-unixy_wallmsh <- wallmsh %>%
-  filter(!is.na(wnum)) %>% select(-bnum)
-unixy_wallmsh <- unixy_wallmsh[!duplicated(select(unixy_wallmsh, x, y)),]
+unixy_wallmsh <- long_wall[!duplicated(select(long_wall, x, y)),]
 
-# Eventually compare spline length to XFOIL output
 
 #---- Elements ----
 # Determine node points for the elements
@@ -67,11 +39,6 @@ long_seshdata <- elements %>%
 
 #--- Mesh ----
 # Combine the mesh (N order poly) with original elements
-# mesh$mnum = 1:nrow(mesh)
-# temp <- left_join(mesh, long_seshdata, by = c("x", "y"))
-# NOTE: THERE WILL BE MANY DUPLICATES e.g. five elements meet at one node
-# nrow(filter(temp, is.na(ncorner))) + nrow(long_seshdata) - nrow(mesh)
-
 # Determine which mesh data belong to which
 mesh$mnum = 1:nrow(mesh)
 # Determine which mesh nodes are wall mesh nodes
@@ -103,9 +70,8 @@ if (nrow(filter(long_seshdata)) !=
 # if (sum(long_meshdata$error) != 0) {
 #   warning("Node spacing not as expected")}
 
-
 #--- History File ----
-long_his <- left_join(his, long_bndry, by = "bnum")
+# long_his <- left_join(his, long_bndry, by = "bnum")
 
 myPalette <- colorRampPalette(rev(brewer.pal(11, "Spectral")))
 ggplot(long_his, aes(s, p, group = t, colour = t)) + geom_line() +

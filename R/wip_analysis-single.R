@@ -43,7 +43,7 @@ keywords <- list(
 )
 # Load airfoil surface
 bndry <- LoadBndry(bndrypath)
-chord <- LoadChord(bndrypath)
+# chord <- LoadChord(bndrypath)
 
 # Load mesh files
 mesh <- LoadMesh(seshpath)
@@ -60,7 +60,9 @@ dumpfile <- LoadDump(folder, dumplist[4])
 # Pre-process Data
 long_wall <- AirfoilLongWall(wallmsh)
 long_wall <- AirfoilSpline(long_wall)
-long_wall <- AirfoilOffset(long_wall)
+# Eventually compare spline length to XFOIL output
+
+long_walloffset<- AirfoilOffset(long_wall)
 
 # source("src_pre-processing.R")
 
