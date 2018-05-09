@@ -22,6 +22,7 @@ source("src_numerical-methods.R")
 # Read data
 source("src_read-files.R")
 # Preprocess read files
+source("src_airfoil-analysis.R")
 
 theme_set(theme_bw())
 
@@ -42,7 +43,7 @@ keywords <- list(
 )
 # Load airfoil surface
 bndry <- LoadBndry(bndrypath)
-chord <- LoadChord(bndrypath)
+# chord <- LoadChord(bndrypath)
 
 # Load mesh files
 mesh <- LoadMesh(seshpath)
@@ -57,7 +58,13 @@ his <- LoadHist(seshpath)
 dumplist <- ListDump(folder, seshname)
 dumpfile <- LoadDump(folder, dumplist[4])
 # Pre-process Data
-source("src_pre-processing.R")
+long_wall <- AirfoilLongWall(wallmsh)
+long_wall <- AirfoilSpline(long_wall)
+# Eventually compare spline length to XFOIL output
+
+long_walloffset<- AirfoilOffset(long_wall)
+
+# source("src_pre-processing.R")
 
 # Dump File
 
