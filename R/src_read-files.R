@@ -9,9 +9,10 @@ ListSesh <- function(batchfolder, listout = FALSE) {
   batchlist <- list.files(batchfolder, pattern = ".sesh", recursive = TRUE)
   # Convert character to dataframe
   batchlist <- data.frame(path = unlist(strsplit(batchlist, "*.sesh"))) %>%
-    mutate(seshpath = path) %>%
+    # mutate(seshpath = path) %>%
     separate(path, c("airfoil", "seshname"), sep = "/") %>%
-    mutate(folder = paste0(batchfolder, "/", airfoil, "/"))
+    mutate(folder = paste0(batchfolder, "/", airfoil, "/")) %>%
+    mutate(seshpath = paste0(folder, seshname))
   # Convert to list if required
   if (listout) {
     # Split the list into airfoil names
