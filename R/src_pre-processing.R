@@ -8,7 +8,7 @@
 unixy_wallmsh <- long_wall[!duplicated(select(long_wall, x, y)),]
 
 
-#---- Elements ----
+#--- Elements ----
 # Determine node points for the elements
 # Check that all elements are quadrangles
 if (as.logical(sum(elements$shapetag != "<Q>"))) warning("Not all elements are Quadrangles") 
