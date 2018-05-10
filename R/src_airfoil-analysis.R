@@ -184,7 +184,8 @@ AirfoilOffset <- function(long_wall, totdist = 0.005, nsteps = 5) {
   # Determine each of the distances
   offset <- offset %>%
     mutate(x = x + totdist*dirx*nstep/nsteps,
-           y = y + totdist*diry*nstep/nsteps)
+           y = y + totdist*diry*nstep/nsteps) %>%
+    mutate(wall = ifelse(nstep == 0, TRUE, FALSE))
   # Plot
   # ggplot(offset, aes(x, y, colour = s, group = snum)) +
   #   geom_path() +

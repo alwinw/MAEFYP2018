@@ -117,6 +117,9 @@ BatchThread <- function(threadval, airfoillist) {
   airfoildata$offset <-  AirfoilOffset(long_wall, totdist = long_localmesh$localave$mean, nsteps = 5) 
   #--- Dump file ----
   dumpfile = LoadDump(threadval$folder, threadval$dumpfile)
+  long_dump <-  cbind(long_meshdata, dumpfile$flowfield)
+  long_localdump <- filter(long_dump, mnum %in% long_localmesh$mesh$mnum)
+  if (nrow(long_localdump) != nrow(long_localmesh$mesh)) warning("Not all dump nodes found") 
   #--- Interpolate ----
 }
 
