@@ -45,44 +45,51 @@ LongMesh <- function(mesh, airfoildata) {
 }
 
 #--- Determine local mesh ----
-MeshLocal <- function(long_seshdata, long_meshdata) {
-  # Determine mesh offset
-  long_local <- long_seshdata %>% 
-    # Remove non session node points, after original elements only
-    group_by(enum) %>%
-    # Count the number of nodes per element on the surface
-    add_count(wall) %>%
-    filter(n == 2, wall) %>%
-    # Find the average 'height' of the rectangle with base on surface
-    mutate(base = EucDist(x, y),
-           aveh = area/base,
-           ar = base/aveh) %>%
-    # Filter results to one per element
-    filter(!is.na(base))
-  # Determine the minimum average height of the 
-  localave <- data.frame(min = min(long_local$aveh), 
-                         median = median(long_local$aveh),
-                         mean = mean(long_local$aveh))
-  # 
-  # Inital nodes and elements
-  long_localmesh <- filter(long_seshdata, wall)
-  long_localmesh <- list(
-    nodes = unique(long_localmesh$nnum),
-    elements = unique(long_localmesh$enum))
-  # Plot
-  # long_localmesh$mesh <- filter(long_meshdata, enum %in% long_localmesh$elements)
-  # Next nodes and elements
-  long_localmesh$nodes =unique(
-    long_seshdata[long_seshdata$enum %in% long_localmesh$elements,]$nnum)
-  long_localmesh$elements =unique(
-    long_seshdata[long_seshdata$nnum %in% long_localmesh$nodes,]$enum)
-  # Plot
-  long_localmesh$mesh <- filter(long_meshdata, enum %in% long_localmesh$elements)
-  ggplot() + 
-    geom_point(aes(x, y), long_localmesh$mesh, alpha = 0.2) + 
-    geom_polygon(aes(x, y, group = enum), 
-                 filter(long_localmesh$mesh, node) %>% arrange(ncorner), fill = NA, colour = "black") + 
-    # geom_path(aes(xdash, ydash, group = snum), data = long_walloffset, colour = "red") +
-    coord_fixed()
-  return(list(localave = localave, mesh = long_localmesh$mesh))
+LocalWallH <- function(long) {
+  # Average height of offset
+  long_ave <- long$threaddata %>% 
+    group_by(enum) %>%                                              # Group by sesh element
+    filter(!is.na(ncorner)) %>%                                     # Only corners of sesh elements
+    add_count(wall) %>%                                             # Count number of corners on wall
+    filter(n == 2, wall) %>%                                        # Only elements with edge (2 corners) on wall
+    mutate(base = EucDist(x, y),                                    # Base length
+           aveh = area/base,                                        # Average height
+           ar = base/aveh) %>%                                      # Aspect ratio of element
+    filter(!is.na(base)) %>%                                        # Reduce to one row per element
+    ungroup()
+  # Summarise
+  summary <- data.frame(
+    min = min(long_ave$aveh), 
+    median = median(long_ave$aveh),
+    mean = mean(long_ave$aveh))
+  # Return
+  return(c(long, list(wallaveh = long_ave, wallavesum = summary)))
+}
+
+LocalMesh <- function(long) {
+  # First nodes and elements
+  localmesh <- filter(long$threaddata, wall, !is.na(ncorner))
+  localmesh <- list(
+    nodes = unique(localmesh$nnum),
+    elements = unique(localmesh$enum))
+  localmesh$mesh = long$seshdata %>% select(enum, nnum)
+  localmesh$mesh$local = 0
+  localmesh$mesh$local = 
+    ifelse(localmesh$mesh$enum %in% localmesh$elements, 
+           localmesh$mesh$local - 1, 
+           localmesh$mesh$local)
+  # Loop
+  while (sum(localmesh$mesh$local == 0) > 0) {
+    localmesh$nodes = unique(
+      localmesh$mesh[localmesh$mesh$enum %in% localmesh$elements,]$nnum)
+    localmesh$elements = unique(
+      localmesh$mesh[localmesh$mesh$nnum %in% localmesh$nodes,]$enum)
+    localmesh$mesh$local = 
+      ifelse(localmesh$mesh$enum %in% localmesh$elements, 
+             localmesh$mesh$local - 1, 
+             localmesh$mesh$local)
+  }
+  # localmesh$mesh$local = - localmesh$mesh$local
+  # Return
+  return(localmesh$mesh)
 }

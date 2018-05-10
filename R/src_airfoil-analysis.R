@@ -67,7 +67,7 @@ AirfoilSpline <- function(long_wall, x = "x", y = "y", theta = "theta") {
   # Initialise variable
   error = 1
   # Spline Length, s = int sqrt(dx/dt^2 + dy/dt^2) dt
-  length2 <- function(tvec) {
+  arclength <- function(tvec) {
     integral(function(t) sqrt(ppval(dcsx, t)^2 + ppval(dcsy, t)^2), tvec[1], tvec[2])}
   # Loop
   while (abs(error) > 0.001) {
@@ -81,7 +81,7 @@ AirfoilSpline <- function(long_wall, x = "x", y = "y", theta = "theta") {
     s <- cbind(data$s, lead(data$s))[-nrow(data),]
     # Determine interval spline distances
     cat("Determining spline distance\n")
-    s <- pbapply(s, 1, length2)
+    s <- pbapply(s, 1, arclength)
     # Determine cumulative spline distance
     s <- c(0, cumsum(s))
     # Report back error (loop variable)

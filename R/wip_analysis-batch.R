@@ -4,7 +4,7 @@
 #----------------------------#
 
 #--- Set Up ----
-# Use rstudioapi to get saved location of this file
+# Use rstudioapi to get saved location of this file; use str to print structures
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))     # Requres devtools, rstudioapi
 # Source Required Scripts
 source("src_library-manager.R")                                 # Call libraries and install missing ones
@@ -91,22 +91,35 @@ BatchThread <- function(threadval, airfoillist) {               # threadval = th
   mesh <- LoadMesh(threadval$seshpath)                            # Load mesh from mesh file
   long$meshdata <- LongMesh(mesh)                                 # Mesh data --> long_meshdata
   #--- Join Data                                                    ----
-  long$threadata = long$meshdata                                     # Start with LARGEST data
-  long$threadata = LongJoin(long$threadata, long$seshdata)
-  long$threadata = LongJoin(long$threadata, long$walldata, wall = TRUE)
-  
+  long$threaddata = long$meshdata                                 # Start with LARGEST data
+  long$threaddata = LongJoin(long$threaddata, long$seshdata)
+  long$threaddata = LongJoin(long$threaddata, long$walldata, wall = TRUE)
   # Sample plot
-  ggplot(long$threadata, aes(x, y, colour = mnum)) + 
-    geom_polygon(aes(x, y, group = enum, colour = mnum), fill = NA,
-                 data = long$threadata %>% filter(!is.na(nnum)) %>% arrange(enum, ncorner)) +
+  # ggplot(long$threaddata, aes(x, y, colour = mnum)) + 
+  #   geom_polygon(aes(x, y, group = enum, colour = mnum), fill = NA,
+  #                data = long$threaddata %>% filter(!is.na(nnum)) %>% arrange(enum, ncorner)) +
+  #   geom_point(alpha = 0.2) +
+  #   geom_text(aes(x = elabx, y = elaby, label = enum, size = area), alpha = 0.5) +
+  #   coord_fixed() +
+  #   scale_colour_gradientn(colours = spectralpalette(10000))
+  
+  #--- Local Mesh                                                   ----
+  long <- LocalWallH(long)                                        # Average height of elements at wall
+  long$threaddata <-  LongJoin(                                   # Join with threaddata
+    long$threaddata, select(long$wallaveh, enum, base, aveh, ar))
+  long$local <- LocalMesh(long)                                   # Determine how local the sessions elements are
+  long$threaddata <- LongJoin(
+    long$threaddata, select(long$local, -nnum))
+  # Sample plot
+  ggplot(long$threaddata, aes(x, y, colour = local)) +
+    geom_polygon(aes(x, y, group = enum, colour = local), fill = NA,
+                 data = long$threaddata %>% filter(!is.na(nnum)) %>% arrange(enum, ncorner)) +
     geom_point(alpha = 0.2) +
     geom_text(aes(x = elabx, y = elaby, label = enum, size = area), alpha = 0.5) +
     coord_fixed() +
-    scale_colour_gradientn(colours = spectralpalette(10000))
+    scale_colour_gradientn(colours = spectralpalette(20))
   
-  
-  #--- Local Mesh                                                   ----
-  long_localmesh <- MeshLocal(long_seshdata, long_meshdata)       # Local mesh around the airfoil
+  # junk
   airfoildata$offset <- AirfoilOffset(                            # Airfoil offset
     long_wall, totdist = long_localmesh$localave$mean, nsteps = 5) 
   
