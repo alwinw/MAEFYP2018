@@ -1,7 +1,7 @@
-#============================
+#============================#
 # Numerical Methods
 # Alwin Wang
-#----------------------------
+#----------------------------#
 
 #--- Required Functions ----
 # Heavyside function (step function)
@@ -9,6 +9,38 @@ heav <- function(t) ifelse(t>0,1,0)
 
 # Distance function
 EucDist <- function(x, y) sqrt((x - lag(x))^2 + (y - lag(y))^2)
+
+# Unique values
+UniLeftJoin <- function(longdata, unicols = c("x", "y")) {
+  longdata[!duplicated(longdata[,unicols]),]
+}
+
+# Custom left join
+LongJoin <- function(left_data, right_data, unicols = NULL, wall = FALSE) {
+  # Prepare data for joining
+  join_cols <-                                                    # Determine columns to join over
+    colnames(left_data)[colnames(left_data) %in% colnames(right_data)]
+  if (is.null(unicols)) unicols = join_cols                       # Cols to determine duplicate rows
+  uni_right_data <- UniLeftJoin(right_data, unicols)              # Remove duplicate rows
+  # Join left_data and right_data
+  join_data <- left_join(                                         # Join ALL columns and rows
+    left_data, uni_right_data, by = join_cols) 
+  if (wall) join_data <- mutate(join_data, wall = !is.na(wnum))   # Update wall column if wanted
+  # Check for duplicates
+  if(nrow(join_data) != nrow(left_data)) {                        # Check the number of rows has not increased
+    warning(paste(
+      deparse(substitute(join_data)), "has more rows than", 
+      deparse(substitute(left_data))))}
+  # Check for missing values
+  join_anti <- anti_join(                                         # Find rows not merged in
+    uni_right_data, left_data, by = join_cols)
+  if(nrow(join_anti) != 0) {
+    warning(paste(
+      deparse(substitute(right_data)), "missing rows in", 
+      deparse(substitute(join_data))))}
+  # Return Result
+  return(join_data)
+}
 
 #--- Cubic Spline Calculus ----
 # Determine derivatives and antiderivatives of cubic splines
@@ -52,7 +84,7 @@ CubicSplineCalc <- function(cs, order = 0) {
 }
 
 #--- Interpolation Function ----
-omesh = long_localdump; imesh = airfoildata$offset; onames = c("x", "y", "t", "wall"); inames = c("x", "y"); wallsplit = TRUE
+# omesh = long_localdump; imesh = airfoildata$offset; onames = c("x", "y", "t", "wall"); inames = c("x", "y"); wallsplit = TRUE
 interpolate <- function(omesh, imesh,
                         onames = c("x", "y", "z", "wall"), inames = c("x", "y", "n"),
                         wallsplit = TRUE) {

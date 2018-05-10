@@ -1,68 +1,9 @@
-#============================
+#============================#
 # Airfoil Analysis
 # Alwin Wang
-#----------------------------
+#----------------------------#
 
-#--- Generate combined long_bndry ----
-# Create combined long_bndry
-AirfoilLongBndry <- function(bndry, wallmsh) {
-  # Determine trailing edge
-  te = bndry[1,1:2]
-  # Determine leading edge point
-  le  <-  rbind(bndry, wallmsh) %>% 
-    mutate(dist = sqrt((x - te$x)^2 + (y - te$y)^2)) %>%
-    arrange(-dist)
-  le = le[1,1:2]
-  # Determine centre point
-  cp = (le + te)/2
-  tetheta = atan2(te$y - cp$y, te$x - cp$x)
-  # Number files
-  bndry$bnum = 1:nrow(bndry)
-  bndry$wnum = NA
-  wallmsh$bnum = NA
-  wallmsh$wnum = 1:nrow(wallmsh)
-  # Combine into long_bndry
-  long_bndry <- rbind(bndry, wallmsh) %>%
-    mutate(theta = atan2(y - cp$y, x - cp$x) - tetheta) %>%
-    mutate(theta = theta + ifelse(theta < 0, 2*pi, 0)) # CANNOT use sign(theta) since theta can be zero
-  # Assume that the boundary was closed at the TE. Thus, add 2pi to the "first" TE
-  long_bndry$theta[1] = long_bndry$theta[1] + 2*pi
-  long_bndry %<>% arrange(theta) %>%
-    mutate(up = theta <= pi,
-           snum = row_number())
-  # Check that the trailing edge closes 
-  # NOTE: indentical is too strong condition, all.equal could have been used
-  if (!isTRUE(all_equal(long_bndry[1, 1:2], long_bndry[nrow(long_bndry), 1:2]))) {
-    warning("Trailing edge not closed")}
-  # Patch LE if necessary
-  lepatch <- filter(long_bndry, x == le$x, y == le$y)
-  if (nrow(lepatch) == 1) {
-    # Add an extra LE row in 
-    lepatch$bnum = NA; lepatch$wnum = NA
-    lepatch$up = FALSE
-    long_bndry <- rbind(long_bndry, lepatch) %>% arrange(theta)
-    # Renumber long_bndry
-    long_bndry$snum = 1:nrow(long_bndry)
-  } else {
-    long_bndry$up <- ifelse(long_bndry$snum == max(lepatch$snum), FALSE, long_bndry$up)
-  }
-  # Add helpful variables
-  long_bndry <- mutate(long_bndry, wall = !is.na(wnum), bndry = !is.na(bnum))
-  # Plot
-  ggplot(long_bndry, aes(x, y, colour = wall)) + #geom_path() + 
-    geom_polygon(aes(group = wall, linetype = wall), fill = NA) + 
-    # geom_point(aes(size = !is.na(wnum))) + 
-    # scale_colour_gradientn(colours = myPalette(100)) +
-    # coord_cartesian(xlim = c(0.599, 0.60478), ylim = c(-0.045, -0.04))
-    coord_cartesian(xlim = c(0.60476, 0.60478), ylim = c(-0.042297, -0.042288))
-  #--- RESULT ----
-  # The boundary and wall mesh files should NOT be joined
-  # This is because they do not coincide at the trailing edge
-  # Return result
-  return(long_bndry)
-}
-
-#--- Generate SINGLE long_wall ----
+#--- Generate single long_wall ----
 AirfoilLongWall <- function(wallmsh) {
   # Determine trailing edge (most right point)
   te = wallmsh[which.max(wallmsh$x),1:2]
