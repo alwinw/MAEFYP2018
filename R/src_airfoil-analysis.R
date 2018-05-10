@@ -172,28 +172,24 @@ AirfoilSpline <- function(long_wall, x = "x", y = "y", theta = "theta") {
 # Calculate distances from the surfaces (maybe requires analysis of one airfoil mesh)
 AirfoilOffset <- function(long_wall, totdist = 0.005, nsteps = 5) {
   # Use the cross product to determine the outward normal
-  long_wall <- long_wall %>%
+  offset <- long_wall %>%
     mutate(dirx = dyds*1 - 0*0,
            diry = -(dxds*1 - 0*0),
            dirdist = sqrt(dirx^2 + diry^2),
            dirx = dirx/dirdist,
            diry = diry/dirdist)
-  # Repeat for 1:nsteps
-  long_wall <- slice(long_wall, rep(1:n(), each = 5))
-  long_wall$nstep = rep(1:nsteps, length.out = nrow(long_wall)) # Length.out since nrow*5 already
+  # Repeat for 0:nsteps
+  offset <- slice(offset, rep(1:n(), each = nsteps + 1))
+  offset$nstep = rep(0:nsteps, length.out = nrow(offset)) # Length.out since nrow*5 already
   # Determine each of the distances
-  long_wall <- long_wall %>%
-    mutate(xdash = x + totdist*dirx*nstep/nsteps,
-           ydash = y + totdist*diry*nstep/nsteps)
+  offset <- offset %>%
+    mutate(x = x + totdist*dirx*nstep/nsteps,
+           y = y + totdist*diry*nstep/nsteps)
   # Plot
-  # test_plot <- rbind(
-  #   long_wall %>% select(-xdash, -ydash),
-  #   long_wall %>% select(-x, -y) %>% rename(x = xdash, y = ydash))
-  # ggplot(test_plot, aes(x, y, colour = s, group = snum)) +
+  # ggplot(offset, aes(x, y, colour = s, group = snum)) +
   #   geom_path() +
   #   geom_point(shape = 'o') +
   #   coord_fixed()
-  # Later: Best output formate? long?
   # Return
-  return(long_wall)   # Data.frame
+  return(offset)   # Data.frame
 }

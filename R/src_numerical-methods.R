@@ -51,96 +51,22 @@ CubicSplineCalc <- function(cs, order = 0) {
   return(ccs)
 }
 
-#--- Splines ----
-# Calculations on closed simpled looped splines
-# e.g. rawdata = long_bndry; colnames(rawdata) <- c("hi", "bye", "up", "wnum", "wsnum", "snum"); x = "hi"; y = "bye"
-CalcSpline <- function(rawdata, x = "x", y = "y") {
-  # Take only columns of interest
-  data = rawdata[,colnames(rawdata) %in% c(x, y)]
-  # Remove duplicate rows or else cubic spline will give NaN
-  data = unique(data)
-  # Rename columns of interest to be x and y
-  oldnames <- colnames(data); names = oldnames
-  names[names == x] = "x"
-  names[names == y] = "y"
-  colnames(data) <- names
-  # Use the path distance from the first point as the parametric variable, t
-  data$t = c(0, sqrt((data$x - lag(data$x))^2 + (data$y - lag(data$y))^2)[-1])
-  data$t = cumsum(data$t)
-  # Cublic spline
-  csx <- cubicspline(data$t, data$x)
-  csy <- cubicspline(data$t, data$y)
-  # Derivative of cubic splines
-  dcsx = CubicSplineCalc(csx, -1)
-  dcsy = CubicSplineCalc(csy, -1)
-  # Integral of cubic splines
-  # icsx = CubicSplineCalc(csx, 1)
-  # icsy = CubicSplineCalc(csy, 1)
-  # Spline Length, s = int sqrt(dx/dt^2 + dy/dt^2) dt
-  length2 <- function(tvec) integral(function(t) sqrt(ppval(dcsx, t)^2 + ppval(dcsy, t)^2), tvec[1], tvec[2])
-  s <- cbind(data$t, lead(data$t))[-nrow(data),]
-  cat("Determining spline distance\n")
-  s <- pbapply(s, 1, length2)
-  s <- c(0, cumsum(s))
-  # Derivative dy/dx = dy/dt * dt/dx
-  # !! Maybe consider refitting the cubic polynomials on s rather than t
-  dxdt <- ppval(dcsx, data$t)
-  dydt <- ppval(dcsy, data$t)
-  dydx <- dydt/dxdt
-  # Plot
-  # plot <- data.frame(t = data$t, dydx = dydx, x = data$x, y = data$y)
-  # myPalette <- colorRampPalette(rev(brewer.pal(11, "Spectral")))
-  # ggplot(plot, aes(x = x, y = y, colour = ifelse(abs(dydx)>0.5,0.5*sign(dydx),dydx))) + geom_path() +
-  #   scale_colour_gradientn(colours = myPalette(100)) + geom_point(shape=as.logical(sign(dydx)/2+1/2)) 
-  # Perhaps add a basic check of dy/dx vs y2-y1/x2-x1 and s vs t
-  # Combine results with data
-  data$s = s
-  data$dydx = dydx
-  data$t <- NULL
-  # Cublic spline
-  csx <- cubicspline(data$s, data$x)
-  csy <- cubicspline(data$s, data$y)
-  # Derivative of cubic splines
-  dcsx = CubicSplineCalc(csx, -1)
-  dcsy = CubicSplineCalc(csy, -1)
-  data$dxds <- ppval(dcsx, data$s)
-  data$dyds <- ppval(dcsy, data$s)
-  # Combine data back with rawdata
-  colnames(data) <- c(x, y, colnames(data)[3:ncol(data)])
-  rawdata <- full_join(rawdata, data, by = c(x, y))
-  return(rawdata)
-}
-
-# Airfoil field to interpolate
-AirfoilLocalMesh <- function(long_bndry, dist = 0.005, nsteps = 5) {
-  # This part may be hard coded to only work if the upper surface is 1 -> n and lower surface is n --> end
-  # long_bndry %<>% mutate(dir = lead(x) - x) %>%
-    # fill(dir)
+#--- Interpolation Function ----
+interpolate <- function(omesh, imesh, 
+                        onames = c("x", "y", "z"), inames = c("x", "y"),
+                        wallsplit = TRUE) {
+  # Selet data based on onames for omesh
   
-  test <- long_bndry %>%
-    # mutate(dely = 0.1,
-    #        delx = dely*(-1)*dydx, # Needed the normal gradient
-    #        deldist = sqrt(delx^2 + dely^2)) %>%
-    # mutate(delx = delx/deldist,
-    #        dely = dely/deldist,
-    #        deldist = sqrt(delx^2 + dely^2)) %>%
-    # Use cross product
-    mutate(dirx = dyds*1 - 0*0,
-           diry = -(dxds*1 - 0*0),
-           dirdist = sqrt(dirx^2 + diry^2),
-           dirx = dirx/dirdist,
-           diry = diry/dirdist) %>%
-    mutate(xdash = x + dirx,
-           ydash = y + diry)
+  # Check for NAs
   
-  test_plot <- rbind(
-    test %>% select(-xdash, -ydash),
-    test %>% select(-x, -y) %>% rename(x = xdash, y = ydash))
-  ggplot(test_plot, aes(x, y, colour = s, group = snum)) +
-    geom_path()
+  # Split datat into wall and non-wall
   
-  ggplot(long_bndry, aes(x = s)) + 
-    geom_point(aes(y = dxds))
+  # Interpolate onto imesh using duplicate = "strip"
   
-  # Need to redo airfoil point order and up/down classification, non-continuous gradients
+  # Recombine wall and non wall if wallsplit == TRUE
+  
+  # Check the interpolation accuracy by interpolating back onto omesh and save column % error
+  
+  # Add original column names
+  
 }
