@@ -89,7 +89,7 @@ LocalMesh <- function(long) {
              localmesh$mesh$local - 1, 
              localmesh$mesh$local)
   }
-  # localmesh$mesh$local = - localmesh$mesh$local
+  localmesh$mesh$local = localmesh$mesh$local - min(localmesh$mesh$local) + 1
   # Return
   return(localmesh$mesh)
 }

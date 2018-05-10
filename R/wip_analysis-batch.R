@@ -12,7 +12,7 @@ source("src_numerical-methods.R")                               # Load custom nu
 source("src_load-files.R")                                      # Load data
 source("src_airfoil-analysis.R")                                # Airfoil files
 source("src_vorticity-generation.R")                            # Vorticity Generation
-# Custom plot setup
+# Custom ggplot2 setup
 theme_set(theme_bw())                                           # Set black and white theme
 spectralpalette <- colorRampPalette(rev(brewer.pal(11, "Spectral")))
 #--- Load List of Session FIles                                   ----
@@ -110,14 +110,26 @@ BatchThread <- function(threadval, airfoillist) {               # threadval = th
   long$local <- LocalMesh(long)                                   # Determine how local the sessions elements are
   long$threaddata <- LongJoin(
     long$threaddata, select(long$local, -nnum))
-  # Sample plot
-  ggplot(long$threaddata, aes(x, y, colour = local)) +
-    geom_polygon(aes(x, y, group = enum, colour = local), fill = NA,
-                 data = long$threaddata %>% filter(!is.na(nnum)) %>% arrange(enum, ncorner)) +
-    geom_point(alpha = 0.2) +
-    geom_text(aes(x = elabx, y = elaby, label = enum, size = area), alpha = 0.5) +
-    coord_fixed() +
-    scale_colour_gradientn(colours = spectralpalette(20))
+  # Should calc aveh after local, so aveh can be found for each local
+  # # Sample plot
+  # ggplot(long$threaddata, aes(x, y, colour = local)) +
+  #   geom_polygon(aes(x, y, group = enum, colour = local), fill = NA,
+  #                data = long$threaddata %>% filter(!is.na(nnum)) %>% arrange(enum, ncorner)) +
+  #   geom_point(alpha = 0.2) +
+  #   geom_text(aes(x = elabx, y = elaby, label = enum, size = area), alpha = 0.5) +
+  #   coord_fixed() +
+  #   scale_colour_gradientn(colours = spectralpalette(20))
+  # Offset
+  long$offset <- AirfoilOffset(long)
+  ggplot() +
+    geom_polygon(aes(x, y, group = enum), fill = NA, colour = "grey",
+                 data = long$threaddata %>% filter(!is.na(nnum), local <= 2) %>% arrange(enum, ncorner)) +
+    geom_point(aes(x, y), alpha = 0.2, shape = 'o',
+               data = long$threaddata %>% filter(local <= 2)) + 
+    geom_point(aes(x, y, colour = nstep), alpha = 0.8,
+               data = long$offset) + 
+    coord_fixed() + 
+    scale_colour_gradientn(colours = spectralpalette(6))
   
   # junk
   airfoildata$offset <- AirfoilOffset(                            # Airfoil offset
