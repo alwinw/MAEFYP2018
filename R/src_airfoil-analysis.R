@@ -139,3 +139,87 @@ AirfoilOffset <- function(long, totdist = 0.01, nsteps = 5, varh = FALSE) {
   # Return
   return(offset)   # Data.frame
 }
+
+
+#--- Airfoil Coordinate Transform ----
+AirfoilTransform <- function(long, extrap = 0.2) {
+  # Limits of splines
+  lim_airfoil <- data.frame(
+    te_up = min(long$walldata$s),
+    le = long$walldata[long$walldata$theta == pi,]$s[1],
+    te_lo = max(long$walldata$s))
+  # Determine unique wall points for cubic spline
+  uni_wall <- long$walldata %>%
+    select(x, y, s) %>%
+    unique()
+  # Determine spline polynomials
+  csx <- cubicspline(uni_wall$s, uni_wall$x)
+  csy <- cubicspline(uni_wall$s, uni_wall$y)
+  # Derivative of cubic splines
+  dcsx = CubicSplineCalc(csx, -1)
+  dcsy = CubicSplineCalc(csy, -1)
+  # Points to coordinate transform (not necessarily threaddata!!)
+  long_ori <- long$threaddata %>%
+    filter(!is.na(nnum), local <= 2) %>%
+    select(x, y) %>%
+    unique() %>%
+    mutate(onum = row_number())
+  # Limits
+  lim <- data.frame(lim_s = c(lim_airfoil$te_up, lim_airfoil$le))
+  lim$id = c("lo", "up")
+  lim$lim_x = ppval(csx, lim$lim_s) 
+  lim$lim_y = ppval(csy, lim$lim_s)
+  lim$lim_dx = ppval(dcsx, lim$lim_s)
+  lim$lim_dy = ppval(dcsy, lim$lim_s)
+  # Determine if (x,y) lie in this coordiante transform
+  long_lim <- slice(long_ori, rep(1:n(), each = nrow(lim)))
+  long_lim <- cbind(long_lim, slice(lim, rep(1:n(), length.out = nrow(long_lim))))
+  
+  long_lim <- long_lim %>% 
+    mutate(
+      vecx = x - lim_x,
+      vecy = y - lim_y,
+      dotprod = vecx*lim_dx + vecy*lim_dy,
+      crossprod = vecx*lim_dy - vecy*lim_dx,
+      lobound = dotprod >= 0 & crossprod >= 0,
+      upbound = dotprod <=0 & crossprod >= 0) %>%
+    group_by(onum) %>%
+    mutate(
+      bounded = sum(lobound, upbound)) 
+  # %>%
+    # filter(id == "up")
+  
+  ggplot(long_lim, aes(x, y, colour = bounded == 2)) + geom_point() + coord_fixed()
+  
+  lim <- data.frame(lim_s = seq(0, 2, length.out = 100))
+  lim$lim_x = ppval(csx, lim$lim_s) 
+  lim$lim_y = ppval(csy, lim$lim_s)
+  lim$lim_dx = ppval(dcsx, lim$lim_s)
+  lim$lim_dy = ppval(dcsy, lim$lim_s)
+  
+  long_lim <- slice(data.frame(x = 0, y = -1), rep(1:n(), each = nrow(lim)))
+  long_lim <- cbind(long_lim, slice(lim, rep(1:n(), length.out = nrow(long_lim))))
+  
+  long_lim <- long_lim %>% 
+    mutate(
+      vecx = x - lim_x,
+      vecy = y - lim_y,
+      dotprod = vecx*lim_dx + vecy*lim_dy,
+      crossprod = vecx*lim_dy - vecy*lim_dx,
+      lobound = dotprod >= 0 & crossprod >= 0,
+      upbound = dotprod <=0 & crossprod >= 0) %>%
+    # group_by(onum) %>%
+    mutate(
+      bounded = sum(lobound, upbound)) 
+  
+  ggplot(long_lim, aes(lim_s, dotprod, colour = crossprod)) + 
+    geom_point() +
+    geom_path()
+  
+  ggplot(long_lim, aes(lim_s, dotprod^sign(crossprod), colour = crossprod)) + 
+    geom_point() +
+    geom_path()
+}
+
+
+

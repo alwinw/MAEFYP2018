@@ -103,23 +103,19 @@ BatchThread <- function(threadval, airfoillist) {               # threadval = th
     long$threaddata, select(long$local, -nnum))
   # Offset
   long$offset <- AirfoilOffset(long, totdist = 0.008, varh = TRUE)
-  ggplot() +
-    geom_polygon(aes(x, y, group = enum), fill = NA, colour = "grey",
-                 data = long$threaddata %>% filter(!is.na(nnum), local <= 2) %>% arrange(enum, ncorner)) +
-    geom_point(aes(x, y), alpha = 0.2, shape = 'o',
-               data = long$threaddata %>% filter(local <= 2)) + 
-    geom_point(aes(x, y, colour = nstep), alpha = 0.8,
-               data = long$offset) + 
-    # coord_fixed(xlim = c(0.55, 0.7)) +
-    coord_fixed(xlim = c(-0.45, -0.3)) +
-    # coord_fixed() +
-    scale_colour_gradientn(colours = spectralpalette(6))
+  # ggplot() +
+  #   geom_polygon(aes(x, y, group = enum), fill = NA, colour = "grey",
+  #                data = long$threaddata %>% filter(!is.na(nnum), local <= 2) %>% arrange(enum, ncorner)) +
+  #   geom_point(aes(x, y), alpha = 0.2, shape = 'o',
+  #              data = long$threaddata %>% filter(local <= 2)) + 
+  #   geom_point(aes(x, y, colour = nstep), alpha = 0.8,
+  #              data = long$offset) + 
+  #   # coord_fixed(xlim = c(0.55, 0.7)) +
+  #   coord_fixed(xlim = c(-0.45, -0.3)) +
+  #   # coord_fixed() +
+  #   scale_colour_gradientn(colours = spectralpalette(6))
   
-  # junk
-  airfoildata$offset <- AirfoilOffset(                            # Airfoil offset
-    long_wall, totdist = long_localmesh$localave$mean, nsteps = 5) 
   
-
 
 }
 
