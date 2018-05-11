@@ -66,6 +66,50 @@ LocalWallH <- function(long) {
   return(c(long, list(wallaveh = long_ave, wallavesum = summary)))
 }
 
+#--- Join airfoil data with main data ----
+LongAirfoil <- function(long) {
+  # Join in initial wall and up varaibles
+  long$threaddata = LongJoin(
+    long$threaddata, 
+    select(long$walldata, x, y, wall, up))
+  
+  check <- long$threaddata %>% 
+    filter(!is.na(ncorner)) %>%
+    group_by(enum) %>%
+    mutate(
+      wall = ifelse(is.na(wall), FALSE, wall),
+      checkwall = ifelse(is.na(wall), 0, sum(wall)),
+      checkup = sum(up)) 
+  
+  check_nnum <- unique(check[check$checkwall == 1 & check$wall,]$nnum)
+  if (length(check_nnum) != 1) warning("Multiple TE points found")
+  check_enum <- check[check$nnum %in% check_nnum,]$enum
+  
+  checkte <- check[check$enum %in% check_enum,] %>%
+    filter(!is.na(ncorner)) %>% 
+    group_by(enum) %>% arrange(enum) %>%
+    mutate(numup = sum(up, na.rm = TRUE)) %>%
+    # Fix up lower element on surface (336)
+    mutate(up = ifelse(up == TRUE & checkwall == 2 & numup == 1, FALSE, up)) %>%
+    mutate(numup = sum(up, na.rm = TRUE)) %>%
+    ungroup() %>%
+    group_by(nnum) %>% arrange(nnum) %>%
+    mutate(eleup = ifelse(nnum == check_nnum, NA, mean(numup))) %>%
+    ungroup() %>%
+    group_by(enum) %>% arrange(enum) %>%
+    mutate(eleup = sum(eleup - 1, na.rm = TRUE)) %>%
+    # Fix up lower element behind trailing edge
+    mutate(up = ifelse(up == TRUE & eleup == -0.5, FALSE, up)) %>%
+    # Clean up
+    select(enum, ncorner, nnum, up) %>%
+    rename(fixed_up = up)
+  
+  long_fixte <- LongJoin(long$threaddata, checkte) %>%
+    mutate(up = ifelse(!is.na(fixed_up), fixed_up, up)) %>%
+    select(-fixed_up)
+}
+
+
 LocalMesh <- function(long) {
   # First nodes and elements
   localmesh <- filter(long$threaddata, wall, !is.na(ncorner))

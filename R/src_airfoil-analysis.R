@@ -111,7 +111,7 @@ AirfoilSpline <- function(long_wall, x = "x", y = "y", theta = "theta") {
 
 #--- Airfoil Offset ----
 # Calculate distances from the surfaces (maybe requires analysis of one airfoil mesh)
-AirfoilOffset <- function(long, totdist = 0.005, nsteps = 5) {
+AirfoilOffset <- function(long, totdist = 0.01, nsteps = 5, varh = FALSE) {
   # Use the cross product to determine the outward normal
   offset <- long$threaddata %>%
     filter(wall) %>%
@@ -125,9 +125,12 @@ AirfoilOffset <- function(long, totdist = 0.005, nsteps = 5) {
   offset$nstep = rep(0:nsteps, length.out = nrow(offset)) # Length.out since nrow*5 already
   # Determine each of the distances
   offset <- offset %>%
-    mutate(x = x + aveh*dirx*nstep/nsteps,
-           y = y + aveh*diry*nstep/nsteps) %>%
+    mutate(
+      offseth = ifelse(is.na(aveh), totdist, ifelse(varh, aveh, totdist)),
+      x = x + offseth*dirx*nstep/nsteps,
+      y = y + offseth*diry*nstep/nsteps) %>%
     mutate(wall = ifelse(nstep == 0, TRUE, FALSE))
+  # There are some duplicates in offset, I should remove them with UniLeftJoin!!
   # Plot
   # ggplot(offset, aes(x, y, colour = s, group = snum)) +
   #   geom_path() +

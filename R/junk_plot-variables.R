@@ -3,6 +3,61 @@
 # Alwin Wang
 #----------------------------
 
+# Trailing Edge
+ggplot(long$threaddata, aes(x, y, colour = local)) +
+  geom_polygon(aes(x, y), fill = NA, colour = "black", alpha = 0.5,
+               data = airfoildata$bndry) +
+  geom_polygon(aes(x, y, group = enum, colour = local), fill = NA,
+               data = long$threaddata %>% filter(!is.na(nnum)) %>% arrange(enum, ncorner)) +
+  geom_point(alpha = 0.2) +
+  geom_text(aes(elabx, elaby, label = enum, size = area), alpha = 0.5) +
+  geom_label(aes(x, y, label = nnum), size = 3, alpha = 1) +
+  coord_fixed(
+    xlim = c(-0.45, -0.25),
+    ylim = c(-0.055, 0.085),
+    expand = FALSE) +
+  scale_colour_gradientn(colours = spectralpalette(20)) +
+  scale_size(guide = "none", range = c(1*3, 6*10)) +
+  ggtitle("Mesh: Leading Edge")
+
+# Trailing Edge
+ggplot(long$threaddata, aes(x, y, colour = local)) +
+  geom_polygon(aes(x, y), fill = NA, colour = "black", alpha = 0.5,
+               data = airfoildata$bndry) +
+  geom_polygon(aes(x, y, group = enum, colour = local), fill = NA,
+               data = long$threaddata %>% filter(!is.na(nnum)) %>% arrange(enum, ncorner)) +
+  geom_point(alpha = 0.2) +
+  geom_text(aes(elabx, elaby, label = enum, size = area), alpha = 0.5) +
+  geom_label(aes(x, y, label = nnum), size = 3, alpha = 1) +
+  coord_fixed(
+    xlim = c(0.5, 0.675),
+    ylim = c(-0.12, 0.024),
+    expand = FALSE) +
+  scale_colour_gradientn(colours = spectralpalette(20)) +
+  scale_size(guide = "none", range = c(1*3, 6*10)) +
+  ggtitle("Mesh: Trailing Edge")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 myPalette <- colorRampPalette(rev(brewer.pal(11, "Spectral")))
 theme_set(theme_bw())
 
