@@ -29,15 +29,17 @@ LongJoin <- function(left_data, right_data, unicols = NULL, wall = FALSE) {
   # Check for duplicates
   if(nrow(join_data) != nrow(left_data)) {                        # Check the number of rows has not increased
     warning(paste(
-      deparse(substitute(join_data)), "has more rows than", 
-      deparse(substitute(left_data))))}
+      "join_data", "has more rows than", 
+      deparse(substitute(left_data)),
+      "by", nrow(join_data) - nrow(left_data)))}
   # Check for missing values
   join_anti <- anti_join(                                         # Find rows not merged in
     uni_right_data, left_data, by = join_cols)
   if(nrow(join_anti) != 0) {
     warning(paste(
-      deparse(substitute(right_data)), "missing rows in", 
-      deparse(substitute(join_data))))}
+      deparse(substitute(right_data)), 
+      "missing rows in", "join_data",
+      "by", nrow(join_anti)))}
   # Return Result
   return(join_data)
 }

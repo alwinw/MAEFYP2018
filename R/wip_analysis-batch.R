@@ -92,19 +92,8 @@ BatchThread <- function(threadval, airfoillist) {               # threadval = th
   long$meshdata <- LongMesh(mesh)                                 # Mesh data --> long_meshdata
   #--- Join Data                                                    ----
   long$threaddata = long$meshdata                                 # Start with LARGEST data
-  long$threaddata = LongJoin(long$threaddata, long$seshdata)
-  # long$threaddata = LongJoin(long$threaddata, long$walldata, wall = TRUE)
-  # When joined with wall, there are two points since two trailing edges.
-  # HOWEVER, this does not work for left join since (x, y) is not unique
-  # Find the theaddata, then determine which sesh element doesn't have the 
-  # correct up / not for all FIVE points along the edge
-  
-  # nrow(long$threaddata %>% filter(theta == 0))
-  
-  
-  
-  
-  
+  long$threaddata = LongJoin(long$threaddata, long$seshdata)      # Left join with session data
+  long$threaddata <- LongAirfoil(long)                            # Special join for airfoil data
   #--- Local Mesh                                                   ----
   long <- LocalWallH(long)                                        # Average height of elements at wall
   long$threaddata <-  LongJoin(                                   # Join with threaddata
@@ -112,9 +101,8 @@ BatchThread <- function(threadval, airfoillist) {               # threadval = th
   long$local <- LocalMesh(long)                                   # Determine how local the sessions elements are
   long$threaddata <- LongJoin(
     long$threaddata, select(long$local, -nnum))
-  # Should calc aveh after local, so aveh can be found for each local
   # Offset
-  long$offset <- AirfoilOffset(long)
+  long$offset <- AirfoilOffset(long, totdist = 0.008, varh = TRUE)
   ggplot() +
     geom_polygon(aes(x, y, group = enum), fill = NA, colour = "grey",
                  data = long$threaddata %>% filter(!is.na(nnum), local <= 2) %>% arrange(enum, ncorner)) +
@@ -122,7 +110,9 @@ BatchThread <- function(threadval, airfoillist) {               # threadval = th
                data = long$threaddata %>% filter(local <= 2)) + 
     geom_point(aes(x, y, colour = nstep), alpha = 0.8,
                data = long$offset) + 
-    coord_fixed(xlim = c(0.55, 0.7)) + 
+    # coord_fixed(xlim = c(0.55, 0.7)) +
+    coord_fixed(xlim = c(-0.45, -0.3)) +
+    # coord_fixed() +
     scale_colour_gradientn(colours = spectralpalette(6))
   
   # junk
