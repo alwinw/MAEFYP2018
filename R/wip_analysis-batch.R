@@ -133,7 +133,4 @@ BatchDumpFile <- function(dumplist, airfoillist) {
   return(list(dumplist = dumplist, airfoildata = airfoildata[[1]]))
 }
 # Iterate over batch list
-threadlist <- split(dumplist, dumplist$seshpath)
-threadlist <- lapply(threadlist, MatchAirfoil, airfoillist)
 
-str(threadlist[[1]])
