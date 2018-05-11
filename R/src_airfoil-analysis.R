@@ -1,68 +1,9 @@
-#============================
+#============================#
 # Airfoil Analysis
 # Alwin Wang
-#----------------------------
+#----------------------------#
 
-#--- Generate combined long_bndry ----
-# Create combined long_bndry
-AirfoilLongBndry <- function(bndry, wallmsh) {
-  # Determine trailing edge
-  te = bndry[1,1:2]
-  # Determine leading edge point
-  le  <-  rbind(bndry, wallmsh) %>% 
-    mutate(dist = sqrt((x - te$x)^2 + (y - te$y)^2)) %>%
-    arrange(-dist)
-  le = le[1,1:2]
-  # Determine centre point
-  cp = (le + te)/2
-  tetheta = atan2(te$y - cp$y, te$x - cp$x)
-  # Number files
-  bndry$bnum = 1:nrow(bndry)
-  bndry$wnum = NA
-  wallmsh$bnum = NA
-  wallmsh$wnum = 1:nrow(wallmsh)
-  # Combine into long_bndry
-  long_bndry <- rbind(bndry, wallmsh) %>%
-    mutate(theta = atan2(y - cp$y, x - cp$x) - tetheta) %>%
-    mutate(theta = theta + ifelse(theta < 0, 2*pi, 0)) # CANNOT use sign(theta) since theta can be zero
-  # Assume that the boundary was closed at the TE. Thus, add 2pi to the "first" TE
-  long_bndry$theta[1] = long_bndry$theta[1] + 2*pi
-  long_bndry %<>% arrange(theta) %>%
-    mutate(up = theta <= pi,
-           snum = row_number())
-  # Check that the trailing edge closes 
-  # NOTE: indentical is too strong condition, all.equal could have been used
-  if (!isTRUE(all_equal(long_bndry[1, 1:2], long_bndry[nrow(long_bndry), 1:2]))) {
-    warning("Trailing edge not closed")}
-  # Patch LE if necessary
-  lepatch <- filter(long_bndry, x == le$x, y == le$y)
-  if (nrow(lepatch) == 1) {
-    # Add an extra LE row in 
-    lepatch$bnum = NA; lepatch$wnum = NA
-    lepatch$up = FALSE
-    long_bndry <- rbind(long_bndry, lepatch) %>% arrange(theta)
-    # Renumber long_bndry
-    long_bndry$snum = 1:nrow(long_bndry)
-  } else {
-    long_bndry$up <- ifelse(long_bndry$snum == max(lepatch$snum), FALSE, long_bndry$up)
-  }
-  # Add helpful variables
-  long_bndry <- mutate(long_bndry, wall = !is.na(wnum), bndry = !is.na(bnum))
-  # Plot
-  ggplot(long_bndry, aes(x, y, colour = wall)) + #geom_path() + 
-    geom_polygon(aes(group = wall, linetype = wall), fill = NA) + 
-    # geom_point(aes(size = !is.na(wnum))) + 
-    # scale_colour_gradientn(colours = myPalette(100)) +
-    # coord_cartesian(xlim = c(0.599, 0.60478), ylim = c(-0.045, -0.04))
-    coord_cartesian(xlim = c(0.60476, 0.60478), ylim = c(-0.042297, -0.042288))
-  #--- RESULT ----
-  # The boundary and wall mesh files should NOT be joined
-  # This is because they do not coincide at the trailing edge
-  # Return result
-  return(long_bndry)
-}
-
-#--- Generate SINGLE long_wall ----
+#--- Generate single long_wall ----
 AirfoilLongWall <- function(wallmsh) {
   # Determine trailing edge (most right point)
   te = wallmsh[which.max(wallmsh$x),1:2]
@@ -126,7 +67,7 @@ AirfoilSpline <- function(long_wall, x = "x", y = "y", theta = "theta") {
   # Initialise variable
   error = 1
   # Spline Length, s = int sqrt(dx/dt^2 + dy/dt^2) dt
-  length2 <- function(tvec) {
+  arclength <- function(tvec) {
     integral(function(t) sqrt(ppval(dcsx, t)^2 + ppval(dcsy, t)^2), tvec[1], tvec[2])}
   # Loop
   while (abs(error) > 0.001) {
@@ -140,7 +81,7 @@ AirfoilSpline <- function(long_wall, x = "x", y = "y", theta = "theta") {
     s <- cbind(data$s, lead(data$s))[-nrow(data),]
     # Determine interval spline distances
     cat("Determining spline distance\n")
-    s <- pbapply(s, 1, length2)
+    s <- pbapply(s, 1, arclength)
     # Determine cumulative spline distance
     s <- c(0, cumsum(s))
     # Report back error (loop variable)
@@ -170,9 +111,10 @@ AirfoilSpline <- function(long_wall, x = "x", y = "y", theta = "theta") {
 
 #--- Airfoil Offset ----
 # Calculate distances from the surfaces (maybe requires analysis of one airfoil mesh)
-AirfoilOffset <- function(long_wall, totdist = 0.005, nsteps = 5) {
+AirfoilOffset <- function(long, totdist = 0.01, nsteps = 5, varh = FALSE) {
   # Use the cross product to determine the outward normal
-  offset <- long_wall %>%
+  offset <- long$threaddata %>%
+    filter(wall) %>%
     mutate(dirx = dyds*1 - 0*0,
            diry = -(dxds*1 - 0*0),
            dirdist = sqrt(dirx^2 + diry^2),
@@ -183,9 +125,12 @@ AirfoilOffset <- function(long_wall, totdist = 0.005, nsteps = 5) {
   offset$nstep = rep(0:nsteps, length.out = nrow(offset)) # Length.out since nrow*5 already
   # Determine each of the distances
   offset <- offset %>%
-    mutate(x = x + totdist*dirx*nstep/nsteps,
-           y = y + totdist*diry*nstep/nsteps) %>%
+    mutate(
+      offseth = ifelse(is.na(aveh), totdist, ifelse(varh, aveh, totdist)),
+      x = x + offseth*dirx*nstep/nsteps,
+      y = y + offseth*diry*nstep/nsteps) %>%
     mutate(wall = ifelse(nstep == 0, TRUE, FALSE))
+  # There are some duplicates in offset, I should remove them with UniLeftJoin!!
   # Plot
   # ggplot(offset, aes(x, y, colour = s, group = snum)) +
   #   geom_path() +

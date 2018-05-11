@@ -1,10 +1,10 @@
-#============================
+#============================#
 # Read Files
 # Alwin Wang
-#----------------------------
+#----------------------------#
 
-#--- List Session Files ----
-ListSesh <- function(batchfolder, listout = FALSE) {
+#--- Set Up ----
+ListSesh <- function(batchfolder) {
   # List of files in folder (should be made more robust later)
   batchlist <- list.files(batchfolder, pattern = ".sesh", recursive = TRUE)
   # Convert character to dataframe
@@ -13,16 +13,19 @@ ListSesh <- function(batchfolder, listout = FALSE) {
     separate(path, c("airfoil", "seshname"), sep = "/") %>%
     mutate(folder = paste0(batchfolder, "/", airfoil, "/")) %>%
     mutate(seshpath = paste0(folder, seshname))
-  # Convert to list if required
-  if (listout) {
-    # Split the list into airfoil names
-    batchlist <- split(batchlist, batchlist$airfoil)
-  }
   # Return list of session files
   return(batchlist)
 }
 
-#--- Load Airfoil Surface Files ----
+# List dump files in directory
+ListDump <- function(folder, seshname) {
+  # List of files in folder (should be made more robust later)
+  dumplist <- list.files(folder, pattern = paste0(seshname,"-"))
+  # Return file list
+  return(dumplist)  # character
+}
+
+#--- Airfoil Calculation ----
 # Airfoil file should only be updated once per airfoil
 # Load the wall boundary (airfoil.dat)
 LoadBndry<- function(bndrypath) {
@@ -34,31 +37,6 @@ LoadBndry<- function(bndrypath) {
   colnames(bndry) <- c("x", "y")
   # Return bndry
   return(bndry)    # Data.frame
-}
-# Load the chord line
-LoadChord<- function(bndrypath) {
-  # Session bndry name
-  file = paste0(bndrypath,"_chord.dat")
-  # Read bndry file
-  bndry <- read.table(file)
-  # Set column names
-  colnames(bndry) <- c("x", "y")
-  # Return bndry
-  return(bndry)    # Data.frame
-}
-
-#---- Load Mesh Files ----
-# Mesh file are updated per airfoil (assuming N-order same)
-# Load Mesh file generated from N order poly on mesh
-LoadMesh <- function(seshpath) {
-  # Session file name
-  file = paste0(seshpath,".mshi")
-  # Read mesh file
-  mesh <- read.table(file, skip = 1)
-  # Set column names
-  colnames(mesh) <- c("x", "y", "enum", "jnum")
-  # Return mesh
-  return(mesh)    # Data.frame
 }
 
 # Load Mesh file generated from N order poly on mesh
@@ -132,6 +110,19 @@ LoadSeshBCEqs <- function(seshpath, bctext, bcfuncname = NULL) {
     envir = .GlobalEnv)
 }
 
+#---- Load Mesh Files ----
+# Mesh file are updated per airfoil (assuming N-order same)
+# Load Mesh file generated from N order poly on mesh
+LoadMesh <- function(seshpath) {
+  # Session file name
+  file = paste0(seshpath,".mshi")
+  # Read mesh file
+  mesh <- read.table(file, skip = 1)
+  # Set column names
+  colnames(mesh) <- c("x", "y", "enum", "jnum")
+  # Return mesh
+  return(mesh)    # Data.frame
+}
 
 #--- Load History File ----
 # Load history file
@@ -147,16 +138,7 @@ LoadHist <- function(seshpath) {
 }
 
 #--- Load Dump File ----
-# List dump files in directory
-ListDump <- function(folder, seshname) {
-  # List of files in folder (should be made more robust later)
-  dumplist <- list.files(folder, pattern = paste0(seshname,"-"))
-  # Return file list
-  return(dumplist)  # character
-}
-
 # Read single dump file
-# Dev variables 
 # dumpfile = dumplist[4]
 LoadDump <- function(folder, dumpfile) {
   # Path to dump file

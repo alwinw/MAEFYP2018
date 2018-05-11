@@ -1,10 +1,10 @@
-#============================
+#============================#
 # Vorticity Generation
 # Alwin Wang
-#----------------------------
+#----------------------------#
 
 #--- Convert session into a session long mesh ----
-SessionMesh <-function(session) {
+LongSession <-function(session) {
   # Elements
   # Check that all elements are quadrangles
   if (as.logical(sum(session$elements$shapetag != "<Q>"))) warning("Not all elements are Quadrangles") 
@@ -28,80 +28,123 @@ SessionMesh <-function(session) {
     # Calculate area
     mutate(area = x*lead(y) - lead(x)*y) %>%
     mutate(area = 1/2*abs(sum(ifelse(is.na(area), 0, area)))) %>%
-    # Join with wall mesh
-    left_join(., airfoildata$unixy_wallmsh, by = c("x", "y")) %>%
-    mutate(wall = !is.na(wnum)) %>%
     # Remove extra ncorner
-    filter(ncorner != "n5")
+    filter(ncorner != "n5") %>%
+    ungroup()
   # Return the output
   return(long_seshdata)
 }
 
 #--- Convert mesh into a long mesh ----
-MeshLong <- function(mesh, airfoildata) {
+LongMesh <- function(mesh, airfoildata) {
   # Determine which mesh data belong to which
   mesh$mnum = 1:nrow(mesh)
-  # Join with unique (x, y) for temp_wallmsh
-  long_meshdata <- left_join(mesh, airfoildata$unixy_wallmsh, by = c("x", "y"))
-  long_meshdata$wall = !is.na(long_meshdata$wnum)
-  # Check the number of rows has not changed
-  if (nrow(long_meshdata) != nrow(mesh)) {
-    warning("Number of nodes has changed!")}
-  # Check that all wall mesh nodes were found
-  if (nrow(airfoildata$unixy_wallmsh) != 
-      nrow(long_meshdata %>% filter(wall) %>% select(wnum) %>% unique())) {
-    warning("Not all wall mesh nodes found")}
-  # Since long_seshdata has been left joined with unixy_wallmsh already, determine columns to add
-  addcols <- c("x", "y", colnames(long_seshdata)[!(colnames(long_seshdata) %in% colnames(airfoildata$unixy_wallmsh))])
-  # Determine which mesh nodes are session node numbers
-  long_meshdata <- left_join(long_meshdata, long_seshdata[addcols], by = c("enum", "x", "y"))
-  long_meshdata$node = !is.na(long_meshdata$nnum)
-  if (nrow(filter(long_seshdata)) !=
-      nrow(long_meshdata %>% select(enum, ncorner) %>% filter(!is.na(ncorner)) %>% unique())) {
-    warning("Not all mesh nodes found")}
+  long_meshdata = mesh
   # Return the output
   return(long_meshdata)
 }
 
-#--- Determine local mesh ----
-MeshLocal <- function(long_seshdata, long_meshdata) {
-  # Determine mesh offset
-  long_local <- long_seshdata %>% 
-    # Remove non session node points, after original elements only
+#--- Join airfoil data with main data ----
+LongAirfoil <- function(long) {
+  # Join in initial wall and up varaibles
+  long$threaddata = LongJoin(
+    long$threaddata, 
+    select(long$walldata, x, y, theta, wall, up))
+  # Create a check data.frame essentially of session nodes
+  check <- long$threaddata %>% 
+    filter(!is.na(ncorner)) %>%
     group_by(enum) %>%
-    # Count the number of nodes per element on the surface
-    add_count(wall) %>%
-    filter(n == 2, wall) %>%
-    # Find the average 'height' of the rectangle with base on surface
-    mutate(base = EucDist(x, y),
-           aveh = area/base,
-           ar = base/aveh) %>%
-    # Filter results to one per element
-    filter(!is.na(base))
-  # Determine the minimum average height of the 
-  localave <- data.frame(min = min(long_local$aveh), 
-                         median = median(long_local$aveh),
-                         mean = mean(long_local$aveh))
-  # 
-  # Inital nodes and elements
-  long_localmesh <- filter(long_seshdata, wall)
-  long_localmesh <- list(
-    nodes = unique(long_localmesh$nnum),
-    elements = unique(long_localmesh$enum))
-  # Plot
-  # long_localmesh$mesh <- filter(long_meshdata, enum %in% long_localmesh$elements)
-  # Next nodes and elements
-  long_localmesh$nodes =unique(
-    long_seshdata[long_seshdata$enum %in% long_localmesh$elements,]$nnum)
-  long_localmesh$elements =unique(
-    long_seshdata[long_seshdata$nnum %in% long_localmesh$nodes,]$enum)
-  # Plot
-  long_localmesh$mesh <- filter(long_meshdata, enum %in% long_localmesh$elements)
-  ggplot() + 
-    geom_point(aes(x, y), long_localmesh$mesh, alpha = 0.2) + 
-    geom_polygon(aes(x, y, group = enum), 
-                 filter(long_localmesh$mesh, node) %>% arrange(ncorner), fill = NA, colour = "black") + 
-    # geom_path(aes(xdash, ydash, group = snum), data = long_walloffset, colour = "red") +
-    coord_fixed()
-  return(list(localave = localave, mesh = long_localmesh$mesh))
+    # For each element determine the number of "wall" and "up" nodes
+    mutate(
+      wall = ifelse(is.na(wall), FALSE, wall),
+      checkwall = ifelse(is.na(wall), 0, sum(wall)),
+      checkup = sum(up)) 
+  # Determine the TE nodes and elements
+  check_nnum <- unique(check[check$checkwall == 1 & check$wall,]$nnum)
+  if (length(check_nnum) != 1) warning("Multiple TE points found")
+  check_enum <- check[check$nnum %in% check_nnum,]$enum
+  # Adjust check to change the "up" indicator at the TE
+  check <- check[check$enum %in% check_enum,] %>%
+    filter(!is.na(ncorner)) %>% 
+    group_by(enum) %>% arrange(enum) %>%
+    mutate(numup = sum(up, na.rm = TRUE)) %>%
+    # Fix up lower element on surface (336)
+    mutate(up = ifelse(up == TRUE & checkwall == 2 & numup == 1, FALSE, up)) %>%
+    mutate(numup = sum(up, na.rm = TRUE)) %>%
+    ungroup() %>%
+    group_by(nnum) %>% arrange(nnum) %>%
+    mutate(eleup = ifelse(nnum == check_nnum, NA, mean(numup))) %>%
+    ungroup() %>%
+    group_by(enum) %>% arrange(enum) %>%
+    mutate(eleup = sum(eleup - 1, na.rm = TRUE)) %>%
+    # Fix up lower element behind trailing edge
+    mutate(up = ifelse(up == TRUE & eleup == -0.5, FALSE, up)) %>%
+    # Clean up
+    select(enum, ncorner, nnum, up) %>%
+    rename(fixed_up = up)
+  # Join corrected values back into the original data
+  long$threaddata <- LongJoin(long$threaddata, check) %>%
+    mutate(up = ifelse(!is.na(fixed_up), fixed_up, up)) %>%
+    select(-fixed_up) %>%
+    ungroup() %>% group_by(enum) %>%
+    mutate(numup = sum(up*2 - 1, na.rm = TRUE),
+           numup = ifelse(wall == TRUE & numup != 0, as.integer(numup), NA)) %>%
+    ungroup() %>%
+    # REMOVE THETA IF PRESET
+    select(-theta)
+  # Join with the wall data using (x, y, up)
+  temp <- LongJoin(long$threaddata, long$walldata, wall = TRUE)
+  # Should think about fixing up the LE as well so one upper and one lower, 
+  # but numerically the result would not be different!
+  return(temp)
+}
+
+#--- Determine local mesh ----
+LocalWallH <- function(long) {
+  # Average height of offset
+  long_ave <- long$threaddata %>% 
+    group_by(enum) %>%                                              # Group by sesh element
+    filter(!is.na(ncorner)) %>%                                     # Only corners of sesh elements
+    add_count(wall) %>%                                             # Count number of corners on wall
+    filter(n == 2, wall) %>%                                        # Only elements with edge (2 corners) on wall
+    mutate(base = EucDist(x, y),                                    # Base length
+           aveh = area/base,                                        # Average height
+           ar = base/aveh) %>%                                      # Aspect ratio of element
+    filter(!is.na(base)) %>%                                        # Reduce to one row per element
+    ungroup()
+  # Summarise
+  summary <- data.frame(
+    min = min(long_ave$aveh), 
+    median = median(long_ave$aveh),
+    mean = mean(long_ave$aveh))
+  # Return
+  return(c(long, list(wallaveh = long_ave, wallavesum = summary)))
+}
+
+LocalMesh <- function(long) {
+  # First nodes and elements
+  localmesh <- filter(long$threaddata, wall, !is.na(ncorner))
+  localmesh <- list(
+    nodes = unique(localmesh$nnum),
+    elements = unique(localmesh$enum))
+  localmesh$mesh = long$seshdata %>% select(enum, nnum)
+  localmesh$mesh$local = 0
+  localmesh$mesh$local = 
+    ifelse(localmesh$mesh$enum %in% localmesh$elements, 
+           localmesh$mesh$local - 1, 
+           localmesh$mesh$local)
+  # Loop
+  while (sum(localmesh$mesh$local == 0) > 0) {
+    localmesh$nodes = unique(
+      localmesh$mesh[localmesh$mesh$enum %in% localmesh$elements,]$nnum)
+    localmesh$elements = unique(
+      localmesh$mesh[localmesh$mesh$nnum %in% localmesh$nodes,]$enum)
+    localmesh$mesh$local = 
+      ifelse(localmesh$mesh$enum %in% localmesh$elements, 
+             localmesh$mesh$local - 1, 
+             localmesh$mesh$local)
+  }
+  localmesh$mesh$local = localmesh$mesh$local - min(localmesh$mesh$local) + 1
+  # Return
+  return(localmesh$mesh)
 }
