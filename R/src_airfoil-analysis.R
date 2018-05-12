@@ -141,6 +141,7 @@ AirfoilOffset <- function(long, totdist = 0.01, nsteps = 5, varh = FALSE) {
   return(offset)   # Data.frame
 }
 
+# Calculate actual enum of offset points
 AirfoilOffsetEnum <- function(long, localnum = 2, returnList = FALSE) {
   long$offset$enum_ori = long$offset$enum
   # Data
@@ -195,7 +196,6 @@ AirfoilOffsetEnum <- function(long, localnum = 2, returnList = FALSE) {
   # Return
   return(long)
 }
-
 
 #--- Airfoil Coordinate Transform ----
 AirfoilTransform <- function(long, localnum = 2, extrap = 0.05)  {

@@ -149,7 +149,8 @@ LocalMesh <- function(long) {
   return(localmesh$mesh)
 }
 
-PointsinPolygon <- function(long) {
+# Loop through each case to determine points in polygon (SLOW)
+PointsinPolygon_SLOW <- function(long) {
   # Points
   offsetdf <- long$offset %>% select(x, y)
   offsetlist <- split(offsetdf, rownames(offsetdf))
