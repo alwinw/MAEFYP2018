@@ -3,7 +3,7 @@
 # Alwin Wang
 #----------------------------
 
-# Trailing Edge
+# Leading Edge
 ggplot(long$threaddata, aes(x, y, colour = local)) +
   geom_polygon(aes(x, y), fill = NA, colour = "black", alpha = 0.5,
                data = airfoildata$bndry) +

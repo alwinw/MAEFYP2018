@@ -24,7 +24,9 @@ packages <- c(
   "RColorBrewer",     # For custom colour palettes
   "pbapply",          # Progress bar wrapper for apply-style functions
   "parallel",         # Parallel apply-style functions, Part of R Core
-  "akima"             # For interpolation, method published by Hiroshi Akima
+  "akima",            # For interpolation, method published by Hiroshi Akima
+  "sp",
+  "animation"
 )
 
 #--- Install Missing Packages ----

@@ -10,6 +10,34 @@ heav <- function(t) ifelse(t>0,1,0)
 # Distance function
 EucDist <- function(x, y) sqrt((x - lag(x))^2 + (y - lag(y))^2)
 
+# Function to find minimum distance
+MinS <- function(x, y, csx, csy, dcsx, dcsy, lim_low, lim_up) {
+  # Determine minimum distance (bounded!)
+  min.out <- fminbnd(
+    function(s) {sqrt((x - ppval(csx, s))^2 + (y - ppval(csy, s))^2)},
+    lim_low, lim_up)
+  # Determine vectors
+  vecpt = data.frame(
+    x = x - ppval(csx, min.out$xmin),
+    y = y - ppval(csy, min.out$xmin))
+  vecsf = data.frame(
+    x = ppval(dcsx, min.out$xmin),
+    y = ppval(dcsy, min.out$xmin))
+  # Determin dot products
+  dotprod = vecpt$x*vecsf$x + vecpt$y*vecsf$y
+  crossprod = vecpt$x*vecsf$y - vecsf$x*vecpt$y
+  dist = sqrt(vecpt$x^2 + vecpt$y^2) * sqrt(vecsf$x^2 + vecsf$y^2)
+  # Note: if I do dotprod/dist, at the surface ~ 0/0 != 0 because of machine error
+  # Create and return output
+  return(data.frame(
+    stream = min.out$xmin,
+    norm = min.out$fmin,
+    prec = min.out$estim.prec,
+    dotprod = dotprod,
+    crossprod = crossprod,
+    dist = dist))
+}
+
 # Unique values
 UniLeftJoin <- function(longdata, unicols = c("x", "y")) {
   longdata[!duplicated(longdata[,unicols]),]
