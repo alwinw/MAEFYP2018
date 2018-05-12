@@ -127,8 +127,9 @@ AirfoilOffset <- function(long, totdist = 0.01, nsteps = 5, varh = FALSE) {
   offset <- offset %>%
     mutate(
       offseth = ifelse(is.na(aveh), totdist, ifelse(varh, aveh, totdist)),
-      x = x + offseth*dirx*nstep/nsteps,
-      y = y + offseth*diry*nstep/nsteps) %>%
+      norm = offseth*nstep/nsteps,
+      x = x + dirx*t,
+      y = y + diry*t) %>%
     mutate(wall = ifelse(nstep == 0, TRUE, FALSE))
   # There are some duplicates in offset, I should remove them with UniLeftJoin!!
   # Plot
@@ -140,14 +141,66 @@ AirfoilOffset <- function(long, totdist = 0.01, nsteps = 5, varh = FALSE) {
   return(offset)   # Data.frame
 }
 
-
 #--- Airfoil Coordinate Transform ----
-AirfoilTransform <- function(long, extrap = 0.2) {
+AirfoilTransform <- function(long, extrap = 0.2)  {
   # Limits of splines
   lim_airfoil <- data.frame(
     te_up = min(long$walldata$s),
     le = long$walldata[long$walldata$theta == pi,]$s[1],
     te_lo = max(long$walldata$s))
+  # Determine unique wall points for cubic spline
+  uni_wall <- long$walldata %>%
+    select(x, y, s) %>%
+    unique()
+  # Determine spline polynomials
+  csx <- cubicspline(uni_wall$s, uni_wall$x)
+  csy <- cubicspline(uni_wall$s, uni_wall$y)
+  # Derivative of cubic splines
+  dcsx = CubicSplineCalc(csx, -1)
+  dcsy = CubicSplineCalc(csy, -1)
+  # Function to find minimum distance
+  MinS <- function(x, y) {
+    # Determine minimum distance (bounded!)
+    min.out <- fminbnd(
+      function(s) {sqrt((x - ppval(csx, s))^2 + (y - ppval(csy, s))^2)},
+      lim_airfoil$te_up, lim_airfoil$te_lo)
+    # Determine dot product (if time, also normalise it)
+    dotprod = 
+      (x - ppval(csx, min.out$xmin))*ppval(dcsx, min.out$xmin) +
+      (y - ppval(csy, min.out$xmin))*ppval(dcsy, min.out$xmin)
+    # Create and return output
+    return(data.frame(
+      s.min = min.out$xmin,
+      norm.min = min.out$fmin,
+      prec.min = min.out$estim.prec,
+      dotprod.min = dotprod))
+  }
+  # Find the minimum distance for all points
+  pts <- long$threaddata %>% 
+    filter(local <= 3) %>%
+    # select(x, y, s) %>% 
+    unique() %>% 
+    rowwise() %>%
+    do(data.frame(., MinS(.$x, .$y)))
+  # Plots
+  # ggplot(pts, aes(s)) + geom_density()
+  # ggplot(pts, aes(prec.min)) + geom_density()
+  # ggplot(pts, aes(dotprod.min)) + geom_density()
+  ggplot() +
+    geom_point(aes(x, y, colour = abs(dotprod.min) > 1e-5), pts) +
+    geom_path(aes(x, y, group = snum), long$offset) +
+    coord_fixed(xlim = c(0.4, 0.75))
+  ggplot(pts %>% filter(abs(dotprod.min) < 1e-5, !is.na(nnum)) %>% arrange(enum, ncorner), 
+         aes(s.min, norm.min, group = enum, colour = enum)) +
+    geom_polygon(fill = NA) +
+    geom_point(data = pts %>% filter(abs(dotprod.min) < 1e-5))
+}
+
+
+
+#--- Airfoil Coordinate Transform ----
+AirfoilTransform <- function(long, extrap = 0.2) {
+  
   # Determine unique wall points for cubic spline
   uni_wall <- long$walldata %>%
     select(x, y, s) %>%
