@@ -141,11 +141,14 @@ BatchLoadDump <- function(dumpval, meshlist) {                  # dumpval = dump
   #---  Long Mesh Data                                              ----
   long <- meshlist[[dumpval$ID]]                                  # Collect airfoil data
   rm(meshlist)                                                    # Reduce memory required
+  dump$threaddata <-LongDump(dump, long) 
   #--- Dump Data                                                    ----
   dump <- LoadDump(dumpval$folder, dumpval$dumpfile)              # Load dump file as list
   #--- Acceleration                                                 ----
   LoadSeshBCEqs(dumpval$seshpath, "MOD_ALPHA_X")                  # Load BC Equation from session file
   dump$acceleration = BC_mod_alpha_x(dump$time)                   # Instantaenous acceleration
+  dump$accel = DumpAcceleration(dump, long)                       # Calculate acceleration components
+  #--- Pressure                                                     ----
   
 }
 

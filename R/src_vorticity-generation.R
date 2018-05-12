@@ -181,3 +181,59 @@ PointsinPolygon_SLOW <- function(long) {
 }
 
 #--- Determine Acceleration ----
+DumpAcceleration <- function(dump, long) {
+  dump_accel <- long$walldata %>%
+    mutate(
+      accel = dump$acceleration,
+      accelx = accel*dxds/dydxlen,
+      accely = accel*dyds/dydxlen)
+  return(dump_accel)
+}
+
+#--- Determine Pressure Gradient ----
+LongDump <- function(dump, long) {
+  # Check the number of rows are equal
+  if (nrow(long$threaddata) != nrow(dump$flowfield)) 
+    warning("Unequal number of mesh numbers due to AirfoilOffsetEnum()")
+  # View(long_dump[duplicated(long_dump$mnum),])
+  # Number the flow field
+  dump$flowfield$mnum <- 1:nrow(dump$flowfield)
+  # Create threaddata
+  long_dump <- LongJoin(long$threaddata, dump$flowfield) %>%
+    arrange(mnum)
+  return(long_dump)
+ }
+
+DumpPressureStream <- function(dump, long) {
+  # Interested in the surface only
+  dump_pres <- dump$threaddata %>%
+    filter(wall) %>%
+    select(x, y, s, p) %>%
+    arrange(s) %>%
+    unique(.)
+  # Cublic spline
+  csp <- cubicspline(dump_pres$s, dump_pres$p)
+  # Derivative of cubic splines
+  dcsp = CubicSplineCalc(csp, -1)
+  # Calculate pressure gradients
+  dump_pres$dpds = ppval(dcsp, dump_pres$s)
+  ggplot(dump_pres, aes(s, dpds)) + geom_path()
+  
+  # Interested in the surface only
+  dump_pres_stream <- dump$threaddata %>%
+    filter(!is.na(stream)) %>%
+    select(stream, p) %>%
+    arrange(stream) %>%
+    unique(.)
+  # Cublic spline
+  csp_stream <- cubicspline(dump_pres_stream$stream, dump_pres_stream$p)
+  # Derivative of cubic splines
+  dcsp_stream = CubicSplineCalc(csp, -1)
+  # Calculate pressure gradients
+  dump_pres_stream$dpds = ppval(dcsp_stream, dump_pres_stream$stream)
+  ggplot() + 
+    geom_path(aes(stream, dpds), dump_pres_stream, colour = "red", linetype = "dashed") +
+    geom_path(aes(s, dpds), dump_pres, colour = "green", linetype = "dashed") +
+    ylim(c(-20, 20))
+  
+}

@@ -99,6 +99,7 @@ AirfoilSpline <- function(long_wall, x = "x", y = "y", theta = "theta") {
   data$dxds <- ppval(dcsx, data$s)
   data$dyds <- ppval(dcsy, data$s)
   data$dydx <- data$dyds/data$dxds
+  data$dydxlen <- sqrt(data$dxds^2 + data$dyds^2)
   # Combine data back with long_wall
   colnames(data) <- c(x, y, theta, colnames(data)[4:ncol(data)])
   long_wall <- full_join(long_wall, data, by = c(x, y, theta))
