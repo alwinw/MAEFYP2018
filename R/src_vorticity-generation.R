@@ -180,4 +180,4 @@ PointsinPolygon_SLOW <- function(long) {
   return(pts)
 }
 
-
+#--- Determine Acceleration ----

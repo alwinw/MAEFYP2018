@@ -86,8 +86,29 @@ LoadSeshFileKeywords <- function(seshpath, keywords) {
   return(sessionfile)   # List
 }
 
-# Dev temp variables
-# bctext = "MOD_ALPHA_X"
+# Function to load a list of keywords and colnames
+LoadSeshTokenWords <- function(seshpath, tokenwords) {
+  # Session file name
+  file = paste0(seshpath,".sesh")
+  # Read the session file to grep lines later
+  filelines <- readLines(file)
+  # For each keyword load the associated data
+  output <- lapply(tokenwords, function(tokenword) {
+    value = filelines[grep(tokenword, filelines)] %>%
+      gsub(tokenword, "", .) %>%
+      gsub("\t", "", .) %>%
+      gsub("=", "", .) %>%
+      as.numeric(.)
+    return(data.frame(tokenword = tokenword,
+                      tokenvalue = value,
+                      stringsAsFactors = FALSE))
+  })
+  # Convert to data.frame
+  output <- bind_rows(output)
+  # Return the session file contents
+  return(output)   # List
+}
+
 # Function to read in BC equations
 # Note: This cannot handle the inflow_u condition yet...
 LoadSeshBCEqs <- function(seshpath, bctext, bcfuncname = NULL) {
