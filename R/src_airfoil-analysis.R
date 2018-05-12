@@ -189,7 +189,7 @@ AirfoilTransform <- function(long, extrap = 0.2) {
   # %>%
     # filter(id == "up")
   
-  ggplot(long_lim, aes(x, y, colour = bounded == 2)) + geom_point() + coord_fixed()
+  # ggplot(long_lim, aes(x, y, colour = bounded == 2)) + geom_point() + coord_fixed()
   
   lim <- data.frame(lim_s = seq(0, 2, length.out = 100))
   lim$lim_x = ppval(csx, lim$lim_s) 

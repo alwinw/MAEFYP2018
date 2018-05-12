@@ -148,3 +148,33 @@ LocalMesh <- function(long) {
   # Return
   return(localmesh$mesh)
 }
+
+# Points in Polygon
+# https://gis.stackexchange.com/questions/171124/data-frame-to-spatialpolygonsdataframe-with-multiple-polygons
+# alternative point.in.polygon
+localpolydf <- long$threaddata %>% ungroup() %>% filter(local <= 2, !is.na(nnum)) %>%
+  arrange(ncorner) %>% select(x, y, enum) 
+# Split the dataframe into a list based on enum and then remove enum from df in the list
+polygonlist <- split(localpolydf, localpolydf$enum)
+polygonlist <- lapply(polygonlist, function(x) x[,c("x", "y")])
+# Convert the list to Polygon, then create a Polygons object
+polygonsp <- sapply(polygonlist, Polygon)
+polygonsp <- Polygons(polygonsp, ID = 1)
+polygonsp <- SpatialPolygons(list(polygonsp))
+plot(polygonsp)
+
+offsetdf <- long$offset %>% select(x, y)
+offsetps <- offsetdf
+coordinates(offsetps) <- ~x+y
+points(offsetps$x, offsetps$y)
+
+temp <- over(offsetps, polygonsp)
+
+over(polygonsp, offsetps)
+
+gContains(offsetps, polygonsp)
+
+localpolysp <- localpolydf
+coordinates(localpolysp) <- ~x+y
+
+offsetdf <- long$offset %>% select(x, y)
