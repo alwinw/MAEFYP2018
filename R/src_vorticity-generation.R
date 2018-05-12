@@ -179,4 +179,4 @@ PointsinPolygon <- function(long) {
   return(pts)
 }
 
-
+#--- Determine Acceleration ----
