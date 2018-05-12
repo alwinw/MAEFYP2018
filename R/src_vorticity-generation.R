@@ -217,23 +217,23 @@ DumpPressureStream <- function(dump, long) {
   dcsp = CubicSplineCalc(csp, -1)
   # Calculate pressure gradients
   dump_pres$dpds = ppval(dcsp, dump_pres$s)
-  ggplot(dump_pres, aes(s, dpds)) + geom_path()
+  # ggplot(dump_pres, aes(s, dpds)) + geom_path() + geom_point(shape = 'O')
+  return(dump_pres)
+}
+
+#--- Vorticity Interpolation ----
+# Call an interpolate function and pass through arguments
+# Interpolate function should know not to have to interpolate exact points
+DumpVortTransformed <- function(dump, var) {
+  # Interpolate based on stream and norm
   
-  # Interested in the surface only
-  dump_pres_stream <- dump$threaddata %>%
-    filter(!is.na(stream)) %>%
-    select(stream, p) %>%
-    arrange(stream) %>%
-    unique(.)
-  # Cublic spline
-  csp_stream <- cubicspline(dump_pres_stream$stream, dump_pres_stream$p)
-  # Derivative of cubic splines
-  dcsp_stream = CubicSplineCalc(csp, -1)
-  # Calculate pressure gradients
-  dump_pres_stream$dpds = ppval(dcsp_stream, dump_pres_stream$stream)
-  ggplot() + 
-    geom_path(aes(stream, dpds), dump_pres_stream, colour = "red", linetype = "dashed") +
-    geom_path(aes(s, dpds), dump_pres, colour = "green", linetype = "dashed") +
-    ylim(c(-20, 20))
+  # Interpolate back and compare
+}
+
+DumpVortElements <- function(dump, var) {
+  # Determine unique elements to lapply over
   
+  # Lapply over elements and interpolate
+  
+  # Rejoin lapply
 }

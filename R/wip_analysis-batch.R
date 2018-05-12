@@ -148,7 +148,18 @@ BatchLoadDump <- function(dumpval, meshlist) {                  # dumpval = dump
   LoadSeshBCEqs(dumpval$seshpath, "MOD_ALPHA_X")                  # Load BC Equation from session file
   dump$acceleration = BC_mod_alpha_x(dump$time)                   # Instantaenous acceleration
   dump$accel = DumpAcceleration(dump, long)                       # Calculate acceleration components
+  dump$threaddata = LongJoin(dump$threaddata, dump$accel)         # Join with rest of data
   #--- Pressure                                                     ----
+  dump$pres = DumpPressureStream(dump, long)                      # Calculate pressure gradient dp/ds
+  dump$threaddata = LongJoin(dump$threaddata, dump$pres)          # Join with rest of data
+  # Plot
+  ggplot(dump$threaddata %>% filter(wall) %>% arrange(s), aes(s)) +
+    geom_path(aes(y = accel), colour = "red") +
+    geom_path(aes(y = dpds), colour = "green") +
+    geom_path(aes(y = accel + dpds)) +
+    geom_path(aes(y = -accel - dpds), linetype = "dashed")
+  
+  #--- Vorticity Interpolation                                      ----
   
 }
 
