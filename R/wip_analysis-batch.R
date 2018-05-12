@@ -60,6 +60,11 @@ airfoillist <- lapply(airfoillist, BatchLoadAirfoil)
 # # Stop cluster
 # stopCluster(cl)
 
+# If feeling adventurous, make a loop to check N order of each airfoil file
+# Loop 1: unique airfoils (bndry files)
+# Loop 2: unique airfoils AND unique N (session files)
+# Loop 3: unique airfoils AND unique N AND unique t (dump files)
+
 #---- Dump File List                                              ----
 dumplist <- batchlist %>%                                       # Determine dump list
   rowwise() %>% 
