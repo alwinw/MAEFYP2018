@@ -128,8 +128,8 @@ AirfoilOffset <- function(long, totdist = 0.01, nsteps = 5, varh = FALSE) {
     mutate(
       offseth = ifelse(is.na(aveh), totdist, ifelse(varh, aveh, totdist)),
       norm = offseth*nstep/nsteps,
-      x = x + dirx*t,
-      y = y + diry*t) %>%
+      x = x + dirx*norm,
+      y = y + diry*norm) %>%
     mutate(wall = ifelse(nstep == 0, TRUE, FALSE))
   # There are some duplicates in offset, I should remove them with UniLeftJoin!!
   # Plot
@@ -142,12 +142,13 @@ AirfoilOffset <- function(long, totdist = 0.01, nsteps = 5, varh = FALSE) {
 }
 
 #--- Airfoil Coordinate Transform ----
-AirfoilTransform <- function(long, extrap = 0.2)  {
+AirfoilTransform <- function(long, extrap = 0.03)  {
   # Limits of splines
   lim_airfoil <- data.frame(
     te_up = min(long$walldata$s),
     le = long$walldata[long$walldata$theta == pi,]$s[1],
-    te_lo = max(long$walldata$s))
+    te_lo = max(long$walldata$s)) %>%
+    mutate(min = te_up - extrap, max = te_lo + extrap)
   # Determine unique wall points for cubic spline
   uni_wall <- long$walldata %>%
     select(x, y, s) %>%
@@ -158,42 +159,58 @@ AirfoilTransform <- function(long, extrap = 0.2)  {
   # Derivative of cubic splines
   dcsx = CubicSplineCalc(csx, -1)
   dcsy = CubicSplineCalc(csy, -1)
-  # Function to find minimum distance
-  MinS <- function(x, y) {
-    # Determine minimum distance (bounded!)
-    min.out <- fminbnd(
-      function(s) {sqrt((x - ppval(csx, s))^2 + (y - ppval(csy, s))^2)},
-      lim_airfoil$te_up, lim_airfoil$te_lo)
-    # Determine dot product (if time, also normalise it)
-    dotprod = 
-      (x - ppval(csx, min.out$xmin))*ppval(dcsx, min.out$xmin) +
-      (y - ppval(csy, min.out$xmin))*ppval(dcsy, min.out$xmin)
-    # Create and return output
-    return(data.frame(
-      s.min = min.out$xmin,
-      norm.min = min.out$fmin,
-      prec.min = min.out$estim.prec,
-      dotprod.min = dotprod))
-  }
   # Find the minimum distance for all points
-  pts <- long$threaddata %>% 
-    filter(local <= 3) %>%
-    # select(x, y, s) %>% 
+  pts_airfoil_upper <- long$threaddata %>% 
+    filter(local <= 1) %>%
+    select(x, y, s) %>%
     unique() %>% 
     rowwise() %>%
-    do(data.frame(., MinS(.$x, .$y)))
-  # Plots
+    do(data.frame(., MinS(.$x, .$y, lim_airfoil$te_up, lim_airfoil$te_lo)))
+  # Plots ----
   # ggplot(pts, aes(s)) + geom_density()
-  # ggplot(pts, aes(prec.min)) + geom_density()
-  # ggplot(pts, aes(dotprod.min)) + geom_density()
+  # ggplot(pts, aes(prec)) + geom_density()
+  # ggplot(pts, aes(dotprod)) + geom_density()
+  airfoilextrap <- data.frame(
+    s = seq(lim_airfoil$te_up - extrap, lim_airfoil$te_lo + extrap, length.out = 100)) %>%
+    mutate(x = ppval(csx, s), y = ppval(csy, s))
+  # ggplot() +
+  #   geom_path(aes(x, y), airfoilextrap) +
+  #   geom_point(aes(x, y, colour = abs(dotprod), size = crossprod/dist > 0), pts) +
+  #   geom_path(aes(x, y, group = snum), long$offset) +
+  #   coord_fixed()
+    # coord_fixed(xlim = c(0.4, 0.75))
+  # ggplot(pts %>% filter(abs(dotprod) < 1e-5, !is.na(nnum)) %>% arrange(enum, ncorner), 
+  #        aes(stream, norm, group = enum, colour = enum)) +
+  #   geom_polygon(fill = NA) +
+  #   geom_point(data = pts %>% filter(abs(dotprod) < 1e-5))
+  # Column ID for reference point
+  #----
+  # Separate out the wake nodes into upper and lower
+  pts <- pts_airfoil_upper %>%
+    mutate(coord = ifelse(abs(dotprod) < 1e-5, "Airfoil", NA))
+  pts_upper <- pts %>%
+    filter(is.na(coord)) %>%
+    select(x, y, s) %>%
+    do(data.frame(., MinS(.$x, .$y, lim_airfoil$min, lim_airfoil$te_up))) %>%
+    mutate(coord = ifelse(abs(dotprod) < 1e-5 & crossprod > 0, 
+                          "Upper", NA))
+  pts_lower <- pts %>%
+    filter(is.na(coord)) %>%
+    select(x, y, s) %>%
+    do(data.frame(., MinS(.$x, .$y, lim_airfoil$te_lo, lim_airfoil$max))) %>%
+    mutate(coord = ifelse(abs(dotprod) < 1e-5 & crossprod > 0,
+                          "Lower", NA))
+  # Clean up
+  pts <- rbind(pts, pts_upper, pts_lower) %>%
+    filter(!is.na(coord),
+           stream != lim_airfoil$min,
+           stream != lim_airfoil$max)
   ggplot() +
-    geom_point(aes(x, y, colour = abs(dotprod.min) > 1e-5), pts) +
+    geom_path(aes(x, y), airfoilextrap) +
+    geom_point(aes(x, y, colour = coord), pts) +
     geom_path(aes(x, y, group = snum), long$offset) +
-    coord_fixed(xlim = c(0.4, 0.75))
-  ggplot(pts %>% filter(abs(dotprod.min) < 1e-5, !is.na(nnum)) %>% arrange(enum, ncorner), 
-         aes(s.min, norm.min, group = enum, colour = enum)) +
-    geom_polygon(fill = NA) +
-    geom_point(data = pts %>% filter(abs(dotprod.min) < 1e-5))
+    # coord_fixed()
+  coord_fixed(xlim = c(0.4, 0.75))
 }
 
 
