@@ -25,7 +25,8 @@ packages <- c(
   "pbapply",          # Progress bar wrapper for apply-style functions
   "parallel",         # Parallel apply-style functions, Part of R Core
   "akima",            # For interpolation, method published by Hiroshi Akima
-  "sp"
+  "sp",
+  "animation"
 )
 
 #--- Install Missing Packages ----

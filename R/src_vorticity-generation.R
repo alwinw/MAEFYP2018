@@ -149,32 +149,34 @@ LocalMesh <- function(long) {
   return(localmesh$mesh)
 }
 
-# Points in Polygon
-# https://gis.stackexchange.com/questions/171124/data-frame-to-spatialpolygonsdataframe-with-multiple-polygons
-# alternative point.in.polygon
-localpolydf <- long$threaddata %>% ungroup() %>% filter(local <= 2, !is.na(nnum)) %>%
-  arrange(ncorner) %>% select(x, y, enum) 
-# Split the dataframe into a list based on enum and then remove enum from df in the list
-polygonlist <- split(localpolydf, localpolydf$enum)
-polygonlist <- lapply(polygonlist, function(x) x[,c("x", "y")])
-# Convert the list to Polygon, then create a Polygons object
-polygonsp <- sapply(polygonlist, Polygon)
-polygonsp <- Polygons(polygonsp, ID = 1)
-polygonsp <- SpatialPolygons(list(polygonsp))
-plot(polygonsp)
+PointsinPolygon <- function(long) {
+  # Points
+  offsetdf <- long$offset %>% select(x, y)
+  offsetlist <- split(offsetdf, rownames(offsetdf))
+  # Polygons
+  localpolydf <- long$threaddata %>% ungroup() %>% filter(local <= 2, !is.na(nnum)) %>%
+    arrange(ncorner) %>% select(x, y, enum) 
+  # Split the dataframe into a list based on enum and then remove enum from df in the list
+  polygonlist <- split(localpolydf, localpolydf$enum)
+  # lapply over each pt in offsetlist
+  pts <- pblapply(offsetlist, function(pt) {
+    # lapply over each polygon in polygonlist
+    ptpoly <- lapply(polygonlist, function(poly) {
+      data.frame(
+        enum = poly$enum[1],
+        ptin = point.in.polygon(pt[1,1], pt[1,2], poly$x, poly$y))
+    })
+    ptpoly <- bind_rows(ptpoly) %>% filter(ptin != 0)
+    # Handle case where the point is not in any polygon
+    if (nrow(ptpoly) == 0) return(data.frame(x = pt$x, y = pt$y, enum = NA, ptin = NA))
+    ptpoly$x = pt$x
+    ptpoly$y = pt$y
+    # Return result
+    return(ptpoly[c("x", "y", "enum", "ptin")])
+  })
+  pts <- bind_rows(pts)
+  # Return points summary
+  return(pts)
+}
 
-offsetdf <- long$offset %>% select(x, y)
-offsetps <- offsetdf
-coordinates(offsetps) <- ~x+y
-points(offsetps$x, offsetps$y)
 
-temp <- over(offsetps, polygonsp)
-
-over(polygonsp, offsetps)
-
-gContains(offsetps, polygonsp)
-
-localpolysp <- localpolydf
-coordinates(localpolysp) <- ~x+y
-
-offsetdf <- long$offset %>% select(x, y)
