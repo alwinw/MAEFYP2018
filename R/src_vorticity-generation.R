@@ -93,7 +93,7 @@ LongAirfoil <- function(long) {
     # REMOVE THETA IF PRESET
     select(-theta)
   # Join with the wall data using (x, y, up)
-  temp <- LongJoin(long$threaddata, long$walldata, wall = TRUE)
+  temp <- LongJoin(long$threaddata, long$walldata)
   # Should think about fixing up the LE as well so one upper and one lower, 
   # but numerically the result would not be different!
   return(temp)
@@ -154,7 +154,7 @@ PointsinPolygon <- function(long) {
   offsetdf <- long$offset %>% select(x, y)
   offsetlist <- split(offsetdf, rownames(offsetdf))
   # Polygons
-  localpolydf <- long$threaddata %>% ungroup() %>% filter(local <= 2, !is.na(nnum)) %>%
+  localpolydf <- long$threaddata %>% ungroup() %>% filter(local <= 2, seshnode) %>%
     arrange(ncorner) %>% select(x, y, enum) 
   # Split the dataframe into a list based on enum and then remove enum from df in the list
   polygonlist <- split(localpolydf, localpolydf$enum)

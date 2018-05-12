@@ -94,6 +94,8 @@ BatchThread <- function(threadval, airfoillist) {               # threadval = th
   long$threaddata = long$meshdata                                 # Start with LARGEST data
   long$threaddata = LongJoin(long$threaddata, long$seshdata)      # Left join with session data
   long$threaddata <- LongAirfoil(long)                            # Special join for airfoil data
+  long$threaddata$wall = !is.na(long$threaddata$wnum)
+  long$threaddata$seshnode = !is.na(long$threaddata$nnum)
   #--- Local Mesh                                                   ----
   long <- LocalWallH(long)                                        # Average height of elements at wall
   long$threaddata <-  LongJoin(                                   # Join with threaddata
@@ -102,18 +104,22 @@ BatchThread <- function(threadval, airfoillist) {               # threadval = th
   long$threaddata <- LongJoin(
     long$threaddata, select(long$local, -nnum))
   # Offset
-  long$offset <- AirfoilOffset(long, totdist = 0.008, varh = TRUE)
-  # ggplot() +
-  #   geom_polygon(aes(x, y, group = enum), fill = NA, colour = "grey",
-  #                data = long$threaddata %>% filter(!is.na(nnum), local <= 2) %>% arrange(enum, ncorner)) +
-  #   geom_point(aes(x, y), alpha = 0.2, shape = 'o',
-  #              data = long$threaddata %>% filter(local <= 2)) + 
-  #   geom_point(aes(x, y, colour = nstep), alpha = 0.8,
-  #              data = long$offset) + 
-  #   # coord_fixed(xlim = c(0.55, 0.7)) +
-  #   coord_fixed(xlim = c(-0.45, -0.3)) +
-  #   # coord_fixed() +
-  #   scale_colour_gradientn(colours = spectralpalette(6))
+  long$offset <- AirfoilOffset(long,                              # Create df of offset points from surface
+                               totdist = 0.008, varh = TRUE)
+  long <- AirfoilOffsetEnum(long)                                 # Update enum values of the offset points
+  ggplot() +
+    geom_polygon(aes(x, y), fill = NA, colour = "black", alpha = 0.5,
+                 data = airfoildata$bndry) +
+    geom_polygon(aes(x, y, group = enum, colour = enum), fill = NA,
+                 data = long$threaddata %>% filter(seshnode, local <= 2) %>% arrange(enum, ncorner)) +
+    geom_point(aes(x, y, colour = enum), alpha = 0.2, shape = 'o',
+               data = long$threaddata %>% filter(local <= 2)) +
+    geom_point(aes(x, y, colour = enum, size = enum != enum_ori), alpha = 0.8, shape = 'o',
+               data = long$offset) +
+    # coord_fixed(xlim = c(0.55, 0.7), ylim = c(-0.1, 0)) +
+    coord_fixed(xlim = c(-0.45, -0.3)) +
+    # coord_fixed() +
+    scale_colour_gradientn(colours = spectralpalette(600))
   #--- Airfoil Transform                                          ----
   long <- AirfoilTransform(long, localnum = 2)
   

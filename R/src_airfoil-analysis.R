@@ -141,6 +141,62 @@ AirfoilOffset <- function(long, totdist = 0.01, nsteps = 5, varh = FALSE) {
   return(offset)   # Data.frame
 }
 
+AirfoilOffsetEnum <- function(long, localnum = 2, returnList = FALSE) {
+  long$offset$enum_ori = long$offset$enum
+  # Data
+  poly_df <- long$threaddata %>% 
+    filter(local <= localnum, seshnode) %>%
+    arrange(enum, ncorner) %>%
+    select(x, y, enum)
+  pts_df <- long$offset %>%
+    select(x, y)
+  # Plot
+  # ggplot() + 
+  #   geom_polygon(aes(x, y, group = enum), 
+  #     poly_df, fill = NA, colour = "black") +
+  #   geom_point(aes(x, y), pts_df, shape = 'O') + 
+  #   coord_fixed()
+  # Split the dataframe into a list based on enum and then remove enum from df in the list
+  poly_list <- split(poly_df, poly_df$enum)
+  # Convert the list to Polygon, then create a Polygons object
+  poly_sp <- sapply(poly_list, function(poly){
+    Polygons(list(Polygon(poly[, c("x", "y")])), ID = poly[1, "enum"])
+  })
+  # polygonsp <- Polygons(polygonsp, ID = 1)
+  poly_sp <- SpatialPolygons(poly_sp)
+  # plot(poly_sp)
+  # plot(poly_sp, col=poly_sp@plotOrder)
+  # Convert points to coordinates
+  pts_ps <- pts_df
+  coordinates(pts_ps) <- ~x+y
+  # points(pts_ps$x, pts_ps$y)
+  # Determine polygons points are in
+  pts_return <- over(pts_ps, poly_sp, returnList = returnList)
+  # points(pts_ps$x, pts_ps$y, col = pts_return)
+  if (returnList) {
+    pts_return <- lapply(pts_return, function(pt) {
+      if(length(pt) == 0) data.frame(enum = NA, ptin = NA)
+      else data.frame(enum = pt, ptin = length(pt))
+    })
+    # Recombine
+    pts_list <- split(pts_df, rownames(pts_df))
+    # DO SOMETHING FANCY HERE
+    temp <- mapply(c, pts_list, pts_return, SIMPLIFY = FALSE)
+    temp <- lapply(temp, function(pt) {
+      data.frame(x = pt$x, y = pt$y, enum = pt$enum, ptin = pt$ptin)
+    })
+    temp <- bind_rows(temp)
+    temp$enum <- unique(poly_df$enum)[temp$enum]
+    warning("Not finished yet")
+  } else {
+    # output <- cbind(pts_df, data.frame(enum = pts_sp))
+    long$offset$enum = unique(poly_df$enum)[pts_return]
+  }
+  # Return
+  return(long)
+}
+
+
 #--- Airfoil Coordinate Transform ----
 AirfoilTransform <- function(long, localnum = 2, extrap = 0.05)  {
   # Limits of splines
