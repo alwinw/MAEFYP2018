@@ -93,7 +93,7 @@ LongAirfoil <- function(long) {
     # REMOVE THETA IF PRESET
     select(-theta)
   # Join with the wall data using (x, y, up)
-  temp <- LongJoin(long$threaddata, long$walldata, wall = TRUE)
+  temp <- LongJoin(long$threaddata, long$walldata)
   # Should think about fixing up the LE as well so one upper and one lower, 
   # but numerically the result would not be different!
   return(temp)
@@ -148,3 +148,35 @@ LocalMesh <- function(long) {
   # Return
   return(localmesh$mesh)
 }
+
+PointsinPolygon <- function(long) {
+  # Points
+  offsetdf <- long$offset %>% select(x, y)
+  offsetlist <- split(offsetdf, rownames(offsetdf))
+  # Polygons
+  localpolydf <- long$threaddata %>% ungroup() %>% filter(local <= 2, seshnode) %>%
+    arrange(ncorner) %>% select(x, y, enum) 
+  # Split the dataframe into a list based on enum and then remove enum from df in the list
+  polygonlist <- split(localpolydf, localpolydf$enum)
+  # lapply over each pt in offsetlist
+  pts <- pblapply(offsetlist, function(pt) {
+    # lapply over each polygon in polygonlist
+    ptpoly <- lapply(polygonlist, function(poly) {
+      data.frame(
+        enum = poly$enum[1],
+        ptin = point.in.polygon(pt[1,1], pt[1,2], poly$x, poly$y))
+    })
+    ptpoly <- bind_rows(ptpoly) %>% filter(ptin != 0)
+    # Handle case where the point is not in any polygon
+    if (nrow(ptpoly) == 0) return(data.frame(x = pt$x, y = pt$y, enum = NA, ptin = NA))
+    ptpoly$x = pt$x
+    ptpoly$y = pt$y
+    # Return result
+    return(ptpoly[c("x", "y", "enum", "ptin")])
+  })
+  pts <- bind_rows(pts)
+  # Return points summary
+  return(pts)
+}
+
+

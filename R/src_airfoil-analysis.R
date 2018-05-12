@@ -127,8 +127,9 @@ AirfoilOffset <- function(long, totdist = 0.01, nsteps = 5, varh = FALSE) {
   offset <- offset %>%
     mutate(
       offseth = ifelse(is.na(aveh), totdist, ifelse(varh, aveh, totdist)),
-      x = x + offseth*dirx*nstep/nsteps,
-      y = y + offseth*diry*nstep/nsteps) %>%
+      norm = offseth*nstep/nsteps,
+      x = x + dirx*norm,
+      y = y + diry*norm) %>%
     mutate(wall = ifelse(nstep == 0, TRUE, FALSE))
   # There are some duplicates in offset, I should remove them with UniLeftJoin!!
   # Plot
@@ -139,3 +140,131 @@ AirfoilOffset <- function(long, totdist = 0.01, nsteps = 5, varh = FALSE) {
   # Return
   return(offset)   # Data.frame
 }
+
+AirfoilOffsetEnum <- function(long, localnum = 2, returnList = FALSE) {
+  long$offset$enum_ori = long$offset$enum
+  # Data
+  poly_df <- long$threaddata %>% 
+    filter(local <= localnum, seshnode) %>%
+    arrange(enum, ncorner) %>%
+    select(x, y, enum)
+  pts_df <- long$offset %>%
+    select(x, y)
+  # Plot
+  # ggplot() + 
+  #   geom_polygon(aes(x, y, group = enum), 
+  #     poly_df, fill = NA, colour = "black") +
+  #   geom_point(aes(x, y), pts_df, shape = 'O') + 
+  #   coord_fixed()
+  # Split the dataframe into a list based on enum and then remove enum from df in the list
+  poly_list <- split(poly_df, poly_df$enum)
+  # Convert the list to Polygon, then create a Polygons object
+  poly_sp <- sapply(poly_list, function(poly){
+    Polygons(list(Polygon(poly[, c("x", "y")])), ID = poly[1, "enum"])
+  })
+  # polygonsp <- Polygons(polygonsp, ID = 1)
+  poly_sp <- SpatialPolygons(poly_sp)
+  # plot(poly_sp)
+  # plot(poly_sp, col=poly_sp@plotOrder)
+  # Convert points to coordinates
+  pts_ps <- pts_df
+  coordinates(pts_ps) <- ~x+y
+  # points(pts_ps$x, pts_ps$y)
+  # Determine polygons points are in
+  pts_return <- over(pts_ps, poly_sp, returnList = returnList)
+  # points(pts_ps$x, pts_ps$y, col = pts_return)
+  if (returnList) {
+    pts_return <- lapply(pts_return, function(pt) {
+      if(length(pt) == 0) data.frame(enum = NA, ptin = NA)
+      else data.frame(enum = pt, ptin = length(pt))
+    })
+    # Recombine
+    pts_list <- split(pts_df, rownames(pts_df))
+    # DO SOMETHING FANCY HERE
+    temp <- mapply(c, pts_list, pts_return, SIMPLIFY = FALSE)
+    temp <- lapply(temp, function(pt) {
+      data.frame(x = pt$x, y = pt$y, enum = pt$enum, ptin = pt$ptin)
+    })
+    temp <- bind_rows(temp)
+    temp$enum <- unique(poly_df$enum)[temp$enum]
+    warning("Not finished yet")
+  } else {
+    # output <- cbind(pts_df, data.frame(enum = pts_sp))
+    long$offset$enum = unique(poly_df$enum)[pts_return]
+  }
+  # Return
+  return(long)
+}
+
+
+#--- Airfoil Coordinate Transform ----
+AirfoilTransform <- function(long, localnum = 2, extrap = 0.05)  {
+  # Limits of splines
+  lim_airfoil <- data.frame(
+    te_up = min(long$walldata$s),
+    le = long$walldata[long$walldata$theta == pi,]$s[1],
+    te_lo = max(long$walldata$s)) %>%
+    mutate(min = te_up - extrap, max = te_lo + extrap)
+  # Determine unique wall points for cubic spline
+  uni_wall <- long$walldata %>%
+    select(x, y, s) %>%
+    unique()
+  # Determine spline polynomials
+  csx <- cubicspline(uni_wall$s, uni_wall$x)
+  csy <- cubicspline(uni_wall$s, uni_wall$y)
+  # Derivative of cubic splines
+  dcsx = CubicSplineCalc(csx, -1)
+  dcsy = CubicSplineCalc(csy, -1)
+  # Find the minimum distance for all points
+  pts_airfoil_upper <- long$threaddata %>% 
+    filter(local <= localnum) %>%
+    select(x, y, s) %>%
+    unique() %>% 
+    rowwise() %>%
+    do(data.frame(., MinS(.$x, .$y, csx, csy, dcsx, dcsy,
+                          lim_airfoil$te_up, lim_airfoil$te_lo)))
+  # Plots
+  # ggplot(pts, aes(s)) + geom_density()
+  # ggplot(pts, aes(prec)) + geom_density()
+  # ggplot(pts, aes(dotprod)) + geom_density()
+  # Separate out the wake nodes into upper and lower
+  pts <- pts_airfoil_upper %>%
+    mutate(coord = ifelse(abs(dotprod) < 1e-5, "Airfoil", NA))
+  pts_upper <- pts %>%
+    filter(is.na(coord)) %>%
+    select(x, y, s) %>%
+    do(data.frame(., MinS(.$x, .$y, csx, csy, dcsx, dcsy,
+                          lim_airfoil$min, lim_airfoil$te_up))) %>%
+    mutate(coord = ifelse(abs(dotprod) < 1e-5 & crossprod > 0, 
+                          "Upper", NA))
+  pts_lower <- pts %>%
+    filter(is.na(coord)) %>%
+    select(x, y, s) %>%
+    do(data.frame(., MinS(.$x, .$y, csx, csy, dcsx, dcsy,
+                          lim_airfoil$te_lo, lim_airfoil$max))) %>%
+    mutate(coord = ifelse(abs(dotprod) < 1e-5 & crossprod > 0,
+                          "Lower", NA))
+  # Clean up
+  pts <- rbind(pts, pts_upper, pts_lower) %>%
+    filter(!is.na(coord),
+           stream != lim_airfoil$min,
+           stream != lim_airfoil$max)
+  # Plots
+  long$airfoilextrap <- data.frame(
+   s = seq(lim_airfoil$te_up - extrap, lim_airfoil$te_lo + extrap, length.out = 100)) %>%
+   mutate(x = ppval(csx, s), y = ppval(csy, s))
+  # ggplot() +
+  #   geom_path(aes(x, y), long$airfoilextrap) +
+  #   geom_point(aes(x, y, colour = coord), pts) +
+  #   geom_path(aes(x, y, group = snum), long$offset) +
+  #   coord_fixed(xlim = c(0.4, 0.75))
+  #  # coord_fixed()
+  
+  # Join with original data
+  long$threaddata <-  LongJoin(long$threaddata, select(pts, -prec, dotprod, crossprod, dist),
+           unicols = c("x", "y", "s", "coord"))
+  # Return the output
+  return(long)
+}
+
+
