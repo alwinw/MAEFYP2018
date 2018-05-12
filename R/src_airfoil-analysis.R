@@ -142,7 +142,7 @@ AirfoilOffset <- function(long, totdist = 0.01, nsteps = 5, varh = FALSE) {
 }
 
 #--- Airfoil Coordinate Transform ----
-AirfoilTransform <- function(long, extrap = 0.03)  {
+AirfoilTransform <- function(long, localnum = 2, extrap = 0.05)  {
   # Limits of splines
   lim_airfoil <- data.frame(
     te_up = min(long$walldata$s),
@@ -161,43 +161,31 @@ AirfoilTransform <- function(long, extrap = 0.03)  {
   dcsy = CubicSplineCalc(csy, -1)
   # Find the minimum distance for all points
   pts_airfoil_upper <- long$threaddata %>% 
-    filter(local <= 1) %>%
+    filter(local <= localnum) %>%
     select(x, y, s) %>%
     unique() %>% 
     rowwise() %>%
-    do(data.frame(., MinS(.$x, .$y, lim_airfoil$te_up, lim_airfoil$te_lo)))
-  # Plots ----
+    do(data.frame(., MinS(.$x, .$y, csx, csy, dcsx, dcsy,
+                          lim_airfoil$te_up, lim_airfoil$te_lo)))
+  # Plots
   # ggplot(pts, aes(s)) + geom_density()
   # ggplot(pts, aes(prec)) + geom_density()
   # ggplot(pts, aes(dotprod)) + geom_density()
-  airfoilextrap <- data.frame(
-    s = seq(lim_airfoil$te_up - extrap, lim_airfoil$te_lo + extrap, length.out = 100)) %>%
-    mutate(x = ppval(csx, s), y = ppval(csy, s))
-  # ggplot() +
-  #   geom_path(aes(x, y), airfoilextrap) +
-  #   geom_point(aes(x, y, colour = abs(dotprod), size = crossprod/dist > 0), pts) +
-  #   geom_path(aes(x, y, group = snum), long$offset) +
-  #   coord_fixed()
-    # coord_fixed(xlim = c(0.4, 0.75))
-  # ggplot(pts %>% filter(abs(dotprod) < 1e-5, !is.na(nnum)) %>% arrange(enum, ncorner), 
-  #        aes(stream, norm, group = enum, colour = enum)) +
-  #   geom_polygon(fill = NA) +
-  #   geom_point(data = pts %>% filter(abs(dotprod) < 1e-5))
-  # Column ID for reference point
-  #----
   # Separate out the wake nodes into upper and lower
   pts <- pts_airfoil_upper %>%
     mutate(coord = ifelse(abs(dotprod) < 1e-5, "Airfoil", NA))
   pts_upper <- pts %>%
     filter(is.na(coord)) %>%
     select(x, y, s) %>%
-    do(data.frame(., MinS(.$x, .$y, lim_airfoil$min, lim_airfoil$te_up))) %>%
+    do(data.frame(., MinS(.$x, .$y, csx, csy, dcsx, dcsy,
+                          lim_airfoil$min, lim_airfoil$te_up))) %>%
     mutate(coord = ifelse(abs(dotprod) < 1e-5 & crossprod > 0, 
                           "Upper", NA))
   pts_lower <- pts %>%
     filter(is.na(coord)) %>%
     select(x, y, s) %>%
-    do(data.frame(., MinS(.$x, .$y, lim_airfoil$te_lo, lim_airfoil$max))) %>%
+    do(data.frame(., MinS(.$x, .$y, csx, csy, dcsx, dcsy,
+                          lim_airfoil$te_lo, lim_airfoil$max))) %>%
     mutate(coord = ifelse(abs(dotprod) < 1e-5 & crossprod > 0,
                           "Lower", NA))
   # Clean up
@@ -205,91 +193,22 @@ AirfoilTransform <- function(long, extrap = 0.03)  {
     filter(!is.na(coord),
            stream != lim_airfoil$min,
            stream != lim_airfoil$max)
-  ggplot() +
-    geom_path(aes(x, y), airfoilextrap) +
-    geom_point(aes(x, y, colour = coord), pts) +
-    geom_path(aes(x, y, group = snum), long$offset) +
-    # coord_fixed()
-  coord_fixed(xlim = c(0.4, 0.75))
+  # Plots
+  long$airfoilextrap <- data.frame(
+   s = seq(lim_airfoil$te_up - extrap, lim_airfoil$te_lo + extrap, length.out = 100)) %>%
+   mutate(x = ppval(csx, s), y = ppval(csy, s))
+  # ggplot() +
+  #   geom_path(aes(x, y), long$airfoilextrap) +
+  #   geom_point(aes(x, y, colour = coord), pts) +
+  #   geom_path(aes(x, y, group = snum), long$offset) +
+  #   coord_fixed(xlim = c(0.4, 0.75))
+  #  # coord_fixed()
+  
+  # Join with original data
+  long$threaddata <-  LongJoin(long$threaddata, select(pts, -prec, dotprod, crossprod, dist),
+           unicols = c("x", "y", "s", "coord"))
+  # Return the output
+  return(long)
 }
-
-
-
-#--- Airfoil Coordinate Transform ----
-AirfoilTransform <- function(long, extrap = 0.2) {
-  
-  # Determine unique wall points for cubic spline
-  uni_wall <- long$walldata %>%
-    select(x, y, s) %>%
-    unique()
-  # Determine spline polynomials
-  csx <- cubicspline(uni_wall$s, uni_wall$x)
-  csy <- cubicspline(uni_wall$s, uni_wall$y)
-  # Derivative of cubic splines
-  dcsx = CubicSplineCalc(csx, -1)
-  dcsy = CubicSplineCalc(csy, -1)
-  # Points to coordinate transform (not necessarily threaddata!!)
-  long_ori <- long$threaddata %>%
-    filter(!is.na(nnum), local <= 2) %>%
-    select(x, y) %>%
-    unique() %>%
-    mutate(onum = row_number())
-  # Limits
-  lim <- data.frame(lim_s = c(lim_airfoil$te_up, lim_airfoil$le))
-  lim$id = c("lo", "up")
-  lim$lim_x = ppval(csx, lim$lim_s) 
-  lim$lim_y = ppval(csy, lim$lim_s)
-  lim$lim_dx = ppval(dcsx, lim$lim_s)
-  lim$lim_dy = ppval(dcsy, lim$lim_s)
-  # Determine if (x,y) lie in this coordiante transform
-  long_lim <- slice(long_ori, rep(1:n(), each = nrow(lim)))
-  long_lim <- cbind(long_lim, slice(lim, rep(1:n(), length.out = nrow(long_lim))))
-  
-  long_lim <- long_lim %>% 
-    mutate(
-      vecx = x - lim_x,
-      vecy = y - lim_y,
-      dotprod = vecx*lim_dx + vecy*lim_dy,
-      crossprod = vecx*lim_dy - vecy*lim_dx,
-      lobound = dotprod >= 0 & crossprod >= 0,
-      upbound = dotprod <=0 & crossprod >= 0) %>%
-    group_by(onum) %>%
-    mutate(
-      bounded = sum(lobound, upbound)) 
-  # %>%
-    # filter(id == "up")
-  
-  # ggplot(long_lim, aes(x, y, colour = bounded == 2)) + geom_point() + coord_fixed()
-  
-  lim <- data.frame(lim_s = seq(0, 2, length.out = 100))
-  lim$lim_x = ppval(csx, lim$lim_s) 
-  lim$lim_y = ppval(csy, lim$lim_s)
-  lim$lim_dx = ppval(dcsx, lim$lim_s)
-  lim$lim_dy = ppval(dcsy, lim$lim_s)
-  
-  long_lim <- slice(data.frame(x = 0, y = -1), rep(1:n(), each = nrow(lim)))
-  long_lim <- cbind(long_lim, slice(lim, rep(1:n(), length.out = nrow(long_lim))))
-  
-  long_lim <- long_lim %>% 
-    mutate(
-      vecx = x - lim_x,
-      vecy = y - lim_y,
-      dotprod = vecx*lim_dx + vecy*lim_dy,
-      crossprod = vecx*lim_dy - vecy*lim_dx,
-      lobound = dotprod >= 0 & crossprod >= 0,
-      upbound = dotprod <=0 & crossprod >= 0) %>%
-    # group_by(onum) %>%
-    mutate(
-      bounded = sum(lobound, upbound)) 
-  
-  ggplot(long_lim, aes(lim_s, dotprod, colour = crossprod)) + 
-    geom_point() +
-    geom_path()
-  
-  ggplot(long_lim, aes(lim_s, dotprod^sign(crossprod), colour = crossprod)) + 
-    geom_point() +
-    geom_path()
-}
-
 
 

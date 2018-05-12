@@ -114,7 +114,8 @@ BatchThread <- function(threadval, airfoillist) {               # threadval = th
   #   coord_fixed(xlim = c(-0.45, -0.3)) +
   #   # coord_fixed() +
   #   scale_colour_gradientn(colours = spectralpalette(6))
-  
+  #--- Airfoil Transform                                          ----
+  long <- AirfoilTransform(long, localnum = 2)
   
 
 }

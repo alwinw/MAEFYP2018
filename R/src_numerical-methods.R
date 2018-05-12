@@ -11,7 +11,7 @@ heav <- function(t) ifelse(t>0,1,0)
 EucDist <- function(x, y) sqrt((x - lag(x))^2 + (y - lag(y))^2)
 
 # Function to find minimum distance
-MinS <- function(x, y, lim_low, lim_up) {
+MinS <- function(x, y, csx, csy, dcsx, dcsy, lim_low, lim_up) {
   # Determine minimum distance (bounded!)
   min.out <- fminbnd(
     function(s) {sqrt((x - ppval(csx, s))^2 + (y - ppval(csy, s))^2)},
