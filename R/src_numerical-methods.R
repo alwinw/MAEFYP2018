@@ -175,3 +175,6 @@ interpolate <- function(omesh, imesh,
   # Check no increase in row number for omesh
   return(imesho)
 }
+
+
+#--- Finite Difference Method ----

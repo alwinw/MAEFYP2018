@@ -140,10 +140,10 @@ BatchLoadDump <- function(dumpval, meshlist) {                  # dumpval = dump
   source("src_vorticity-generation.R")                            # Vorticity Generation
   #---  Long Mesh Data                                              ----
   long <- meshlist[[dumpval$ID]]                                  # Collect airfoil data
-  rm(meshlist)                                                    # Reduce memory required
-  dump$threaddata <-LongDump(dump, long) 
+  # rm(meshlist)                                                    # Reduce memory required
   #--- Dump Data                                                    ----
   dump <- LoadDump(dumpval$folder, dumpval$dumpfile)              # Load dump file as list
+  dump$threaddata <- LongDump(dump, long)
   #--- Acceleration                                                 ----
   LoadSeshBCEqs(dumpval$seshpath, "MOD_ALPHA_X")                  # Load BC Equation from session file
   dump$acceleration = BC_mod_alpha_x(dump$time)                   # Instantaenous acceleration
@@ -154,10 +154,10 @@ BatchLoadDump <- function(dumpval, meshlist) {                  # dumpval = dump
   dump$threaddata = LongJoin(dump$threaddata, dump$pres)          # Join with rest of data
   # Plot
   ggplot(dump$threaddata %>% filter(wall) %>% arrange(s), aes(s)) +
-    geom_path(aes(y = accel), colour = "red") +
+    geom_path(aes(y = accelx), colour = "red") +
     geom_path(aes(y = dpds), colour = "green") +
-    geom_path(aes(y = accel + dpds)) +
-    geom_path(aes(y = -accel - dpds), linetype = "dashed")
+    geom_path(aes(y = accelx + dpds)) +
+    geom_path(aes(y = -accelx - dpds), linetype = "dashed")
   
   #--- Vorticity Interpolation                                      ----
   

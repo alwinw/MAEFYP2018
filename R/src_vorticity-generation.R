@@ -221,11 +221,40 @@ DumpPressureStream <- function(dump, long) {
   return(dump_pres)
 }
 
+#--- Interpolation ----
+Interpolate <- function(mesh, meshi) {
+  # Interpolate
+  meshi_out <- as.data.frame(
+    interpp(x = mesh$x, y = mesh$y, z = mesh$z,
+            xo = meshi$x, yo = meshi$y,
+            linear = FALSE,
+            duplicate = "strip"))
+  # Check for NA
+  if (sum(is.na(meshi_out$z)) > 0) warning("NA found in interpolation")
+  # Recombine wall and non wall if wallsplit == TRUE
+}
+
 #--- Vorticity Interpolation ----
-# Call an interpolate function and pass through arguments
+# Call an interpolate function and pass through arguments e.g. var = "t"
 # Interpolate function should know not to have to interpolate exact points
-DumpVortTransformed <- function(dump, var) {
+DumpVortTransformed <- function(dump, long, localval = 2, var) {
+  # Original Mesh
+  meshcols <- c("x", "y", "stream", "norm", var, "wall")
+  mesh <- filter(dump$threaddata, local <= localval, !is.na(stream))
+  mesh <- mesh[,meshcols] %>% unique(.)
+      # colnames(mesh) <- c("x", "y", "z", "wall")
+  # Mesh to interpolate
+  meshi <- long$offset[,c("x", "y", "s", "norm", "wall")]
+  # colnames(meshi) <- c("x", "y", "wall")
+  # Do some fancy wall split , interpolate, recombine
+  # Plot
+  # ggplot() +
+  #   geom_point(aes(x, y, colour = z), mesh, alpha = 0.5) +
+  #   geom_point(aes(x, y), meshinp, shape = 'O', colour = "dark red") +
+  #   scale_colour_gradientn(colours = spectralpalette(20))
   # Interpolate based on stream and norm
+  
+  
   
   # Interpolate back and compare
 }
