@@ -114,8 +114,37 @@ CubicSplineCalc <- function(cs, order = 0) {
 }
 
 #--- Finite Difference Method ----
-FiniteDiff <- function(offset, var) {
-  
+# offset = dump$offset
+FiniteDiff <- function(offset, var, order = NULL) {
+  # https://en.wikipedia.org/wiki/Finite_difference_coefficient
+  FFD1 <- list(
+    c(     -1, 1                       ),
+    c(   -3/2, 2, -1/2                 ),
+    c(  -11/6, 3, -3/2,  1/3           ),
+    c( -25/12, 4,   -3,  4/3, -1/4     ),
+    c(-137/60, 5,   -5, 10/3, -5/4, 1/5)
+  )
+  # If no order specified, determine the order
+  if (is.null(order)) {
+    order = max(offset$nstep) - min(offset$nstep)
+    if (order > 5) order = 5}
+  # Group by offset number
+  offset <- arrange(offset, onum, nstep)
+  offset_list <- split(offset, offset$onum)
+  # Determine gradient over each row
+  offset_list <- lapply(offset_list, function(row) {
+    if (sd(diff(row$norm)) > sqrt(.Machine$double.eps)) warning("Not equally sized steps")
+    del = mean(diff(row$norm))
+    diff = (sum(row[1:order, var] * FFD1[[order]]))/del
+    return(cbind(
+      row[1,], data.frame(diffvar = diff)))
+  })
+  # Clean up results
+  offset_list <- bind_rows(offset_list) %>%
+    select(onum, diffvar)
+  colnames(offset_list)[ncol(offset_list)] <- paste0(var, "_diff")
+  # Return the result
+  return(LongJoin(offset, offset_list))
 }
 
 

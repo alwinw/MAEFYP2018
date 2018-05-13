@@ -132,7 +132,8 @@ batchlist <- batchlist %>%                                      # Determine dump
   mutate(dumppath = paste0(folder, dumpfile))
 dumplist <- split(batchlist, batchlist$dumppath)                # Create thread list
 # Function to load and process dump files
-BatchLoadDump <- function(dumpval, meshlist) {                  # dumpval = dumplist[[1]]
+BatchLoadDump <- function(dumpval, meshlist) {                  # dumpval = dumplist[[5]]
+  dumpval = dumplist[[26]]
   source("src_library-manager.R")                                 # Call libraries and install missing ones
   source("src_numerical-methods.R")                               # Load custom numerical methods
   source("src_load-files.R")                                      # Load data
@@ -152,17 +153,21 @@ BatchLoadDump <- function(dumpval, meshlist) {                  # dumpval = dump
   #--- Pressure                                                     ----
   dump$pres = DumpPressureStream(dump, long)                      # Calculate pressure gradient dp/ds
   dump$threaddata = LongJoin(dump$threaddata, dump$pres)          # Join with rest of data
-  # Plot
-  ggplot(dump$threaddata %>% filter(wall) %>% arrange(s), aes(s)) +
-    geom_path(aes(y = accels), colour = "red") +
-    geom_path(aes(y = dpds), colour = "green") +
-    geom_path(aes(y = accels + dpds)) +
-    geom_path(aes(y = -accels - dpds), linetype = "dashed")
-  
   #--- Vorticity Interpolation                                      ----
   dump$offset = long$offset                                       # Initialise the offset for interpolation
   dump <- DumpVortTransformed(dump, localval = 2, var = "t")      # Interpolate based on stream, norm cs
   dump <- DumpVortElements(dump, localval = 2, var = "t")         # Interpolate using each element
+  # Derivatives
+  dump$offset <- FiniteDiff(dump$offset, "t_trans")               # Calculate derivative using stream, norm cs
+  dump$offset <- FiniteDiff(dump$offset, "t_enum")                # Calculate derivative using each element
+  # Plot
+  ggplot(dump$threaddata %>% filter(wall) %>% arrange(s), aes(s)) +
+    geom_path(aes(y = -accels), colour = "red") +
+    geom_path(aes(y = dpds), colour = "green") +
+    geom_path(aes(y = - accels + dpds), colour = "purple") +
+    # geom_path(aes(y = -accels - dpds), linetype = "dashed") +
+    # geom_point(aes(s, t_trans_diff*dump$kinvis), dump$offset, colour = "blue") +
+    geom_point(aes(s, t_enum_diff*dump$kinvis), dump$offset, colour = "purple")
   
 }
 
