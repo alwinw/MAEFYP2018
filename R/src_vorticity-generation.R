@@ -145,6 +145,8 @@ LocalMesh <- function(long) {
              localmesh$mesh$local)
   }
   localmesh$mesh$local = localmesh$mesh$local - min(localmesh$mesh$local) + 1
+  # For much later, try:
+  # over(poly_sp, poly_sp, returnList = TRUE)
   # Return
   return(localmesh$mesh)
 }
@@ -185,8 +187,8 @@ DumpAcceleration <- function(dump, long) {
   dump_accel <- long$walldata %>%
     mutate(
       accel = dump$acceleration,
-      accelx = accel*dxds/dydxlen,
-      accely = accel*dyds/dydxlen)
+      accels = accel*dxds/dydxlen,
+      acceln = accel*dyds/dydxlen)
   return(dump_accel)
 }
 
@@ -222,7 +224,7 @@ DumpPressureStream <- function(dump, long) {
 }
 
 #--- Interpolation ----
-Interpolate <- function(mesh, meshi) {
+Interpolate <- function(mesh, meshi, trylinear = FALSE) {
   # Interpolate
   meshio <- as.data.frame(
     interpp(x = mesh$intx, y = mesh$inty, z = mesh$intz,
@@ -231,7 +233,16 @@ Interpolate <- function(mesh, meshi) {
             duplicate = "strip"))
   colnames(meshio) <- c("intx", "inty", "intz")
   # Check for NA
-  if (sum(is.na(meshio$intz)) > 0) warning("NA found in interpolation")
+  if (sum(is.na(meshio$intz)) > 0) warning("NA found in cubic spline interpolation")
+  if (trylinear) {
+    # If asked to try linear option in case cubic fails:
+    meshio <- as.data.frame(
+      interpp(x = mesh$intx, y = mesh$inty, z = mesh$intz,
+              xo = meshi$intx, yo = meshi$inty,
+              linear = TRUE,
+              duplicate = "strip"))
+    colnames(meshio) <- c("intx", "inty", "intz")
+  }
   # Recombine wall and non wall if wallsplit == TRUE
   return(meshio)
 }
@@ -239,14 +250,14 @@ Interpolate <- function(mesh, meshi) {
 #--- Vorticity Interpolation ----
 # Call an interpolate function and pass through arguments e.g. var = "t"
 # Interpolate function should know not to have to interpolate exact points
-DumpVortTransformed <- function(dump, long, localval = 2, var) {
+DumpVortTransformed <- function(dump, localval = 2, var) {
   # Original Mesh
   meshcols <- c("x", "y", "stream", "norm", var, "wall")
   mesh <- filter(dump$threaddata, local <= localval, !is.na(stream))
   mesh <- mesh[,meshcols] %>% unique(.)
   colnames(mesh) <- c("x", "y", "intx", "inty", "intz", "wall")
   # Mesh to interpolate
-  meshi <- long$offset[,c("x", "y", "s", "norm", "wall")]
+  meshi <- dump$offset[,c("x", "y", "s", "norm", "wall")]
   meshwi <- filter(meshi, wall) %>% select(x, y)
   meshi <- filter(meshi, !wall)
   colnames(meshi) <- c("x", "y", "intx", "inty", "wall")
@@ -254,7 +265,7 @@ DumpVortTransformed <- function(dump, long, localval = 2, var) {
   meshwo <- left_join(meshwi, mesh, by = c("x", "y"))
   if (sum(is.na(meshwo$intz)) > 0) warning("NA found in wall left_join")
   # Interpolate remaining data
-  meshio <- Interpolate(mesh, meshi)
+  meshio <- Interpolate(mesh, meshi, trylinear = FALSE)
   meshio <- cbind(meshi[, c("x", "y")], meshio, meshi[,"wall"])
   mesho <- rbind(meshwo, meshio)
   # Plot
@@ -264,16 +275,27 @@ DumpVortTransformed <- function(dump, long, localval = 2, var) {
   #   coord_fixed() +
   #   scale_colour_gradientn(colours = spectralpalette(20))
   # Interpolate back and compare
-  meshoc <- Interpolate(mesho, mesh) %>%
+  meshoc <- Interpolate(mesho, mesh, trylinear = FALSE) %>%
     filter(!is.na(intz)) %>%
     rename(intzc = intz)
   meshoc <- left_join(meshoc, mesh, by = c("intx", "inty")) %>%
     mutate(errorz = intzc - intz,
            errorzper = errorz/intz * 100)
-  # median(meshoc$errorzper)
+  #
+  check = cbind(
+    data.frame(
+      nrow = nrow(meshoc),
+      median = median(meshoc$errorzper),
+      mean = mean(meshoc$errorzper),
+      sd = sd(meshoc$errorzper),
+      iqr = IQR(meshoc$errorzper),
+      mad = IQR(meshoc$errorzper)),
+    t(quantile(meshoc$errorzper)))
   # ggplot(meshoc, aes(errorzper)) +
   #   geom_density() +
   #   xlim(-100, 100)
+  # ggplot(meshoc, aes(errorzper)) +
+  #   geom_density()
   # ggplot(meshoc, aes(x, y, colour = errorzper)) +
   #   geom_point() +
   #   coord_fixed() +
@@ -282,13 +304,86 @@ DumpVortTransformed <- function(dump, long, localval = 2, var) {
   #     limits = c(-200, 200))
   
   # Join mesho back with original data
-  int_trans <- mesho #left join etc
+  int_trans <- mesho[,c("x", "y", "intz")]
+  colnames(int_trans) <- c("x", "y", paste0(var, "_trans"))
+  dump$offset <- LongJoin(dump$offset, int_trans) #left join etc
+  dump$interpcheck_trans <- check
+  # Return the output
+  return(dump)
 }
 
-DumpVortElements <- function(dump, var) {
+DumpVortElements <- function(dump, localval = 2, var) {
   # Determine unique elements to lapply over
-  
+  # Original Mesh
+  meshcols <- c("x", "y", var, "wall", "enum")
+  mesh <- filter(dump$threaddata, local <= localval)
+  mesh <- mesh[,meshcols]
+  colnames(mesh) <- c("intx", "inty", "intz", "wall", "enum")
+  mesh_list <- split(mesh, mesh$enum)
+  # Interpolated mesh
+  meshi <- dump$offset[,c("x", "y", "wall", "enum")]
+  colnames(meshi) <- c("intx", "inty", "wall", "enum")
+  # Split out wall nodes
+  meshwi <- filter(meshi, wall) %>% select(intx, inty)
+  meshi <- filter(meshi, !wall)
+  meshi_list <- split(meshi, meshi$enum)
   # Lapply over elements and interpolate
+  # Left join based on wall
+  meshwo <- left_join(meshwi, mesh, by = c("intx", "inty"))
+  if (sum(is.na(meshwo$intz)) > 0) warning("NA found in wall left_join")
+  # Interpolate over each element
+  meshio <- lapply(names(meshi_list), function(enum) {
+    meshio <- Interpolate(mesh_list[[enum]], meshi_list[[enum]], trylinear = TRUE)
+    ggplot() +
+      geom_point(aes(intx, inty, colour = intz), mesh) +
+      geom_point(aes(intx, inty, colour = intz), meshio) +
+      coord_fixed() +
+      scale_colour_gradientn(colours = spectralpalette(20))
+    return(meshio)
+  })
+  meshio <- bind_rows(meshio)
+  meshio <- cbind(meshio, meshi[,c("wall", "enum")])
+  mesho <- rbind(meshwo, meshio)
+  # ggplot() + 
+  #   geom_point(aes(intx, inty, colour = intz), meshio) + 
+  #   geom_point(aes(intx, inty, colour = intz), mesh) +
+  #   coord_fixed() +
+  #   scale_colour_gradientn(colours = spectralpalette(20))
   
-  # Rejoin lapply
+  meshoc <- Interpolate(mesho, mesh, trylinear = FALSE) %>%
+    filter(!is.na(intz)) %>%
+    rename(intzc = intz)
+  meshoc <- left_join(meshoc, mesh, by = c("intx", "inty")) %>%
+    mutate(errorz = intzc - intz,
+           errorzper = errorz/intz * 100)
+  #
+  check = cbind(
+    data.frame(
+      nrow = nrow(meshoc),
+      median = median(meshoc$errorzper),
+      mean = mean(meshoc$errorzper),
+      sd = sd(meshoc$errorzper),
+      iqr = IQR(meshoc$errorzper),
+      mad = IQR(meshoc$errorzper)),
+    t(quantile(meshoc$errorzper)))
+  #
+  # ggplot(meshoc, aes(errorzper)) +
+  #   geom_density() +
+  #   xlim(-100, 100)
+  # ggplot(meshoc, aes(errorzper)) +
+  #   geom_density() 
+  # ggplot(meshoc, aes(intx, inty, colour = errorzper)) +
+  #   geom_point() +
+  #   coord_fixed() +
+  #   scale_colour_gradientn(
+  #     colours = spectralpalette(20),
+  #     limits = c(-200, 200))
+  
+  # Join mesho back with original data
+  int_enum <- mesho[,c("intx", "inty", "intz")]
+  colnames(int_enum) <- c("x", "y", paste0(var, "_enum"))
+  dump$offset <- LongJoin(dump$offset, int_enum) #left join etc
+  dump$interpcheck_enum <- check
+  # Return the output
+  return(dump)
 }

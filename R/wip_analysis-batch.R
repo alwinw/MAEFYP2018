@@ -154,12 +154,15 @@ BatchLoadDump <- function(dumpval, meshlist) {                  # dumpval = dump
   dump$threaddata = LongJoin(dump$threaddata, dump$pres)          # Join with rest of data
   # Plot
   ggplot(dump$threaddata %>% filter(wall) %>% arrange(s), aes(s)) +
-    geom_path(aes(y = accelx), colour = "red") +
+    geom_path(aes(y = accels), colour = "red") +
     geom_path(aes(y = dpds), colour = "green") +
-    geom_path(aes(y = accelx + dpds)) +
-    geom_path(aes(y = -accelx - dpds), linetype = "dashed")
+    geom_path(aes(y = accels + dpds)) +
+    geom_path(aes(y = -accels - dpds), linetype = "dashed")
   
   #--- Vorticity Interpolation                                      ----
+  dump$offset = long$offset                                       # Initialise the offset for interpolation
+  dump <- DumpVortTransformed(dump, localval = 2, var = "t")      # Interpolate based on stream, norm cs
+  dump <- DumpVortElements(dump, localval = 2, var = "t")         # Interpolate using each element
   
 }
 

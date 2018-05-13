@@ -113,68 +113,10 @@ CubicSplineCalc <- function(cs, order = 0) {
   return(ccs)
 }
 
-#--- Interpolation Function ----
-# omesh = long_localdump; imesh = airfoildata$offset; onames = c("x", "y", "t", "wall"); inames = c("x", "y"); wallsplit = TRUE
-interpolate <- function(omesh, imesh,
-                        onames = c("x", "y", "z", "wall"), inames = c("x", "y", "n"),
-                        wallsplit = TRUE) {
-  # Selet data based on onames for omesh
-  omesh <- omesh[onames] 
-  colnames(omesh) <- c("x", "y", "z", "wall")
-  # rename columns for inames 
+#--- Finite Difference Method ----
+FiniteDiff <- function(offset, var) {
   
-  # Check for NAs <-- what did I mean for this initially? check imesh = omesh on wall?
-  # Split datat into wall and non-wall
-  if (wallsplit) {
-    # Split the interp mesh into two separate meshes
-    wmesh <- filter(imesh, wall)
-    imesh <- filter(imesh, !wall)
-  }
-  # Interpolate onto imesh using duplicate = "strip"
-  imesho <- as.data.frame(
-    interpp(x = omesh$x, y = omesh$y, z = omesh$z,
-            xo = imesh$x, yo = imesh$y,
-            linear = FALSE,
-            duplicate = "strip")) %>%
-    # Make more robust later
-    cbind(., imesh[-(1:2)]) %>%
-    arrange(snum, nstep)
-  # Check for NA
-  if (sum(is.na(imesho$z)) > 0) warning("NA found in interpolation")
-  # Recombine wall and non wall if wallsplit == TRUE
-  if (wallsplit) {
-    # Determine wall values for wmesh
-    # semi_join(omesh, wmesh, by = c("x", "y"))
-    wmesh <- left_join(
-      wmesh, omesh[!duplicated(omesh[c("x", "y")]),], 
-      by = c("x", "y", "wall"))
-    # Join with previous imesho
-    imesho <- rbind(imesho, wmesh) %>%
-      arrange(snum, nstep)
-  }
-  # Plot
-  ggplot(imesho, aes(x, y, colour = z)) +
-    geom_point() + coord_fixed()
-  # Check the interpolation accuracy by interpolating back onto omesh and save column % error
-  omeshc <- as.data.frame(
-    interpp(x = imesho$x, y = imesho$y, z = imesho$z,
-            xo = omesh$x, yo = omesh$y,
-            linear = FALSE,
-            duplicate = "strip")) %>%
-    rename(zo = z) %>%
-    cbind(., omesh[c("z", "wall")]) %>%
-    filter(!is.na(zo)) %>%
-    mutate(zerror = (zo - z),
-           zrelerror = zerror/z)
-  ggplot(omeshc) + geom_density(aes(zerror)) + facet_wrap(~wall, scales = "free_y")
-  ggplot(omeshc, aes(x, zerror)) + geom_point() + facet_wrap(~wall, scales = "free_y")
-  ggplot(omeshc, aes(x, y, colour = zerror)) +
-    geom_point() + coord_fixed()
-  # Add original column names
-  
-  # Check no increase in row number for omesh
-  return(imesho)
 }
 
 
-#--- Finite Difference Method ----
+
