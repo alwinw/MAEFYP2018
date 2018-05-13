@@ -16,9 +16,9 @@ source("src_vorticity-generation.R")                            # Vorticity Gene
 theme_set(theme_bw())                                           # Set black and white theme
 spectralpalette <- colorRampPalette(rev(brewer.pal(11, "Spectral")))
 # Output Location
-# saveplot = "Output_Plot"
+saveplot = "../output-plot"
 # savedata = "Output_Data"
-# if (!file.info(saveplot)$isdir) dir.create(saveplot, recursive = TRUE)
+if (!dir.exists(saveplot)) dir.create(saveplot, recursive = TRUE)
 # if (!file.info(savedata)$isdir) dir.create(savedata, recursive = TRUE)
 # logfile = paste0(format(Sys.time(), "%Y-%m-%dT%H.%M.%S"), ".txt")
 
