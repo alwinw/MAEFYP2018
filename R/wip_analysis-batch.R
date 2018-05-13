@@ -12,6 +12,7 @@ source("src_numerical-methods.R")                               # Load custom nu
 source("src_load-files.R")                                      # Load data
 source("src_airfoil-analysis.R")                                # Airfoil files
 source("src_vorticity-generation.R")                            # Vorticity Generation
+source("src_plot-output.R")                                     # Plots to output and save
 # Custom ggplot2 setup
 theme_set(theme_bw())                                           # Set black and white theme
 spectralpalette <- colorRampPalette(rev(brewer.pal(11, "Spectral")))
@@ -35,6 +36,7 @@ BatchLoadAirfoil <- function(airfoilval) {                      # airfoilval = a
   source("src_numerical-methods.R")                               # Load custom numerical methods
   source("src_load-files.R")                                      # Load data
   source("src_airfoil-analysis.R")                                # Airfoil files
+  source("src_plot-output.R")                                     # Plots to output and save
   #--- Boundary Data                                                ----
   bndrypath = paste0(airfoilval$folder, "bndry_prf")              # Path to bndry file
   bndry <- LoadBndry(bndrypath)                                   # Read the bndry file
@@ -67,6 +69,7 @@ BatchLoadMesh <- function(meshval, airfoillist) {
   source("src_load-files.R")                                      # Load data
   source("src_airfoil-analysis.R")                                # Airfoil files
   source("src_vorticity-generation.R")                            # Vorticity Generation
+  source("src_plot-output.R")                                     # Plots to output and save
   long <- list()                                                  # Create a list of long format data
   #--- Airfoil Data                                                 ----
   airfoildata = airfoillist[[meshval$airfoil]]                    # Collect airfoil data
@@ -125,23 +128,17 @@ meshlist <- pblapply(meshlist, BatchLoadMesh,                   # Load airfoil d
 stopCluster(cl)                                                 # Stop the cluster
 
 #--- Dump File List                                               ----
-batchlist <- batchlist %>%                                      # Determine dump list
-  rowwise() %>% 
-  do(data.frame(., dumpfile = ListDump(.$folder, .$seshname),
-                stringsAsFactors = FALSE)) %>%
-  mutate(dumppath = paste0(folder, dumpfile))
-dumplist <- split(batchlist, batchlist$dumppath)                # Create thread list
 # Function to load and process dump files
-BatchLoadDump <- function(dumpval, meshlist) {                  # dumpval = dumplist[[5]]
-  dumpval = dumplist[[26]]
+BatchLoadDump <- function(dumpval, meshlistin) {              # dumpval = dumplist[[5]]; meshlistin = meshlist
   source("src_library-manager.R")                                 # Call libraries and install missing ones
   source("src_numerical-methods.R")                               # Load custom numerical methods
   source("src_load-files.R")                                      # Load data
   source("src_airfoil-analysis.R")                                # Airfoil files
   source("src_vorticity-generation.R")                            # Vorticity Generation
+  source("src_plot-output.R")                                     # Plots to output and save
   #---  Long Mesh Data                                              ----
-  long <- meshlist[[dumpval$ID]]                                  # Collect airfoil data
-  # rm(meshlist)                                                    # Reduce memory required
+  long <- meshlistin[[dumpval$ID]]                                # Collect airfoil data
+  rm(meshlistin)                                                  # Reduce memory required
   #--- Dump Data                                                    ----
   dump <- LoadDump(dumpval$folder, dumpval$dumpfile)              # Load dump file as list
   dump$threaddata <- LongDump(dump, long)
@@ -155,20 +152,45 @@ BatchLoadDump <- function(dumpval, meshlist) {                  # dumpval = dump
   dump$threaddata = LongJoin(dump$threaddata, dump$pres)          # Join with rest of data
   #--- Vorticity Interpolation                                      ----
   dump$offset = long$offset                                       # Initialise the offset for interpolation
-  dump <- DumpVortTransformed(dump, localval = 2, var = "t")      # Interpolate based on stream, norm cs
+  # dump <- DumpVortTransformed(dump, localval = 2, var = "t")      # Interpolate based on stream, norm cs
   dump <- DumpVortElements(dump, localval = 2, var = "t")         # Interpolate using each element
   # Derivatives
-  dump$offset <- FiniteDiff(dump$offset, "t_trans")               # Calculate derivative using stream, norm cs
+  # dump$offset <- FiniteDiff(dump$offset, "t_trans")               # Calculate derivative using stream, norm cs
   dump$offset <- FiniteDiff(dump$offset, "t_enum")                # Calculate derivative using each element
   # Plot
-  ggplot(dump$threaddata %>% filter(wall) %>% arrange(s), aes(s)) +
+  plot_title <- paste(dumpval$ID, 
+                      "\nkinvis", dump$kinvis, "m^2/s", 
+                      "\ntime", dump$time, "s",
+                      "\naccleration", round(dump$acceleration, 2), "m/s^2")
+  plot_filename <- paste(dumpval$ID, 
+                         "kv", dump$kinvis, 
+                         "t", dump$time,
+                         "a", round(dump$acceleration, 2), sep = "_")
+  plot <- ggplot(dump$threaddata %>% filter(wall) %>% arrange(s), aes(s)) +
     geom_path(aes(y = -accels), colour = "red") +
     geom_path(aes(y = dpds), colour = "green") +
     geom_path(aes(y = - accels + dpds), colour = "purple") +
     # geom_path(aes(y = -accels - dpds), linetype = "dashed") +
     # geom_point(aes(s, t_trans_diff*dump$kinvis), dump$offset, colour = "blue") +
-    geom_point(aes(s, t_enum_diff*dump$kinvis), dump$offset, colour = "purple")
-  
+    geom_point(aes(s, t_enum_diff*dump$kinvis), dump$offset, colour = "purple") +
+    xlab("s") + ylab("dw/dz") +
+    ggtitle(plot_title)
+  ggsave(paste0(plot_filename, ".png"), plot, device = "png", path = "../output-plot")
+  # Return the output
+  return(dump)
 }
-
-# Move to cluster
+# Process batch list
+batchlist <- batchlist %>%                                      # Determine dump list
+  rowwise() %>% 
+  do(data.frame(., dumpfile = ListDump(.$folder, .$seshname),
+                stringsAsFactors = FALSE)) %>%
+  mutate(dumppath = paste0(folder, dumpfile))
+dumplist <- split(batchlist, batchlist$dumppath)                # Create thread list
+# Testing, shortern dump list
+# dumplist <- dumplist[1:8]
+# dumplist <- lapply(dumplist, BatchLoadDump)
+cl <- makeCluster(detectCores())                                # Start the cluster
+clusterExport(cl, c("dumplist", "BatchLoadDump"))               # Export objects into the cluster
+dumplist <- pblapply(dumplist, BatchLoadDump,                   # Load airfoil data from each airfoil
+                     meshlist, cl = cl)
+stopCluster(cl)   
