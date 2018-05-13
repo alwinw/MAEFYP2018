@@ -224,14 +224,16 @@ DumpPressureStream <- function(dump, long) {
 #--- Interpolation ----
 Interpolate <- function(mesh, meshi) {
   # Interpolate
-  meshi_out <- as.data.frame(
-    interpp(x = mesh$x, y = mesh$y, z = mesh$z,
-            xo = meshi$x, yo = meshi$y,
+  meshio <- as.data.frame(
+    interpp(x = mesh$intx, y = mesh$inty, z = mesh$intz,
+            xo = meshi$intx, yo = meshi$inty,
             linear = FALSE,
             duplicate = "strip"))
+  colnames(meshio) <- c("intx", "inty", "intz")
   # Check for NA
-  if (sum(is.na(meshi_out$z)) > 0) warning("NA found in interpolation")
+  if (sum(is.na(meshio$intz)) > 0) warning("NA found in interpolation")
   # Recombine wall and non wall if wallsplit == TRUE
+  return(meshio)
 }
 
 #--- Vorticity Interpolation ----
@@ -242,21 +244,45 @@ DumpVortTransformed <- function(dump, long, localval = 2, var) {
   meshcols <- c("x", "y", "stream", "norm", var, "wall")
   mesh <- filter(dump$threaddata, local <= localval, !is.na(stream))
   mesh <- mesh[,meshcols] %>% unique(.)
-      # colnames(mesh) <- c("x", "y", "z", "wall")
+  colnames(mesh) <- c("x", "y", "intx", "inty", "intz", "wall")
   # Mesh to interpolate
   meshi <- long$offset[,c("x", "y", "s", "norm", "wall")]
-  # colnames(meshi) <- c("x", "y", "wall")
-  # Do some fancy wall split , interpolate, recombine
+  meshwi <- filter(meshi, wall) %>% select(x, y)
+  meshi <- filter(meshi, !wall)
+  colnames(meshi) <- c("x", "y", "intx", "inty", "wall")
+  # Left join based on wall
+  meshwo <- left_join(meshwi, mesh, by = c("x", "y"))
+  if (sum(is.na(meshwo$intz)) > 0) warning("NA found in wall left_join")
+  # Interpolate remaining data
+  meshio <- Interpolate(mesh, meshi)
+  meshio <- cbind(meshi[, c("x", "y")], meshio, meshi[,"wall"])
+  mesho <- rbind(meshwo, meshio)
   # Plot
-  # ggplot() +
-  #   geom_point(aes(x, y, colour = z), mesh, alpha = 0.5) +
-  #   geom_point(aes(x, y), meshinp, shape = 'O', colour = "dark red") +
+  # ggplot() + 
+  #   geom_point(aes(x, y, colour = intz), mesho, shape = "O") + 
+  #   geom_point(aes(x, y, colour = intz), mesh, shape = "O") +
+  #   coord_fixed() +
   #   scale_colour_gradientn(colours = spectralpalette(20))
-  # Interpolate based on stream and norm
-  
-  
-  
   # Interpolate back and compare
+  meshoc <- Interpolate(mesho, mesh) %>%
+    filter(!is.na(intz)) %>%
+    rename(intzc = intz)
+  meshoc <- left_join(meshoc, mesh, by = c("intx", "inty")) %>%
+    mutate(errorz = intzc - intz,
+           errorzper = errorz/intz * 100)
+  # median(meshoc$errorzper)
+  # ggplot(meshoc, aes(errorzper)) +
+  #   geom_density() +
+  #   xlim(-100, 100)
+  # ggplot(meshoc, aes(x, y, colour = errorzper)) +
+  #   geom_point() +
+  #   coord_fixed() +
+  #   scale_colour_gradientn(
+  #     colours = spectralpalette(20),
+  #     limits = c(-200, 200))
+  
+  # Join mesho back with original data
+  int_trans <- mesho #left join etc
 }
 
 DumpVortElements <- function(dump, var) {
