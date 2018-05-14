@@ -9,3 +9,11 @@ convert -resize 30% -delay 20 -loop 0 *.png test.gif
 convert ns.png \( a.png le.png -append \) +append test.png
 
 convert test.gif \( test_a.gif test_le.gif -append \) +append test_combine2.gif
+
+
+
+convert -resize 30% -delay 20 -loop 0 *a.png a.gif
+
+convert -resize 30% -delay 20 -loop 0 *le.png le.gif
+
+convert -resize 30% -delay 20 -loop 0 *ns.png ns.gif
