@@ -117,7 +117,8 @@ batchlist <- batchlist %>%
   rowwise() %>%
   do(data.frame(., LoadSeshTokenWords(.$seshpath, tokenwords),
                 stringsAsFactors = FALSE)) %>%
-  mutate(ID = paste(airfoil, tokenword, tokenvalue, sep = "_")) # This CANNOT handle multiple token words...
+  mutate(ID = paste(airfoil, 
+                    paste0(tokenword, tokenvalue), sep = "-"))  # This CANNOT handle multiple token words...
 meshlist <- split(batchlist, batchlist$ID)                      # Unique airfoil and N_P
 meshlist <- lapply(meshlist, function(x) x[1,])                 # Take only the first row in each
 # meshlist <- lapply(meshlist, BatchLoadMesh)
@@ -157,25 +158,78 @@ BatchLoadDump <- function(dumpval, meshlistin) {              # dumpval = dumpli
   # Derivatives
   # dump$offset <- FiniteDiff(dump$offset, "t_trans")               # Calculate derivative using stream, norm cs
   dump$offset <- FiniteDiff(dump$offset, "t_enum")                # Calculate derivative using each element
+  #--- Plot Output                                                  ----
+  # Vertical Lines
+  plot_vline <- data.frame(                                       # LE, TE, LE limits for vertical lines
+    te_up = min(long$walldata$s),
+    le = long$walldata[long$walldata$theta == pi,]$s[1],
+    te_lo = max(long$walldata$s))
+  plot_surf <- data.frame(                                        # Labels for surfaces
+    x = c(plot_vline$te_up,
+          (plot_vline$te_up + plot_vline$le)/2,
+          plot_vline$le,
+          (plot_vline$le + plot_vline$te_lo)/2,
+          plot_vline$te_lo),
+    y = rep(-20, 5),
+    labels = c("TE", "Upper Surface", "LE", "Lower Surface", "TE"))
+  plot_xbreaks <-                                                 # Breaks in x axis
+    c(seq(plot_vline$te_up, plot_vline$le, length.out = 3)[1:2],
+      seq(plot_vline$le, plot_vline$te_lo, length.out = 3))
+  # Title
+  plot_title <- paste(
+    dumpval$airfoil,
+    paste("Kinematic Viscosity:", format(dump$kinvis, scientific = FALSE)),
+    paste("Time:", sprintf("%4.2f", dump$time)),
+    paste("Acceleration:", sprintf("%+6.3f", dump$acceleration)),
+    sep = "\n")
+  plot_filename <- paste(
+    dumpval$ID,
+    paste0("v", format(dump$kinvis, scientific = TRUE)),
+    paste0("t", sprintf("%05.3f", dump$time)),
+    paste0("a", sprintf("%+07.3f", dump$acceleration)),
+    sep = "_")
   # Plot
-  plot_title <- paste(dumpval$ID, 
-                      "\nkinvis", dump$kinvis, "m^2/s", 
-                      "\ntime", dump$time, "s",
-                      "\naccleration", round(dump$acceleration, 2), "m/s^2")
-  plot_filename <- paste(dumpval$ID, 
-                         "kv", dump$kinvis, 
-                         "t", dump$time,
-                         "a", round(dump$acceleration, 2), sep = "_")
-  plot <- ggplot(dump$threaddata %>% filter(wall) %>% arrange(s), aes(s)) +
-    geom_path(aes(y = -accels), colour = "red") +
-    geom_path(aes(y = dpds), colour = "green") +
-    geom_path(aes(y = - accels + dpds), colour = "purple") +
-    # geom_path(aes(y = -accels - dpds), linetype = "dashed") +
-    # geom_point(aes(s, t_trans_diff*dump$kinvis), dump$offset, colour = "blue") +
-    geom_point(aes(s, t_enum_diff*dump$kinvis), dump$offset, colour = "purple") +
-    xlab("s") + ylab("dw/dz") +
+  plot_NS <- ggplot(dump$threaddata %>%                           # Initiate plot with threaddata
+                   filter(wall) %>% arrange(s), aes(s)) +
+    geom_vline(xintercept = as.numeric(plot_vline),               # Vertical lines for LE, TE, LE
+               colour = "grey", linetype = "dashed") +
+    geom_label(aes(x, y, label = labels), plot_surf,              # Surface labels
+              colour = "grey") +
+    geom_path(aes(y = -accels, colour = "dU/dt")) +               # Acceleration terms
+    geom_path(aes(y = dpds, colour = "dp/ds")) +                  # Pressure field
+    geom_path(aes(y = - accels + dpds, colour = "LHS"),           # LHS, acceleration + pressure
+              linetype = "dashed") +
+    geom_point(aes(s, t_enum_diff*dump$kinvis, colour = "RHS"),   # RHS, v * dw/dz
+               dump$offset, shape = "O") +
+    xlab("s") + 
+    scale_x_continuous(breaks = plot_xbreaks, 
+                       labels = function(x) sprintf("%.2f", x)) +
+    ylab(NULL) + ylim(c(-20, 40)) +
+    scale_color_manual(
+      name = "Legend",
+      values = c("dp/ds" = "red", "dU/dt" = "blue", "LHS" = "purple", "RHS" = "purple"),
+      labels = c(
+        expression(frac(1, rho)~frac(partialdiff*p, partialdiff*s)), 
+        expression(frac(partialdiff*U, partialdiff*t)), 
+        expression(
+          bgroup("(",
+            frac(1, rho)~frac(partialdiff*p, partialdiff*s) +
+              frac(partialdiff*U, partialdiff*t), ")")),
+        expression(nu~frac(partialdiff*omega, partialdiff*z))),
+      guide = guide_legend(
+        override.aes = list(
+          linetype = c(rep("solid", 2), "dashed", "blank"),
+          shape = c(rep(NA, 3), "O")))) +
+    theme(legend.key.size = unit(2.25, "lines"),
+          legend.text.align = 0.5,
+          legend.direction = "vertical", 
+          legend.position = "right",
+          legend.background = element_rect(colour = "black", size = 0.3)) +
     ggtitle(plot_title)
-  ggsave(paste0(plot_filename, ".png"), plot, device = "png", path = "../output-plot")
+  
+  # Should save to indivial folders based on ID
+  ggsave(paste0(plot_filename, ".png"), plot_NS, path = "../output-plot",
+         width = 8, height = 6)
   # Return the output
   return(dump)
 }
