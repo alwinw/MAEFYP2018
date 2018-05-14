@@ -117,7 +117,8 @@ batchlist <- batchlist %>%
   rowwise() %>%
   do(data.frame(., LoadSeshTokenWords(.$seshpath, tokenwords),
                 stringsAsFactors = FALSE)) %>%
-  mutate(ID = paste(airfoil, tokenword, tokenvalue, sep = "_")) # This CANNOT handle multiple token words...
+  mutate(ID = paste(airfoil, 
+                    paste0(tokenword, tokenvalue), sep = "-"))  # This CANNOT handle multiple token words...
 meshlist <- split(batchlist, batchlist$ID)                      # Unique airfoil and N_P
 meshlist <- lapply(meshlist, function(x) x[1,])                 # Take only the first row in each
 # meshlist <- lapply(meshlist, BatchLoadMesh)
@@ -154,30 +155,23 @@ BatchLoadDump <- function(dumpval, meshlistin) {              # dumpval = dumpli
   dump$offset = long$offset                                       # Initialise the offset for interpolation
   # dump <- DumpVortTransformed(dump, localval = 2, var = "t")      # Interpolate based on stream, norm cs
   dump <- DumpVortElements(dump, localval = 2, var = "t")         # Interpolate using each element
+  
+  # Determine inflow velocity
+  
   # Derivatives
   # dump$offset <- FiniteDiff(dump$offset, "t_trans")               # Calculate derivative using stream, norm cs
   dump$offset <- FiniteDiff(dump$offset, "t_enum")                # Calculate derivative using each element
-  # Plot
-  plot_title <- paste(dumpval$ID, 
-                      "\nkinvis", dump$kinvis, "m^2/s", 
-                      "\ntime", dump$time, "s",
-                      "\naccleration", round(dump$acceleration, 2), "m/s^2")
-  plot_filename <- paste(dumpval$ID, 
-                         "kv", dump$kinvis, 
-                         "t", dump$time,
-                         "a", round(dump$acceleration, 2), sep = "_")
-  plot <- ggplot(dump$threaddata %>% filter(wall) %>% arrange(s), aes(s)) +
-    geom_path(aes(y = -accels), colour = "red") +
-    geom_path(aes(y = dpds), colour = "green") +
-    geom_path(aes(y = - accels + dpds), colour = "purple") +
-    # geom_path(aes(y = -accels - dpds), linetype = "dashed") +
-    # geom_point(aes(s, t_trans_diff*dump$kinvis), dump$offset, colour = "blue") +
-    geom_point(aes(s, t_enum_diff*dump$kinvis), dump$offset, colour = "purple") +
-    xlab("s") + ylab("dw/dz") +
-    ggtitle(plot_title)
-  ggsave(paste0(plot_filename, ".png"), plot, device = "png", path = "../output-plot")
-  # Return the output
-  return(dump)
+  #--- Plot Output                                                  ----
+  # Should save to indivial folders based on ID
+  # Plot acceleration curve
+  PlotAccel(dump, dumpval, save = TRUE)
+  # Plot N-S for LHS vs RHS
+  PlotNS(dump, dumpval, long, save = TRUE)
+  # Plot leading edge
+  PlotLE(dump, dumpval, save = TRUE)
+  
+  # Return the output (turned off temporarily)
+  return(NULL)
 }
 # Process batch list
 batchlist <- batchlist %>%                                      # Determine dump list
@@ -193,4 +187,7 @@ cl <- makeCluster(detectCores())                                # Start the clus
 clusterExport(cl, c("dumplist", "BatchLoadDump"))               # Export objects into the cluster
 dumplist <- pblapply(dumplist, BatchLoadDump,                   # Load airfoil data from each airfoil
                      meshlist, cl = cl)
-stopCluster(cl)   
+stopCluster(cl)    
+
+# Clean up large files
+rm(dumplist)

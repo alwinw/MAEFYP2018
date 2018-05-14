@@ -334,11 +334,11 @@ DumpVortElements <- function(dump, localval = 2, var) {
   # Interpolate over each element
   meshio <- lapply(names(meshi_list), function(enum) {
     meshio <- Interpolate(mesh_list[[enum]], meshi_list[[enum]], trylinear = TRUE)
-    ggplot() +
-      geom_point(aes(intx, inty, colour = intz), mesh) +
-      geom_point(aes(intx, inty, colour = intz), meshio) +
-      coord_fixed() +
-      scale_colour_gradientn(colours = spectralpalette(20))
+    # ggplot() +
+    #   geom_point(aes(intx, inty, colour = intz), mesh) +
+    #   geom_point(aes(intx, inty, colour = intz), meshio) +
+    #   coord_fixed() +
+    #   scale_colour_gradientn(colours = spectralpalette(20))
     return(meshio)
   })
   meshio <- bind_rows(meshio)
