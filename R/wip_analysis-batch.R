@@ -155,83 +155,23 @@ BatchLoadDump <- function(dumpval, meshlistin) {              # dumpval = dumpli
   dump$offset = long$offset                                       # Initialise the offset for interpolation
   # dump <- DumpVortTransformed(dump, localval = 2, var = "t")      # Interpolate based on stream, norm cs
   dump <- DumpVortElements(dump, localval = 2, var = "t")         # Interpolate using each element
+  
+  # Determine inflow velocity
+  
   # Derivatives
   # dump$offset <- FiniteDiff(dump$offset, "t_trans")               # Calculate derivative using stream, norm cs
   dump$offset <- FiniteDiff(dump$offset, "t_enum")                # Calculate derivative using each element
   #--- Plot Output                                                  ----
-  # Vertical Lines
-  plot_vline <- data.frame(                                       # LE, TE, LE limits for vertical lines
-    te_up = min(long$walldata$s),
-    le = long$walldata[long$walldata$theta == pi,]$s[1],
-    te_lo = max(long$walldata$s))
-  plot_surf <- data.frame(                                        # Labels for surfaces
-    x = c(plot_vline$te_up,
-          (plot_vline$te_up + plot_vline$le)/2,
-          plot_vline$le,
-          (plot_vline$le + plot_vline$te_lo)/2,
-          plot_vline$te_lo),
-    y = rep(-20, 5),
-    labels = c("TE", "Upper Surface", "LE", "Lower Surface", "TE"))
-  plot_xbreaks <-                                                 # Breaks in x axis
-    c(seq(plot_vline$te_up, plot_vline$le, length.out = 3)[1:2],
-      seq(plot_vline$le, plot_vline$te_lo, length.out = 3))
-  # Title
-  plot_title <- paste(
-    dumpval$airfoil,
-    paste("Kinematic Viscosity:", format(dump$kinvis, scientific = FALSE)),
-    paste("Time:", sprintf("%4.2f", dump$time)),
-    paste("Acceleration:", sprintf("%+6.3f", dump$acceleration)),
-    sep = "\n")
-  plot_filename <- paste(
-    dumpval$ID,
-    paste0("v", format(dump$kinvis, scientific = TRUE)),
-    paste0("t", sprintf("%05.3f", dump$time)),
-    paste0("a", sprintf("%+07.3f", dump$acceleration)),
-    sep = "_")
-  # Plot
-  plot_NS <- ggplot(dump$threaddata %>%                           # Initiate plot with threaddata
-                   filter(wall) %>% arrange(s), aes(s)) +
-    geom_vline(xintercept = as.numeric(plot_vline),               # Vertical lines for LE, TE, LE
-               colour = "grey", linetype = "dashed") +
-    geom_label(aes(x, y, label = labels), plot_surf,              # Surface labels
-              colour = "grey") +
-    geom_path(aes(y = -accels, colour = "dU/dt")) +               # Acceleration terms
-    geom_path(aes(y = dpds, colour = "dp/ds")) +                  # Pressure field
-    geom_path(aes(y = - accels + dpds, colour = "LHS"),           # LHS, acceleration + pressure
-              linetype = "dashed") +
-    geom_point(aes(s, t_enum_diff*dump$kinvis, colour = "RHS"),   # RHS, v * dw/dz
-               dump$offset, shape = "O") +
-    xlab("s") + 
-    scale_x_continuous(breaks = plot_xbreaks, 
-                       labels = function(x) sprintf("%.2f", x)) +
-    ylab(NULL) + ylim(c(-20, 40)) +
-    scale_color_manual(
-      name = "Legend",
-      values = c("dp/ds" = "red", "dU/dt" = "blue", "LHS" = "purple", "RHS" = "purple"),
-      labels = c(
-        expression(frac(1, rho)~frac(partialdiff*p, partialdiff*s)), 
-        expression(frac(partialdiff*U, partialdiff*t)), 
-        expression(
-          bgroup("(",
-            frac(1, rho)~frac(partialdiff*p, partialdiff*s) +
-              frac(partialdiff*U, partialdiff*t), ")")),
-        expression(nu~frac(partialdiff*omega, partialdiff*z))),
-      guide = guide_legend(
-        override.aes = list(
-          linetype = c(rep("solid", 2), "dashed", "blank"),
-          shape = c(rep(NA, 3), "O")))) +
-    theme(legend.key.size = unit(2.25, "lines"),
-          legend.text.align = 0.5,
-          legend.direction = "vertical", 
-          legend.position = "right",
-          legend.background = element_rect(colour = "black", size = 0.3)) +
-    ggtitle(plot_title)
-  
   # Should save to indivial folders based on ID
-  ggsave(paste0(plot_filename, ".png"), plot_NS, path = "../output-plot",
-         width = 8, height = 6)
-  # Return the output
-  return(dump)
+  # Plot acceleration curve
+  PlotAccel(dump, dumpval, save = TRUE)
+  # Plot N-S for LHS vs RHS
+  PlotNS(dump, dumpval, long, save = TRUE)
+  # Plot leading edge
+  PlotLE(dump, dumpval, save = TRUE)
+  
+  # Return the output (turned off temporarily)
+  return(NULL)
 }
 # Process batch list
 batchlist <- batchlist %>%                                      # Determine dump list
@@ -247,4 +187,7 @@ cl <- makeCluster(detectCores())                                # Start the clus
 clusterExport(cl, c("dumplist", "BatchLoadDump"))               # Export objects into the cluster
 dumplist <- pblapply(dumplist, BatchLoadDump,                   # Load airfoil data from each airfoil
                      meshlist, cl = cl)
-stopCluster(cl)   
+stopCluster(cl)    
+
+# Clean up large files
+rm(dumplist)
