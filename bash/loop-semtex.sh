@@ -66,6 +66,7 @@ for airfoil in $airfoils; do
       csplit -z "$f.flddump" /Session/ {*} >/dev/null   && echo "   > Split Finished"     &&
       # Remove unneded dump file
       rm "$f.flddump"                                   && echo "   > ASCII dump removed" &&
+      rm "$f.fld"                                       && echo "   > Field dump removed" &&
       # Rename split files
       for i in [xx]*; do 
         mv $i "$f-${i#*xx}.dump"; done                  && echo "   > Renamed Finished"
