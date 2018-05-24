@@ -10,6 +10,12 @@
 \usepackage{epstopdf}
 \usepackage[italic]{mathastext}	% for general symbols
 \usepackage{isomath}		% for Greek letters
+
+
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=10000
+\hbadness=10000
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
@@ -82,7 +88,7 @@
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation skip
-\defskip smallskip
+\defskip medskip
 \is_math_indent 0
 \math_numbering_side default
 \quotes_style english
@@ -129,7 +135,7 @@ g impulsively stated and uniformly accelerated viscous flows.
  from the wall side, will be compared.
  Analysis of the results suggest different generation mechanisms dominate
  different regions on the airfoil surface and observed pair of leading edge
- vorticies and trailing edge vortex.
+ vortices and trailing edge vortex.
  Calculation of the circulation of these vortices allows the vorticity productio
 n to be related to the overall life production.
 \end_layout
@@ -150,9 +156,60 @@ Introduction
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Context for vorticity
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Check referencing as per Adam's report
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Although vorticity is not a primary variable in fluid dynamics, it is an
  important variable for understanding and solving problems (Morton 1984).
+ The Kutta-Joukowski Theorem (Equation 1) helps explain lift production
+ by relating the lift per unit span and circulation – the flux of vorticity
+ (Anderson 2011).
+ Used in conjunction with Kelvin's circulation theorem (shown in Figure
  
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Ref
+\end_layout
+
+\end_inset
+
+), many fundamental textbooks relate the generation of circulation around
+ an airfoil to the starting and stopping vortices at the trailing edge produced
+ by large velocity gradients (Anderson 2011, Torenbeek 2009).
+ Figure 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Ref
+\end_layout
+
+\end_inset
+
+ shows these stating and stopping vortices as observed in experiments by
+ Prandtl, Tietjens and Müller (1957) over 80 years ago.
 \begin_inset Formula 
 \begin{gather}
 L'=\rho_{\infty}V_{\infty}\Gamma\\
@@ -162,6 +219,112 @@ L'=\rho_{\infty}V_{\infty}\Gamma\\
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Figure
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Additional Findings; needs reworking
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+With the increase in availability of computational power in recent decades,
+ multiple numerical studies have been conducted on vorticity production
+ around an airfoil.
+ In addition to Prandtl's main findings, other phenomena have been discovered
+ in relation to vortex production and shedding.
+ Numerical studies of viscous starting flows past wedges conducted by Xu
+ (2016) detailed vorticity evolution which is applicable to finite-angle
+ trailing edges of airfoils.
+ For low Reynolds number airfoils Lei, Feng and Can (2013) discovered laminar
+ separation bubbles on the upper surface that could cause periodic primary
+ and secondary vortex shedding that varied with angle of attack.
+ Leading edge vortices were also observed by Vincent and Blackburn (2014)
+ on airfoils during the stopping phase which questions the importance of
+ vortex production on airfoil regions other than the trailing edge.
+ Though there is an emphasis in current literature on vorticity generation
+ at the trailing edge, this project will take a more holistic approach to
+ investigating vorticity generation around the entire surface to better
+ understand these phenomena.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Vorticity production
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+During the starting and stopping phases of motion the airfoil, the vorticity
+ production is due to the relative acceleration of the fluid and wall.
+ It is recognised that the sources of vorticity must occur at the boundary
+ of the fluid regions.
+ For this particular case, Morton (1984) outlines two production mechanisms
+ as tangential pressure gradients from the fluid side and acceleration of
+ the surface from the wall side.
+ In either mechanism the vorticity is generated instantaneously and partially
+ masked by viscous diffusion when there is constant generation (Morton 1984).
+ These contributions were investigated by Blackburn and Henderson (1999)
+ for vortex shedding of oscillating cylinders and it was noted the pressure-grad
+ient generation mechanism could override the surface-acceleration generation
+ mechanism and vice versa.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This project
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This project will explore the vortex generation around an airfoil during
+ acceleration and deceleration of the airfoil which has observed in earlier
+ research.
+ The first aspect of this project will require a literature review to appreciate
+ the various phenomena already recorded and recreate them in a numerical
+ simulation.
+ The next aspect of the investigation will involve varying parameters such
+ as the Reynolds number and calculating the strengths of various vortices
+ produced around the airfoil by evaluating Equation 2.
+ The last aspect of this project will analyse the contributions of the two
+ vorticity generation mechanisms for various regions of the airfoil surface
+ and how variables such as Reynolds number and acceleration affect the generatio
+n mechanism.
+\end_layout
+
+\begin_layout Section
+Aims
 \end_layout
 
 \begin_layout Standard
