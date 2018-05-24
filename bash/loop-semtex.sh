@@ -43,6 +43,7 @@ for airfoil in $airfoils; do
     # Remove extension
     f="${sessionfile%.*}"                               && echo "   Found $f"             &&
       # Copy to extensionless file
+      # Perhaps consider coping to a different folder
       cp $sessionfile "$f"                              && echo "   > Copy Made"          &&
       # Generate the mesh
       meshpr $f > "$f.msh"                              && echo "   > Meshpr Finished"    &&
