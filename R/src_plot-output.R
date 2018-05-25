@@ -79,7 +79,9 @@ PlotNS <- function(dump, dumpval, long, save = TRUE) { # Handle some output vari
     ggtitle(plot_title)
   # Save plot
   if (save) {
-    ggsave(paste0(plot_filename, ".png"), plot_NS, path = "../output-plot",
+    plotpath = paste0("../output-plot", "/", dumpval$airfoil, "_", dumpval$seshname)
+    if (!dir.exists(plotpath)) dir.create(plotpath, recursive = TRUE)
+    ggsave(paste0(plot_filename, ".png"), plot_NS, path = plotpath,
            width = 8, height = 7)
   } else {
     print(plot_NS)
@@ -106,7 +108,9 @@ PlotAccel <- function(dump, dumpval,save = TRUE) {
                colour = "blue")
   # Save plot
   if (save) {
-    ggsave(paste0(plot_filename, ".png"), plot_accel, path = "../output-plot",
+    plotpath = paste0("../output-plot", "/", dumpval$airfoil, "_", dumpval$seshname)
+    if (!dir.exists(plotpath)) dir.create(plotpath, recursive = TRUE)
+    ggsave(paste0(plot_filename, ".png"), plot_accel, path = plotpath,
            width = 6, height = 2)
   } else {
     print(plot_accel)
@@ -199,7 +203,9 @@ PlotLE <- function(dump, dumpval, save = TRUE) {
   
   # Save plot
   if (save) {
-    ggsave(paste0(plot_filename, ".png"), plot_le, path = "../output-plot",
+    plotpath = paste0("../output-plot", "/", dumpval$airfoil, "_", dumpval$seshname)
+    if (!dir.exists(plotpath)) dir.create(plotpath, recursive = TRUE)
+    ggsave(paste0(plot_filename, ".png"), plot_le, path = plotpath,
            width = 6, height = 5)
   } else {
     print(plot_le)
