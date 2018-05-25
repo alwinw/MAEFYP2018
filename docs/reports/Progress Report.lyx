@@ -41,7 +41,7 @@
 \bibtex_command default
 \index_command default
 \float_placement h
-\paperfontsize 12
+\paperfontsize 11
 \spacing single
 \use_hyperref true
 \pdf_author "Alwin Wang"
@@ -151,8 +151,86 @@ n to be related to the overall life production.
 
 \end_layout
 
+\begin_layout Section*
+Summary
+\end_layout
+
+\begin_layout Standard
+This report summarises the work conducted in Semester 1 of 2018 on vorticity
+ production around 2D airfoils.
+ Time was conducting a literature review of existing research, configuring
+ Semtex on Ubuntu 16.04 LTS and conducting initial analysis.
+ Files and results from Vincent 2014 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+smooth hat function or something?
+\end_layout
+
+\end_inset
+
+were recreated and post-processing using finite difference methods 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+that's what it's called yeh?
+\end_layout
+
+\end_inset
+
+conducted.
+ Additional flow cases with different acceleration profiles and Reynolds
+ numbers were also investigated.
+ It was found that a finite difference scheme would not be suitable to accuratel
+y estimate the vorticity gradients and a method using the 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Galerkian basis functions??
+\end_layout
+
+\end_inset
+
+ should be pursued instead.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Introduction
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+15/80 ~ 1.875 Pages
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Background
 \end_layout
 
 \begin_layout Standard
@@ -299,6 +377,126 @@ ient generation mechanism could override the surface-acceleration generation
 status open
 
 \begin_layout Plain Layout
+Vorticity Generation Equation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As such, the Navier-Stokes equation (shown in Equation 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+
+) can be reduced to the case of a wall moving in its own plane for an infinitesi
+mally small region on the airfoil as described by Morton (1984).
+ The boundary conditions for the Navier-Stokes equation were found by using
+ 
+\begin_inset Formula $\boldsymbol{V}=\left\{ U\left(t\right),0\right\} $
+\end_inset
+
+ where 
+\begin_inset Formula $U\left(t\right)$
+\end_inset
+
+ is the motion of the body and 
+\begin_inset Formula $z=0$
+\end_inset
+
+ to indicate the rigid boundary at the wall.
+ Thus, no slip condition gives 
+\begin_inset Formula $\boldsymbol{v}=\left(U\left(t\right),0\right)\,\forall\,x,t$
+\end_inset
+
+ for the fluid at the wall and there is no spatial variation of the boundary
+ motion (Equation 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+
+).
+ Substitution into the Navier-Stokes equation at the boundary gives Equation
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+5a
+\end_layout
+
+\end_inset
+
+ which can be simplified to 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+5b-c
+\end_layout
+
+\end_inset
+
+ (Morton, 1984).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Include image from Morton
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{gather}
+\frac{\partial\boldsymbol{u}}{\partial t}+\boldsymbol{u}\cdot\nabla\boldsymbol{u}=-\frac{1}{\rho}\nabla\rho+\frac{1}{\text{Re}}\nabla^{2}\boldsymbol{u}-\boldsymbol{a},\qquad\nabla\cdot\boldsymbol{u}=0\\
+\left[\left(\frac{\partial}{\partial x},\frac{\partial^{2}}{\partial x^{2}}\right)\cdot\left(u,w\right)\right]_{0}=0
+\end{gather}
+
+\end_inset
+
+
+\begin_inset VSpace -1.5em*
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\left[\frac{\partial^{2}}{\partial z^{2}}\left(u,w\right)\right]_{0} & =\left\{ 0,\frac{1}{\mu}\frac{\partial\boldsymbol{p}}{\partial x}+\frac{1}{\nu}\frac{d\boldsymbol{U}}{\text{d}t},\frac{1}{\mu}\right\} _{0}\tag{5a}\\
+\nu\left(\frac{\partial\boldsymbol{\omega}}{\partial z}\right)_{0} & =\left\{ 0,-\left[-\frac{1}{\rho}\frac{\partial\boldsymbol{p}}{\partial x}+\frac{d\boldsymbol{U}}{dt}\right],0\right\} _{0}\tag{5b}\nonumber \\
+-v\boldsymbol{n}\cdot\nabla\boldsymbol{\omega} & =-\boldsymbol{n}\times\left(\nabla\boldsymbol{P}+\boldsymbol{a}\right)\tag{5c}\nonumber 
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Project Aims
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 This project
 \end_layout
 
@@ -323,16 +521,233 @@ This project will explore the vortex generation around an airfoil during
 n mechanism.
 \end_layout
 
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
-Aims
+Work Complete
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+40/80 ~ 5 Pages
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Methodology
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
-\begin{align}
-\frac{\partial\boldsymbol{u}}{\partial t}+\boldsymbol{u}\cdot\nabla\boldsymbol{u} & =-\frac{1}{\rho}\nabla\rho+\frac{1}{\text{Re}}\nabla^{2}\boldsymbol{u}-\boldsymbol{a},\qquad\nabla\cdot\boldsymbol{u}=0\\
--v\boldsymbol{n}\cdot\nabla\boldsymbol{\omega} & =-\boldsymbol{n}\times\left(\nabla\boldsymbol{P}+\boldsymbol{a}\right)
-\end{align}
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Methodology
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The scope of this project will be limited to two dimensional flows to reflect
+ the initial Prandtl experiments and compare results to established literature.
+ For similar reasons, low Reynolds numbers will be used, specifically between
+ 1,000 and 10,000.
+ Finally, the initial analysis will be limited to numerical simulations
+ of a single airfoil, NACA0012, at a single angle of attack, 4 degrees.
+ While this does reduce the capacity of this project it does reduce the
+ computational resources required which allows for much finer investigation
+ of time, Reynolds number, pressure gradient, acceleration and vorticity.
+ The equations to be numerically solved are the two-dimensional incompressible
+ Navier-Stokes equations in the acceleration reference frame shown in Equation
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+
+ and the vorticity strength in the inertial reference frame at the surface
+ of the airfoil shown in Equation 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+
+ (Morton 1984).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Stuff about interpolation and trailing edges etc; possible discontinuities
+ across boundaries and splitting by elements
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Quality and Extent of Work
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Results
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Analysis
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Include something about getting the same results as Vincent 2014?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+For my variable h, try cut it down by 1/2 and see what the results are,
+ if any better
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Plot of different finite difference schemes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Results
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Limitations
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Limitation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Work Planned
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+20/80 ~ 2.5 Pages
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Project Plan
+\end_layout
+
+\begin_layout Subsection
+Timeline
+\end_layout
+
+\begin_layout Section
+Conclusion
+\end_layout
+
+\begin_layout Section
+\start_of_appendix
+References
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+5/80 ~0.625
+\end_layout
 
 \end_inset
 
