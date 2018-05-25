@@ -112,7 +112,7 @@ AirfoilSpline <- function(long_wall, x = "x", y = "y", theta = "theta") {
 
 #--- Airfoil Offset ----
 # Calculate distances from the surfaces (maybe requires analysis of one airfoil mesh)
-AirfoilOffset <- function(long, totdist = 0.008, nsteps = 5, varh = TRUE) {
+AirfoilOffset <- function(long, totdist = 0.008, nsteps = 5, varh = TRUE, scale) {
   # Use the cross product to determine the outward normal
   offset <- long$threaddata %>%
     filter(wall) %>%
@@ -132,7 +132,7 @@ AirfoilOffset <- function(long, totdist = 0.008, nsteps = 5, varh = TRUE) {
   # Determine each of the distances
   offset <- offset %>%
     mutate(
-      offseth = ifelse(is.na(aveh) | !varh, totdist, aveh),
+      offseth = ifelse(is.na(aveh) | !varh, totdist, aveh)*scale,
       norm = offseth*nstep/nsteps,
       x = x + dirx*norm,
       y = y + diry*norm) %>%

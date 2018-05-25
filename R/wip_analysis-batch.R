@@ -100,10 +100,17 @@ BatchLoadMesh <- function(meshval, airfoillist) {
     long$threaddata, select(long$local, -nnum))
   # Offset
   long$offset <- AirfoilOffset(long,                              # Create df of offset points from surface
-                               totdist = 0.008, varh = TRUE)
+                               totdist = 0.008, 
+                               varh = TRUE, scale = 1)
   long <- AirfoilOffsetEnum(long)                                 # Update enum values of the offset points
+  # Plot
+  # ggplot() +
+  #   geom_path(aes(x, y, group = snum), long$offset) +
+  #   geom_point(aes(x, y, group = snum), long$offset, shape = 'o') +
+  #   geom_path(aes(x, y), long$walldata) +
+  #   coord_fixed()
   #--- Airfoil Transform                                          ----
-  long <- AirfoilTransform(long, localnum = 2)
+  # long <- AirfoilTransform(long, localnum = 2)
   # Do some plots and save them to png
   #--- Clean up and Return                                        ----
   # Clean up
