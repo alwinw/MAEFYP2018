@@ -16,6 +16,11 @@
 \emergencystretch=\maxdimen
 \hyphenpenalty=10000
 \hbadness=10000
+
+\fancyhead[L]{\emph{Final Year Project 2018\\ Progress Report}}
+\fancyhead[R]{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
@@ -82,7 +87,7 @@
 \color #008000
 \end_index
 \leftmargin 1in
-\topmargin 1in
+\topmargin 1.1in
 \rightmargin 1in
 \bottommargin 1in
 \secnumdepth 3
@@ -95,7 +100,7 @@
 \dynamic_quotes 0
 \papercolumns 1
 \papersides 1
-\paperpagestyle default
+\paperpagestyle fancy
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -263,36 +268,120 @@ Although vorticity is not a primary variable in fluid dynamics, it is an
  by relating the lift per unit span and circulation – the flux of vorticity
  (Anderson 2011).
  Used in conjunction with Kelvin's circulation theorem (shown in Figure
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Ref
-\end_layout
-
-\end_inset
-
-), many fundamental textbooks relate the generation of circulation around
+ 1a), many fundamental textbooks relate the generation of circulation around
  an airfoil to the starting and stopping vortices at the trailing edge produced
  by large velocity gradients (Anderson 2011, Torenbeek 2009).
- Figure 
-\begin_inset Note Note
+ Figure 1b shows these stating and stopping vortices as observed in experiments
+ by Prandtl, Tietjens and Müller (1957) over 80 years ago.
+\begin_inset Float figure
+wide false
+sideways false
 status open
 
 \begin_layout Plain Layout
-Ref
+\noindent
+\align center
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Kelvin Starting Vortex.png
+	lyxscale 50
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Circulation around an airfoil in inviscid incompressible flow (Anderson,
+ 2011)
 \end_layout
 
 \end_inset
 
- shows these stating and stopping vortices as observed in experiments by
- Prandtl, Tietjens and Müller (1957) over 80 years ago.
-\begin_inset Formula 
-\begin{gather}
-L'=\rho_{\infty}V_{\infty}\Gamma\\
-\Gamma\equiv-\ointop_{A}\boldsymbol{V}\cdot\text{d}\boldsymbol{s}=-\iintop_{S}\left(\nabla\times\boldsymbol{V}\right)\cdot\text{d}\boldsymbol{S}=-\iintop_{S}\boldsymbol{\omega}\cdot\text{d}\boldsymbol{S}
-\end{gather}
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Prandtl Starting Stopping Vortex.png
+	lyxscale 50
+	width 45text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Snapshot from Prandtl's flow visualisation film of a transient lifting airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Vortex shedding from 2D airfoils
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
 
 \end_inset
 
@@ -303,6 +392,15 @@ status open
 \begin_layout Plain Layout
 Figure
 \end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{gather}
+L'=\rho_{\infty}V_{\infty}\Gamma\\
+\Gamma\equiv-\ointop_{A}\boldsymbol{V}\cdot\text{d}\boldsymbol{s}=-\iintop_{S}\left(\nabla\times\boldsymbol{V}\right)\cdot\text{d}\boldsymbol{S}=-\iintop_{S}\boldsymbol{\omega}\cdot\text{d}\boldsymbol{S}
+\end{gather}
 
 \end_inset
 
@@ -386,18 +484,10 @@ Vorticity Generation Equation
 \end_layout
 
 \begin_layout Standard
-As such, the Navier-Stokes equation (shown in Equation 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-3
-\end_layout
-
-\end_inset
-
-) can be reduced to the case of a wall moving in its own plane for an infinitesi
-mally small region on the airfoil as described by Morton (1984).
+As such, the Navier-Stokes equation (shown in Equation 3) can be reduced
+ to the case of a wall moving in its own plane for an infinitesimally small
+ region on the airfoil (coordinate system defined in Figure 2) as described
+ by Morton (1984).
  The boundary conditions for the Navier-Stokes equation were found by using
  
 \begin_inset Formula $\boldsymbol{V}=\left\{ U\left(t\right),0\right\} $
@@ -417,39 +507,9 @@ mally small region on the airfoil as described by Morton (1984).
 \end_inset
 
  for the fluid at the wall and there is no spatial variation of the boundary
- motion (Equation 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-4
-\end_layout
-
-\end_inset
-
-).
- Substitution into the Navier-Stokes equation at the boundary gives Equation
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-5a
-\end_layout
-
-\end_inset
-
- which can be simplified to 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-5b-c
-\end_layout
-
-\end_inset
-
- (Morton, 1984).
+ motion (shown in Equation 4).
+ Substitution into the Navier-Stokes equation at the boundary yields Equation
+ 5a which can be simplified to Equations 5b and 5c (Morton, 1984).
 \end_layout
 
 \begin_layout Standard
@@ -458,6 +518,39 @@ status open
 
 \begin_layout Plain Layout
 Include image from Morton
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Morton Axis Definition.png
+	lyxscale 50
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Definition of coordinate system (Morton, 1984)
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -512,13 +605,13 @@ This project will explore the vortex generation around an airfoil during
  The first aspect of this project will require a literature review to appreciate
  the various phenomena already recorded and recreate them in a numerical
  simulation.
- The next aspect of the investigation will involve varying parameters such
+ The next aspect of this project will analyse the contributions of the two
+ vorticity generation mechanisms for various regions of the airfoil surface
+ (Equation 5c) and how variables such as Reynolds number and acceleration
+ affect the generation mechanism.
+ The last aspect of the investigation will involve varying parameters such
  as the Reynolds number and calculating the strengths of various vortices
  produced around the airfoil by evaluating Equation 2.
- The last aspect of this project will analyse the contributions of the two
- vorticity generation mechanisms for various regions of the airfoil surface
- and how variables such as Reynolds number and acceleration affect the generatio
-n mechanism.
 \end_layout
 
 \begin_layout Standard
@@ -567,7 +660,7 @@ Methodology
 The scope of this project will be limited to two dimensional flows to reflect
  the initial Prandtl experiments and compare results to established literature.
  For similar reasons, low Reynolds numbers will be used, specifically between
- 1,000 and 10,000.
+ 1,000 and 50,000.
  Finally, the initial analysis will be limited to numerical simulations
  of a single airfoil, NACA0012, at a single angle of attack, 4 degrees.
  While this does reduce the capacity of this project it does reduce the
@@ -575,28 +668,290 @@ The scope of this project will be limited to two dimensional flows to reflect
  of time, Reynolds number, pressure gradient, acceleration and vorticity.
  The equations to be numerically solved are the two-dimensional incompressible
  Navier-Stokes equations in the acceleration reference frame shown in Equation
+ 3 and the vorticity strength in the inertial reference frame at the surface
+ of the airfoil shown in Equation 5b (Morton 1984).
+\end_layout
+
+\begin_layout Standard
+Figure 3 shows the mesh used in the initial analysis of the NACA0012 at
+ an angle of attack 4 degrees.
+ This mesh is the same as the mesh used by Vincent 2014 and was used as
+ a baseline to ensure the same results were obtained before moving to further
+ detailed analysis.
  
-\begin_inset Note Note
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
 status open
 
 \begin_layout Plain Layout
-3
+\noindent
+\align center
+\begin_inset Graphics
+	filename Mesh Local All.png
+	lyxscale 50
+	width 95text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Mesh for NACA0012 at angle of attack 4 degrees (mesh source: Vincent, 2014)
 \end_layout
 
 \end_inset
 
- and the vorticity strength in the inertial reference frame at the surface
- of the airfoil shown in Equation 
-\begin_inset Note Note
-status open
 
-\begin_layout Plain Layout
-4
 \end_layout
 
 \end_inset
 
- (Morton 1984).
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Mesh Local LE.png
+	lyxscale 25
+	height 35text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Leading Edge
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Mesh Local TE.png
+	lyxscale 25
+	height 35text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Trailing Edge
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Output of 4
+\begin_inset script superscript
+
+\begin_layout Plain Layout
+th
+\end_layout
+
+\end_inset
+
+ order polynomial mesh overlaid on session file of defined elements and
+ nodes in the semtex session file
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From Equation 5b it was evident that the gradients of the vorticity and
+ pressure were required.
+ However, from figure 4 it was evident that the mesh was not constructed
+ such that mesh lines were tangential and orthogonal to the airfoil surface.
+ For the initial analysis it was decided that points normal to the surface
+ would be taken and the value of vorticity interpolated using a bicubic
+ spline method.
+ These points would then be used to estimate 
+\begin_inset Formula $\left(\frac{\partial\boldsymbol{\omega}}{\partial z}\right)_{0}$
+\end_inset
+
+ using a one-sided finite difference method for five equally spaced points,
+ 
+\begin_inset Formula $z_{0},z_{+1},\ldots,z_{+4}$
+\end_inset
+
+, such that the error would be similar in magnitude to the polynomial order
+ chosen (shown in Equation 6) (Fornberg, 1988).
+\begin_inset VSpace -0.9em
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\boldsymbol{\omega}}{\partial z}\left(z_{0}\right)\approx\frac{-\frac{25}{12}\boldsymbol{\omega}\left(z_{0}\right)+4\boldsymbol{\omega}\left(z_{+1}\right)-3\boldsymbol{\omega}\left(z_{+2}\right)+\frac{4}{3}\boldsymbol{\omega}\left(z_{+3}\right)-\frac{1}{4}\boldsymbol{\omega}\left(z_{+4}\right)}{h}+O\left(h_{z}^{4}\right)
+\end{equation}
+
+\end_inset
+
+For the bicubic interpolate of points, 
+\begin_inset Formula $z_{0},z_{+1},\ldots,z_{+4}$
+\end_inset
+
+, it was quickly discovered that the interpolation would not provide accurate
+ results at the trailing edge.
+ This was because a triangulation algorithm was used to determine the interpolat
+ion for irregularly spaced data.
+ As such, a point that lay in an element on the lower surface, e.g.
+ element 336, may use point(s) from the upper surface, e.g.
+ element 143, as part of the triangulation.
+ 
+\end_layout
+
+\begin_layout Standard
+One solution to this problem was to transform the field properties (
+\begin_inset Formula $x,y,u,v,p,\omega$
+\end_inset
+
+) into a coordinate system normal and tangential to the surface of the airfoil
+ before interpolation.
+ However, it was found that this coordinate transformed introduced too much
+ error as shown in Figure 5.
+ The solution for this problem was to use a point-in-polygon algorithm (O'Rourke
+, 1998) to first determine which element a point lay in.
+ When the interpolation was run, only the points within that element would
+ be used in the interpolation.
+ While this prevented `wrong' points being used, it did not guarantee smooth
+ results at the boundary of elements.
+\end_layout
+
+\begin_layout Standard
+An estimate of the interpolation error was determined by using the interpolated
+ values to estimate the value of 
+\begin_inset Formula $\omega$
+\end_inset
+
+ on the original mesh points 
+\begin_inset Formula $\left(x,y\right)$
+\end_inset
+
+.
+ These results were consistent with Figure 5, if the field was first transformed
+ into a normal and tangential grid (similar to conformal mapping), the average
+ error was 204.4% with standard deviation 5923.1% whereas interpolating on
+ each element individually gave an average error of -1.13 % with standard
+ deviation 76.6% (for this particular time step).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Interpolation Comparison.png
+	lyxscale 50
+	width 88text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison of two interpolation methods at 
+\begin_inset Formula $t=0.1$
+\end_inset
+
+ for 
+\begin_inset Formula $Re=10,000$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -626,8 +981,147 @@ Quality and Extent of Work
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Results
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename combined1.png
+	lyxscale 15
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Impulsively started flow at 
+\begin_inset Formula $t=0.86$
+\end_inset
+
+, 
+\begin_inset Formula $Re=10,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename combined2.png
+	lyxscale 15
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Non-Impulsively started flow at 
+\begin_inset Formula $t=0.91$
+\end_inset
+
+, 
+\begin_inset Formula $Re=10,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename combined3.png
+	lyxscale 15
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Non-Impulsively started flow at 
+\begin_inset Formula $t=0.91$
+\end_inset
+
+, 
+\begin_inset Formula $Re=1,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -713,6 +1207,24 @@ Limitation
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Work Planned
 \begin_inset Note Note
@@ -729,6 +1241,24 @@ status open
 
 \begin_layout Subsection
 Project Plan
+\end_layout
+
+\begin_layout Standard
+Unfortunately, there is still a large amount of work remaining.
+ While progress has been on track with the initial plan in the project proposal,
+ the difficulties in accurately estimating the vorticity and pressure gradients
+ is a significant setback.
+\end_layout
+
+\begin_layout Standard
+The next major focus will be to try to incorporate the post-processing into
+ semtex as an additional utility function.
+ This will require an understanding of semtex's inner workings and spectral
+ elements methods.
+ However, by using the piecewise polynomial basis functions in the Galerkin
+ method, it should result in a more accurate estimation.
+ Care should be taken at the boundaries of elements as it is not guaranteed
+ that the vorticity (or other derived quantities) will be constant).
 \end_layout
 
 \begin_layout Subsection
@@ -752,6 +1282,17 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Fornberg, Bengt (1988), "Generation of Finite Difference Formulas on Arbitrarily
+ Spaced Grids", Mathematics of Computation, 51 (184): 699–706, doi:10.1090/S0025-
+5718-1988-0935077-0, ISSN 0025-5718.
+\end_layout
+
+\begin_layout Standard
+O'Rourke, Joseph (1998), Computational Geometry in C 2nd Ed.
+ 
 \end_layout
 
 \end_body
