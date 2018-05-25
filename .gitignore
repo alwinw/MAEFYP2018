@@ -19,6 +19,7 @@
 
 # RStudio files
 .Rproj.user/
+.Rproj.user
 
 # produced vignettes
 vignettes/*.html
@@ -44,7 +45,11 @@ rsconnect/
 *.dump
 *.fld
 *.flddump
+*.flx
+*.mdl
 *.vfld
+*.num
+*.rst
 *.png
 *.gif
 
@@ -83,4 +88,3 @@ rsconnect/
 *.exe
 *.out
 *.app
-.Rproj.user

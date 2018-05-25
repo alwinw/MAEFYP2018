@@ -22,11 +22,15 @@ echo $oldpwd
 folder=../session-files/
 cd $folder
 
+# Copy session files to the ouput location
+output=../session-output/
+cp -r */ $output
+cd $output
+echo $(pwd)
+
 #--- Loop Over Airfoils in Folder ----
-# Airfoil folders
-airfoils=*/
 # Loop over airfoils
-for airfoil in $airfoils; do
+for airfoil in */; do
   echo
   echo "#============================"
   # Echo airfoil name
@@ -35,39 +39,37 @@ for airfoil in $airfoils; do
   cd $airfoil
   echo " > Entering $(pwd)"
   #--- Loop Over Files in Folder ----
-  # Session files
-  sessionfiles=*.sesh
   # Loop over session files
-  for sessionfile in $sessionfiles; do
+  for sessionfile in *.sesh; do
     echo "#----------------------------"    
     # Remove extension
-    f="${sessionfile%.*}"                               && echo "   Found $f"             &&
+    f="${sessionfile%.*}"                               && echo "   Found $f"               &&
       # Copy to extensionless file
-      # Perhaps consider coping to a different folder
-      cp $sessionfile "$f"                              && echo "   > Copy Made"          &&
+      cp $sessionfile "$f"                              && echo "   > Copy Made"            &&
       # Generate the mesh
-      meshpr $f > "$f.msh"                              && echo "   > Meshpr Finished"    &&
+      meshpr $f > "$f.msh"                              && echo "   > Meshpr Finished"      &&
       # Add extra mesh info
-      meshpr -i $f > "$f.mshi"                          && echo "   > Meshpr -i Finished" &&
+      meshpr -i $f > "$f.mshi"                          && echo "   > Meshpr -i Finished"   &&
       # Enumerate
-      enumerate $f > "$f.num"                           && echo "   > Enumerate Finished" &&
+      enumerate $f > "$f.num"                           && echo "   > Enumerate Finished"   &&
       # Compare
-      compare $f > "$f.rst"                             && echo "   > Compare Finished"   &&
+      compare $f > "$f.rst"                             && echo "   > Compare Finished"     &&
       # Generate wall mesh
-      wallmesh $f "$f.msh" > "$f.wallmsh"               && echo "   > Wall Mesh Finished" &&
+      wallmesh $f "$f.msh" > "$f.wallmsh"               && echo "   > Wall Mesh Finished"   &&
       # dns (verbosity -v turned off);
       # use > /dev/null to hide stdout and 2>&1 to hide stderror as well
-      dns $f | grep "Divergence Energy:"                && echo "   > DNS Finished"       &&
+      dns $f | grep "Divergence Energy:"                && echo "   > DNS Finished"         &&
       # Add vorticity field t
       # Note: new field file CANNOT be the same as the original one (else 0)
-      addfield -v -s $f "$f.fld" > "$f.vfld"            && echo "   > Vorticity Added"    &&
+      addfield -v -s $f "$f.fld" > "$f.vfld"            && echo "   > Vorticity Added"      &&
       # Convert to ascii
-      convert "$f.vfld" > "$f.flddump"                  && echo "   > Convert Finished"   &&
+      convert "$f.vfld" > "$f.flddump"                  && echo "   > Convert Finished"     &&
       # Split the output file
-      csplit -z "$f.flddump" /Session/ {*} >/dev/null   && echo "   > Split Finished"     &&
+      csplit -z "$f.flddump" /Session/ '{*}' >/dev/null && echo "   > Split Finished"       &&
       # Remove unneded dump file
-      rm "$f.flddump"                                   && echo "   > ASCII dump removed" &&
-      rm "$f.fld"                                       && echo "   > Field dump removed" &&
+      rm "$f.flddump"                                   && echo "   > ASCII dump removed"   &&
+      rm "$f.fld"                                       && echo "   > Field dump removed"   &&
+      rm "$f.vfld"                                      && echo "   > V Field dump removed" &&
       # Rename split files
       for i in [xx]*; do 
         mv $i "$f-${i#*xx}.dump"; done                  && echo "   > Renamed Finished"
