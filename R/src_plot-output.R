@@ -8,7 +8,7 @@ theme_set(theme_bw())                                           # Set black and 
 spectralpalette <- colorRampPalette(rev(brewer.pal(11, "Spectral")))
 
 #--- Plot N-S LHS vs RHS ----
-PlotNS <- function(dump, dumpval, long, save = TRUE) { # Handle some output variable for path
+PlotNS <- function(dump, dumpval, long, save = TRUE, saveplot = NULL) {
   # Vertical Lines
   plot_vline <- data.frame(                                       # LE, TE, LE limits for vertical lines
     te_up = min(long$walldata$s),
@@ -28,7 +28,7 @@ PlotNS <- function(dump, dumpval, long, save = TRUE) { # Handle some output vari
   # Title
   plot_title <- paste(
     dumpval$airfoil,
-    paste("Kinematic Viscosity:", format(dump$kinvis, scientific = FALSE)),
+    paste("Kinematic Viscosity:", sprintf("%.4f", dump$kinvis)),
     paste("Time:", sprintf("%4.2f", dump$time)),
     paste("Acceleration:", sprintf("%+6.3f", dump$acceleration)),
     sep = "\n")
@@ -79,7 +79,7 @@ PlotNS <- function(dump, dumpval, long, save = TRUE) { # Handle some output vari
     ggtitle(plot_title)
   # Save plot
   if (save) {
-    plotpath = paste0("../output-plot", "/", dumpval$airfoil, "_", dumpval$seshname)
+    plotpath = paste0(saveplot, "/", dumpval$airfoil, "_", dumpval$seshname)
     if (!dir.exists(plotpath)) dir.create(plotpath, recursive = TRUE)
     ggsave(paste0(plot_filename, ".png"), plot_NS, path = plotpath,
            width = 8, height = 7)
@@ -91,7 +91,7 @@ PlotNS <- function(dump, dumpval, long, save = TRUE) { # Handle some output vari
 }
 
 #--- Plot Acceleration ----
-PlotAccel <- function(dump, dumpval,save = TRUE) {
+PlotAccel <- function(dump, dumpval, save = TRUE, saveplot = NULL) {
   # ASSUME the time is 0 to 2 which may NOT always be the case
   plot_filename <- paste(
     dumpval$ID,
@@ -108,7 +108,7 @@ PlotAccel <- function(dump, dumpval,save = TRUE) {
                colour = "blue")
   # Save plot
   if (save) {
-    plotpath = paste0("../output-plot", "/", dumpval$airfoil, "_", dumpval$seshname)
+    plotpath = paste0(saveplot, "/", dumpval$airfoil, "_", dumpval$seshname)
     if (!dir.exists(plotpath)) dir.create(plotpath, recursive = TRUE)
     ggsave(paste0(plot_filename, ".png"), plot_accel, path = plotpath,
            width = 6, height = 2)
@@ -121,7 +121,7 @@ PlotAccel <- function(dump, dumpval,save = TRUE) {
 
 
 #--- Plot Leading Edge ----
-PlotLE <- function(dump, dumpval, save = TRUE) {
+PlotLE <- function(dump, dumpval, save = TRUE, saveplot = NULL) {
   # Mesh to interpolate over
   n = 250
   plot_le_df = data.frame(
@@ -203,7 +203,7 @@ PlotLE <- function(dump, dumpval, save = TRUE) {
   
   # Save plot
   if (save) {
-    plotpath = paste0("../output-plot", "/", dumpval$airfoil, "_", dumpval$seshname)
+    plotpath = paste0(saveplot, "/", dumpval$airfoil, "_", dumpval$seshname)
     if (!dir.exists(plotpath)) dir.create(plotpath, recursive = TRUE)
     ggsave(paste0(plot_filename, ".png"), plot_le, path = plotpath,
            width = 6, height = 5)

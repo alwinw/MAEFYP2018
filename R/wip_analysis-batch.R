@@ -17,15 +17,15 @@ source("src_plot-output.R")                                     # Plots to outpu
 theme_set(theme_bw())                                           # Set black and white theme
 spectralpalette <- colorRampPalette(rev(brewer.pal(11, "Spectral")))
 # Output Location
-saveplot = "../output-plot"
+saveplot = "../plot-output"
 # savedata = "Output_Data"
 if (!dir.exists(saveplot)) dir.create(saveplot, recursive = TRUE)
 # if (!file.info(savedata)$isdir) dir.create(savedata, recursive = TRUE)
 # logfile = paste0(format(Sys.time(), "%Y-%m-%dT%H.%M.%S"), ".txt")
 
 #--- List of Session FIles                                        ----
-batchfolder = "../session-files"                                # Path to session files
-batchlist <- ListSesh(batchfolder)                              # List sessionfiles in folder
+batchfolder = "../session-output"                               # Path to session files
+batchdf <- ListSesh(batchfolder)                                # Dataframe of session files in folder
 
 # Check if all file types exist, if not then call bash script
 
@@ -53,12 +53,13 @@ BatchLoadAirfoil <- function(airfoilval) {                      # airfoilval = a
 }
 
 # Iterate over list of airfoils list to load data
-airfoillist <- split(batchlist, batchlist$airfoil)              # Determine unique airfoil types
+airfoillist <- split(batchdf, batchdf$airfoil)                  # Determine unique airfoil types
 airfoillist <- lapply(airfoillist, function(x) x[1,])           # Take only the first row in each
 # airfoillist <- lapply(airfoillist, BatchLoadAirfoil)
 cl <- makeCluster(detectCores())                                # Start the cluster
-clusterExport(cl, c("airfoillist", "BatchLoadAirfoil"))         # Export objects into the cluster
-airfoillist <- pblapply(airfoillist, BatchLoadAirfoil, cl = cl) # Load airfoil data from each airfoil
+  clusterExport(cl, c("airfoillist", "BatchLoadAirfoil"))         # Export objects into the cluster
+  airfoillistout <- pblapply(airfoillist, BatchLoadAirfoil,       # Load airfoil data from each airfoil
+                            cl = cl) 
 stopCluster(cl)                                                 # Stop the cluster
 
 #--- Session and Mesh Calculation                                 ----
@@ -120,24 +121,24 @@ BatchLoadMesh <- function(meshval, airfoillist) {
 
 # Load session info e.g. tokenwords = list("N_P", "N_Z")
 tokenwords = list("N_P")                                        # Find unique bndry and knot N values
-batchlist <- batchlist %>%
+meshdf <- batchdf %>%
   rowwise() %>%
   do(data.frame(., LoadSeshTokenWords(.$seshpath, tokenwords),
                 stringsAsFactors = FALSE)) %>%
   mutate(ID = paste(airfoil, 
                     paste0(tokenword, tokenvalue), sep = "-"))  # This CANNOT handle multiple token words...
-meshlist <- split(batchlist, batchlist$ID)                      # Unique airfoil and N_P
+meshlist <- split(meshdf, meshdf$ID)                            # Unique airfoil and N_P
 meshlist <- lapply(meshlist, function(x) x[1,])                 # Take only the first row in each
 # meshlist <- lapply(meshlist, BatchLoadMesh)
 cl <- makeCluster(detectCores())                                # Start the cluster
-clusterExport(cl, c("meshlist", "BatchLoadMesh"))               # Export objects into the cluster
-meshlist <- pblapply(meshlist, BatchLoadMesh,                   # Load airfoil data from each airfoil
-                     airfoillist, cl = cl)
+  clusterExport(cl, c("meshlist", "BatchLoadMesh"))               # Export objects into the cluster
+  meshlistout <- pblapply(meshlist, BatchLoadMesh,                # Load airfoil data from each airfoil
+                       airfoillistout, cl = cl)
 stopCluster(cl)                                                 # Stop the cluster
 
 #--- Dump File List                                               ----
 # Function to load and process dump files
-BatchLoadDump <- function(dumpval, meshlistin) {              # dumpval = dumplist[[5]]; meshlistin = meshlist
+BatchLoadDump <- function(dumpval, meshlistin, saveplot) {      # dumpval = dumplist[[5]]; meshlistin = meshlistout
   source("src_library-manager.R")                                 # Call libraries and install missing ones
   source("src_numerical-methods.R")                               # Load custom numerical methods
   source("src_load-files.R")                                      # Load data
@@ -171,30 +172,27 @@ BatchLoadDump <- function(dumpval, meshlistin) {              # dumpval = dumpli
   #--- Plot Output                                                  ----
   # Should save to indivial folders based on ID
   # Plot acceleration curve
-  PlotAccel(dump, dumpval, save = TRUE)
+  PlotAccel(dump, dumpval, save = TRUE, saveplot)
   # Plot N-S for LHS vs RHS
-  PlotNS(dump, dumpval, long, save = TRUE)
+  PlotNS(dump, dumpval, long, save = TRUE, saveplot)
   # Plot leading edge
-  PlotLE(dump, dumpval, save = TRUE)
+  PlotLE(dump, dumpval, save = TRUE, saveplot)
   
   # Return the output (turned off temporarily)
   return(NULL)
 }
 # Process batch list
-batchlist <- batchlist %>%                                      # Determine dump list
+dumpdf <- meshdf %>%                                            # Determine dump dataframe
   rowwise() %>% 
   do(data.frame(., dumpfile = ListDump(.$folder, .$seshname),
                 stringsAsFactors = FALSE)) %>%
   mutate(dumppath = paste0(folder, dumpfile))
-dumplist <- split(batchlist, batchlist$dumppath)                # Create thread list
+dumplist <- split(dumpdf, dumpdf$dumppath)                      # Create dump list
 # Testing, shortern dump list
-# dumplist <- dumplist[1:8]
+dumplist <- dumplist[1:8]
 # dumplist <- lapply(dumplist, BatchLoadDump)
 cl <- makeCluster(detectCores())                                # Start the cluster
-clusterExport(cl, c("dumplist", "BatchLoadDump"))               # Export objects into the cluster
-dumplist <- pblapply(dumplist, BatchLoadDump,                   # Load airfoil data from each airfoil
-                     meshlist, cl = cl)
+  clusterExport(cl, c("dumplist", "BatchLoadDump", "saveplot"))   # Export objects into the cluster
+  dumplistout <- pblapply(dumplist, BatchLoadDump,                # Load airfoil data from each airfoil
+                       meshlistout, saveplot, cl = cl)
 stopCluster(cl)    
-
-# Clean up large files
-rm(dumplist)
