@@ -44,6 +44,7 @@ long_wall <- AirfoilLongWall(wallmsh)                           # Airfoil data -
 long_wall <- AirfoilSpline(long_wall)                           # Determine spline distance
 
 # Add a leading edge and trailing edge dataframe and s for upper LE --> upper TE and lower LE --> lower TE
+# Maybe derotate the chord line to get horizontal location along the airfoil
 
 # Return the output as a list
 airfoillistout <- list(
@@ -110,7 +111,7 @@ dumpdf <- meshdf %>%                                            # Determine dump
 dumplist <- split(dumpdf, dumpdf$dumppath)                      # Create dump list
 # Function to load and process dump files
 # dumpval <- dumplist[[1202]]
-dumpval <- dumplist[[350]]
+dumpval <- dumplist[[391]]
 # Long Mesh Data
 long <- meshlistout                                             # HARD CODED FOR SINGLE ANALYSIS!!!!!!!!!!!!
 # Dump Data
@@ -127,16 +128,84 @@ dump$threaddata = LongJoin(dump$threaddata, dump$pres)          # Join with rest
 # Vorticity Interpolation
 # Offset
 long$offset <- AirfoilOffset(                                   # Create df of offset points from surface
-  long, totdist = 0.008, varh = TRUE, scale = 0.5)
+  long, totdist = 0.008, varh = TRUE, scale = 0.25)
 long <- AirfoilOffsetEnum(long)                                 # Update enum values of the offset points
 dump$offset = long$offset                                       # Initialise the offset for interpolation
 dump <- DumpVortElements(dump, localval = 3, var = "t")         # Interpolate using each element
+# Derivatives
+dump$offset <- FiniteDiff(dump$offset, "t_enum")                # Calculate derivative using each element
 
 # Determine inflow velocity
 # Determine Cp graph
 
-# Derivatives
-dump$offset <- FiniteDiff(dump$offset, "t_enum")                # Calculate derivative using each element
+surface <- dump$threaddata %>%                           # Initiate plot with threaddata
+  filter(wall) %>% arrange(s) %>%
+  select(-z, -elabx, -elaby, -area, -wall, -dxds, -dyds, -dydx,
+         -dydxlen, -base, -aveh, -ar, -local) %>%
+  mutate()
+surface <- LongJoin(surface, dump$offset %>% select(s, t_enum_diff) %>% unique(.)) 
+
+surface <- surface %>%
+  mutate(LHS = - accels + dpds,
+         RHS = t_enum_diff*dump$kinvis,
+         error = (RHS - LHS)/RHS * 100)
+
+velocity <- rbind(
+  cbind(filter(dump$threaddata, x == min(dump$threaddata$x)), inflow = TRUE),
+  cbind(filter(dump$threaddata, x == max(dump$threaddata$x)), inflow = FALSE))
+
+ggplot(velocity, aes(u, y, group = inflow, colour = inflow)) +
+  geom_point() +
+  geom_path()
+#+
+  # facet_wrap(~ifelse(inflow, "inflow", "outflow"))
+
+summary <- data.frame(
+  x = c(2.5, 3),
+  y = rep(-90, 2),
+  labels = c(paste("median:", sprintf("%.2f%%", median(filter(surface, up)$error)), "\n",
+                   "iqr:", sprintf("%.2f%%", IQR(filter(surface, up)$error))),
+             paste("median:", sprintf("%.2f%%", median(filter(surface, !up)$error)), "\n",
+                   "iqr:", sprintf("%.2f%%", IQR(filter(surface, !up)$error)))))
+
+plot_vline <- data.frame(                                       # LE, TE, LE limits for vertical lines
+  te_up = min(long$walldata$s),
+  le = long$walldata[long$walldata$theta == pi,]$s[1],
+  te_lo = max(long$walldata$s))
+plot_surf <- data.frame(                                        # Labels for surfaces
+  x = c(plot_vline$te_up,
+        (plot_vline$te_up + plot_vline$le)/2,
+        plot_vline$le,
+        (plot_vline$le + plot_vline$te_lo)/2,
+        plot_vline$te_lo),
+  y = rep(-100, 5),
+  labels = c("TE", "Upper Surface", "LE", "Lower Surface", "TE"))
+plot_xbreaks <-                                                 # Breaks in x axis
+  c(seq(plot_vline$te_up, plot_vline$le, length.out = 3)[1:2],
+    seq(plot_vline$le, plot_vline$te_lo, length.out = 3))
+plot_xlabs <- sprintf("%.2f", plot_xbreaks)
+plot_xbreaks <- c(plot_xbreaks, 2.5, 3)
+plot_xlabs <- c(plot_xlabs, "Uppper", "Lower")
+
+ggplot(surface) +
+  geom_vline(xintercept = as.numeric(plot_vline),               # Vertical lines for LE, TE, LE
+             colour = "grey", linetype = "dashed") +
+  geom_col(aes(s, error, fill = up)) +
+  geom_boxplot(aes(as.numeric(up)*-0.5 + 3, error, colour = up),
+               outlier.shape = "x") +
+  geom_label(aes(x, y, label = labels), plot_surf,              # Surface labels
+             colour = "grey40") +
+  geom_label(aes(x, y, label = labels), summary,                # Summary labels
+             colour = "grey40") +
+  scale_x_continuous(breaks = plot_xbreaks, 
+                     labels = plot_xlabs) +
+  coord_cartesian(ylim = c(-100, 100)) +
+  ylab(expression(frac(RHS - LHS, RHS)%*%100~"%")) +
+  guides(fill = FALSE, colour = FALSE) +
+  theme(axis.title.y = element_text(margin = margin(t = 0, r = -10, b = 0, l = 0)))
+
+ggplot(surface, aes(s, p, colour = up)) +
+  geom_path()
 
 
 #--- Plot N-S LHS vs RHS                                          ----
@@ -257,19 +326,19 @@ PlotContourBreak <- function(max, step) seq(-max, max, by = step)[seq(-max, max,
 
 plot_le <- ggplot(plot_le_interp) +
   # Vorticity tile
-  geom_tile(aes(x, y, fill = PlotScaleLimit(t, 200))) +
+  geom_tile(aes(x, y, fill = PlotScaleLimit(t, 200)), alpha = 0.8) +
   # Original Points
   # geom_point(aes(x, y, fill = PlotScaleLimit(t, 200)), 
              # shape = 23, colour = "white",
              # data = plot_full_df) +
   # Original Mesh
   geom_polygon(aes(x, y, group = enum), 
-               fill = NA, colour = "white", alpha = 0.1, linetype = "1616",
+               fill = NA, colour = "grey90", alpha = 0.1, linetype = "1616",
                data = plot_full_df %>% filter(!is.na(nnum)) %>% arrange(enum, ncorner)) +
   # Vorticity contours
   # stat_contour(aes(x, y, z = t, fill = ..level..), geom = "polygon", alpha =1,
   # breaks = PlotContourBreak(200, 10)) +
-  stat_contour(aes(x, y, z = t, colour = -abs(..level..)),
+  stat_contour(aes(x, y, z = t, colour = ..level..), alpha = 1,
                breaks = PlotContourBreak(200, 10)) +
   # Chosen offset points
   geom_point(aes(x, y, fill = PlotScaleLimit(t_enum, 200)),
@@ -283,5 +352,6 @@ plot_le <- ggplot(plot_le_interp) +
     ylim = plot_limits$y,
     expand = FALSE) +
   scale_fill_gradientn(name = "vorticity\n", colours = spectralpalette(20), limits = c(-200, 200)) +
-  # scale_colour_gradientn(colours = spectralpalette(20), limits = c(-200, 200)); print(plot_le)
-  scale_colour_gradient(low = "grey99", high = "grey80", guide = "none"); print(plot_le)
+  scale_colour_gradientn(colours = spectralpalette(20), limits = c(-200, 200), guide = "none")
+  # scale_colour_gradient(low = "grey99", high = "grey80", guide = "none")
+print(plot_le)
