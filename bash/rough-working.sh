@@ -74,3 +74,34 @@ convert -resize 30% -delay 20 -loop 0 *a.png a.gif
 convert -resize 30% -delay 20 -loop 0 *le.png le.gif
 
 convert -resize 30% -delay 20 -loop 0 *ns.png ns.gif
+
+
+
+# sudo apt-get install imagemagick
+# sudo apt-get install ffmpeg
+
+# convert -delay 20 -loop 0 *.jpg myimage.gif
+
+# convert -resize 20% -delay 20 -loop 0 *.jpg myimage.gif
+
+convert -resize 30% -delay 20 -loop 0 *.png test.gif
+
+convert ns.png \( a.png le.png -append \) +append test.png
+
+convert test.gif \( test_a.gif test_le.gif -append \) +append test_combine2.gif
+
+
+
+convert -resize 30% -delay 20 -loop 0 *a.png a.gif
+
+convert -resize 30% -delay 20 -loop 0 *le.png le.gif
+
+convert -resize 30% -delay 20 -loop 0 *ns.png ns.gif
+
+/usr/bin/convert -delay 20 -loop 0 *_a.png m2v:animation_a.mpeg
+
+/usr/bin/convert -delay 20 -loop 0 *_err.png m2v:animation_err.mpeg
+
+/usr/bin/convert -delay 20 -loop 0 *_le.png m2v:animation_le.mpeg
+
+/usr/bin/convert -delay 10 -loop 0 *_ns.png m2v:animation_ns.mpeg
