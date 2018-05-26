@@ -993,135 +993,22 @@ Results
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename combined1.png
-	lyxscale 15
-	width 90text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Impulsively started flow at 
-\begin_inset Formula $t=0.86$
-\end_inset
-
-, 
-\begin_inset Formula $Re=10,000$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
+For each case of fast and slow vorticity generation three Reynolds numbers
+ were considered, 1,000, 5,000 and 10,000.
+ Figures 6 and 7 on the following pages show the results of the numerical
+ simulation and the post processing using the finite difference of points
+ interpolated normal to the airfoil surface.
+ For these plots, the method of interpolation was to interpolate per element
+ as this was found to be more accurate earlier.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename combined2.png
-	lyxscale 15
-	width 90text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Non-Impulsively started flow at 
-\begin_inset Formula $t=0.91$
-\end_inset
-
-, 
-\begin_inset Formula $Re=10,000$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename combined3.png
-	lyxscale 15
-	width 90text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Non-Impulsively started flow at 
-\begin_inset Formula $t=0.91$
-\end_inset
-
-, 
-\begin_inset Formula $Re=1,000$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
+However, for both the impulsively and non-impulsively started flow cases,
+ it can be seen that there is a clear discrepancy between the left hand
+ side of Equation 5b and the right hand side of Equation 5b at lower Reynolds
+ numbers.
+ Even when the points for interpolation were moved closer to the surface,
+ this discrepancy remained.
 \end_layout
 
 \begin_layout Standard
@@ -1195,11 +1082,190 @@ Limitations
 \end_layout
 
 \begin_layout Standard
+Due to the apparent error between the left hand side and right hand side
+ of the theoretical result in Equation 5b, it was determined that even this
+ interpolation post-process method was inadequate.
+ 
+\end_layout
+
+\begin_layout Standard
+The proposed solution is to use the underlying piecewise polynomials in
+ semtex to generate a vector field of pressure and vorticity gradients.
+ Rather than using Equation 5b where the derivatives are taken in directions
+ normal and perpendicular to the surface, Equation 5c will be used instead
+ to take the cross product between the normal vector and the vector field
+ of derivatives.
+ 
+\end_layout
+
+\begin_layout Standard
+As this semtex is a spectral element solver, this would mean that each element
+ has its own set of basis polynomial functions.
+ While primary variables (
+\begin_inset Formula $u$
+\end_inset
+
+, 
+\begin_inset Formula $v$
+\end_inset
+
+, 
+\begin_inset Formula $p$
+\end_inset
+
+) are continuous across element boundaries, derived variables like vorticity
+ are not guaranteed to be continuous.
+ Thus, care should be taken to ensure that the vorticity is continuous across
+ element boundaries such that the vorticity gradient is not affected.
+ This can be achieved by increasing the polynomial order.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
 Limitation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename imp1.png
+	lyxscale 15
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename imp2.png
+	lyxscale 15
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename imp3.png
+	lyxscale 15
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Impulsively started flow at 
+\begin_inset Formula $t=0.86$
+\end_inset
+
+ for 
+\begin_inset Formula $Re=1000,\,5000,\,10000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename non1.png
+	lyxscale 15
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename non2.png
+	lyxscale 15
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename non3.png
+	lyxscale 15
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Non-Impulsively started flow at 
+\begin_inset Formula $t=0.91$
+\end_inset
+
+ for 
+\begin_inset Formula $Re=1000,\,5000,\,10000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1261,16 +1327,90 @@ The next major focus will be to try to incorporate the post-processing into
  that the vorticity (or other derived quantities) will be constant).
 \end_layout
 
+\begin_layout Standard
+The next steps will be to analyse the results as per Equation 5b to investigate
+ the vorticity generation mechanisms and their dependence on variables such
+ as location and acceleration.
+ 
+\end_layout
+
+\begin_layout Standard
+Two extension ideas have been identified which are a non-lifting airfoil,
+ i.e.
+ NACA0012 at zero angle of attack, and a cylinder to determine the effects
+ of lift production and a sharp trailing edge on the vorticity generation
+ around a surface.
+ 
+\end_layout
+
 \begin_layout Subsection
 Timeline
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Progress Gant Chart.png
+	lyxscale 50
+	width 88text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Updated timeline
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
 Conclusion
 \end_layout
 
+\begin_layout Standard
+An initial analysis has been conducted on a single NACA0012 airfoil at angle
+ of attack 4 degrees.
+ It was found that the chosen method of estimating derivatives using a finite
+ difference method was inadequate and an alternative approach should be
+ chosen to ensure better quality results.
+\end_layout
+
 \begin_layout Section
-\start_of_appendix
 References
 \begin_inset Note Note
 status open
@@ -1285,14 +1425,149 @@ status open
 \end_layout
 
 \begin_layout Standard
-Fornberg, Bengt (1988), "Generation of Finite Difference Formulas on Arbitrarily
- Spaced Grids", Mathematics of Computation, 51 (184): 699–706, doi:10.1090/S0025-
-5718-1988-0935077-0, ISSN 0025-5718.
+Anderson, J.D., 2011.
+ 
+\emph on
+Fundamentals of aerodynamics
+\emph default
+ 5th ed., NY McGraw-Hill, pp 174-177, 280-282, 330-338.
 \end_layout
 
 \begin_layout Standard
-O'Rourke, Joseph (1998), Computational Geometry in C 2nd Ed.
+Blackburn, H.
+ M.
+ & Henderson, R.
+ D.
+ 1999.
  
+\emph on
+A study of two-dimensional flow past an oscillating cylinder
+\emph default
+, Journal of Fluid Mechanics, Vol 385, pp.
+ 255-286.
+\end_layout
+
+\begin_layout Standard
+Blackburn, H.
+ M.
+ & Sherwin S.
+ J.
+ 2004.
+ 
+\emph on
+Formulation of a Galerkin spectral element–Fourier method for three-dimensional
+ incompressible flows in cylindrical geometries
+\emph default
+, Journal of Computational Physics, Vol 197, pp.
+ 759–778.
+\end_layout
+
+\begin_layout Standard
+Jones, A.
+ & Babinsky, H.
+ 2011.
+ 
+\emph on
+Reynolds number effects on leading edge vortex development on a waving wing
+\emph default
+, Exp Fluids 2011, pp.
+ 197-210.
+\end_layout
+
+\begin_layout Standard
+Fornberg, B.
+ 1988.
+ 
+\emph on
+Generation of Finite Difference Formulas on Arbitrarily Spaced Grids
+\emph default
+, Mathematics of Computation, 51 (184) pp 699–706.
+\end_layout
+
+\begin_layout Standard
+Lei, J., Feng, G.
+ & Can, H.
+ 2013.
+ 
+\emph on
+Numerical study of separation on the trailing edge of a symmetrical airfoil
+ at a low Reynolds number
+\emph default
+, Chinese Journal of Aeronautics, pp.918-925.
+\end_layout
+
+\begin_layout Standard
+Morton, B.
+ R.
+ 1984.
+ 
+\emph on
+The generation and decay of vorticity
+\emph default
+, Geophys.
+ Astrophys.
+ Fluid Dyn., Vol 28, pp.
+ 277-308.
+\end_layout
+
+\begin_layout Standard
+Noca, F., Shiels, D.
+ & Jeon, D.
+ 1999.
+ 
+\emph on
+A Comparison of Methods for Evaluating Time-Dependent Fluid Dynamic Forces
+ on Bodies, Using Only Velocity Fields and Their Derivatives
+\emph default
+, Journal of Fluids and Structures, Vol 13, pp 551-578.
+\end_layout
+
+\begin_layout Standard
+O'Rourke, J.
+ 1998.
+ 
+\emph on
+Computational Geometry in C
+\emph default
+ 2nd ed., Cambridge University Press.
+\end_layout
+
+\begin_layout Standard
+Prandtl, L & Tietjens, O.G., 
+\emph on
+Applied Hydro- and Aeromechanics, Engineering Societies Monographs
+\emph default
+, 1934.
+\end_layout
+
+\begin_layout Standard
+Torenbeek, E., Wittenberg, H & SpringerLink, 2009.
+ 
+\emph on
+Flight physics: Essentials of aeronautical disciplines and technology, with
+ historical notes
+\emph default
+, London: Springer, pp 137-148.
+\end_layout
+
+\begin_layout Standard
+Vincent, M.
+ 2014.
+ 
+\emph on
+Simulation of starting/stopping vortices for a lifting airfoil
+\emph default
+, 19th Australasian Fluid Mechanics Conference, 8-11 December, Melbourne,
+ Australia.
+\end_layout
+
+\begin_layout Standard
+Xu, L., 2016.
+ 
+\emph on
+Numerical study of viscous starting flow past wedges, Journal of Fluid Mechanics
+\emph default
+, Vol 801, pp 150-165.
 \end_layout
 
 \end_body
