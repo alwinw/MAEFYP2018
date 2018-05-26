@@ -114,9 +114,10 @@ CubicSplineCalc <- function(cs, order = 0) {
 }
 
 #--- Finite Difference Method ----
-# offset = dump$offset
+# offset = filter(dump$offset, onum == 1) %>% select(onum, nstep, norm, aveh, t_enum, offseth); print(offset)
 FiniteDiff <- function(offset, var, order = NULL) {
   # https://en.wikipedia.org/wiki/Finite_difference_coefficient
+  # Forward finite difference coefficients
   FFD1 <- list(
     c(     -1, 1                       ),
     c(   -3/2, 2, -1/2                 ),
@@ -135,7 +136,7 @@ FiniteDiff <- function(offset, var, order = NULL) {
   offset_list <- lapply(offset_list, function(row) {
     if (sd(diff(row$norm)) > sqrt(.Machine$double.eps)) warning("Not equally sized steps")
     del = mean(diff(row$norm))
-    diff = (sum(row[1:order, var] * FFD1[[order]]))/del
+    diff = (sum(row[1:(order + 1), var] * FFD1[[order]]))/del
     return(cbind(
       row[1,], data.frame(diffvar = diff)))
   })
@@ -147,5 +148,28 @@ FiniteDiff <- function(offset, var, order = NULL) {
   return(LongJoin(offset, offset_list))
 }
 
-
+#--- Point in Polygon ----
+PointinElement <- function(pts_df, poly_df, resize = NULL) {
+  # Reduce the size of poly_df if possible
+  if (!is.null(resize)) {
+    poly_df <- filter(
+      poly_df,
+      x >= min(pts_df$x) - resize, y <= max(pts_df$x) + resize,
+      y >= min(pts_df$y) - resize, y <= max(pts_df$y) + resize)}
+  # Split the dataframe into a list based on enum and then remove enum from df in the list
+  poly_list <- split(poly_df, poly_df$enum)
+  # Convert the list to Polygon, then create a Polygons object
+  poly_sp <- sapply(poly_list, function(poly){
+    Polygons(list(Polygon(poly[, c("x", "y")])), ID = poly[1, "enum"])})
+  poly_sp <- SpatialPolygons(poly_sp)
+  # Convert points to coordinates
+  pts_ps <- pts_df
+  coordinates(pts_ps) <- ~x+y
+  # Determine polygons points are in
+  pts_return <- over(pts_ps, poly_sp, returnList = FALSE)
+  pts_df$enum <- unique(poly_df$enum)[pts_return] 
+  pts_df <- filter(pts_df, !is.na(enum))
+  # Return
+  return(pts_df)
+}
 
