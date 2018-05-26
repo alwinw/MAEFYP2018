@@ -172,6 +172,7 @@ BatchLoadDump <- function(dumpval, meshlistin, saveplot) {      # dumpval = dump
   velocity <- rbind(
     cbind(filter(dump$threaddata, x == min(dump$threaddata$x)), inflow = TRUE),
     cbind(filter(dump$threaddata, x == max(dump$threaddata$x)), inflow = FALSE))
+  dumpinfo <- data.frame(time = dump$time, kinvis = dump$kinvis, acceleration = dump$acceleration)
   #--- Plot Output                                                  ----
   # Plot acceleration curve
   PlotAccel(dump, dumpval, save = TRUE, saveplot)
@@ -182,7 +183,7 @@ BatchLoadDump <- function(dumpval, meshlistin, saveplot) {      # dumpval = dump
   # Plot error
   PlotError(dump, surface, dumpval, long, save = TRUE, saveplot)
   # Return the output (turned off temporarily)
-  return(list(dumpval = dumpval, surface = surface, velocity = velocity))
+  return(list(dumpval = dumpval, surface = surface, velocity = velocity, dumpinfo = dumpinfo))
 }
 # Process batch list
 dumpdf <- meshdf %>%                                            # Determine dump dataframe
@@ -199,3 +200,48 @@ cl <- makeCluster(detectCores())                                # Start the clus
   dumplistout <- pblapply(dumplist, BatchLoadDump,                # Load airfoil data from each airfoil
                        meshlistout, saveplot, cl = cl)
 stopCluster(cl)    
+
+
+#--- Summarise Dump List Output                                     ----
+# Dump Values
+dumpval <- lapply(dumplistout, function(x) x$dumpval)
+dumpval <- bind_rows(dumpval)
+# Surface Values
+surface <- lapply(dumplistout, function(x) cbind(
+  x$surface, seshname = x$dumpval$seshname, 
+  time = x$time, kinvis = x$kinvis))
+surface <- bind_rows(surface)
+# Velocity Values
+velocity <- lapply(dumplistout, function(x) cbind(
+  x$velocity, seshname = x$dumpval$seshname, 
+  time = x$time, kinvis = x$kinvis))
+velocity <- bind_rows(velocity)
+
+surface$accelcat <- ifelse(surface$accel > 0, 1, 0)
+surface$accelcat <- ifelse(surface$accel <0, -1, surface$accelcat)
+
+# Some plots
+ggplot(surface, aes(x = s, colour = accel)) +
+  geom_point(aes(y = RHS), alpha = 0.8) +
+  ylim(-20,40) +
+  facet_grid(accelcat~kinvis) +
+  scale_colour_gradientn(colours = spectralpalette(20))
+
+ggplot(surface, aes(x = s, colour = accel)) +
+  geom_point(aes(y = LHS/RHS), alpha = 0.8) +
+  geom_hline(yintercept = 1) +
+  ylim(-10,10) +
+  facet_grid(accelcat~kinvis) +
+  scale_colour_gradientn(colours = spectralpalette(20))
+  
+ggplot(surface, aes(x = s, colour = accel)) +
+  geom_point(aes(y = dpds/RHS), alpha = 0.8) +
+  ylim(-10,10) +
+  facet_grid(accelcat~kinvis) +
+  scale_colour_gradientn(colours = spectralpalette(20))
+
+ggplot(surface, aes(x = s, colour = accel)) +
+  geom_point(aes(y = -accel/RHS), alpha = 0.8) +
+  ylim(-10,10) +
+  facet_grid(accelcat~kinvis) +
+  scale_colour_gradientn(colours = spectralpalette(20))
