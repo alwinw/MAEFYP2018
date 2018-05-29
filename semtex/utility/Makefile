@@ -12,14 +12,14 @@ essential: sem compare enumerate
 all: essential plain preplot nosrc meshpr calc addfield sem2nek \
      convert project interp probe rectmesh transform wallmesh   \
      phase lowpass eneq integral traction stressdiv mapmesh     \
-     wavestress nonlin
+     wavestress nonlin wallgrad
 
 distclean:
 	make clean
 	rm -f addfield avgdump calc chop compare convert eneq enumerate \
         integral interp lowpass meshpr moden noiz phase preplot probe   \
         probeline probeplane project rectmesh repeatxy repeatz rstress  \
-        sem2nek sem2tec slit stressdiv transform wallmesh xplane modep  \\
+        sem2nek sem2tec slit stressdiv transform wallmesh xplane modep wallgrad \\
 	nonlin
 
 # ----------------------------------------------------------------------------
@@ -90,6 +90,17 @@ $(WALOBJ): $(SEMHDR)
 
 wallmesh: $(WALOBJ)
 	$(LD) -o $@ $(WALOBJ) $(LDFLAGS)
+
+# ----------------------------------------------------------------------------
+# Build wallgrad, 2D mesh filter utility for sideGeom.
+#
+WAGOBJ = wallgrad.o bsys.o bcmgr.o condition.o edge.o	\
+	 family.o feml.o mesh.o element.o svv.o geometry.o integration.o
+
+$(WAGOBJ): $(SEMHDR)
+
+wallgrad: $(WAGOBJ)
+	$(LD) -o $@ $(WAGOBJ) $(LDFLAGS)
 
 # ----------------------------------------------------------------------------
 # Build traction, utility to compute normal & tangential tractions on walls

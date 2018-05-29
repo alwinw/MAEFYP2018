@@ -50,8 +50,9 @@ rsconnect/
 *.vfld
 *.num
 *.rst
-*.png
 *.gif
+*.mpeg
+*.png
 
 #======================================
 # C++
