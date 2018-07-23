@@ -12,14 +12,16 @@ essential: sem compare enumerate
 all: essential plain preplot nosrc meshpr calc addfield sem2nek \
      convert project interp probe rectmesh transform wallmesh   \
      phase lowpass eneq integral traction stressdiv mapmesh     \
-     wavestress nonlin
+     wavestress nonlin \
+     wallgrad addvortfield
 
 distclean:
 	make clean
 	rm -f addfield avgdump calc chop compare convert eneq enumerate \
         integral interp lowpass meshpr moden noiz phase preplot probe   \
         probeline probeplane project rectmesh repeatxy repeatz rstress  \
-        sem2nek sem2tec slit stressdiv transform wallmesh xplane modep  \\
+        sem2nek sem2tec slit stressdiv transform wallmesh xplane modep \
+        wallgrad addvortfield \\
 	nonlin
 
 # ----------------------------------------------------------------------------
@@ -92,6 +94,17 @@ wallmesh: $(WALOBJ)
 	$(LD) -o $@ $(WALOBJ) $(LDFLAGS)
 
 # ----------------------------------------------------------------------------
+# Build wallgrad, 2D mesh filter utility for sideGeom.
+#
+WAGOBJ = wallgrad.o bsys.o bcmgr.o condition.o edge.o	\
+	 family.o feml.o mesh.o element.o svv.o geometry.o integration.o
+
+$(WAGOBJ): $(SEMHDR)
+
+wallgrad: $(WAGOBJ)
+	$(LD) -o $@ $(WAGOBJ) $(LDFLAGS)
+
+# ----------------------------------------------------------------------------
 # Build traction, utility to compute normal & tangential tractions on walls
 #
 TRCOBJ = traction.o feml.o auxfield.o bcmgr.o element.o svv.o data2df.o	\
@@ -119,6 +132,17 @@ $(ADFOBJ): $(SEMHDR) tensorcalcs.h
 
 addfield: $(ADFOBJ)
 	$(LD) -o $@ $(ADFOBJ) $(LDFLAGS)
+
+# ----------------------------------------------------------------------------
+# Build addvortfield, gradient calculations.
+#
+ADVFOBJ = addvortfield.o auxfield.o bcmgr.o boundary.o bsys.o condition.o       \
+	 data2df.o domain.o edge.o element.o svv.o family.o feml.o field.o \
+	 geometry.o integration.o mesh.o misc.o tensorcalcs.o
+$(ADVFOBJ): $(SEMHDR) tensorcalcs.h
+
+addvortfield: $(ADVFOBJ)
+	$(LD) -o $@ $(ADVFOBJ) $(LDFLAGS)
 
 # ----------------------------------------------------------------------------
 # Build semtex --> NEKTON input file converter.
