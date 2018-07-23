@@ -13,3 +13,4 @@
 
 # addvortfield.cpp  | 2018.07.23
  - Added additional auxfields for gradients
+ - `-G` for VORTGEN option

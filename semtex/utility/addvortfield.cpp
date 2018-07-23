@@ -117,7 +117,7 @@ static char RCS[] = "$Id: addfield.cpp,v 8.4 2016/02/17 03:46:35 hmb Exp $";
 #include <tensorcalcs.h>
 
 #define FLDS_MAX 64 // -- More than we'll ever want.
-#define FLAG_MAX 10 // -- NB: FLAG_MAX should tally with the following enum:
+#define FLAG_MAX 11 // -- NB: FLAG_MAX should tally with the following enum:
 enum {
   ENERGY      ,     // -- NB: the placing of ENERGY and FUNCTION in the first
   FUNCTION    ,	    //    two positions is significant: don't break this.
@@ -158,12 +158,15 @@ int main (int    argc,
   vector<Element*>           elmt;
   AuxField                   *Ens, *Hel, *Div, *Disc, *Strain;
   AuxField                   *Func, *Vtx, *DivL, *Nrg, *work;
+  AuxField                   *pressure;
+  vector<AuxField*>          VortGen;
   vector<AuxField*>          velocity, vorticity, lamb, addField(FLDS_MAX);
   vector<vector<AuxField*> > Vij;     // -- Usually computed, for internal use.
   vector<vector<real_t*> >   VijData; // -- For pointwise access in Vij.
 
   vector<real_t*> VorData; // -- Ditto in vorticity.
   vector<real_t*> LamData; // -- Ditto in Lamb vector.
+  vector<real_t*> VortGenData;
 
   real_t          *DisData, *DivData, *StrData, *VtxData, *HelData, *EnsData;
   real_t          vel[3], vort[3], tensor[9];
@@ -287,7 +290,7 @@ int main (int    argc,
     addField[iAdd++] = Vtx;
   }
 
-  if (need[VORTICITY])
+  if (need[VORTICITY]) {
     if (NDIM == 2) {
       vorticity.resize (1);
       VorData  .resize (1);
@@ -303,6 +306,7 @@ int main (int    argc,
 	addField[iAdd++] = vorticity[i];
       }
     }
+  }
 
   if (add[DIVLAMB]) { 		// -- Know also NDIM == 3.
     lamb   .resize (3);
@@ -324,6 +328,14 @@ int main (int    argc,
     HelData = new real_t [allocSize];
     Hel = new AuxField (HelData, nz, elmt, 'H');
     if (add[HELICITY]) addField[iAdd++] = Hel;
+  }
+  
+  if (need[VORTGEN]) {
+    for (i = 0; i < 5; i++) {
+      VortGenData[i]   = new real_t [allocSize];
+      VortGen[i]       = new AuxField (VortGenData[i], nz, elmt, 'k' + i);
+      addField[iAdd++] = VortGen[i];
+    }
   }
 
   // -- Cycle through field dump, first (if required) making the only
@@ -540,6 +552,16 @@ int main (int    argc,
 	  VtxData[i] = lambda2 (tensor);
 	}
     }
+    
+      if (need[VORTGEN]) { // -- Only for 2 dimensions
+        *pressure = *D -> u[NCOM];
+  	    *VortGen[4]  = *Vij[1][0];
+	      *VortGen[4] -= *Vij[0][1];
+        (*VortGen[0]  = *VortGen[4]).gradient(0);
+        (*VortGen[1]  = *VortGen[4]).gradient(1);
+        (*VortGen[2]  = *pressure).gradient(0);
+        (*VortGen[3]  = *pressure).gradient(1);
+      }      
 #endif
     // -- Finally, add mass-projection smoothing on everything.
 
