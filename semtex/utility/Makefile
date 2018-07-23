@@ -12,14 +12,16 @@ essential: sem compare enumerate
 all: essential plain preplot nosrc meshpr calc addfield sem2nek \
      convert project interp probe rectmesh transform wallmesh   \
      phase lowpass eneq integral traction stressdiv mapmesh     \
-     wavestress nonlin wallgrad
+     wavestress nonlin \
+     wallgrad addvortfield
 
 distclean:
 	make clean
 	rm -f addfield avgdump calc chop compare convert eneq enumerate \
         integral interp lowpass meshpr moden noiz phase preplot probe   \
         probeline probeplane project rectmesh repeatxy repeatz rstress  \
-        sem2nek sem2tec slit stressdiv transform wallmesh xplane modep wallgrad \\
+        sem2nek sem2tec slit stressdiv transform wallmesh xplane modep \
+        wallgrad addvortfield \\
 	nonlin
 
 # ----------------------------------------------------------------------------
@@ -130,6 +132,17 @@ $(ADFOBJ): $(SEMHDR) tensorcalcs.h
 
 addfield: $(ADFOBJ)
 	$(LD) -o $@ $(ADFOBJ) $(LDFLAGS)
+
+# ----------------------------------------------------------------------------
+# Build addvortfield, gradient calculations.
+#
+ADVFOBJ = addvortfield.o auxfield.o bcmgr.o boundary.o bsys.o condition.o       \
+	 data2df.o domain.o edge.o element.o svv.o family.o feml.o field.o \
+	 geometry.o integration.o mesh.o misc.o tensorcalcs.o
+$(ADVFOBJ): $(SEMHDR) tensorcalcs.h
+
+addvortfield: $(ADVFOBJ)
+	$(LD) -o $@ $(ADVFOBJ) $(LDFLAGS)
 
 # ----------------------------------------------------------------------------
 # Build semtex --> NEKTON input file converter.
