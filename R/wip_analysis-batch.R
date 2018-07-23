@@ -99,23 +99,7 @@ BatchLoadMesh <- function(meshval, airfoillist) {
   long$local <- LocalMesh(long)                                   # Determine how local the sessions elements are
   long$threaddata <- LongJoin(
     long$threaddata, select(long$local, -nnum))
-  # Offset
-  long$offset <- AirfoilOffset(long,                              # Create df of offset points from surface
-                               totdist = 0.008, 
-                               varh = TRUE, scale = 1)
-  long <- AirfoilOffsetEnum(long)                                 # Update enum values of the offset points
-  # Plot
-  # ggplot() +
-  #   geom_path(aes(x, y, group = snum), long$offset) +
-  #   geom_point(aes(x, y, group = snum), long$offset, shape = 'o') +
-  #   geom_path(aes(x, y), long$walldata) +
-  #   coord_fixed()
-  #--- Airfoil Transform                                          ----
-  # long <- AirfoilTransform(long, localnum = 2)
-  # Do some plots and save them to png
-  #--- Clean up and Return                                        ----
-  # Clean up
-  output <- long[c("walldata", "threaddata", "offset")]
+  output <- long[c("walldata", "threaddata")]
   return(output)
 }
 
@@ -160,6 +144,10 @@ BatchLoadDump <- function(dumpval, meshlistin, saveplot) {      # dumpval = dump
   dump$pres = DumpPressureStream(dump, long)                      # Calculate pressure gradient dp/ds
   dump$threaddata = LongJoin(dump$threaddata, dump$pres)          # Join with rest of data
   #--- Vorticity Interpolation                                      ----
+  # Offset
+  long$offset <- AirfoilOffset(                                   # Create df of offset points from surface
+    long, totdist = 0.008, varh = TRUE, scale = 0.25)
+  long <- AirfoilOffsetEnum(long)                                 # Update enum values of the offset points
   dump$offset = long$offset                                       # Initialise the offset for interpolation
   # dump <- DumpVortTransformed(dump, localval = 2, var = "t")      # Interpolate based on stream, norm cs
   dump <- DumpVortElements(dump, localval = 2, var = "t")         # Interpolate using each element
@@ -167,19 +155,35 @@ BatchLoadDump <- function(dumpval, meshlistin, saveplot) {      # dumpval = dump
   # Determine inflow velocity
   
   # Derivatives
-  # dump$offset <- FiniteDiff(dump$offset, "t_trans")               # Calculate derivative using stream, norm cs
+  # dump$offset <- FiniteDiff(dump$offset, "t_trans")             # Calculate derivative using stream, norm cs
   dump$offset <- FiniteDiff(dump$offset, "t_enum")                # Calculate derivative using each element
+  #--- Data Output                                                  ----
+  # Surface is the surface only data
+  surface <- dump$threaddata %>%
+    filter(wall) %>% arrange(s) %>%                               # Only surface, only variables of interest
+    select(-z, -elabx, -elaby, -area, -wall, -dxds, -dyds, -dydx,
+           -dydxlen, -base, -aveh, -ar, -local)
+  surface <- LongJoin(surface,                                    # Join with dw/dz
+                      dump$offset %>% select(s, t_enum_diff) %>% unique(.)) %>%
+    mutate(LHS = - accels + dpds,
+           RHS = t_enum_diff*dump$kinvis,
+           error = (RHS - LHS)/RHS * 100)                         # Percentage error
+  # Velocity Profiles
+  velocity <- rbind(
+    cbind(filter(dump$threaddata, x == min(dump$threaddata$x)), inflow = TRUE),
+    cbind(filter(dump$threaddata, x == max(dump$threaddata$x)), inflow = FALSE))
+  dumpinfo <- data.frame(time = dump$time, kinvis = dump$kinvis, acceleration = dump$acceleration)
   #--- Plot Output                                                  ----
-  # Should save to indivial folders based on ID
   # Plot acceleration curve
   PlotAccel(dump, dumpval, save = TRUE, saveplot)
   # Plot N-S for LHS vs RHS
   PlotNS(dump, dumpval, long, save = TRUE, saveplot)
   # Plot leading edge
   PlotLE(dump, dumpval, save = TRUE, saveplot)
-  
+  # Plot error
+  PlotError(dump, surface, dumpval, long, save = TRUE, saveplot)
   # Return the output (turned off temporarily)
-  return(NULL)
+  return(list(dumpval = dumpval, surface = surface, velocity = velocity, dumpinfo = dumpinfo))
 }
 # Process batch list
 dumpdf <- meshdf %>%                                            # Determine dump dataframe
@@ -189,10 +193,55 @@ dumpdf <- meshdf %>%                                            # Determine dump
   mutate(dumppath = paste0(folder, dumpfile))
 dumplist <- split(dumpdf, dumpdf$dumppath)                      # Create dump list
 # Testing, shortern dump list
-dumplist <- dumplist[1:8]
+# dumplist <- dumplist[1:8]
 # dumplist <- lapply(dumplist, BatchLoadDump)
 cl <- makeCluster(detectCores())                                # Start the cluster
   clusterExport(cl, c("dumplist", "BatchLoadDump", "saveplot"))   # Export objects into the cluster
   dumplistout <- pblapply(dumplist, BatchLoadDump,                # Load airfoil data from each airfoil
                        meshlistout, saveplot, cl = cl)
 stopCluster(cl)    
+
+
+#--- Summarise Dump List Output                                     ----
+# Dump Values
+dumpval <- lapply(dumplistout, function(x) x$dumpval)
+dumpval <- bind_rows(dumpval)
+# Surface Values
+surface <- lapply(dumplistout, function(x) cbind(
+  x$surface, seshname = x$dumpval$seshname, 
+  time = x$time, kinvis = x$kinvis))
+surface <- bind_rows(surface)
+# Velocity Values
+velocity <- lapply(dumplistout, function(x) cbind(
+  x$velocity, seshname = x$dumpval$seshname, 
+  time = x$time, kinvis = x$kinvis))
+velocity <- bind_rows(velocity)
+
+surface$accelcat <- ifelse(surface$accel > 0, 1, 0)
+surface$accelcat <- ifelse(surface$accel <0, -1, surface$accelcat)
+
+# Some plots
+ggplot(surface, aes(x = s, colour = accel)) +
+  geom_point(aes(y = RHS), alpha = 0.8) +
+  ylim(-20,40) +
+  facet_grid(accelcat~kinvis) +
+  scale_colour_gradientn(colours = spectralpalette(20))
+
+ggplot(surface, aes(x = s, colour = accel)) +
+  geom_point(aes(y = LHS/RHS), alpha = 0.8) +
+  geom_hline(yintercept = 1) +
+  ylim(-10,10) +
+  facet_grid(accelcat~kinvis) +
+  scale_colour_gradientn(colours = spectralpalette(20))
+  
+ggplot(surface, aes(x = s, colour = accel)) +
+  geom_point(aes(y = dpds/RHS), alpha = 0.8) +
+  ylim(-10,10) +
+  facet_grid(accelcat~kinvis) +
+  scale_colour_gradientn(colours = spectralpalette(20))
+
+ggplot(surface, aes(x = s, colour = accel)) +
+  geom_point(aes(y = -accel/RHS), alpha = 0.8) +
+  ylim(-10,10) +
+  facet_grid(accelcat~kinvis) +
+  scale_colour_gradientn(colours = spectralpalette(20))
