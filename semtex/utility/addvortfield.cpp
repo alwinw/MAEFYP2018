@@ -26,6 +26,7 @@
 //   -J        ... add vortex core measure of Jeong & Hussain. (3D only)
 //   -a        ... add all fields derived from velocity (above)
 //   -f <func> ... add a computed function <func> of x, y, z, t, etc.
+//   -G        ... add pressure and vorticity gradients
 //
 // Reserved field names used/assumed:
 // ---------------------------------
@@ -61,6 +62,12 @@
 // J -- vortex core identification measure, see [2]. 3D only.
 // D -- discriminant of velocity gradient tensor, see [1]. 3D only.
 // L -- divergence of Lamb vector = div (omega x u), see [3] 3D only.
+// 2-D vorticity and pressure gradients
+// k -- del(omega)/del(x)
+// l -- del(omega)/del(y)
+// m -- del(P)/del(x)
+// n -- del(P)/del(y)
+// o -- omega (y componenent of vorticity)
 //
 // NB: product terms -- such as are used to calculate enstrophy,
 // helicity, the invariants and discriminant of the velocity gradient
@@ -118,10 +125,11 @@ enum {
   ENSTROPHY   ,
   DISCRIMINANT,
   HELICITY    ,
-  DIVLAMB  ,
+  DIVLAMB     ,
   STRAINRATE  ,
   VORTICITY   ,
-  VORTEXCORE
+  VORTEXCORE  ,
+  VORTGEN
 };
 
 static char  prog[] = "addfield";
@@ -571,7 +579,8 @@ static void getargs (int    argc   ,
     "                NB: divergence is assumed to be zero. (3D only)\n"
     "  -J        ... add vortex core measure of Jeong & Hussain (3D only)\n"
     "  -a        ... add all fields derived from velocity (above)\n"
-    "  -f <func> ... add a computed function <func> of x, y, z, t, etc.\n";
+    "  -f <func> ... add a computed function <func> of x, y, z, t, etc.\n"
+    "  -G        ... add pressure and vorticity gradients\n";
               
   int_t i, sum = 0;
   char  buf[StrMax];
@@ -595,6 +604,7 @@ static void getargs (int    argc   ,
     case 'J': flag[VORTEXCORE]   = true; break;
     case 'L': flag[DIVLAMB]      = true; break;
     case 'q': flag[ENERGY]       = true; break;
+    case 'G': flag[VORTGEN]      = true; break;
     case 'a': flag[0]=true; for (i = 2; i < FLAG_MAX ; i++) flag[i]=true; break;
     case 'f':
       if (*++argv[0]) func = *argv; else { --argc; func = *++argv; }
