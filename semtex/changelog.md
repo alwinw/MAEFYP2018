@@ -14,3 +14,13 @@
 # addvortfield.cpp  | 2018.07.23
  - Added additional auxfields for gradients
  - `-G` for VORTGEN option
+ - Debugging using gdb
+ 
+    $ gdb addvortfield
+    (gdb) run -G -s kovas1 kovas1.fld
+    (gdb) backtrace
+ 
+ - Example
+ 
+    addvortfield -G -s kovas1 kovas1.fld > kovas.vfld
+    

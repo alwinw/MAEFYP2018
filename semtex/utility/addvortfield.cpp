@@ -170,7 +170,7 @@ int main (int    argc,
 
   real_t          *DisData, *DivData, *StrData, *VtxData, *HelData, *EnsData;
   real_t          vel[3], vort[3], tensor[9];
-
+  
   Femlib::initialize (&argc, &argv);
   for (i = 0; i < FLAG_MAX; i++) add [i] = need [i] = false;
 
@@ -331,10 +331,12 @@ int main (int    argc,
   }
   
   if (need[VORTGEN]) {
-    for (i = 0; i < 5; i++) {
+    VortGen    .resize (5);
+    VortGenData.resize (5);
+    for (i = 0; i < 5; i++) { 
       VortGenData[i]   = new real_t [allocSize];
       VortGen[i]       = new AuxField (VortGenData[i], nz, elmt, 'k' + i);
-      addField[iAdd++] = VortGen[i];
+      addField[iAdd++] = VortGen[i]; 
     }
   }
 
@@ -407,6 +409,16 @@ int main (int    argc,
 	    VorData[2][i] = vort[2];
 	  }
 	}
+	
+  if (need[VORTGEN]) { // -- Only for 2 dimensions 
+    //*pressure = *D -> u[NCOM];
+    *VortGen[4]  = *Vij[1][0];
+    *VortGen[4] -= *Vij[0][1];
+    (*VortGen[0]  = *VortGen[4]).gradient(0);
+    (*VortGen[1]  = *VortGen[4]).gradient(1);
+    (*VortGen[2]  = *D -> u[NCOM]).gradient(0);
+    (*VortGen[3]  = *D -> u[NCOM]).gradient(1);
+  }
 
 	if (!(need[HELICITY] || need[DIVLAMB])) continue;
 
@@ -551,17 +563,7 @@ int main (int    argc,
 	      tensor [k] = VijData[p][q][i];
 	  VtxData[i] = lambda2 (tensor);
 	}
-    }
-    
-      if (need[VORTGEN]) { // -- Only for 2 dimensions
-        *pressure = *D -> u[NCOM];
-  	    *VortGen[4]  = *Vij[1][0];
-	      *VortGen[4] -= *Vij[0][1];
-        (*VortGen[0]  = *VortGen[4]).gradient(0);
-        (*VortGen[1]  = *VortGen[4]).gradient(1);
-        (*VortGen[2]  = *pressure).gradient(0);
-        (*VortGen[3]  = *pressure).gradient(1);
-      }      
+    }      
 #endif
     // -- Finally, add mass-projection smoothing on everything.
 
