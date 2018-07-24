@@ -175,48 +175,44 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-The conference proceedings will be published from ``camera-ready copy''.
- For reasons of uniformity, all papers must adhere to the format as defined
- by the appropriate document template, the 
-\family typewriter
-afmc_art
-\family default
- class file together with this ``template'' paper.
- 
-\end_layout
-
-\begin_layout Standard
-\noindent
-The organising committee will accept papers formatted using either the 
-\begin_inset ERT
+\begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
+- Starting and stopping vortices shown by PTM (1957) and analysed by Willert
+ (2018)
+\end_layout
 
+\begin_layout Plain Layout
+- Numerous numerical studies to examine similar phenomena (list some inc.
+ Hugh's stuff)
+\end_layout
 
-\backslash
-LaTeX
-\backslash
+\begin_layout Plain Layout
+- This work will examine X
+\end_layout
 
+\begin_layout Plain Layout
+- Focus on vorticity generation mechanisms
 \end_layout
 
 \end_inset
 
-, LyX or Microsoft Word templates available on the web at 
-\begin_inset Newline newline
-\end_inset
 
+\end_layout
 
-\begin_inset ERT
+\begin_layout Standard
+Around 1930 L.
+ Prandtl, O.
+ Tietjens and Müller recorded the motion of fine particles around an airfoil
+ in the starting and stopping phases of motion to observe transient, unsteady
+ flows.
+ 
+\begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-
-
-\backslash
-centerline{
-\backslash
-texttt{http://www.afms.org.au/21AFMC}}
+Ref
 \end_layout
 
 \end_inset
@@ -224,448 +220,17 @@ texttt{http://www.afms.org.au/21AFMC}}
 
 \end_layout
 
-\begin_layout Standard
-Particular attention should be given to the formatting style used in this
- ``template''.
- Papers which do not conform to this style will 
-\series bold
-NOT
-\series default
- be published.
-\end_layout
-
-\begin_layout Standard
-For authors who use LyX to prepare a paper, this file serves as an ``instruction
-s to authors'' and, together with the class file 
-\family typewriter
-afmc_art.cls
-\family default
- it is the document template for 21AFMC papers.
- LyX users may begin by editing this file.
- 
-\end_layout
-
 \begin_layout Section
-Page limits
-\end_layout
-
-\begin_layout Standard
-The page limit for contributed papers is four (4) pages.
- The page limit for invited papers is eight (8) pages.
- Papers which exceed this limit will be returned to the author(s) for shortening.
-\end_layout
-
-\begin_layout Section
-Title and Authors
-\end_layout
-
-\begin_layout Standard
-The title should be in lower case with the first letter of major words capitalis
-ed.
- Avoid forcing a line-break unless absolutely necessary.
- Author affiliations should consist of ``Department, Institution, City,
- State, Post-code, Country''.
- Author affiliations should be indicated with a superscript digit.
-\end_layout
-
-\begin_layout Section
-Section Headings
+Numerical Method
 \end_layout
 
 \begin_layout Subsection
-And Subsection Headings
-\end_layout
-
-\begin_layout Standard
-Section and subsection headings should be in lower case with the first letter
- of major words in upper case.
- Do not use subsubsections.
-\end_layout
-
-\begin_layout Section
-Figures and Tables
-\end_layout
-
-\begin_layout Standard
-Figures and Tables should appear in the text near to where they are first
- referenced.
- They should be centred between the margins, and must not fall outside of
- the normal printed area of the page which is 170mm wide by 248mm high.
- The font size for all numbers and letters in the figure, as it appears
- in your paper, must be at least as large as that for the running headings.
- Put table captions below the table, and figure captions below the figure.
- Refer to figures and tables as in 
-\begin_inset Quotes eld
-\end_inset
-
-figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Single-column figure"
-
-\end_inset
-
-, table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Single-column table"
-
-\end_inset
-
-
-\begin_inset Quotes erd
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset VSpace 2mm
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename fig.eps
-	width 40text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-This figure was saved as an encapsulated Postscript (.eps) file.
- It is also centred between the margins.
- Because the bounding box of this figure is fairly tight some space has
- been added above the figure.
- This is not a good example of a figure; the lines should be thicker and
- a bigger and bolder font used.
- 
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Single-column figure"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float table
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="5" columns="3">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Problem A
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $40\times40$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $80\times80$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $160\times160$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-129 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-258
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-520
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.179 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.844
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-8.527
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2.8E-6
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4.56E-6
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4.5E-6
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-This is an example of a table that spans a single column.
- Note that it is centred.
- 
-\begin_inset CommandInset label
-LatexCommand label
-name "tab:Single-column table"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The proceedings will be distributed in softcopy format so colour figures
- and illustrations can be included.
- However, please try, where possible, to ensure that the details are still
- clear in black and white copies.
- 
-\end_layout
-
-\begin_layout Standard
-You have the option of having the tables and figure span a single column
- (e.g.
- figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Single-column figure"
-
-\end_inset
-
- and table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Single-column table"
-
-\end_inset
-
-) or both columns (figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Two-column figure"
-
-\end_inset
-
- and table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Two-column table"
-
-\end_inset
-
-).
- In all cases, make sure that the figure and all labels are still legible
- and that font sizes on figures closely match the body text.
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide true
-sideways false
+Governing Equations and Numerical Approach 
+\begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-\begin_inset VSpace 2mm
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename Conference_Logo.png
-	lyxscale 30
-	scale 33
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-This figure has been inserted into this document as a portable network graphics
- (.png).
- It is the conference logo and is a good example of a coloured raster image
- inserted into the manuscript.
- It is also centred between the margins, and spans both columns.
- Because the bounding box of this figure is fairly tight some space has
- been added above the figure.
- 
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Two-column figure"
-
-\end_inset
-
-
+2016 626
 \end_layout
 
 \end_inset
@@ -673,465 +238,46 @@ name "fig:Two-column figure"
 
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float table
-wide true
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="5" columns="6">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Problem A
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Problem B
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $40\times40$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $80\times80$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $160\times160$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $40\times20$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $80\times40$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $160\times80$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-129 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-258
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-520
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-102
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-193
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-387
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.179 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.844
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-8.527
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.148
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.700
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4.468
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2.8E-6
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4.56E-6
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4.5E-6
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3.1E-6
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3.2E-6
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4.2E-6
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-This is an example of a table that spans both columns.
- Note that it is centred.
- 
-\begin_inset CommandInset label
-LatexCommand label
-name "tab:Two-column table"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
+\begin_layout Subsection
+Grid and Time Step Refinement
 \end_layout
 
 \begin_layout Section
-Equations
+Results and Discussion
 \end_layout
 
-\begin_layout Standard
-Equations will be centred with a number flush against the right margin as
- in 
-\begin_inset Formula 
-\begin{equation}
-\rho c_{p}\frac{\partial T}{\partial t}=S-k\frac{\partial^{2}T}{\partial x^{2}}\label{eq:energy}
-\end{equation}
-
-\end_inset
-
-and this equation would be referred to as 
-\begin_inset Quotes eld
-\end_inset
-
-equation (
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:energy"
-
-\end_inset
-
-)
-\begin_inset Quotes erd
-\end_inset
-
-.
- 
+\begin_layout Subsection
+Development of Vortices
 \end_layout
 
-\begin_layout Standard
-Some care should be taken in ensuring that long Mathematical expressions
- are correctly split over lines.
- For example,
-\begin_inset Formula 
-\begin{eqnarray}
-\rho c_{p}\frac{\partial T}{\partial t} & = & S-k\frac{\partial^{2}T}{\partial x^{2}}\nonumber \\
- &  & -k\frac{\partial^{2}T}{\partial y^{2}}-k\frac{\partial^{2}T}{\partial z^{2}}\label{eq:11}
-\end{eqnarray}
+\begin_layout Subsection
+Impulsively and Non-Impulsively Started Flow
+\end_layout
 
-\end_inset
-
-should be used.
- If necessary use 
-\begin_inset Formula $\times$
-\end_inset
-
- at the end of a line to indicate that the multiplication is to be carried
- over to the next line.
- 
+\begin_layout Subsection
+Effect of Reynolds Number
 \end_layout
 
 \begin_layout Section
-Miscellaneous
+Conclusions
 \end_layout
 
-\begin_layout Itemize
-Try to avoid isolated lines of text where, for example, a paragraph spills
- over a page.
- Often a slight rewording resolves the problem.
-\end_layout
-
-\begin_layout Itemize
-Avoid wasted white space around figures or a last page that is almost empty.
-\end_layout
-
-\begin_layout Itemize
-Use quotation marks correctly, as in 
-\begin_inset Quotes eld
-\end_inset
-
-correct
-\begin_inset Quotes erd
-\end_inset
-
-, not ''incorrect''.
-\end_layout
-
-\begin_layout Itemize
-Use a hyphen (-) for compound words (two-dimensional), an en-dash to link
- numbers, nouns or names (Navier--Stokes, pages 27--85), and an em-dash
- to link clauses or sentences---like this.
-\end_layout
-
-\begin_layout Itemize
-Use a 
-\begin_inset Formula $\times$
-\end_inset
-
- to represent multiplication in text, not x.
-\end_layout
-
-\begin_layout Itemize
-Resist the temptation to use footnotes.
+\begin_layout Standard
+You should include a brief conclusion section which summarises the results
+ of your paper.
 \end_layout
 
 \begin_layout Section
-Format for References
+Acknowledgements
+\end_layout
+
+\begin_layout Standard
+Any acknowledgements should appear immediately before the references.
+ This template was modified from the one for 20
+\begin_inset Formula $^{\textrm{th}}$
+\end_inset
+
+ AFMC in Perth.
 \end_layout
 
 \begin_layout Standard
@@ -1187,26 +333,17 @@ afmc.bst
  
 \end_layout
 
-\begin_layout Section
-Conclusions
-\end_layout
-
 \begin_layout Standard
-You should include a brief conclusion section which summarizes the results
- of your paper.
+\begin_inset Note Note
+status open
+
+\begin_layout Section*
+References
 \end_layout
 
-\begin_layout Section
-Acknowledgements
-\end_layout
-
-\begin_layout Standard
-Any acknowledgements should appear immediately before the references.
- This template was modified from the one for 20
-\begin_inset Formula $^{\textrm{th}}$
 \end_inset
 
- AFMC in Perth.
+
 \end_layout
 
 \begin_layout Standard
