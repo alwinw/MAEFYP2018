@@ -4,7 +4,7 @@
 #
 # 	u = 1 - exp(lambda*x)*cos(2*PI*y)
 # 	v = lambda/(2*PI)*exp(lambda*x)*sin(2*PI*y)
-# 	p = (1 - exp(lambda*x))/2
+# 	p = (1 - exp(2*lambda*x))/2
 #
 # where lambda = Re/2 - sqrt(0.25*Re*Re + 4*PI*PI).
 #
@@ -13,7 +13,7 @@
 <USER>
  	u = 1-exp(LAMBDA*x)*cos(TWOPI*y)
  	v = LAMBDA/(TWOPI)*exp(LAMBDA*x)*sin(TWOPI*y)
- 	p = (1-exp(LAMBDA*x))/2
+ 	p = (1-exp(2*LAMBDA*x))/2
 </USER>
 
 <FIELDS>
