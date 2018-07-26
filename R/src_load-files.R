@@ -200,5 +200,26 @@ LoadDump <- function(folder, dumpfile) {
 
 #--- Load GradField Dump File ----
 LoadGradFieldDump <- function(folder, dumpfile) {
-  
+  # Path to dump file
+  dumppath = paste0(folder, dumpfile)
+  # Read the dump file to grep lines later
+  filelines <- readLines(dumppath)
+  # Read time
+  time <-  filelines[grep("Time", filelines)[1]] %>%
+    gsub("Time", "", .) %>%
+    as.numeric(.)
+  # Read Kinvis
+  kinvis <-  filelines[grep("Kinvis", filelines)[1]] %>%
+    gsub("Kinvis", "", .) %>%
+    as.numeric(.)
+  # Read table
+  flowfield <- read.table(
+    file = dumppath,
+    skip = grep("ASCII", filelines),
+    stringsAsFactors = FALSE)
+  colnames(flowfield) <- c("u", "v", "p", "k", "l", "m", "n", "o")
+  # Return list
+  return(
+    list(time = time, kinvis = kinvis, flowfield = flowfield)
+  )
 }
