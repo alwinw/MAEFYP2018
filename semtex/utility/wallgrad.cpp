@@ -195,6 +195,8 @@ static void printWalls (int_t             np  ,
   // cout << np << " 1 " << nz << " " << Nwall << " NR NS NZ NEL" << endl;
 
   std::cout.precision(16);
+  cout << setw(20) << "x" << setw(24) << "y" << setw(24) << \
+    "nx" << setw(24) << "ny" << setw(24) << "area" << endl;
   for (i = 0; i < Nedge; i++)
     if (strstr (bman -> groupInfo (edge[i] -> group), "wall")) {
       k = edge[i] -> elmt;
@@ -202,7 +204,9 @@ static void printWalls (int_t             np  ,
       // elmt[k] -> sideGet (s, &x[k*np2], &xs[0]);
       //elmt[k] -> sideGet (s, &y[k*np2], &ys[0]);
       elmt[k] -> sideGeom(s, &xs[0], &ys[0], &nxs[0], &nys[0], &area[0]);
-      for (j = 0; j < np; j++)
-	cout << setw(20) << xs[j] << setw(24) << ys[j] << setw(24) << nxs[j] << setw(24) << nys[j] << setw(24) << area[j]<< endl;
+      for (j = 0; j < np; j++) {
+	      cout << setw(20) << xs[j] << setw(24) << ys[j] << setw(24) << \
+	        nxs[j] << setw(24) << nys[j] << setw(24) << area[j]<< endl;
+      }
     }
 }
