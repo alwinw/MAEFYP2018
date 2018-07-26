@@ -26,6 +26,7 @@
 //   -J        ... add vortex core measure of Jeong & Hussain. (3D only)
 //   -a        ... add all fields derived from velocity (above)
 //   -f <func> ... add a computed function <func> of x, y, z, t, etc.
+//   -G        ... add pressure and vorticity gradients
 //
 // Reserved field names used/assumed:
 // ---------------------------------
@@ -61,6 +62,12 @@
 // J -- vortex core identification measure, see [2]. 3D only.
 // D -- discriminant of velocity gradient tensor, see [1]. 3D only.
 // L -- divergence of Lamb vector = div (omega x u), see [3] 3D only.
+// 2-D vorticity and pressure gradients
+// k -- del(omega)/del(x)
+// l -- del(omega)/del(y)
+// m -- del(P)/del(x)
+// n -- del(P)/del(y)
+// o -- omega (y componenent of vorticity)
 //
 // NB: product terms -- such as are used to calculate enstrophy,
 // helicity, the invariants and discriminant of the velocity gradient
@@ -110,7 +117,7 @@ static char RCS[] = "$Id: addfield.cpp,v 8.4 2016/02/17 03:46:35 hmb Exp $";
 #include <tensorcalcs.h>
 
 #define FLDS_MAX 64 // -- More than we'll ever want.
-#define FLAG_MAX 10 // -- NB: FLAG_MAX should tally with the following enum:
+#define FLAG_MAX 11 // -- NB: FLAG_MAX should tally with the following enum:
 enum {
   ENERGY      ,     // -- NB: the placing of ENERGY and FUNCTION in the first
   FUNCTION    ,	    //    two positions is significant: don't break this.
@@ -118,10 +125,11 @@ enum {
   ENSTROPHY   ,
   DISCRIMINANT,
   HELICITY    ,
-  DIVLAMB  ,
+  DIVLAMB     ,
   STRAINRATE  ,
   VORTICITY   ,
-  VORTEXCORE
+  VORTEXCORE  ,
+  VORTGEN
 };
 
 static char  prog[] = "addfield";
@@ -150,16 +158,19 @@ int main (int    argc,
   vector<Element*>           elmt;
   AuxField                   *Ens, *Hel, *Div, *Disc, *Strain;
   AuxField                   *Func, *Vtx, *DivL, *Nrg, *work;
+  AuxField                   *pressure;
+  vector<AuxField*>          VortGen;
   vector<AuxField*>          velocity, vorticity, lamb, addField(FLDS_MAX);
   vector<vector<AuxField*> > Vij;     // -- Usually computed, for internal use.
   vector<vector<real_t*> >   VijData; // -- For pointwise access in Vij.
 
   vector<real_t*> VorData; // -- Ditto in vorticity.
   vector<real_t*> LamData; // -- Ditto in Lamb vector.
+  vector<real_t*> VortGenData;
 
   real_t          *DisData, *DivData, *StrData, *VtxData, *HelData, *EnsData;
   real_t          vel[3], vort[3], tensor[9];
-
+  
   Femlib::initialize (&argc, &argv);
   for (i = 0; i < FLAG_MAX; i++) add [i] = need [i] = false;
 
@@ -279,7 +290,7 @@ int main (int    argc,
     addField[iAdd++] = Vtx;
   }
 
-  if (need[VORTICITY])
+  if (need[VORTICITY]) {
     if (NDIM == 2) {
       vorticity.resize (1);
       VorData  .resize (1);
@@ -295,6 +306,7 @@ int main (int    argc,
 	addField[iAdd++] = vorticity[i];
       }
     }
+  }
 
   if (add[DIVLAMB]) { 		// -- Know also NDIM == 3.
     lamb   .resize (3);
@@ -316,6 +328,16 @@ int main (int    argc,
     HelData = new real_t [allocSize];
     Hel = new AuxField (HelData, nz, elmt, 'H');
     if (add[HELICITY]) addField[iAdd++] = Hel;
+  }
+  
+  if (need[VORTGEN]) {
+    VortGen    .resize (5);
+    VortGenData.resize (5);
+    for (i = 0; i < 5; i++) { 
+      VortGenData[i]   = new real_t [allocSize];
+      VortGen[i]       = new AuxField (VortGenData[i], nz, elmt, 'k' + i);
+      addField[iAdd++] = VortGen[i]; 
+    }
   }
 
   // -- Cycle through field dump, first (if required) making the only
@@ -387,6 +409,16 @@ int main (int    argc,
 	    VorData[2][i] = vort[2];
 	  }
 	}
+	
+  if (need[VORTGEN]) { // -- Only for 2 dimensions 
+    //*pressure = *D -> u[NCOM];
+    *VortGen[4]  = *Vij[1][0];
+    *VortGen[4] -= *Vij[0][1];
+    (*VortGen[0]  = *VortGen[4]).gradient(0);
+    (*VortGen[1]  = *VortGen[4]).gradient(1);
+    (*VortGen[2]  = *D -> u[NCOM]).gradient(0);
+    (*VortGen[3]  = *D -> u[NCOM]).gradient(1);
+  }
 
 	if (!(need[HELICITY] || need[DIVLAMB])) continue;
 
@@ -531,7 +563,7 @@ int main (int    argc,
 	      tensor [k] = VijData[p][q][i];
 	  VtxData[i] = lambda2 (tensor);
 	}
-    }
+    }      
 #endif
     // -- Finally, add mass-projection smoothing on everything.
 
@@ -571,7 +603,8 @@ static void getargs (int    argc   ,
     "                NB: divergence is assumed to be zero. (3D only)\n"
     "  -J        ... add vortex core measure of Jeong & Hussain (3D only)\n"
     "  -a        ... add all fields derived from velocity (above)\n"
-    "  -f <func> ... add a computed function <func> of x, y, z, t, etc.\n";
+    "  -f <func> ... add a computed function <func> of x, y, z, t, etc.\n"
+    "  -G        ... add pressure and vorticity gradients\n";
               
   int_t i, sum = 0;
   char  buf[StrMax];
@@ -595,6 +628,7 @@ static void getargs (int    argc   ,
     case 'J': flag[VORTEXCORE]   = true; break;
     case 'L': flag[DIVLAMB]      = true; break;
     case 'q': flag[ENERGY]       = true; break;
+    case 'G': flag[VORTGEN]      = true; break;
     case 'a': flag[0]=true; for (i = 2; i < FLAG_MAX ; i++) flag[i]=true; break;
     case 'f':
       if (*++argv[0]) func = *argv; else { --argc; func = *++argv; }

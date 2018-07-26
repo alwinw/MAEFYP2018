@@ -142,7 +142,7 @@ ADVFOBJ = addvortfield.o auxfield.o bcmgr.o boundary.o bsys.o condition.o       
 $(ADVFOBJ): $(SEMHDR) tensorcalcs.h
 
 addvortfield: $(ADVFOBJ)
-	$(LD) -o $@ $(ADVFOBJ) $(LDFLAGS)
+	$(LD) -o $@ $(ADVFOBJ) $(LDFLAGS) -g
 
 # ----------------------------------------------------------------------------
 # Build semtex --> NEKTON input file converter.
