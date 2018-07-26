@@ -51,6 +51,18 @@ LoadWallmsh <- function(seshpath) {
   return(wallmesh)    # Data.frame
 }
 
+# Load Wall Grad file generated from N order poly on mesh
+LoadWallmsh <- function(seshpath) {
+  # Session file name
+  file = paste0(seshpath,".wallgrad")
+  # Read mesh file
+  wallmesh <- read.table(file, skip = 1)
+  # Set column names
+  colnames(wallmesh) <- c("x", "y", "nx", "ny", "area")
+  # Return mesh
+  return(wallmesh)    # Data.frame
+}
+
 #--- Load Session File ----
 # Session files are updated per session-
 # Function to load keywords from the session file
@@ -186,3 +198,7 @@ LoadDump <- function(folder, dumpfile) {
   )
 }
 
+#--- Load GradField Dump File ----
+LoadGradFieldDump <- function(folder, dumpfile) {
+  
+}
