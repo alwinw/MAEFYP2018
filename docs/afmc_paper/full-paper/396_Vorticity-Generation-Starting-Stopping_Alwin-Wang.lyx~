@@ -180,7 +180,7 @@ status open
 
 \begin_layout Plain Layout
 - Starting and stopping vortices shown by PTM (1957) and analysed by Willert
- (2018)
+ (2010)
 \end_layout
 
 \begin_layout Plain Layout
@@ -206,8 +206,7 @@ Around 1930 L.
  Prandtl, O.
  Tietjens and Müller recorded the motion of fine particles around an airfoil
  in the starting and stopping phases of motion to observe transient, unsteady
- flows.
- 
+ flows
 \begin_inset Note Note
 status open
 
@@ -217,7 +216,114 @@ Ref
 
 \end_inset
 
+.
+ The original recordings have been analysed using modern particle image
+ velocimetry (PIV) by Willert and Kompenhans 
+\begin_inset Note Note
+status open
 
+\begin_layout Plain Layout
+Ref
+\end_layout
+
+\end_inset
+
+ and the phenomena of starting and stopping vortices still remains of interest.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Should I include an image somewhere?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Vincent and Blackburn 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Ref
+\end_layout
+
+\end_inset
+
+ showed the formation of these vorticies by performing a direct numerical
+ simulation (DNS) of transient flow over a NACA0012 airfoil at 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha=4\text{\textdegree}$
+\end_inset
+
+ while Agromayo, Rúa and Kristoffersen investigated a NACA4612 at 
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha=16\text{\textdegree}$
+\end_inset
+
+ using OpenFOAM.
+ Both studies determined coefficients of lift and drag during the starting
+ and stopping phases and verified Kelvin's and Stoke's theorems for vorticity
+ around various contours.
+ This paper extends on these studies by considering the vorticity generation
+ mechanisms and exploring the physical phenomina behind leading edge vortices
+ observed during the stopping phase 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Ref V&B
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Studies have been performed on the vortex shedding that occurs at the trailing
+ edge <Kutta condition> <Xu paper> etc
+\end_layout
+
+\begin_layout Standard
+It is recognised that the sources of vorticity must occur at the boundary
+ of the fluid regions and for the starting and starting and stopping phases
+ of motion, Morton 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Ref
+\end_layout
+
+\end_inset
+
+ outlines two production mechanisms for vorticity: tangential pressure gradients
+ from the fluid side, and the acceleration of the surface from the wall
+ side.
+ These contributions were investigated by Blackburn and Henderson 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Ref
+\end_layout
+
+\end_inset
+
+ for vortex shedding of oscillating cylinders and it was noted that the
+ pressure-gradient generation mechanism could override the surface-acceleration
+ generation mechanism and vice verse.
+ 
 \end_layout
 
 \begin_layout Section
@@ -313,12 +419,22 @@ status open
 \end_inset
 
  is the acceleration of the reference frame.
- The boundary conditions at prescribed-velocity boundaries are set as 
-\begin_inset Formula $\boldsymbol{u}=-\boldsymbol{v}$
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Some reference by Fox et al in the Agro paper
+\end_layout
+
 \end_inset
 
-where 
-\begin_inset Formula $\boldsymbol{v}$
+ The boundary conditions at prescribed-velocity boundaries are set as 
+\begin_inset Formula $\boldsymbol{u}=-V\left(t\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $V\left(t\right)$
 \end_inset
 
  is the velocity of the reference frame.
@@ -343,6 +459,16 @@ For motion of a two-dimensional plane boundary moving in its own plane with
 
 , the diffusive flux density (flow per unit lenth per unit time) of positive
  vorticity outwards from the wall is given as
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+https://en.wikipedia.org/wiki/Vorticity_equation
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
 \begin{equation}
 -\nu\frac{\partial\boldsymbol{\omega}}{\partial z}\Big|_{z=0}=-\boldsymbol{n}\times\left(\nabla\boldsymbol{P}+\boldsymbol{a}\right)
@@ -391,30 +517,83 @@ It is assumed that a local section of airfoil can be modelled as an infinite
 \begin_inset Formula $\boldsymbol{t}$
 \end_inset
 
- is a unit tangent vector.
- Thus, the vorticity production around the airfoil is given as 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Check the -ve signs AND the definition of dV(t)/dt etc for acceleration
-\end_layout
+ is a unit tangent vector as shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Coordinate-system-used"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-
+.
+ Thus, the vorticity production around the airfoil is given as 
 \begin_inset Formula 
 \begin{align}
--\nu\frac{\partial\boldsymbol{\omega}}{\partial z}\Big|_{z=0} & =\left(0,-\left[\frac{\partial\boldsymbol{P}}{\partial s}+\frac{\text{d}\boldsymbol{V}\left(t\right)}{\text{d}t}\right],0\right)\Big|_{z=0}\\
 -\nu\boldsymbol{n}\cdot\nabla\boldsymbol{\omega} & =-\boldsymbol{n}\times\nabla\boldsymbol{P}-\boldsymbol{t}\cdot\boldsymbol{a}
 \end{align}
 
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Check the -ve signs AND the definition of dV(t)/dt etc for acceleration
+\begin_inset Formula 
+\[
+-\nu\frac{\partial\boldsymbol{\omega}}{\partial z}\Big|_{z=0}=\left(0,-\left[\frac{\partial\boldsymbol{P}}{\partial s}+\frac{\text{d}\boldsymbol{V}\left(t\right)}{\text{d}t}\right],0\right)\Big|_{z=0}
+\]
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Coordinate-Systems.png
+	lyxscale 30
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Coordinate system used
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Coordinate-system-used"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 <image of section of airfoil, maybe with a 
 \begin_inset Quotes eld
 \end_inset
@@ -432,6 +611,20 @@ breakout
 \end_inset
 
  that shows a flat surface with negligible curvature>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -467,6 +660,22 @@ Check mesh resolution.
 
 \end_layout
 
+\begin_layout Standard
+As no analytical solution for this flow exists, the convergence of the flow
+ was compared to the convergence of a Kovasznay Flow
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Ref
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
 \begin_layout Section
 Results and Discussion
 \end_layout
@@ -491,6 +700,19 @@ Show a plot of the kutta condition being enforced through vorticity generation
 
 \begin_layout Subsection
 Impulsively and Non-Impulsively Started Flow
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Discretised steps vs smoothed top had vs const acceleration trapezium shape
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
