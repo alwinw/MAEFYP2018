@@ -22,6 +22,7 @@ path = "../src-example/NACA0012/results/"
 sesh = "RE-10000-sine-0.001-2000"
 bndry <- LoadBndry(paste0(path, "bndry_prf"))
 wall  <- LoadWallmsh(paste0(path, sesh))
+mesh  <- LoadMesh(paste0(path, sesh))
 
 # Plot airfoil normals
 wallplot <- select(wall, -area) %>%
@@ -30,3 +31,19 @@ wallplot <- rbind(wallplot[,1:2], wallplot[,1:2] - wallplot[,3:4])
 wallplot$wnum <- 1:nrow(wall)
 ggplot(wallplot, aes(x, y, group = wnum)) +
   geom_line()
+
+# Load Dump File
+dump = "RE-10000-sine-0.001-2000-01.dump"
+dump <- LoadGradFieldDump(path, dump)
+dumpplot <- cbind(mesh, dump$flowfield)
+ggplot(dumpplot, aes(x, y)) +
+  geom_point(aes(colour = o), shape = 'o') +
+  coord_fixed(xlim = c(-2, 2)) +
+  scale_colour_gradientn(colors = spectralpalette(20))
+
+join <- LongJoin(wall, dumpplot)
+ggplot(join, aes(x, y)) +
+  geom_point(aes(colour = o)) +
+  scale_colour_gradientn(colors = spectralpalette(20))
+
+
