@@ -397,7 +397,7 @@ It is assumed that a local section of airfoil can be modelled as an infinite
 status open
 
 \begin_layout Plain Layout
-Check the -ve signs
+Check the -ve signs AND the definition of dV(t)/dt etc for acceleration
 \end_layout
 
 \end_inset
@@ -473,6 +473,20 @@ Results and Discussion
 
 \begin_layout Subsection
 Development of Vortices
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Show a plot of the kutta condition being enforced through vorticity generation
+ on the upper surface vs the lower surface
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection

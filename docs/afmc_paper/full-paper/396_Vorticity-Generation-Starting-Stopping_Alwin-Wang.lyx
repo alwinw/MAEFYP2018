@@ -475,8 +475,35 @@ Results and Discussion
 Development of Vortices
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Show a plot of the kutta condition being enforced through vorticity generation
+ on the upper surface vs the lower surface
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Impulsively and Non-Impulsively Started Flow
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Discretised steps vs smoothed top had vs const acceleration trapezium shape
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
