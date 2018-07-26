@@ -412,8 +412,8 @@ int main (int    argc,
 	
   if (need[VORTGEN]) { // -- Only for 2 dimensions 
     //*pressure = *D -> u[NCOM];
-    *VortGen[4]  = *Vij[1][0];
-    *VortGen[4] -= *Vij[0][1];
+    *VortGen[4]  = *Vij[0][1];
+    *VortGen[4] -= *Vij[1][0];
     (*VortGen[0]  = *VortGen[4]).gradient(0);
     (*VortGen[1]  = *VortGen[4]).gradient(1);
     (*VortGen[2]  = *D -> u[NCOM]).gradient(0);
