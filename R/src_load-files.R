@@ -217,7 +217,7 @@ LoadGradFieldDump <- function(folder, dumpfile) {
     file = dumppath,
     skip = grep("ASCII", filelines),
     stringsAsFactors = FALSE)
-  colnames(flowfield) <- c("u", "v", "p", "k", "l", "m", "n", "t")
+  colnames(flowfield) <- c("u", "v", "p", "dtdx", "dtdy", "dpdx", "dpdy", "t")
   # Return list
   return(
     list(time = time, kinvis = kinvis, flowfield = flowfield)

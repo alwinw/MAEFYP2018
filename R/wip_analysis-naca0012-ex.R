@@ -39,10 +39,11 @@ bndry <- LoadBndry(bndrypath)                                   # Read the bndry
 # ggplot(bndry, aes(x, y)) + geom_point(shape = 'o') + coord_fixed()
 # --- Wall Mesh Data                                               ----
 wallmsh   <- LoadWallGrad(airfoilval$seshpath)                  # Read the wallgrad file [x y nxG nyG areaG]
+# wallmsh  <- LoadWallmsh(airfoilval$seshpath)                    # Read the wallmsh file [x y] 
 # plot this showing the normals from the surface?
 long_wall <- AirfoilLongWall(wallmsh)                           # LE->TE->LE [x y nxG nyG areaG wnum theta up wall]
 long_wall <- AirfoilSpline(long_wall)                           # Spline dist [x y ... s dxds dydx dydx dydxlen]
-check     <- AirfoilSplineCheck(long_wall)
+long_wall <- AirfoilSplineCheck(long_wall)
 # Return the output as a list
 airfoildata <- list(
   airfoil = airfoilval, 

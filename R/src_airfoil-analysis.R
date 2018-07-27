@@ -115,14 +115,30 @@ AirfoilSplineCheck <- function(long_wall) {
   splinecheck <- long_wall %>%
     select(x, y, nxG, nyG, up, dxds, dydx, dydx) %>%
     mutate(dydxG = -nxG/nyG) %>%
-    mutate(error = abs((dydxG-dydx))/dydx)
+    mutate(error = abs((dydxG-dydx)/dydx))
   if (cor(splinecheck$dydx, splinecheck$dydxG) < 0.99)
     warning("Low correlation between spline and wallgrad")
   if (max(splinecheck$error) > 0.01)
     warning(paste(sum(splinecheck$error > 0.01), "spline abs error > 1%"))
   if (mean(splinecheck$error) > 0.0015)
     warning("Mean spline abs error > 0.15%")
-  return(NULL)
+  # ave(gradient1, gradient2) =/= ave(Dely1, Dely2)/ave(Delx1, Delx2)
+  splinecheck <- splinecheck %>%
+    group_by(x, y, up) %>%
+    mutate(nxG = mean(nxG), nyG = mean(nyG)) %>%
+    ungroup() %>%
+    mutate(dydxGm = -nxG/nyG) %>%
+    mutate(errorm = abs((dydxGm - dydx)/dydx))
+  # cor(splinecheck$dydx, splinecheck$dydxG) <= cor(splinecheck$dydx, splinecheck$dydxGm)
+  # max(splinecheck$error)  >= max(splinecheck$errorm)
+  # mean(splinecheck$error) >= mean(splinecheck$errorm)
+  
+  long_wall <- long_wall %>%
+    group_by(x, y, up) %>%
+    mutate(nxG = mean(nxG), nyG = mean(nyG), areaG = mean(areaG)) %>%
+    ungroup()
+  
+  return(long_wall)
 }
 
 #--- Airfoil Offset ----
