@@ -52,13 +52,13 @@ LoadWallmsh <- function(seshpath) {
 }
 
 # Load Wall Grad file generated from N order poly on mesh
-LoadWallmsh <- function(seshpath) {
+LoadWallGrad <- function(seshpath) {
   # Session file name
   file = paste0(seshpath,".wallgrad")
   # Read mesh file
   wallmesh <- read.table(file, skip = 1)
   # Set column names
-  colnames(wallmesh) <- c("x", "y", "nx", "ny", "area")
+  colnames(wallmesh) <- c("x", "y", "nxG", "nyG", "areaG")
   # Return mesh
   return(wallmesh)    # Data.frame
 }
@@ -217,7 +217,7 @@ LoadGradFieldDump <- function(folder, dumpfile) {
     file = dumppath,
     skip = grep("ASCII", filelines),
     stringsAsFactors = FALSE)
-  colnames(flowfield) <- c("u", "v", "p", "k", "l", "m", "n", "o")
+  colnames(flowfield) <- c("u", "v", "p", "k", "l", "m", "n", "t")
   # Return list
   return(
     list(time = time, kinvis = kinvis, flowfield = flowfield)

@@ -64,7 +64,7 @@ stopCluster(cl)                                                 # Stop the clust
 
 #--- Session and Mesh Calculation                                 ----
 # Function to load mesh data                                    # meshval = meshlist[[1]]
-BatchLoadMesh <- function(meshval, airfoillist) {
+BatchLoadMesh <- function(meshval, airfoillistin) {
   source("src_library-manager.R")                                 # Call libraries and install missing ones
   source("src_numerical-methods.R")                               # Load custom numerical methods
   source("src_load-files.R")                                      # Load data
@@ -73,7 +73,7 @@ BatchLoadMesh <- function(meshval, airfoillist) {
   source("src_plot-output.R")                                     # Plots to output and save
   long <- list()                                                  # Create a list of long format data
   #--- Airfoil Data                                                 ----
-  airfoildata = airfoillist[[meshval$airfoil]]                    # Collect airfoil data
+  airfoildata = airfoillistin[[meshval$airfoil]]                  # Collect airfoil data
   long$walldata = airfoildata$long_wall                           # Airfoil --> long_walldata
   #--- Session Data                                                 ----
   keywords <- list(                                               # Keywords in session to read
