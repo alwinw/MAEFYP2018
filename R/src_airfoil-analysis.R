@@ -7,12 +7,12 @@
 AirfoilLongWall <- function(wallmsh) {
   # Determine trailing edge (most right point)
   te = wallmsh[which.max(wallmsh$x),1:2]
-  # Determine leading edge point
+  # Determine leading edge point (furthest point from the TE)
   le <-  wallmsh %>% 
     mutate(dist = sqrt((x - te$x)^2 + (y - te$y)^2)) %>%
     arrange(-dist)
   le = le[1,1:2]
-  # Determine centre point
+  # Determine centre point and angle to the te
   cp = (le + te)/2
   tetheta = atan2(te$y - cp$y, te$x - cp$x)
   # Number files
@@ -26,6 +26,7 @@ AirfoilLongWall <- function(wallmsh) {
   # Note: It would be nice to decide if the first OR the second row should be used based on tail(...)
   long_wall$theta[1] = long_wall$theta[1] + 2*pi
   long_wall <- long_wall  %>%
+    mutate(theta = 2*pi - theta) %>% # start from TE -> lower surface -> LE -> upper surface -> TE
     arrange(theta, wnum) %>%
     mutate(up = theta <= pi)
   # Patch LE if necessary
@@ -108,6 +109,20 @@ AirfoilSpline <- function(long_wall, x = "x", y = "y", theta = "theta") {
     warning("Merge Failed")}
   # Return result
   return(long_wall)   # Data.frame
+}
+
+AirfoilSplineCheck <- function(long_wall) {
+  splinecheck <- long_wall %>%
+    select(x, y, nxG, nyG, up, dxds, dydx, dydx) %>%
+    mutate(dydxG = -nxG/nyG) %>%
+    mutate(error = abs((dydxG-dydx))/dydx)
+  if (cor(splinecheck$dydx, splinecheck$dydxG) < 0.99)
+    warning("Low correlation between spline and wallgrad")
+  if (max(splinecheck$error) > 0.01)
+    warning(paste(sum(splinecheck$error > 0.01), "spline abs error > 1%"))
+  if (mean(splinecheck$error) > 0.0015)
+    warning("Mean spline abs error > 0.15%")
+  return(NULL)
 }
 
 #--- Airfoil Offset ----

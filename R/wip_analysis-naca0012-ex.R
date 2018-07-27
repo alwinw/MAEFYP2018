@@ -3,6 +3,8 @@
 # Alwin Wang
 #----------------------------#
 
+# May consider moving the smaller single functions to 3-5 larger functions that are run once
+
 #--- Set Up ----
 # Use rstudioapi to get saved location of this file; use str to print structures
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))     # Requres devtools, rstudioapi
@@ -33,11 +35,14 @@ dumpval <- data.frame(
 #--- Airfoil Calculation                                          ----
 #--- Boundary Data                                                ----
 bndrypath = paste0(airfoilval$folder, "bndry_prf")              # Path to bndry file
-bndry <- LoadBndry(bndrypath)                                   # Read the bndry file
-#--- Wall Mesh Data                                               ----
-wallmsh <- LoadWallmsh(airfoilval$seshpath)                     # Read the wallmesh file
-long_wall <- AirfoilLongWall(wallmsh)                           # Airfoil data --> long_wall
-long_wall <- AirfoilSpline(long_wall)                           # Determine spline distance
+bndry <- LoadBndry(bndrypath)                                   # Read the bndry file [x y]
+# ggplot(bndry, aes(x, y)) + geom_point(shape = 'o') + coord_fixed()
+# --- Wall Mesh Data                                               ----
+wallmsh   <- LoadWallGrad(airfoilval$seshpath)                  # Read the wallgrad file [x y nxG nyG areaG]
+# plot this showing the normals from the surface?
+long_wall <- AirfoilLongWall(wallmsh)                           # LE->TE->LE [x y nxG nyG areaG wnum theta up wall]
+long_wall <- AirfoilSpline(long_wall)                           # Spline dist [x y ... s dxds dydx dydx dydxlen]
+check     <- AirfoilSplineCheck(long_wall)
 # Return the output as a list
 airfoildata <- list(
   airfoil = airfoilval, 
