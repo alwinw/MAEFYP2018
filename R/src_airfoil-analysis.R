@@ -26,7 +26,7 @@ AirfoilLongWall <- function(wallmsh) {
   # Note: It would be nice to decide if the first OR the second row should be used based on tail(...)
   long_wall$theta[1] = long_wall$theta[1] + 2*pi
   long_wall <- long_wall  %>%
-    mutate(theta = 2*pi - theta) %>% # start from TE -> lower surface -> LE -> upper surface -> TE
+    # mutate(theta = 2*pi - theta) %>% # start from TE -> lower surface -> LE -> upper surface -> TE
     arrange(theta, wnum) %>%
     mutate(up = theta <= pi)
   # Patch LE if necessary
