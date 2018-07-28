@@ -75,7 +75,6 @@ rm(data_airfoil, bndry, long_wall)
 #--- Session and Mesh Calculation                                 ----
 #--- * Airfoil Data                                               ----
 long <- list()
-long$wall= list_airfoil$long_wall
 #--- * Session Data                                               ----
 session   <- LoadSeshFileKeywords(data_mesh$seshpath)
 long$sesh <- LongSesh(session)
@@ -104,3 +103,27 @@ if (auxplot > 0) {
     scale_size(guide="none", range=c(1*0.3, 6*0.8)) +
     coord_fixed()
 }
+#--- * Wall Data                                                  ----
+long$wall= list_airfoil$long_wall
+long$wall <- LongWall(long$wall, long$mesh)
+if (auxplot > 0) {
+  long_wallplot <- long$wall %>%
+    mutate(xd = x - nxG*aveh, yd = y - nyG*aveh) %>%
+    select(x, y, xd, yd, enum, wnum)
+  long_wallplot <- cbind(rbind(
+    long_wallplot[,1:2], data.frame(x=long_wallplot$xd, y=long_wallplot$yd)),
+    enum = long$wall$enum, wnum = long$wall$wnum)
+  ggplot(long$wall,
+         aes(x, y, group=enum, colour=enum)) +
+    geom_point(aes(shape=node)) +
+    geom_path() + 
+    geom_path(aes(group=wnum), data=long_wallplot) + 
+    scale_colour_gradientn(colours=spectralpalette(10)) +
+    coord_fixed()
+  rm(long_wallplot)
+}
+#--- > Sesh & Mesh Calc Output                                    ----
+list_mesh <- list(
+  wall = long$wall,
+  mesh = long$mesh)
+rm(data_mesh, long, session, wallmesh)

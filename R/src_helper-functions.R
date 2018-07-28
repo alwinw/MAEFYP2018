@@ -194,14 +194,52 @@ LoadMesh <- function(seshpath,
   return(mesh)
 }
 # Convert to long mesh
-# out: long_mesh = data.frame(x, y, enum, jnum, ncorner, nnum, z, elabx, elaby, area) 
+# out: long_mesh = data.frame(x, y, enum, jnum, ncorner, nnum, z, elabx, elaby, area, node) 
 LongMesh <- function(long_mesh, long_sesh) {
   long_mesh$mnum =  1:nrow(long_mesh)                              # Mesh number
   long_mesh     <- LongJoin(long_mesh, long_sesh)                  # Join with node numbers
   long_mesh$z   <- NULL                                            # Not useful column
   long_mesh$node = !is.na(long_mesh$nnum)                          # Handy variable
-  # out: long_mesh = data.frame(x, y, enum, jnum, ncorner, nnum, z, elabx, elaby, area) 
+  # out: long_mesh = data.frame(x, y, enum, jnum, ncorner, nnum, z, elabx, elaby, area, node) 
   return(long_mesh)
+}
+#--- * Wall Data                                                  ----
+LongWall <- function(long_wall, long_mesh) {
+  # Non-node points only
+  join_mesh <- long_mesh %>%
+    filter(!node) %>%
+    select(x, y, enum)
+  join_wall <- left_join(long_wall, join_mesh, by = c("x", "y")) %>%
+    arrange(wnum)
+  # Path up NA enum (assume wnum was some logical order)
+  join_wall$node <- is.na(join_wall$enum)
+  join_wall$enum <- ifelse(is.na(join_wall$enum), lag (join_wall$enum), join_wall$enum)
+  join_wall$enum <- ifelse(is.na(join_wall$enum), lead(join_wall$enum), join_wall$enum)
+  # Double check
+  if (length(unique(count(group_by(join_wall, enum))[,2])) != 1)
+    warning("Unequal number of points per element")
+  # Determine average element height
+  area <- long_mesh %>%
+    filter(node, enum %in% unique(join_wall$enum)) %>%
+    select(enum, area) %>%
+    arrange(enum) %>%
+    unique(.)
+  base <- join_wall %>%
+    filter(node) %>%
+    group_by(enum) %>%
+    mutate(base = LagDist(x, y)) %>%
+    filter(!is.na(base)) %>%
+    select(enum, base) %>%
+    arrange(enum) %>%
+    unique(.)
+  if (sum(abs(base$enum - area$enum)) > 0)
+    warning("Unexplained error between area and base")
+  elem <- cbind(area, base = base$base) %>%
+    mutate(aveh = area/base,
+           ar   = base/aveh)
+  long_wall <- left_join(join_wall, elem, by = "enum") %>%
+    arrange(snum)
+  return(long_wall)
 }
 
 
