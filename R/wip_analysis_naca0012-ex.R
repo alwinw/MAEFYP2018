@@ -91,23 +91,16 @@ if (auxplot > 1) {
 }
 #--- * Mesh Data                                                  ----
 long$mesh <- LoadMesh(data_mesh$seshpath)
-long$mesh <- LongMesh(long$mesh)
-if (auxplot > 1) {
-  mid = floor(median(long$mesh$jnum))
-  ggplot(long$mesh,
-         aes(x, y, group=enum, colour=jnum)) +
-    geom_point(shape = 'o', alpha = 0.5) +
-    geom_text(aes(x, y, label=enum),
-              data = filter(long$mesh, jnum==mid)) +
-    coord_fixed()
-}
-#--- * Thread Data                                                ----
-long$mesh <- LongJoin(long$mesh, long$sesh)
+long$mesh <- LongMesh(long$mesh, long$sesh)
 if (auxplot > 0) {
   ggplot(long$mesh,
-         aes(x, y, group=enum)) +
+         aes(x, y, group=enum, colour=enum)) +
+    geom_point(shape='o', alpha = 0.2) +
     geom_polygon(fill=NA,
-                 data = filter(long$mesh, !is.na(nnum)))
+                 data = long$mesh %>% filter(node) %>% arrange(ncorner)) +
+    geom_text(aes(elabx, elaby, label=enum, size=area),
+              data = filter(long$mesh, ncorner=="n1")) +
+    scale_color_gradientn(colours=spectralpalette(100)) +
+    scale_size(guide="none", range=c(1*0.3, 6*0.8)) +
+    coord_fixed()
 }
-
-# Then determine for the wall what the equivalent mesh elements are

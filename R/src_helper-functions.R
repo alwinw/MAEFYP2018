@@ -199,7 +199,7 @@ LongMesh <- function(long_mesh, long_sesh) {
   long_mesh$mnum =  1:nrow(long_mesh)                              # Mesh number
   long_mesh     <- LongJoin(long_mesh, long_sesh)                  # Join with node numbers
   long_mesh$z   <- NULL                                            # Not useful column
-  long_mesh$node = is.na(long_mesh$nnum)                           # Handy variable
+  long_mesh$node = !is.na(long_mesh$nnum)                          # Handy variable
   # out: long_mesh = data.frame(x, y, enum, jnum, ncorner, nnum, z, elabx, elaby, area) 
   return(long_mesh)
 }
