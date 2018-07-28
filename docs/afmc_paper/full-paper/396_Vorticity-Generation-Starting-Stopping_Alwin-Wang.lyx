@@ -207,24 +207,20 @@ Around 1930 L.
  Tietjens and Müller recorded the motion of fine particles around an airfoil
  in the starting and stopping phases of motion to observe transient, unsteady
  flows
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Ref
-\end_layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Prandtl1934"
+literal "false"
 
 \end_inset
 
 .
  The original recordings have been analysed using modern particle image
  velocimetry (PIV) by Willert and Kompenhans 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Ref
-\end_layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Willert2010"
+literal "false"
 
 \end_inset
 
@@ -244,12 +240,10 @@ Should I include an image somewhere?
 
 \begin_layout Standard
 Vincent and Blackburn 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Ref
-\end_layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vincent2014"
+literal "false"
 
 \end_inset
 
@@ -259,15 +253,23 @@ Ref
 \end_inset
 
  and 
-\begin_inset Formula $\alpha=4\text{\textdegree}$
+\begin_inset Formula $\alpha=4\text{°}$
 \end_inset
 
- while Agromayo, Rúa and Kristoffersen investigated a NACA4612 at 
+ while Agromayo, Rúa and Kristoffersen 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Agromayor2017"
+literal "false"
+
+\end_inset
+
+ investigated a NACA4612 at 
 \begin_inset Formula $\text{Re}=1,000$
 \end_inset
 
  and 
-\begin_inset Formula $\alpha=16\text{\textdegree}$
+\begin_inset Formula $\alpha=16\text{°}$
 \end_inset
 
  using OpenFOAM.
@@ -292,18 +294,27 @@ Ref V&B
 \begin_layout Standard
 Studies have been performed on the vortex shedding that occurs at the trailing
  edge <Kutta condition> <Xu paper> <Lei paper> etc.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Include the Kutta condition
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 It is recognised that the sources of vorticity must occur at the boundary
  of the fluid regions and for the starting and starting and stopping phases
  of motion, Morton 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Ref
-\end_layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Morton1984"
+literal "false"
 
 \end_inset
 
@@ -311,12 +322,10 @@ Ref
  from the fluid side, and the acceleration of the surface from the wall
  side.
  These contributions were investigated by Blackburn and Henderson 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Ref
-\end_layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Blackburn1999"
+literal "false"
 
 \end_inset
 
@@ -373,6 +382,14 @@ status open
 
 \begin_layout Standard
 Simulation was carried out using the Semtex code 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Blackburn2004"
+literal "false"
+
+\end_inset
+
+
 \begin_inset Note Note
 status open
 
@@ -492,18 +509,15 @@ where
 \begin_inset Formula $\boldsymbol{a}=V'\left(t\right)$
 \end_inset
 
- is the local wall acceleration.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Ref Morton
-\end_layout
+ is the local wall acceleration 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Morton1984"
+literal "false"
 
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Standard
