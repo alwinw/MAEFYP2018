@@ -17,6 +17,10 @@
  - Looked into conformal mapping, however not used since the N-S eqs solved on original domain
  - Airfoil spline created by using the distance between subsequent points
 
+# Gradient Fields
+ - Tried mapping to a s-z plane and determining gradients there
+ - Tried finite difference methods that requried interpolation
+
 # Semtex Utilities
  - Used wallmesh to extract the wall surface coordinates
  - prob, hist, checkpoint can all be used to extract information
@@ -26,3 +30,9 @@
  - addfield : add gradients of pressure and vorticity
  - For wallmsh, use sideGeom in order to determine the gradients
  - For addfield, need to add additional fields
+
+# WallGrad Integration
+ - At the corners of two quads, the normals are not exactly equal
+ - The average has been taken
+ - When the direction of s was changed, so were the directions of the normals in R causing problems
+ - Instead of using a join between mesh and field data, try match elements
