@@ -8,7 +8,7 @@
 heav <- function(t) ifelse(t>0,1,0)
 
 # Distance function
-EucDist <- function(x, y) sqrt((x - lag(x))^2 + (y - lag(y))^2)
+LagDist <- function(x, y) sqrt((x - lag(x))^2 + (y - lag(y))^2)
 
 # Function to find minimum distance
 MinS <- function(x, y, csx, csy, dcsx, dcsy, lim_low, lim_up) {
@@ -73,6 +73,12 @@ LongJoin <- function(left_data, right_data, unicols = NULL, wall = FALSE) {
 }
 
 #--- Cubic Spline Calculus ----
+# Spline Length
+arclength <- function(tvec) {
+  # s = int sqrt(dx/dt^2 + dy/dt^2) dt
+  integral(function(t) sqrt(ppval(dcsx, t)^2 + ppval(dcsy, t)^2), tvec[1], tvec[2])
+}
+
 # Determine derivatives and antiderivatives of cubic splines
 CubicSplineCalc <- function(cs, order = 0) {
   # Object to return

@@ -1,7 +1,7 @@
-#============================
+#============================#
 # Library Manager
 # Alwin Wang
-#----------------------------
+#----------------------------#
 
 #--- Recommendations ----
 # R version: 64-bit https://cran.r-project.org/bin/windows/base/
@@ -25,8 +25,7 @@ packages <- c(
   "pbapply",          # Progress bar wrapper for apply-style functions
   "parallel",         # Parallel apply-style functions, Part of R Core
   "akima",            # For interpolation, method published by Hiroshi Akima
-  "sp",
-  "animation"
+  "sp"                # For point in polygon calculations
 )
 
 #--- Install Missing Packages ----
