@@ -6,7 +6,7 @@
 #--- Airfoil Calculation                                          ----
 #--- * Boundary Data                                              ----
 # Load the boundary file (i.e. airfoil shape)
-# out: bndry = data.frame(x, y)
+  # out: bndry = data.frame(x, y)
 LoadBndry <- function(folder,
                       profile = "bndry_prf", extension = ".dat") {
   file            <- paste0(folder, profile, extension)
@@ -15,7 +15,6 @@ LoadBndry <- function(folder,
   # out: bndry = data.frame(x, y)
   return(bndry)
 }
-
 #--- * Wall Mesh Data                                             ----
 # Load wall grad file
 # out: wallmesh = data.frame(x, y, nxG, nyG, areaG)
@@ -27,7 +26,6 @@ LoadWallGrad <- function(seshpath,
   # out: wallmesh = data.frame(x, y, nxG, nyG, areaG)
   return(wallmesh)
 }
-
 # Determine the LE, TE, spline length, etc of the airfoil
 # out:long_wall = data.frame(<wallmesh>, wnum, theta, up, wall, snum)
 AirfoilLongWall <- function(wallmesh, 
@@ -73,7 +71,6 @@ AirfoilLongWall <- function(wallmesh,
   # out:long_wall = data.frame(<wallmesh>, wnum, theta, up, wall, snum)
   return(long_wall)
 }
-
 # Determine airfoil spline length
 # out: long_wall = data.frame(<long_wall>, s, dxds, dyds, dydx, dydxlen)
 AirfoilSpline <- function(long_wall, 
@@ -125,7 +122,8 @@ AirfoilSpline <- function(long_wall,
 #--- Session and Mesh Calculation                                 ----
 #--- * Session Data                                               ----
 # Load a single keyword from list of keywords
-LoadKeyword <- function(keyword, filelines, file) {
+LoadKeyword <- function(keyword, 
+                        filelines, file) {
   num <- grep(keyword[1], filelines)                              # Find the line numbers the keyword appears in
   # keyword... keyword
   table <- read.table(
@@ -137,10 +135,10 @@ LoadKeyword <- function(keyword, filelines, file) {
   table$junk <- NULL                                              # Remove any junk defined in "keyword"
   return(table)
 }
-
 # Load a list of keywords and colnames
 # out: session = list(nodes, elements, surfaces, curves)
-LoadSeshFileKeywords <- function(seshpath, list_keyword = NULL) {
+LoadSeshFileKeywords <- function(seshpath, 
+                                 list_keyword = NULL) {
   # Determine keywords
   if (is.null(list_keyword)) {
     list_keyword <- list(                                         # Keywords in session to read
@@ -158,7 +156,53 @@ LoadSeshFileKeywords <- function(seshpath, list_keyword = NULL) {
   # out: session = list(nodes, elements, surfaces, curves)
   return(session)
 }
-
+# Determine the mesh nodes from the session data
+# out: long_sesh = tibble(enum, ncorner, nnum, x, y, z, elabx, elaby, area
+LongSesh <-function(session) {
+  # Check that all elements are quadrangles
+  if (as.logical(sum(session$elements$shapetag != "<Q>"))) {
+    warning("Not all elements are Quadrangles")
+  }
+  # Manipulate data
+  long_sesh <- session$elements %>%                           # data.frame(enum, shapetag, n1, n2, n3, n4)
+    select(-shapetag) %>%                                         # Remove shape tag since checked shape already
+    gather(ncorner, nnum, -enum) %>%                              # Gather nodes 1-4 into a single column
+    left_join(., session$nodes, "nnum") %>%                       # Combine with nodes to get (x,y) for each element corner
+    group_by(enum) %>%                                            # Order data
+    mutate(                                                       # Add columns for labels
+      elabx = mean(x),
+      elaby = mean(y)) %>%
+    rbind(.,                                                      # Close the quadrilateratl (without effecting mean) 
+          mutate(filter(., ncorner=="n1"), ncorner = "n5")) %>%
+    arrange(enum, ncorner) %>% 
+    mutate(area = x*lead(y) - lead(x)*y) %>%                      # Calculate area
+    mutate(area = 1/2*abs(sum(ifelse(is.na(area), 0, area)))) %>%
+    filter(ncorner != "n5") %>%                                   # Remove extra ncorner
+    ungroup()
+  # out: long_sesh = tibble(enum, ncorner, nnum, x, y, z, elabx, elaby, area)
+  return(long_sesh)
+}
+#--- * Mesh Data                                                  ----
+# Load mesh file
+# out: mesh = data.frame(x, y, enum, jnum)
+LoadMesh <- function(seshpath,
+                     extension = ".mshi") {
+  file           <- paste0(seshpath, extension)
+  mesh           <- read.table(file, skip = 1)
+  colnames(mesh) <- c("x", "y", "enum", "jnum")
+  # out: mesh = data.frame(x, y, enum, jnum)
+  return(mesh)
+}
+# Convert to long mesh
+# out: long_mesh = data.frame(x, y, enum, jnum, ncorner, nnum, z, elabx, elaby, area) 
+LongMesh <- function(long_mesh, long_sesh) {
+  long_mesh$mnum =  1:nrow(long_mesh)                              # Mesh number
+  long_mesh     <- LongJoin(long_mesh, long_sesh)                  # Join with node numbers
+  long_mesh$z   <- NULL                                            # Not useful column
+  long_mesh$node = is.na(long_mesh$nnum)                           # Handy variable
+  # out: long_mesh = data.frame(x, y, enum, jnum, ncorner, nnum, z, elabx, elaby, area) 
+  return(long_mesh)
+}
 
 
 #--- Numerical Methods ----

@@ -41,25 +41,26 @@ data_dump <- data.frame(
   stringsAsFactors = FALSE)
 rm(airfoil, folderpath, seshpath, dumppath)
 # Plots
-auxplot = TRUE
+auxplot = 1
 
 #--- Airfoil Calculation                                          ----
 # Determine things like spline distance once per unique airfoil i.e. boundary profile and wall output
 #--- * Boundary Data                                              ----
 bndry <- LoadBndry(data_airfoil$folder)
-if (auxplot) {
+if (auxplot > 0) {
   ggplot(bndry, aes(x, y)) + geom_point() + coord_fixed()
 }
 #--- * Wall Mesh Data                                             ----
 wallmesh <- LoadWallGrad(data_airfoil$seshpath)
-if (auxplot) {
+if (auxplot > 1) {
   wallmeshplot      <- rbind(wallmesh[,1:2], wallmesh[,1:2] - wallmesh[,3:4])
   wallmeshplot$wnum <- 1:nrow(wallmesh)
   ggplot(wallmeshplot, aes(x, y, group = wnum)) + geom_line()
   rm(wallmeshplot)
 }
 long_wall <- AirfoilLongWall(wallmesh)
-if (auxplot) {
+if (auxplot > 0) {
+  # long_wallplot make normals etc
   ggplot(long_wall, aes(x, y, colour = theta, shape = up)) + 
     geom_point() + geom_path() + coord_fixed()
 }
@@ -74,11 +75,39 @@ rm(data_airfoil, bndry, long_wall)
 #--- Session and Mesh Calculation                                 ----
 #--- * Airfoil Data                                               ----
 long <- list()
-long$walldata = list_airfoil$long_wall
+long$wall= list_airfoil$long_wall
 #--- * Session Data                                               ----
-session       <- LoadSeshFileKeywords(data_mesh$seshpath)
-long$seshdata <- 
-
-if (auxplot) {
-  ggplot(session)
+session   <- LoadSeshFileKeywords(data_mesh$seshpath)
+long$sesh <- LongSesh(session)
+if (auxplot > 1) {
+  ggplot(long$sesh, 
+         aes(x, y, group=enum, colour=enum)) +
+    geom_polygon(fill=NA) +
+    geom_text(aes(elabx, elaby, label=enum, size=area),
+              data = filter(long$sesh, ncorner=="n1")) +
+    scale_color_gradientn(colours=spectralpalette(100)) +
+    scale_size(guide="none", range=c(1*0.3, 6*0.8)) +
+    coord_fixed()
 }
+#--- * Mesh Data                                                  ----
+long$mesh <- LoadMesh(data_mesh$seshpath)
+long$mesh <- LongMesh(long$mesh)
+if (auxplot > 1) {
+  mid = floor(median(long$mesh$jnum))
+  ggplot(long$mesh,
+         aes(x, y, group=enum, colour=jnum)) +
+    geom_point(shape = 'o', alpha = 0.5) +
+    geom_text(aes(x, y, label=enum),
+              data = filter(long$mesh, jnum==mid)) +
+    coord_fixed()
+}
+#--- * Thread Data                                                ----
+long$mesh <- LongJoin(long$mesh, long$sesh)
+if (auxplot > 0) {
+  ggplot(long$mesh,
+         aes(x, y, group=enum)) +
+    geom_polygon(fill=NA,
+                 data = filter(long$mesh, !is.na(nnum)))
+}
+
+# Then determine for the wall what the equivalent mesh elements are
