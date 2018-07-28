@@ -266,6 +266,41 @@ LongWall <- function(long_wall, long_mesh) {
     arrange(snum)
   return(long_wall)
 }
+#--- * Local Data                                                 ----
+# Determine local mesh
+# out: long_mesh = data.frame(<long_mesh>, local)
+LocalMesh <- function(long_mesh, long_wall) {
+  # First nodes and elements
+  local_mesh <- filter(long_wall, node)
+  local_mesh <- list(
+    nodes = unique(local_mesh$nnum),
+    elements = unique(local_mesh$enum))
+  local_mesh$mesh = long_mesh %>% 
+    filter(node) %>% 
+    select(enum, nnum) 
+  local_mesh$mesh$local = 0
+  local_mesh$mesh$local = 
+    ifelse(local_mesh$mesh$enum %in% local_mesh$elements, 
+           local_mesh$mesh$local - 1, 
+           local_mesh$mesh$local)
+  # Loop
+  while (sum(local_mesh$mesh$local == 0) > 0) {
+    local_mesh$nodes = unique(
+      local_mesh$mesh[local_mesh$mesh$enum %in% local_mesh$elements,]$nnum)
+    local_mesh$elements = unique(
+      local_mesh$mesh[local_mesh$mesh$nnum %in% local_mesh$nodes,]$enum)
+    local_mesh$mesh$local = 
+      ifelse(local_mesh$mesh$enum %in% local_mesh$elements, 
+             local_mesh$mesh$local - 1, 
+             local_mesh$mesh$local)
+  }
+  local_mesh$mesh$local = local_mesh$mesh$local - min(local_mesh$mesh$local) + 1
+  # Clean up and join
+  local_mesh <- local_mesh$mesh %>% select(enum, local) %>% unique(.)
+  long_mesh <- LongJoin(long_mesh, local_mesh)
+  # out: long_mesh = data.frame(<long_mesh>, local)
+  return(long_mesh)
+}
 
 #--- Dump File Calculation                                        ----
 #--- * Dump Data                                                  ----
@@ -313,7 +348,6 @@ DumpWall <- function(long_wall, dump_dump) {
   return(dump_wall)
 }
 
-
 #--- * Accleration Data                                           ----
 # Boundary equations from the session file
 # out: none, function saved to environment
@@ -345,9 +379,115 @@ DumpAccel <- function(a, long_wall) {
   return(long_wall)
 }
 #--- * Pressure Data                                              ----
-
+# out: dump_wall = data.frame(<dump_wall>, dpdsG, dpdsS)
+DumpPres <- function(dump_wall) {
+  # Wall Norm
+  # Assumes clockwise direction
+  dump_wall <- dump_wall %>%
+    mutate(dpdsG = -nyG*dpdx +nxG*dpdy)
+  # Cublic spline
+  dump_pres <- dump_wall %>%
+    select(x, y, s, p) %>%
+    arrange(s) %>%
+    unique(.)
+  csp <- cubicspline(dump_pres$s, dump_pres$p)
+  dcsp = CubicSplineCalc(csp, -1)
+  dump_pres$dpdsS = ppval(dcsp, dump_pres$s)
+  dump_wall <- LongJoin(dump_wall, dump_pres)
+  # Checks
+  if (cor(dump_wall$dpdsG, dump_wall$dpdsS) < 0.99)
+    warning("Poor correlation between dpds methods")
+  if (sum(abs(dump_wall$dpdsG - dump_wall$dpdsS)/dump_wall$dpdsG > 0.01))
+    warning(paste(sum(abs(dump_wall$dpdsG - dump_wall$dpdsS)/dump_wall$dpdsG > 0.01)), " dpds error > 1%")
+  # out: dump_wall = data.frame(<dump_wall>, dpdsG, dpdsS)
+  return(dump_wall)
+}
+#--- * Vorticity Data                                             ----
 # Determine normal offsets
+# out: dump_offs = tibble(x, y, nxS, nyS, aveh, wnum, onum, nstep, offseth, norm, wall)
+AirfoilOffset <- function(dump_wall, 
+                          totdist = 0.008, nsteps = 5, varh = TRUE, scale = 1) {
+  # Variables of interest
+  dump_offs <- dump_wall %>%
+    select(x, y, theta, nxG, nyG, nxS, nyS, dodx, dody, aveh, enum, wnum) %>%
+    group_by(x, y, theta) %>%
+    mutate(aveh = mean(aveh)) %>%
+    ungroup() %>%
+    select(-theta)
+  dump_offs$onum <- 1:nrow(dump_offs)
+  # Repeat for nsteps
+  dump_offs <- slice(dump_offs, rep(1:n(), each = nsteps + 1))
+  dump_offs$nstep = rep(0:nsteps, length.out = nrow(dump_offs))
+  dump_offs <- dump_offs %>%
+    mutate(
+      offseth = ifelse(is.na(aveh) | !varh, totdist, aveh)*scale,
+      norm = offseth*nstep/nsteps,
+      x = x - nxS*norm,
+      y = y - nyS*norm) %>%
+    mutate(wall = ifelse(nstep == 0, TRUE, FALSE),
+           wnum = ifelse(wall, wnum, NA))
+  # out: dump_offs = tibble(x, y, nxS, nyS, aveh, wnum, onum, nstep, offseth, norm, wall)
+  return(dump_offs)
+}
+# Interpolate vorticity data onto offset points
+DumpVortInterp <- function(dump_offs, dump_dump,
+                           localmax = 2) {
+  dump_offs$enumo <- dump_offs$enum
+  # Points (ps) in Spacial Polygon (ps)
+  poly_df <- dump_dump %>%
+    filter(local <= localmax, node) %>%
+    arrange(enum, ncorner) %>%
+    select(x, y, enum)
+  poly_sp <- split(poly_df, poly_df$enum)
+  poly_sp <- sapply(poly_sp, function(poly) {
+    Polygons(list(Polygon(poly[, c("x", "y")])), ID = poly[1, "enum"])})
+  poly_sp <- SpatialPolygons(poly_sp)
+  pts_ps  <- dump_offs %>%
+    select(x, y)
+  coordinates(pts_ps) <- ~x + y
+  pts_ret <- over(pts_ps, poly_sp, returnList = FALSE)
+  dump_offs$enum <- unique(poly_df$enum)[pts_ret] 
+  if (sum(is.na(dump_offs$enum)) > 0) 
+    warning("Some points not found in polygon, maybe larger localmax?")
+  # Interpolation
+  mesh <- dump_dump %>%
+    filter(local <= localmax) %>%
+    select(x, y, o, enum)
+  mesh_list <- split(mesh, mesh$enum)
+  offs <- dump_offs %>%
+    select(x, y, enum) %>%
+    arrange(enum) %>%
+    as.data.frame(.)
+  offs_list <- split(offs, offs$enum)
+  # SPECIAL NOTE: since enum is int, mesh_list[[57]] =/= mesh_list[["57"]]
+  # mesh_list[[names(offs_list)[1]]] =/= mesh_list[[57]]
+  intp_out  <- lapply(names(offs_list), function(enum) {
+    intp <- Interpolate(mesh_list[[enum]], offs_list[[enum]], linearintp = TRUE)
+  })
+  intp_out <- bind_rows(intp_out)
+  if (sum(abs(intp_out$x-offs$x) + abs(intp_out$y-offs$y)))
+    warning("enum is out of order")
+  offs <- cbind(intp_out, enum=offs$enum)
+  # Combine back
+  dump_offs <- LongJoin(dump_offs, offs)
+  # out: dump_offs = tibble(<dump_offs>, enumo, o)
+  return(dump_offs)
+}
 
+DumpVortGrad <- function(dump_offs) {
+  dump_offs <- dump_offs %>%
+    rename(dodzS = o_diff) %>%
+    mutate(dodzG = -nxG*dodx - nyG*dody)
+  # BROKEN, THERE ARE NA FROM THE INTERPOLATION!!
+  check <- dump_offs %>% 
+    filter(!is.na(dodzS)) %>%
+    select(dodzG, dodzS) %>%
+    unique(.)
+  print(cor(check$dodzG, check$dodzS))
+  print(max(abs(check$dodzG - check$dodzS)/check$dodzG))
+  print(median(abs(check$dodzG - check$dodzS)/check$dodzG))
+  return(dump_offs)
+}
 
 #--- Numerical Methods ----
 # Heavyside function (step function)
@@ -526,3 +666,19 @@ PointinElement <- function(pts_df, poly_df, resize = NULL) {
   return(pts_df)
 }
 
+#--- Interpolation ----
+Interpolate <- function(mesh, input, linearintp = FALSE) {
+  names <- colnames(mesh)
+  # Interpolate
+  suppressWarnings(
+    output <- as.data.frame(
+      interpp( x = mesh[,1],  y = mesh[,2],    z = mesh[,3],
+              xo = input[,1], yo = input[,2],
+              linear = linearintp,
+              duplicate = "strip"))
+  )
+  colnames(output) <- names[1:3]
+  # Check for NA
+  if (sum(is.na(output[,3])) > 0) warning("NA found in cubic spline interpolation")
+  return(output)
+}

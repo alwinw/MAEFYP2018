@@ -105,7 +105,7 @@ if (auxplot > 1) {
 #--- * Mesh Data                                                  ----
 long$mesh <- LoadMesh(data_mesh$seshpath)
 long$mesh <- LongMesh(long$mesh, long$sesh)
-if (auxplot > 0) {
+if (auxplot > 1) {
   ggplot(long$mesh,
          aes(x, y, group=enum, colour=enum)) +
     geom_point(shape='o', alpha = 0.2) +
@@ -136,6 +136,21 @@ if (auxplot > 0) {
     coord_fixed()
   rm(long_wallplot)
 }
+#--- * Local Data                                                 ----
+long$mesh <- LocalMesh(long$mesh, long$wall)
+if (auxplot > 0) {
+  ggplot(long$mesh,
+         aes(x, y, group=enum, colour=local)) +
+    geom_point(shape='o', alpha = 0.2) +
+    geom_polygon(fill=NA,
+                 data = long$mesh %>% filter(node) %>% arrange(ncorner)) +
+    geom_text(aes(elabx, elaby, label=enum, size=area),
+              data = filter(long$mesh, ncorner=="n1")) +
+    scale_color_gradientn(colours=rev(spectralpalette(10))) +
+    scale_size(guide="none", range=c(1*0.3, 6*0.8)) +
+    coord_fixed()
+}
+
 #--- > Sesh & Mesh Calc Output                                    ----
 list_mesh <- list(
   wall = long$wall,
@@ -179,3 +194,26 @@ if (auxplot > 0) {
     coord_fixed(xlim=c(-0.4, 0.6), ylim=c(-0.2, 0.2))
 }
 #--- * Pressure Data                                              ----
+dump$wall <- DumpPres(dump$wall)
+if (auxplot > 0) {
+  ggplot(dump$wall, aes(x, y, colour = dpdsG)) +
+    geom_point() +
+    scale_colour_gradientn(colours=rev(spectralpalette(10))) +
+    coord_fixed(xlim=c(-0.4, 0.6), ylim=c(-0.2, 0.2))
+}
+#--- * Vorticity Data                                             ----
+order = 4
+dump$offs <- AirfoilOffset(dump$wall, nsteps = order, scale = 0.2)
+if (auxplot > 1) {
+  ggplot(dump$offs, aes(x, y, colour = norm, group = onum)) +
+    geom_point() +
+    geom_line() +
+    coord_fixed()
+}
+dump$offs <- DumpVortInterp(dump$offs, dump$dump)
+# I should really compare dump$offs and dump$wall
+dump$offs <- FiniteDiff(dump$offs, "o", order = order)
+dump$offs <- DumpVortGrad(dump$offs)
+ggplot(dump$offs, aes(dodzG, dodzS)) + geom_point() + coord_fixed() +
+  geom_abline(slope = 1, intercept = 0)
+
