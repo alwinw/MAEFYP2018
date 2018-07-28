@@ -50,7 +50,7 @@ AirfoilLongWall <- function(wallmesh,
     long_wall <- long_wall  %>%
       mutate(theta = 2*pi - theta) %>%                              # TE -> lower -> LE -> upper -> TE
       arrange(theta, wnum) %>%
-      mutate(up = theta <= pi)
+      mutate(up = theta >= pi)
   } else {
     long_wall <- long_wall  %>%
       arrange(theta, wnum) %>%
@@ -106,7 +106,7 @@ AirfoilSpline <- function(long_wall,
   csy <- cubicspline(data$s, data$y)
   dcsx = CubicSplineCalc(csx, -1)                                 # Derivative of cubic splines
   dcsy = CubicSplineCalc(csy, -1)
-  data$dxds    <- ppval(dcsx, data$s)                             # Use cublic spline to determine derivatives
+  data$dxds <- ppval(dcsx, data$s)                                # Use cublic spline to determine derivatives
   data$dyds <- ppval(dcsy, data$s)
   data$dydx <- data$dyds/data$dxds
   data$dydxlen <- sqrt(data$dxds^2 + data$dyds^2)
@@ -116,6 +116,30 @@ AirfoilSpline <- function(long_wall,
   if (originalnrow != nrow(long_wall)) {                          # Check the number of rows is correct
     warning("Merge Failed")}
   # out: long_wall = data.frame(<long_wall>, s, dxds, dyds, dydx, dydxlen)
+  return(long_wall)
+}
+# Determine airfoil normals from spline
+# out: long_wall = data.frame(<long_wall>, nxS, nyS, vecerr)
+AirfoilNorm <- function(long_wall) {
+  # Assume that nxG, nyG etc exist
+  long_wall <- long_wall %>%
+    mutate(nxS = nxG,
+           nyS = -nxS/dydx) %>%
+    mutate(distG = EucDist(nxG, nyG),
+           distS = EucDist(nxS, nyS)) %>%
+    mutate(nxG = nxG/distG,
+           nyG = nyG/distG,
+           nxS = nxS/distS,
+           nyS = nyS/distS) %>%
+    select(-distG, -distS) %>%
+    mutate(vecerr = EucDist(nxG-nxS, nyG-nyS))
+  # Checks
+  if (min(cor(long_wall$nxG, long_wall$nxS), 
+          cor(long_wall$nyS, long_wall$nyS)) < 0.999)
+    warning("Low correlation between normals")
+  if (sum(long_wall$vecerr > 0.005) > 0)
+    warning(paste(sum(long_wall$vecerr > 0.005), "vector error > 0.5%"))
+  # out: long_wall = data.frame(<long_wall>, nxS, nyS, vecerr)
   return(long_wall)
 }
 
@@ -204,6 +228,7 @@ LongMesh <- function(long_mesh, long_sesh) {
   return(long_mesh)
 }
 #--- * Wall Data                                                  ----
+# Add enum and other important variables
 LongWall <- function(long_wall, long_mesh) {
   # Non-node points only
   join_mesh <- long_mesh %>%
@@ -242,6 +267,87 @@ LongWall <- function(long_wall, long_mesh) {
   return(long_wall)
 }
 
+#--- Dump File Calculation                                        ----
+#--- * Dump Data                                                  ----
+# Load GradFieldDump
+# out: dump = list(time, kinvis, dump)
+LoadGradFieldDump <- function(folder, dumpfile) {
+  dumppath  <-  paste0(folder, dumpfile)
+  filelines <- readLines(dumppath)
+  # Read time
+  time <-  filelines[grep("Time", filelines)[1]] %>%
+    gsub("Time", "", .) %>%
+    as.numeric(.)
+  # Read Kinvis
+  kinvis <-  filelines[grep("Kinvis", filelines)[1]] %>%
+    gsub("Kinvis", "", .) %>%
+    as.numeric(.)
+  # Read table
+  flowfield <- read.table(
+    file = dumppath,
+    skip = grep("ASCII", filelines),
+    stringsAsFactors = FALSE)
+  colnames(flowfield) <-                                          # o = omega, p = pressure
+    c("u", "v", "p", "dodx", "dody", "dpdx", "dpdy", "o")
+  # out: dump = list(time, kinvis, dump)
+  return(list(time = time, kinvis = kinvis, dump = flowfield))
+}
+# Combine dump with mesh
+# out: long_mesh = data.frame(<long_mesh>, <dump_dump>)
+DumpMesh <- function(long_mesh, dump_dump) {
+  # Check the number of rows are equal
+  if (nrow(long_mesh) != nrow(dump_dump)) 
+    warning("Unequal number of mesh numbers")
+  # Join
+  dump_dump$dnum <- 1:nrow(dump_dump)
+  dump_dump <- cbind(long_mesh, dump_dump)
+  # out: long_mesh = data.frame(<long_mesh>, <dump_dump>)
+  return(dump_dump)
+}
+# Combine dump with wall
+# out: dump_wall = data.frame(<long_wall>, <dump_dump>)
+DumpWall <- function(long_wall, dump_dump) {
+  dump_wall <- left_join(long_wall, select(dump_dump, -area),
+                         by = c("x", "y", "enum", "node"))
+  # out: dump_wall = data.frame(<long_wall>, <dump_dump>)
+  return(dump_wall)
+}
+
+
+#--- * Accleration Data                                           ----
+# Boundary equations from the session file
+# out: none, function saved to environment
+LoadSeshBCEq <- function(seshpath, bctext, bcfuncname = NULL) {
+  # Read function from session file
+  if (is.null(bcfuncname)) bcfuncname = bctext                    # Determine function name
+  file = paste0(seshpath,".sesh")                                 # Session file name
+  filelines <- readLines(file)
+  bc <- filelines[grep(bctext, filelines)]
+  # Clean up line
+  bc %<>% gsub(bctext, "", .) %>%
+    gsub("\t", "", .) %>%
+    gsub("=", "", .) %>%
+    gsub("PI", "pi", .)
+  # Create the required bc function
+  eval(parse(text = paste0(
+    "BC_", tolower(bctext), " <- function(t) ", bc)),
+    envir = .GlobalEnv)
+}
+# Relative Acceleration
+# out: long_wall = data.frame(<long_wall>, as, an)
+DumpAccel <- function(a, long_wall) {
+  long_wall <- long_wall %>%
+    mutate(
+      a  = a,
+      as = a*dxds/dydxlen,
+      an = a*dyds/dydxlen)
+  # out: long_wall = data.frame(<long_wall>, as, an)
+  return(long_wall)
+}
+#--- * Pressure Data                                              ----
+
+# Determine normal offsets
+
 
 #--- Numerical Methods ----
 # Heavyside function (step function)
@@ -249,6 +355,7 @@ heav <- function(t) ifelse(t>0,1,0)
 
 # Distance function
 LagDist <- function(x, y) sqrt((x - lag(x))^2 + (y - lag(y))^2)
+EucDist <- function(x, y) sqrt(x^2 + y^2)
 
 # Function to find minimum distance
 MinS <- function(x, y, csx, csy, dcsx, dcsy, lim_low, lim_up) {

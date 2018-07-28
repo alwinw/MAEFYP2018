@@ -46,6 +46,7 @@ auxplot = 1
 #--- Airfoil Calculation                                          ----
 # Determine things like spline distance once per unique airfoil i.e. boundary profile and wall output
 #--- * Boundary Data                                              ----
+# Not sure this is actually used anywhere...
 bndry <- LoadBndry(data_airfoil$folder)
 if (auxplot > 0) {
   ggplot(bndry, aes(x, y)) + geom_point() + coord_fixed()
@@ -59,19 +60,32 @@ if (auxplot > 1) {
   rm(wallmeshplot)
 }
 long_wall <- AirfoilLongWall(wallmesh)
-if (auxplot > 0) {
+if (auxplot > 1) {
   # long_wallplot make normals etc
   ggplot(long_wall, aes(x, y, colour = theta, shape = up)) + 
     geom_point() + geom_path() + coord_fixed()
 }
 long_wall <- AirfoilSpline(long_wall)
+long_wall <- AirfoilNorm  (long_wall)
+if (auxplot > 0) {
+  long_wallplot1        <- rbind(long_wall[,1:2], long_wall[,1:2] - long_wall[,3:4])
+  long_wallplot1$wnum   <- 1:nrow(long_wall)
+  long_wallplot1$type   <- "WallGrad"
+  long_wallplot2        <- rbind(long_wall[,1:2], long_wall[,1:2] - long_wall[,16:17])
+  long_wallplot2$vecerr <- long_wall$vecerr
+  long_wallplot2$type   <- "Spline"
+  ggplot(mapping = aes(x, y)) +
+    geom_line(aes(group = wnum), linetype = "dashed", alpha = 0.5, data = long_wallplot1) +
+    geom_point(aes(colour = vecerr), data = long_wallplot2) +
+    scale_colour_gradientn(colours=spectralpalette(10))
+  rm(long_wallplot1, long_wallplot2)
+}
 #--- > Airfoil Calc Output                                        ----
 list_airfoil <- list(
   airfoil   = data_airfoil,
   bndry     = bndry,
   long_wall = long_wall)
 rm(data_airfoil, bndry, long_wall)
-
 #--- Session and Mesh Calculation                                 ----
 #--- * Airfoil Data                                               ----
 long <- list()
@@ -104,7 +118,7 @@ if (auxplot > 0) {
     coord_fixed()
 }
 #--- * Wall Data                                                  ----
-long$wall= list_airfoil$long_wall
+long$wall <-  list_airfoil$long_wall
 long$wall <- LongWall(long$wall, long$mesh)
 if (auxplot > 0) {
   long_wallplot <- long$wall %>%
@@ -127,3 +141,41 @@ list_mesh <- list(
   wall = long$wall,
   mesh = long$mesh)
 rm(data_mesh, long, session, wallmesh)
+
+#--- Dump File Calculation                                        ----
+#--- * Dump Data                                                  ----
+dump      <- LoadGradFieldDump(data_dump$folder, data_dump$dumpfile)
+dump$dump <- DumpMesh(list_mesh$mesh, dump$dump)
+if (auxplot > 1) {
+  ggplot(dump$dump, aes(x, y, colour = u)) +
+    geom_point() +
+    scale_colour_gradientn(colours=rev(spectralpalette(10))) +
+    coord_fixed(xlim=c(-0.4, 0.6), ylim=c(-0.2, 0.2))
+  ggplot(dump$dump, aes(x, y, colour = p)) +
+    geom_point() +
+    scale_colour_gradientn(colours=rev(spectralpalette(10))) +
+    coord_fixed(xlim=c(-0.4, 0.6), ylim=c(-0.2, 0.2))
+  ggplot(dump$dump, aes(x, y, colour = o)) +
+    geom_point() +
+    scale_colour_gradientn(colours=rev(spectralpalette(10))) +
+    coord_fixed(xlim=c(-0.4, 0.6), ylim=c(-0.2, 0.2))
+}
+dump$wall <- DumpWall(list_mesh$wall, dump$dump)
+if (auxplot > 1) {
+  ggplot(dump$wall, aes(x, y, colour = dpdx)) +
+    geom_point() +
+    scale_colour_gradientn(colours=rev(spectralpalette(10))) +
+    coord_fixed(xlim=c(-0.4, 0.6), ylim=c(-0.2, 0.2))
+}
+#--- * Accleration Data                                           ----
+# Note that tangent direction based on spline calc
+LoadSeshBCEq(data_dump$seshpath, "MOD_ALPHA_X")
+dump$a    <- BC_mod_alpha_x(dump$time)
+dump$wall <- DumpAccel(dump$a, dump$wall)
+if (auxplot > 0) {
+  ggplot(dump$wall, aes(x, y, colour = as)) +
+    geom_point() +
+    scale_colour_gradientn(colours=rev(spectralpalette(10))) +
+    coord_fixed(xlim=c(-0.4, 0.6), ylim=c(-0.2, 0.2))
+}
+#--- * Pressure Data                                              ----
