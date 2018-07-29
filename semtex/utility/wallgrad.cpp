@@ -210,7 +210,7 @@ static void printWalls (int_t             np  ,
 	      cout << \
 	        setw(24) << xs [j] << setw(24) << ys [j] << \
 	        setw(24) << nxs[j] << setw(24) << nys[j] << setw(24) << area[j] << \
-	        setw(10) << k      << setw(10) << s      << endl;
+	        setw(10) << k + 1  << setw(10) << s + 1  << endl;
       }
     }
 }
