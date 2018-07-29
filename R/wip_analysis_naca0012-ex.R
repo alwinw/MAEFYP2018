@@ -15,12 +15,12 @@ source("src_helper-functions.R")                                 # Smaller funct
 theme_set(theme_bw())                                           # Set black and white theme
 spectralpalette <-                                              # Custom spectral pallette
   colorRampPalette(rev(brewer.pal(11, "Spectral")))             #  usage: spectralpallette(10) 
-#--- * Required Paths                                           ----
-saveplot   = "../src-example/NACA0012/"
+#--- * Required Paths                                             ----
+saveplot   = "../src-example/NACA0012/"                         # Pass in later to plot_data
 airfoil    = "NACA0012-AoA04"
 folderpath = "../src-example/NACA0012/results/"
 seshpath   = "RE-10000-sine-0.001-2000"
-dumppath   = "RE-10000-sine-0.001-2000-03.dump"
+dumppath   = "RE-10000-sine-0.001-2000-21.dump"
 # Required input dataframes
 data_airfoil <- data.frame(
   airfoil  = airfoil, 
@@ -41,7 +41,7 @@ data_dump <- data.frame(
   stringsAsFactors = FALSE)
 rm(airfoil, folderpath, seshpath, dumppath)
 # Plots
-auxplot = 1
+auxplot = 0
 
 #--- Airfoil Calculation                                          ----
 # Determine things like spline distance once per unique airfoil i.e. boundary profile and wall output
@@ -210,16 +210,101 @@ if (auxplot > 1) {
     geom_line() +
     coord_fixed()
 }
-if        (T) {linear = TRUE ; extrap = TRUE; round = NULL
-} else if (F) {linear = FALSE; extrap = FALSE; round = 8
-} else        {linear = FALSE; extrap = TRUE ; round = 8}
 dump$offs <- DumpVortInterp(dump$offs, dump$dump, 
-                            linear = linear, extrap = extrap, round = round)
-# I should really compare dump$offs and dump$wall
+                            linear = TRUE, extrap = FALSE, round = NULL)
 dump$offs <- FiniteDiff(dump$offs, "o", order = order)
 dump$offs <- DumpVortGrad(dump$offs)
-ggplot(dump$offs, aes(dodzG, dodzS)) + geom_point() + coord_fixed()+
-  geom_abline(slope = 1, intercept = 0)
+if (auxplot > 0) {
+  dodzfit <- lm(dodzS~dodzG, dump$offs)
+  ggplot(dump$offs, aes(dodzG, dodzS)) + geom_point() + coord_fixed()+
+    geom_abline(slope = 1, intercept = 0) + 
+    stat_smooth(method = "lm", col = "blue") +
+    labs(title = paste("Adj R2 = ",signif(summary(dodzfit)$adj.r.squared, 5),
+                       "Intercept =",signif(dodzfit$coef[[1]],5 ),
+                       " Slope =",signif(dodzfit$coef[[2]], 5),
+                       " P =",signif(summary(dodzfit)$coef[2,4], 5)))
+  rm(dodzfit)
+}
+#--- > Dump Calc Output                                           ----
+data_plot <- bind_rows(dump[c("time", "kinvis", "a")])
+data_plot <- cbind(data_dump, data_plot)
+list_dump <- c(
+  data_plot = list(data_plot), 
+  dump = dump[c("wall", "offs", "dump")])
+names(list_dump) <- c("data_plot", "wall", "offs", "dump")
+rm(data_dump, data_plot, dump, order)  
 
-dodzfit <- lm(dodzS~dodzG, dump$offs)
-summary(dodzfit)
+#--- Plot Outputs                                                 ----
+#--- * Plot Setup                                                 ----
+plot <- list()
+plot$data      <- list_dump$data_plot
+plot$data$save <- saveplot                                      # saveplot needs to be passed in!
+plot$wall      <- list_dump$wall
+plot$offs      <- list_dump$offs
+plot$dump      <- list_dump$dump
+plot$setup     <- PlotSetup(plot$wall, plot$data)
+#--- * Plot Navier Stokes LHS vs RHS                          ----
+
+plot_data <- plot$data
+plot_wall <- plot$wall
+plot_offs <- plot$offs
+plot_dump <- plot$dump
+plot_setup <- plot$setup
+
+
+plot_nstheme <- ggplot(plot_wall, aes(s)) + 
+  geom_vline(xintercept = as.numeric(plot_setup$vlines),        # Vertical lines for LE, TE, LE
+             colour = "grey", linetype = "dashed") +
+  geom_label(aes(x, y, label = labels), plot_setup$surf,        # Surface labels
+             colour = "grey") +
+  xlab("s") + 
+  scale_x_continuous(breaks = plot_setup$xbreaks, 
+                     labels = function(x) sprintf("%.2f", x)) +
+  ylab(NULL) + ylim(c(-40, 20)) +
+  scale_color_manual(
+    name = "Legend",
+    values = c("dp/ds" = "red", "dV/dt" = "blue", "LHS" = "purple", "RHS" = "purple"),
+    labels = c(
+      expression(-frac(1, rho)~frac(partialdiff*p, partialdiff*s)), 
+      expression(-frac(partialdiff*V, partialdiff*t)), 
+      expression(-
+        bgroup("(",
+               frac(1, rho)~frac(partialdiff*p, partialdiff*s) +
+                 frac(partialdiff*V, partialdiff*t), ")")),
+      expression(-nu~frac(partialdiff*omega, partialdiff*z))),
+    guide = guide_legend(
+      override.aes = list(
+        linetype = c(rep("solid", 2), "dashed", "blank"),
+        shape = c(rep(NA, 3), "O"),
+        alpha = rep(1, 4)))) +
+  theme(legend.key.size = unit(2.25, "lines"),
+        legend.text.align = 0.5,
+        legend.direction = "vertical", 
+        legend.position = "right",
+        legend.background = element_rect(colour = "black", size = 0.3))
+
+plot_nsS <- plot_nstheme +
+  geom_path(aes(y = -as, colour = "dV/dt")) +                   # Acceleration terms
+  geom_path(aes(y = +dpdsS, colour = "dp/ds")) +                # Pressure field
+  geom_path(aes(y = - as + dpdsS, colour = "LHS"),              # LHS, acceleration + pressure
+            linetype = "dashed") +
+  geom_point(aes(s, -dodzS*plot_data$kinvis, colour = "RHS"),    # RHS, v * dw/dz
+             plot_offs, shape = "o", alpha = 0.3) +
+  ggtitle(plot_setup$title)
+
+plot_nsG <- plot_nstheme +
+  geom_path(aes(y = -as, colour = "dV/dt")) +                   # Acceleration terms
+  geom_path(aes(y = + dpdsG, colour = "dp/ds")) +               # Pressure field
+  geom_path(aes(y = - as + dpdsG, colour = "LHS"),              # LHS, acceleration + pressure
+            linetype = "dashed") +
+  geom_point(aes(s, -dodzG*plot_data$kinvis, colour = "RHS"),    # RHS, v * dw/dz
+             plot_offs, shape = "o", alpha = 0.3) +
+  ggtitle(plot_setup$title)
+
+print(plot_nsS)
+print(plot_nsG)
+
+
+
+
+

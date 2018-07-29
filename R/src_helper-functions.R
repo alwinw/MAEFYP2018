@@ -409,7 +409,7 @@ AirfoilOffset <- function(dump_wall,
                           totdist = 0.008, nsteps = 5, varh = TRUE, scale = 1) {
   # Variables of interest
   dump_offs <- dump_wall %>%
-    select(x, y, theta, nxG, nyG, nxS, nyS, dodx, dody, aveh, enum, wnum) %>%
+    select(x, y, theta, s, nxG, nyG, nxS, nyS, dodx, dody, aveh, enum, wnum) %>%
     group_by(x, y, theta) %>%
     mutate(aveh = mean(aveh)) %>%
     ungroup() %>%
@@ -430,7 +430,7 @@ AirfoilOffset <- function(dump_wall,
   return(dump_offs)
 }
 # Interpolate vorticity data onto offset points
-dump_offs = dump$off; dump_dump = dump$dump; localmax = 2;
+# dump_offs = dump$off; dump_dump = dump$dump; localmax = 2;
 
 DumpVortInterp <- function(dump_offs, dump_dump,
                            localmax = 2, linear = TRUE, extrap = FALSE, round = NULL) {
@@ -506,10 +506,14 @@ DumpVortGrad <- function(dump_offs) {
     filter(!is.na(dodzS)) %>%
     select(dodzG, dodzS) %>%
     unique(.)
-  print(cor(check$dodzG, check$dodzS))
-  print(max(abs(check$dodzG - check$dodzS)/check$dodzG))
-  print(median(abs(check$dodzG - check$dodzS)/check$dodzG))
+  # print(cor(check$dodzG, check$dodzS))
+  # print(max(abs(check$dodzG - check$dodzS)/check$dodzG))
+  # print(median(abs(check$dodzG - check$dodzS)/check$dodzG))
   return(dump_offs)
+}
+
+DumpVortJoin <- function(dump_wall, dump_offs) {
+  sum(abs(dump_wall$x - dump_offs$x))
 }
 
 #--- Numerical Methods ----
@@ -710,4 +714,54 @@ Interpolate <- function(mesh, input,
                       NA, output[,3])
   if (sum(is.na(output[,3])) > 0) warning("NA found in bicubic interpolation")
   return(output)
+}
+
+
+#--- Plot Outputs                                                 ----
+#--- * Plot Setup                                                 ----
+# Variables used in multiple plots
+PlotSetup <- function(plot_wall, plot_data) {
+  # Vertical lines to make TE, LE, TE
+  plot_vlines <- data.frame(
+    telo = min(plot_wall$s),
+    le   = plot_wall[plot_wall$theta == pi,]$s[1],
+    teup = max(plot_wall$s))
+  # Location of surface labels
+  plot_surf <- data.frame(
+    x = c(plot_vlines$telo,
+          mean(c(plot_vlines$telo, plot_vlines$le)),
+          plot_vlines$le,
+          mean(c(plot_vlines$le, plot_vlines$teup)),
+          plot_vlines$teup),
+    y = rep(-40, 5),
+    labels = c("TE", "Lower", "LE", "Upper", "TE"))
+  # xbreak locations on x-axis
+  plot_xbreaks <-
+    c(seq(plot_vlines$telo, plot_vlines$le, length.out = 3)[1:2],
+      seq(plot_vlines$le, plot_vlines$teup, length.out = 3))
+  # Title of plot with key information
+  plot_title <- paste0(
+    plot_data$airfoil, "\n",
+    paste("Time:",                sprintf("%05.3f",  plot_data$time  )), "   ",
+    paste("Acceleration:",        sprintf("%+07.4f", plot_data$a   )), "\n",
+    paste("Kinematic Viscosity:", sprintf("%.4f",   plot_data$kinvis))
+  )
+  # Plot filename
+  plot_filename <- paste(
+    plot_data$ID,
+    paste0("v", format(plot_data$kinvis, scientific = TRUE)),
+    paste0("t", sprintf("%05.3f",  plot_data$time)),
+    paste0("a", sprintf("%+07.3f", plot_data$a)),
+    # "ns",
+    sep = "_")
+  # Plots limits
+  # Add limits for airfoil, LE, TE, etc here
+  # Output
+  plot_setup <- list(
+    vlines   = plot_vlines,
+    surf     = plot_surf,
+    xbreaks  = plot_xbreaks,
+    title    = plot_title,
+    filename = plot_filename)
+  return(plot_setup)
 }
