@@ -202,18 +202,24 @@ if (auxplot > 0) {
     coord_fixed(xlim=c(-0.4, 0.6), ylim=c(-0.2, 0.2))
 }
 #--- * Vorticity Data                                             ----
-order = 4
-dump$offs <- AirfoilOffset(dump$wall, nsteps = order, scale = 0.2)
+order = 3 # Ideally, scale should be order/N_P
+dump$offs <- AirfoilOffset(dump$wall, nsteps = order, scale = (order)*0.2)
 if (auxplot > 1) {
   ggplot(dump$offs, aes(x, y, colour = norm, group = onum)) +
     geom_point() +
     geom_line() +
     coord_fixed()
 }
-dump$offs <- DumpVortInterp(dump$offs, dump$dump)
+if        (T) {linear = TRUE ; extrap = TRUE; round = NULL
+} else if (F) {linear = FALSE; extrap = FALSE; round = 8
+} else        {linear = FALSE; extrap = TRUE ; round = 8}
+dump$offs <- DumpVortInterp(dump$offs, dump$dump, 
+                            linear = linear, extrap = extrap, round = round)
 # I should really compare dump$offs and dump$wall
 dump$offs <- FiniteDiff(dump$offs, "o", order = order)
 dump$offs <- DumpVortGrad(dump$offs)
-ggplot(dump$offs, aes(dodzG, dodzS)) + geom_point() + coord_fixed() +
+ggplot(dump$offs, aes(dodzG, dodzS)) + geom_point() + coord_fixed()+
   geom_abline(slope = 1, intercept = 0)
 
+dodzfit <- lm(dodzS~dodzG, dump$offs)
+summary(dodzfit)

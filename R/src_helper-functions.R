@@ -430,8 +430,10 @@ AirfoilOffset <- function(dump_wall,
   return(dump_offs)
 }
 # Interpolate vorticity data onto offset points
+dump_offs = dump$off; dump_dump = dump$dump; localmax = 2;
+
 DumpVortInterp <- function(dump_offs, dump_dump,
-                           localmax = 2) {
+                           localmax = 2, linear = TRUE, extrap = FALSE, round = NULL) {
   dump_offs$enumo <- dump_offs$enum
   # Points (ps) in Spacial Polygon (ps)
   poly_df <- dump_dump %>%
@@ -461,8 +463,29 @@ DumpVortInterp <- function(dump_offs, dump_dump,
   offs_list <- split(offs, offs$enum)
   # SPECIAL NOTE: since enum is int, mesh_list[[57]] =/= mesh_list[["57"]]
   # mesh_list[[names(offs_list)[1]]] =/= mesh_list[[57]]
+  # Testing
+  if (FALSE) {
+    mesh_val <- mesh_list[[names(offs_list)[1]]]
+    mesh_val <- round(mesh_val, 8)
+    offs_val <- offs_list[[names(offs_list)[1]]]
+    offs_val <- mesh_val[7,] #offs_val[12,]
+    ggplot(mapping = aes(x, y)) + 
+      geom_point(shape = 19, colour = "red", size = 3, alpha = 0.5,
+                 data = mesh_val[7,]) + 
+      geom_point(aes(colour = o), shape = 19, data = mesh_val) +
+      geom_point(shape = 21, data = offs_val) +
+      geom_polygon(fill = NA, colour = "black", 
+                   data = mesh_val[chull(mesh_val[,1], mesh_val[,2]),])
+    # Interpolate(mesh_val, offs_val, TRUE)
+    interpp( x = mesh_val[,1],  y = mesh_val[,2],  z = mesh_val[,3],
+            xo = offs_val[,1], yo = offs_val[,2],
+            linear = FALSE,
+            extrap = FALSE,
+            duplicate = "strip")
+    }
   intp_out  <- lapply(names(offs_list), function(enum) {
-    intp <- Interpolate(mesh_list[[enum]], offs_list[[enum]], linearintp = TRUE)
+    intp <- Interpolate(mesh_list[[enum]], offs_list[[enum]], 
+                        linear = linear, extrap = extrap, round = round)
   })
   intp_out <- bind_rows(intp_out)
   if (sum(abs(intp_out$x-offs$x) + abs(intp_out$y-offs$y)))
@@ -667,18 +690,24 @@ PointinElement <- function(pts_df, poly_df, resize = NULL) {
 }
 
 #--- Interpolation ----
-Interpolate <- function(mesh, input, linearintp = FALSE) {
+Interpolate <- function(mesh, input, 
+                        linear = FALSE, extrap = FALSE, round = NULL) {
   names <- colnames(mesh)
+  if (!is.null(round))
+    mesh <- round(mesh, round)
   # Interpolate
   suppressWarnings(
     output <- as.data.frame(
-      interpp( x = mesh[,1],  y = mesh[,2],    z = mesh[,3],
-              xo = input[,1], yo = input[,2],
-              linear = linearintp,
+      interpp( mesh[,1],  mesh[,2],  mesh[,3],
+              input[,1], input[,2],
+              linear = linear,
+              extrap = extrap,
               duplicate = "strip"))
   )
   colnames(output) <- names[1:3]
-  # Check for NA
-  if (sum(is.na(output[,3])) > 0) warning("NA found in cubic spline interpolation")
+  # Check for extremely large/small values and NA
+  output[,3] = ifelse(output[,3] < min(mesh[,3]) | output[,3] > max(mesh[,3]),
+                      NA, output[,3])
+  if (sum(is.na(output[,3])) > 0) warning("NA found in bicubic interpolation")
   return(output)
 }
