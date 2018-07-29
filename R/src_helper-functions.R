@@ -52,11 +52,11 @@ AirfoilLongWall <- function(wallmesh,
     mutate(theta = 2*pi - theta,                                  # Reverse the direction for lower first
            up = theta >= pi) %>%
     group_by(elmt) %>%
-    mutate(up = as.logical(round(mean(up))),                      # LE automatically patched
-           avetheta = mean(theta)) %>%                            # Use average theta to "group" elements in sort by theta
-    ungroup()
+    mutate(up = as.logical(round(mean(up))))                      # LE automatically patched
   long_wall$theta[long_wall$theta==2*pi & long_wall$up==FALSE] = 0
   long_wall <- long_wall %>% 
+    mutate(avetheta = mean(theta)) %>%                            # Use average theta to "group" elements in sort by theta
+    ungroup() %>%
     arrange(up, theta, avetheta) %>%
     select(-avetheta)
   # Output
@@ -507,7 +507,10 @@ DumpVortGrad <- function(dump_offs) {
 }
 
 DumpVortJoin <- function(dump_wall, dump_offs) {
-  sum(abs(dump_wall$x - dump_offs$x))
+  # sum(abs(dump_wall$x - dump_offs$x))
+  dump_offs <- filter(dump_offs, nstep==0)
+  
+  return(dump_offs)
 }
 
 #--- Numerical Methods ----

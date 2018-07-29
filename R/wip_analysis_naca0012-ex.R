@@ -225,6 +225,7 @@ if (auxplot > 0) {
                        " P =",signif(summary(dodzfit)$coef[2,4], 5)))
   rm(dodzfit)
 }
+dump$offs <- DumpVortJoin(dump$wall, dump$offs)
 #--- > Dump Calc Output                                           ----
 data_plot <- bind_rows(dump[c("time", "kinvis", "a")])
 data_plot <- cbind(data_dump, data_plot)
@@ -260,7 +261,7 @@ plot_nstheme <- ggplot(plot_wall, aes(s)) +
   xlab("s") + 
   scale_x_continuous(breaks = plot_setup$xbreaks, 
                      labels = function(x) sprintf("%.2f", x)) +
-  ylab(NULL) + ylim(c(-40, 20)) +
+  ylab(NULL) + ylim(c(-40, 30)) +
   scale_color_manual(
     name = "Legend",
     values = c("dp/ds" = "red", "dV/dt" = "blue", "LHS" = "purple", "RHS" = "purple"),
