@@ -713,6 +713,48 @@ Interpolate <- function(mesh, input,
   return(output)
 }
 
+#--- Batch                                                        ----
+ListSesh <- function(batchfolder) {
+  # List of files in folder (should be made more robust later)
+  batchlist <- list.files(batchfolder, pattern = ".sesh", recursive = TRUE)
+  # Convert character to dataframe
+  batchlist <- data.frame(path = unlist(strsplit(batchlist, "*.sesh"))) %>%
+    separate(path, c("airfoil", "seshname"), sep = "/") %>%
+    mutate(folder = paste0(batchfolder, "/", airfoil, "/")) %>%
+    mutate(seshpath = paste0(folder, seshname))
+  # Return list of session files
+  return(batchlist)
+}
+
+# List dump files in directory
+ListDump <- function(folder, seshname) {
+  # List of files in folder (should be made more robust later)
+  dumplist <- list.files(folder, pattern = paste0(seshname,"-"))
+  # Return file list
+  return(dumplist)  # character
+}
+
+LoadSeshTokenWords <- function(seshpath, tokenwords) {
+  # Session file name
+  file = paste0(seshpath,".sesh")
+  # Read the session file to grep lines later
+  filelines <- readLines(file)
+  # For each keyword load the associated data
+  output <- lapply(tokenwords, function(tokenword) {
+    value = filelines[grep(tokenword, filelines)] %>%
+      gsub(tokenword, "", .) %>%
+      gsub("\t", "", .) %>%
+      gsub("=", "", .) %>%
+      as.numeric(.)
+    return(data.frame(tokenword = tokenword,
+                      tokenvalue = value,
+                      stringsAsFactors = FALSE))
+  })
+  # Convert to data.frame
+  output <- bind_rows(output)
+  # Return the session file contents
+  return(output)   # List
+}
 
 #--- Plot Outputs                                                 ----
 #--- * Plot Setup                                                 ----
