@@ -29,7 +29,7 @@
  - wallmsh  : add outward normals
  - addfield : add gradients of pressure and vorticity
  - For wallmsh, use sideGeom in order to determine the gradients
- - For addfield, need to add additional fields
+ - For addfield, need to add additional fields: klmno
 
 # WallGrad Integration
  - At the corners of two quads, the normals are not exactly equal
