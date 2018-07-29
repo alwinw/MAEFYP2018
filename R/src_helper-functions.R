@@ -22,7 +22,7 @@ LoadWallGrad <- function(seshpath,
                          extension = ".wallgrad") {
   file               <- paste0(seshpath, extension)
   wallmesh           <- read.table(file, skip = 1)
-  colnames(wallmesh) <- c("x", "y", "nxG", "nyG", "areaG")
+  colnames(wallmesh) <- c("x", "y", "nxG", "nyG", "areaG", "elmt", "side")
   # out: wallmesh = data.frame(x, y, nxG, nyG, areaG)
   return(wallmesh)
 }

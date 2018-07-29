@@ -20,7 +20,7 @@ saveplot   = "../src-example/NACA0012/"                         # Pass in later 
 airfoil    = "NACA0012-AoA04"
 folderpath = "../src-example/NACA0012/results/"
 seshpath   = "RE-10000-sine-0.001-2000"
-dumppath   = "RE-10000-sine-0.001-2000-21.dump"
+dumppath   = "RE-10000-sine-0.001-2000-11.dump"
 # Required input dataframes
 data_airfoil <- data.frame(
   airfoil  = airfoil, 
@@ -31,7 +31,7 @@ data_airfoil <- data.frame(
 data_mesh <- data.frame(
   data_airfoil,
   tokenword  = "N_P",
-  tokenvalue = 5,
+  tokenvalue = 8,
   ID         = "NACA0012-AoA04-N_P5",
   stringsAsFactors = FALSE)
 data_dump <- data.frame(
@@ -203,7 +203,7 @@ if (auxplot > 0) {
 }
 #--- * Vorticity Data                                             ----
 order = 3 # Ideally, scale should be order/N_P
-dump$offs <- AirfoilOffset(dump$wall, nsteps = order, scale = (order)*0.2)
+dump$offs <- AirfoilOffset(dump$wall, nsteps = order, scale = (order)/data_dump$tokenvalue)
 if (auxplot > 1) {
   ggplot(dump$offs, aes(x, y, colour = norm, group = onum)) +
     geom_point() +

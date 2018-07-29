@@ -49,6 +49,11 @@ rsconnect/
 *.mdl
 *.vfld
 *.Gfld
+*.his
+*.msh
+*.mshi
+*.wallgrad
+*.wallmsh
 *.num
 *.rst
 *.gif

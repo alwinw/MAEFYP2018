@@ -15,10 +15,10 @@
 	KINVIS    = 1./10000.
 	
 	D_T       = 0.001
-	N_STEP    = 2000
+	N_STEP    = 200
 	N_TIME    = 2
 
-	N_P       = 5
+	N_P       = 10
 	N_Z       = 1
   LZ        = 1.0
 	BETA      = TWOPI/LZ
