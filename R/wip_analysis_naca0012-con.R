@@ -69,7 +69,7 @@ long$sesh <- LongSesh(session)
 long$mesh <- LoadMesh(data_mesh$seshpath)
 long$mesh <- LongMesh(long$mesh, long$sesh)
 #--- * Wall Data                                                  ----
-long$wall <-  list_airfoil$long_wall
+long$wall <- list_airfoil$long_wall
 long$wall <- LongWall(long$wall, long$mesh)
 #--- * Local Data                                                 ----
 long$mesh <- LocalMesh(long$mesh, long$wall)

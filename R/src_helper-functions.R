@@ -30,6 +30,7 @@ LoadWallGrad <- function(seshpath,
 # out:long_wall = data.frame(<wallmesh>, wnum, theta, up, wall, snum)
 AirfoilLongWall <- function(wallmesh, 
                             dir = "clockwise") {
+  # Note: Direction must be clockwise, cannot change!!
   # Determine LE and TE edges
   te = wallmesh[which.max(wallmesh$x), 1:2]                       # Most far right point
   le <- wallmesh %>%                                              # Furthest point from te
@@ -43,29 +44,22 @@ AirfoilLongWall <- function(wallmesh,
     mutate(theta = atan2(y - cp$y, x - cp$x) - tetheta) %>%
     mutate(theta = theta + ifelse(theta < 0, 2*pi, 0)) %>%        # CANNOT use sign(theta) since theta can be zero
     arrange(theta, wnum)
-  # Patch TE 
-  long_wall$theta[1] = long_wall$theta[1] + 2*pi
-  # Order by theta
-  if (dir == "clockwise") {
-    long_wall <- long_wall  %>%
-      mutate(theta = 2*pi - theta) %>%                              # TE -> lower -> LE -> upper -> TE
-      arrange(theta, wnum) %>%
-      mutate(up = theta >= pi)
-  } else {
-    long_wall <- long_wall  %>%
-      arrange(theta, wnum) %>%
-      mutate(up = theta <= pi)
-  }
-  # Patch LE if necessary
-  lepatch <- filter(long_wall, x == le$x, y == le$y)
-  if (nrow(lepatch) == 1) {
-    # Add an extra LE row in 
-    lepatch$bnum = NA; lepatch$wnum = NA
-    lepatch$up = FALSE
-    long_wall <- rbind(long_wall, lepatch) %>% arrange(theta)
-  } else {
-    long_wall$up <- ifelse(long_wall$wnum == max(lepatch$wnum), FALSE, long_wall$up)
-  }
+  if (dir != "clockwise")
+    warning("Only clockwise supported for normals")
+  # Patch LE and TE using elmt number
+  # ASSUME that the LE corresponds to a node point!!
+  long_wall <- long_wall %>%
+    mutate(theta = 2*pi - theta,                                  # Reverse the direction for lower first
+           up = theta >= pi) %>%
+    group_by(elmt) %>%
+    mutate(up = as.logical(round(mean(up))),                      # LE automatically patched
+           avetheta = mean(theta)) %>%                            # Use average theta to "group" elements in sort by theta
+    ungroup()
+  long_wall$theta[long_wall$theta==2*pi & long_wall$up==FALSE] = 0
+  long_wall <- long_wall %>% 
+    arrange(up, theta, avetheta) %>%
+    select(-avetheta)
+  # Output
   long_wall <- mutate(long_wall, wall = !is.na(wnum))             # Add helpful variables
   long_wall$snum = 1:nrow(long_wall)
   # out:long_wall = data.frame(<wallmesh>, wnum, theta, up, wall, snum)
@@ -273,7 +267,7 @@ LocalMesh <- function(long_mesh, long_wall) {
   # First nodes and elements
   local_mesh <- filter(long_wall, node)
   local_mesh <- list(
-    nodes = unique(local_mesh$nnum),
+    # nodes = unique(local_mesh$nnum),
     elements = unique(local_mesh$enum))
   local_mesh$mesh = long_mesh %>% 
     filter(node) %>% 

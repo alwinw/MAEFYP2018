@@ -118,7 +118,7 @@ if (auxplot > 1) {
     coord_fixed()
 }
 #--- * Wall Data                                                  ----
-long$wall <-  list_airfoil$long_wall
+long$wall <- list_airfoil$long_wall
 long$wall <- LongWall(long$wall, long$mesh)
 if (auxplot > 0) {
   long_wallplot <- long$wall %>%
