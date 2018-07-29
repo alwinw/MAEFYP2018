@@ -36,3 +36,5 @@
  - The average has been taken
  - When the direction of s was changed, so were the directions of the normals in R causing problems
  - Instead of using a join between mesh and field data, try match elements
+
+ctrl+shift+m gives %>% 
