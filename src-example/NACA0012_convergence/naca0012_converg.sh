@@ -1,7 +1,7 @@
 # Create required setup files
 # Create session files
-# N_P=( 3 4 5 6 7 8 9 10 11 )
-N_P=( 3 4 )
+N_P=( 3 4 5 6 7 8 9 10 11 12 )
+# N_P=( 3 4 )
 for i in $N_P[*]; do
   name=$(printf "%02d" i)
   echo N_P = $name

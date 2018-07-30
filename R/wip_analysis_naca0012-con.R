@@ -176,3 +176,43 @@ rm(df_batch,     df_mesh,   df_dump,
 
 #--- Convergence                                                ----
 conv <- list()
+# Navier-Stokes for vorticity convergence
+conv$wall <- outp$wall %>%
+  select(tokenvalue, s, LHSG, RHSG, nserrG) %>%
+  group_by(tokenvalue)
+conv$nsabserr <- conv$wall %>% 
+  summarise(mean = mean(abs(nserrG)),
+            max  = max (abs(nserrG)),
+            relmean = mean(abs(nserrG/RHSG)),
+            relmax  = max (abs(nserrG/RHSG)))
+
+ggplot(conv$wall, 
+       aes(s, nserrG, group = tokenvalue, colour = tokenvalue)) +
+  geom_point(shape = 'o') +
+  geom_line (data = filter(conv$wall, tokenvalue == 11))
+
+ggplot(conv$nsabserr, aes(tokenvalue, mean)) +
+  geom_line() + geom_point() +
+  scale_y_continuous(trans='log10')
+# Convergence of nxG nxyG?
+# Convergence of fields
+# u v p dodx dody dpdx dpdy o 
+conv$fld <- outp$node %>%
+  select(tokenvalue, u, v, p, dodx, dody, dpdx, dpdy, o)
+maxNP <- max(conv$fld$tokenvalue)
+conv_maxN <- filter(conv$fld, tokenvalue == maxNP) %>% 
+  mutate(tokenvalue = 0)
+conv_err  <- split(conv$fld, conv$fld$tokenvalue)
+conv_err  <- lapply(conv_err, function(df) abs(df - conv_maxN))
+conv_err  <- bind_rows(conv_err) %>%
+  filter(tokenvalue != maxNP) %>% 
+  group_by(tokenvalue)
+conv$flderr <- summarise_all(conv_err, funs(max))
+
+conv_flderrplot <- gather(conv$flderr, var, norm_inf, -tokenvalue) %>%
+  mutate(order = ifelse(var %in% c("u", "v", "p"), "1", "2")) %>%
+  mutate(order = ifelse(var %in% c("dodx", "dody"), "3", order))
+ggplot(conv_flderrplot, aes(tokenvalue, norm_inf, group = var, colour = var)) +
+  geom_line() + geom_point(aes(shape = order)) +
+  scale_y_continuous(trans='log10') +
+  facet_wrap(~order, scales = "free_y")
