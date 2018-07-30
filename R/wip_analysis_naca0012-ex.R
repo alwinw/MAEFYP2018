@@ -225,7 +225,7 @@ if (auxplot > 0) {
                        " P =",signif(summary(dodzfit)$coef[2,4], 5)))
   rm(dodzfit)
 }
-dump$offs <- DumpVortJoin(dump$wall, dump$offs)
+dump$wall <- DumpVortJoin(dump$wall, dump$offs)
 #--- > Dump Calc Output                                           ----
 data_plot <- bind_rows(dump[c("time", "kinvis", "a")])
 data_plot <- cbind(data_dump, data_plot)

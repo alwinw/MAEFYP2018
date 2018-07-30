@@ -25,7 +25,7 @@ for i in $N_P[*]; do
     wallgrad $f $f.msh > $f.wallgrad        &&
     csplit -z "$f.flddump" /Session/ '{*}' >/dev/null &&
     for i in [xx]*; do 
-      mv $i "$f.dump"; done                 &&
+      mv $i "$f-${i#*xx}.dump"; done                  &&
     echo $sessionfile complete
     rm $f.msh $f.num $f.fld $f.Gfld $f.mdl $f.flddump $f.his $f.flx
   done

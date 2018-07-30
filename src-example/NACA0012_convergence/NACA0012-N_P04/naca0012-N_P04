@@ -1,6 +1,6 @@
 ##########################################
 # Run 1: Test connected bndry_prf
-# Run 2: Increased N_P for convergence
+# Run 2: Increased NP for convergence
 # Run 3: [ToDo] add 0.02 of zero accel
 
 <USER>

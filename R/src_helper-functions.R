@@ -443,8 +443,11 @@ DumpVortInterp <- function(dump_offs, dump_dump,
   coordinates(pts_ps) <- ~x + y
   pts_ret <- over(pts_ps, poly_sp, returnList = FALSE)
   dump_offs$enum <- unique(poly_df$enum)[pts_ret] 
-  if (sum(is.na(dump_offs$enum)) > 0) 
+  if (sum(is.na(dump_offs$enum)) > 0) {
     warning("Some points not found in polygon, maybe larger localmax?")
+    warning("Patching based on original mesh number...")
+    dump_offs$enum <- ifelse(is.na(dump_offs$enum), dump_offs$enumo, dump_offs$enum)
+  }
   # Interpolation
   mesh <- dump_dump %>%
     filter(local <= localmax) %>%
@@ -490,7 +493,7 @@ DumpVortInterp <- function(dump_offs, dump_dump,
   # out: dump_offs = tibble(<dump_offs>, enumo, o)
   return(dump_offs)
 }
-
+# Create the vorticity gradients for both methods
 DumpVortGrad <- function(dump_offs) {
   dump_offs <- dump_offs %>%
     rename(dodzS = o_diff) %>%
@@ -506,11 +509,23 @@ DumpVortGrad <- function(dump_offs) {
   return(dump_offs)
 }
 
-DumpVortJoin <- function(dump_wall, dump_offs) {
-  # sum(abs(dump_wall$x - dump_offs$x))
+DumpVortJoin <- function(dump_wall, dump_offs, dump_kinvs) {
+  # Combine offset data into dump_wall
   dump_offs <- filter(dump_offs, nstep==0)
-  
-  return(dump_offs)
+  if (sum(abs(dump_wall$s - dump_offs$s)) > 0)
+    warning("Difference in s for wall and offs detected")
+  dump_offs <- rename(dump_offs, interpo = o)
+  dump_wall <- cbind(
+    dump_wall,
+    select(dump_offs, offseth, enumo, interpo, dodzS, dodzG))
+  dump_wall <- dump_wall %>% 
+    mutate(LHSS   = -as + dpdsS,
+           RHSS   = -dodzS*dump_kinvs,
+           nserrS =  LHSS - RHSS,
+           LHSG   = -as + dpdsG,
+           RHSG   = -dodzG*dump_kinvs,
+           nserrG =  LHSG - RHSG)
+  return(dump_wall)
 }
 
 #--- Numerical Methods ----
