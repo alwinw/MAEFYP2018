@@ -41,7 +41,8 @@ for airfoil in */; do
   #--- Loop Over Files in Folder ----
   # Loop over session files
   for sessionfile in *.sesh; do
-    echo "#----------------------------"    
+    echo "#----------------------------"
+    echo "   $(date +%D-%T.%10N)"
     # Remove extension
     f="${sessionfile%.*}"                               && echo "   Found $f"               &&
       # Copy to extensionless file
