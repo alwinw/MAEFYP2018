@@ -1,6 +1,6 @@
 ##########################################
 # Run 1: Test connected bndry_prf
-# Run 2: Increased NP for convergence
+# Run 2: Incr NP, decr D_T, incr NTIME for convergence
 # Run 3: [ToDo] add 0.02 of zero accel
 
 <USER>
@@ -16,17 +16,17 @@
 <TOKENS>
 	KINVIS    = 1./10000.
 	
-	D_T       = 0.001
+	D_T       = 0.0005
 	N_STEP    = 100
-	N_TIME    = 2
+	N_TIME    = 3
 
 	N_P       = 8
 	N_Z       = 1
-  LZ        = 1.0
+    LZ        = 1.0
 	BETA      = TWOPI/LZ
 
 # IO_CFL    = 25
-# IO_FLD    = 10
+# IO_FLD    = 20
 
 	AVERAGE   = 0
 #	CHKPOINT  = 0
@@ -37,7 +37,7 @@
 <FORCE>
 	MOD_A_X = 1
 	MOD_A_Y = 0
-	MOD_ALPHA_X = -((5*PI/2*sin(5*PI*t))*heav(t)+(-5*PI/2*sin(5*PI*t))*heav(t-0.2)+(-5*PI/2*sin(5*PI*t))*heav(t-0.8)+(5*PI/2*sin(5*PI*t))*heav(t-1))
+	MOD_ALPHA_X = -((5*PI/2*sin(5*PI*t))*heav(t-0.05)+(-5*PI/2*sin(5*PI*t))*heav(t-0.25)+(-5*PI/2*sin(5*PI*t))*heav(t-0.85)+(5*PI/2*sin(5*PI*t))*heav(t-1.05))
 	MOD_ALPHA_Y = 0
 </FORCE>
 
@@ -67,7 +67,7 @@
                  <D>     v = 0      </D>
                  <H>     p = 0      </H>
      5     v     3
-                 <D>     u = (1/2-1/2*cos(5*PI*t))*heav(t)+(1/2-1/2*cos(5*PI*t+PI))*heav(t-0.2)+(-1/2-1/2*cos(5*PI*t+PI))*heav(t-0.8)+(-1/2-1/2*cos(5*PI*t))*heav(t-1)   </D>
+                 <D>     u = (1/2-1/2*cos(5*PI*t))*heav(t-0.05)+(1/2-1/2*cos(5*PI*t+PI))*heav(t-0.25)+(-1/2-1/2*cos(5*PI*t+PI))*heav(t-0.85)+(-1/2-1/2*cos(5*PI*t))*heav(t-1.05)   </D>
                  <D>     v = 0      </D>
                  <H>     p = 0      </H>
 </BCS>
