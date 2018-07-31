@@ -38,3 +38,13 @@
  - Instead of using a join between mesh and field data, try match elements
 
 ctrl+shift+m gives %>% 
+
+# Convergence
+ - Increased N_P to 9 for convergence of derivatives
+ - Needed to decrease D_T to 0.0005
+ - Increased  N_TIME to 3
+
+# AFMC Paper Consultation
+ - Look at flow field using tecplot to see if Kutta condition at TE or near TE
+ - Check the integration around the airfoil (research how) and other areas
+ - Examine the added mass force for a lift generating airfoil to explain CD (but CL?)
