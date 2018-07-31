@@ -114,8 +114,8 @@ BatchLoadDump <- function(data_dump, outp_mesh) {
   data_plot <- cbind(data_dump, data_plot)
   list_dump <- c(
     data_plot = list(data_plot), 
-    dump = dump[c("wall", "offs")])
-  names(list_dump) <- c("data_plot", "wall", "offs")
+    dump = dump[c("wall")])
+  names(list_dump) <- c("data_plot", "wall")
   rm(data_dump, data_plot, dump, order)
   # output
   return(list_dump)
@@ -181,8 +181,13 @@ plot_tevort <- outp$wall %>%
 
 ggplot(plot_tevort, aes(x=time, y=o, group=seshname, colour=seshname)) +
   geom_point(aes(shape=up)) +
-  geom_line(data=filter(outp$wall, s == plot_setup$smin | s == plot_setup$smin)) +
+  # geom_line(data=filter(outp$wall, s == plot_setup$smin | s == plot_setup$smin)) +
   ggtitle("Vorticity at trailing edge")
+
+ggplot(plot_tevort, aes(x=time, y=dpdsG, group=seshname, colour=seshname)) +
+  geom_point(aes(shape=up)) +
+  # geom_line(data=filter(outp$wall, s == plot_setup$smin | s == plot_setup$smin)) +
+  ggtitle("Pressure differentials at trailing edge")
 
 ggplot(plot_tevort, aes(x=time, y=LHSG, group=seshname, colour=seshname)) +
   geom_point(aes(shape=up)) +``

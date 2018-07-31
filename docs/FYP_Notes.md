@@ -38,3 +38,5 @@
  - Instead of using a join between mesh and field data, try match elements
 
 ctrl+shift+m gives %>% 
+
+Look for .flx for forces
