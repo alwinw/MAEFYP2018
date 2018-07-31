@@ -20,7 +20,7 @@
 	N_STEP    = 2100
 	N_TIME    = 3
 
-	N_P       = 10
+	N_P       = 9
 	N_Z       = 1
     LZ        = 1.0
 	BETA      = TWOPI/LZ

@@ -60,4 +60,5 @@ ggplot(norminf, aes(N_P, norm_inf, group = var, colour = var)) +
   geom_line(aes(linetype = var)) +
   geom_point(aes(shape = var)) +
   scale_y_continuous(trans='log10') +
-  facet_wrap(~pressure, scales = "free_y")
+  facet_wrap(~pressure, scales = "free_y") +
+  ggtitle("Kovasznay Flow Convergence")
