@@ -17,7 +17,7 @@
 	KINVIS    = 1./10000.
 	
 	D_T       = 0.0005
-	N_STEP    = 100
+	N_STEP    = 300
 	N_TIME    = 3
 
 	N_P       = 6

@@ -24,7 +24,7 @@
 	BETA      = TWOPI/LZ
 
 	IO_CFL    = 25
-	IO_FLD    = 20
+#	IO_FLD    = 20
 
 	AVERAGE   = 0
 	CHKPOINT  = 0

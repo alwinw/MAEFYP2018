@@ -189,7 +189,7 @@ conv$nsabserr <- conv$wall %>%
 ggplot(conv$wall, 
        aes(s, nserrG, group = tokenvalue, colour = tokenvalue)) +
   geom_point(shape = 'o') +
-  geom_line (data = filter(conv$wall, tokenvalue == 11))
+  geom_line (data = filter(conv$wall, tokenvalue == 10))
 
 ggplot(conv$nsabserr, aes(tokenvalue, mean)) +
   geom_line() + geom_point() +
@@ -207,7 +207,7 @@ conv_err  <- lapply(conv_err, function(df) abs(df - conv_maxN))
 conv_err  <- bind_rows(conv_err) %>%
   filter(tokenvalue != maxNP) %>% 
   group_by(tokenvalue)
-conv$flderr <- summarise_all(conv_err, funs(max))
+conv$flderr <- summarise_all(conv_err, funs(mean))
 
 conv_flderrplot <- gather(conv$flderr, var, norm_inf, -tokenvalue) %>%
   mutate(order = ifelse(var %in% c("u", "v", "p"), "1", "2")) %>%
