@@ -191,7 +191,7 @@ Abstract & Introduction
 
 \begin_layout Itemize
 NACA4612 airfoil in viscous flow, Re = 1000 and 
-\begin_inset Formula $\alpha=16\text{\textdegree}$
+\begin_inset Formula $\alpha=16\text{°}$
 \end_inset
 
  focusing on the starting and stopping vortices
@@ -1336,6 +1336,157 @@ Ok so is the added mass effect an inviscid effect?? Mainly due to the pressure
 \end_layout
 
 \begin_layout Section
+Brons 2014: Vorticity generation and conservation for two-dimensional interfaces
+ and boundaries
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Found this when looking for additional theory on vorticity generation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The generation, redistribution and, importantly, conservation of vorticity
+ and circulation is studied for incompressible Newtonian fluids in planar
+ and axisymmetric geometries.
+ A generalised formulation of the vorticity at the interface between two
+ fluids for both no-slip and stress-free conditions is presented.
+ 
+\end_layout
+
+\begin_layout Itemize
+As the gap between the cylinder and the free surface decreases, the vorticity
+ strongly shed from the top surface of the cylinder remarkably, and rapidly,
+ disappears in the wake, leaving vorticity of only one sign in the flow
+ (see figure 1) ...
+ consider the more general problem of how vorticity is generated and diffused
+ at interfaces, and under what conditions the corresponding circulation
+ is conserved.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+When is circulation not conserved?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Vorticity, 
+\begin_inset Formula $\omega$
+\end_inset
+
+, is defined precisely mathematically by
+\begin_inset Formula 
+\[
+\vec{\omega}\left(\vec{r},t\right)=\nabla\times\vec{u}\left(\vec{r},t\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+ is the local velocity at a point 
+\begin_inset Formula $\vec{r}$
+\end_inset
+
+ in space at time 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ ...
+ In particular, if the fluid is locally in solid-body motion, the axis of
+ rotation is given by the direction of 
+\begin_inset Formula $\omega$
+\end_inset
+
+, and the angular velocity by 
+\begin_inset Formula $\left|\omega/2\right|$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Morton (2984) distinguishes between vorticity generation and diffusion,
+ i.e.
+ he separates the acceleration at the solid boundary leading to vorticity
+ generation from its subsequent diffusion away from the boundary.
+ Lundgren & Koumoutsakos (1999) study the appearance and conservation of
+ vorticity in the case of a free-surface boundary.
+ 
+\end_layout
+
+\begin_layout Itemize
+...
+ Taking the curl of the Navier-Stokes equation eliminates the pressure term.
+ However, as Morton (1984) has pointed out, the resulting Helmholtz vorticity
+ equation for an incompressible fluid with uniform density,
+\begin_inset Formula 
+\[
+\frac{\partial\omega}{\partial t}+\left(\vec{u}\cdot\nabla\right)\omega=\left(\omega\cdot\nabla\right)\vec{u}+\nu\nabla^{2}\omega
+\]
+
+\end_inset
+
+...
+ The first term on the right is a processing term describing the local amplifica
+tion (or concentration) of vorticity by stretching and tilting the vortex
+ filaments.
+ The second term on the right represents viscous diffusion, i.e.
+ the spreading of vorticity due to viscosity.
+ For homogeneous fluid, 
+\end_layout
+
+\begin_layout Section
 Blackburn 1999: A study of two-dimensional flow past an oscillating cylinder
 \end_layout
 
@@ -2373,7 +2524,7 @@ Good explanation of flow based a (trailing edge) wedge, for example if an
 \end_layout
 
 \begin_layout Plain Layout
-May be applicable to the start where there is a large vertical velocity
+May be applicable to the start where there is a large vertical velocity?
 \end_layout
 
 \end_inset
