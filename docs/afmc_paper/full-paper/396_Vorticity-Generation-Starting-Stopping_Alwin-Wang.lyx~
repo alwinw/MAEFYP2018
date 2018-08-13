@@ -308,6 +308,27 @@ Include the Kutta condition
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Acceleration of a body (dense particles) through a fluid will accelerate
+ the fluid surrounding the body as a result of work done by body on fluid.
+ Thus this body-induced acceleration can be related to an additional mass
+ (F=ma) and eventually a virtual mass that is called added mass.
+\begin_inset Newline newline
+\end_inset
+
+https://www.researchgate.net/post/What_is_the_physical_interpretation_of_the_added
+_mass_term_in_the_Maxey-Riley-Gatignol_Equation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 It is recognised that the sources of vorticity must occur at the boundary
  of the fluid regions and for the starting and starting and stopping phases
  of motion, Morton 
@@ -518,17 +539,6 @@ literal "false"
 \end_inset
 
 .
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Ref Morton
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
