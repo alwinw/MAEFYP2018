@@ -1,0 +1,1942 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{wallpaper}
+\usepackage{epstopdf}
+\usepackage[italic]{mathastext}	% for general symbols
+\usepackage{isomath}		% for Greek letters
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language australian
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "helvet" "default"
+\font_typewriter "default" "default"
+\font_math "newtxmath" "auto"
+\font_default_family sfdefault
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_author "Alwin Wang"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 2
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\boxbgcolor #cccccc
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip smallskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+FYP Papers Summary
+\end_layout
+
+\begin_layout Author
+Alwin Wang
+\end_layout
+
+\begin_layout Date
+2018
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+For each comment, add 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+FINISHED
+\end_layout
+
+\end_inset
+
+ if I have finished it or not.
+\end_layout
+
+\begin_layout Plain Layout
+If no 
+\begin_inset Quotes eld
+\end_inset
+
+FINISHED
+\begin_inset Quotes erd
+\end_inset
+
+ LyX comment, assume not finished.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Agromayer 2017: Simulation of Starting and Stopping Vortices of an Airfoil
+\end_layout
+
+\begin_layout Standard
+Abstract & Introduction
+\end_layout
+
+\begin_layout Itemize
+NACA4612 airfoil in viscous flow, Re = 1000 and 
+\begin_inset Formula $\alpha=16\text{\textdegree}$
+\end_inset
+
+ focusing on the starting and stopping vortices
+\end_layout
+
+\begin_layout Itemize
+When the flow around a streamlined body is accelerated or decelerated, starting
+ and stopping vortices are shed from the trailing edge of the body, respectively
+\end_layout
+
+\begin_layout Itemize
+The incompressible Navier-Stokes equations with constant density and viscosity
+ in an inertial frame of reference were solved with OpenFOAM using a linear
+ upwind finite volume method (FVM) for the space discretization and the
+ implicit Euler method for the time integration.
+\end_layout
+
+\begin_layout Itemize
+The flow visualizations of Prandtl were analyzed by (Willert and Kompenhans,
+ 2010) using particle image ve- locimetry (PIV) to compute and visualize
+ the vorticity of the flow.
+\end_layout
+
+\begin_layout Standard
+Inviscid Flow
+\end_layout
+
+\begin_layout Itemize
+The simplest approach is to analyze the forces caused by the motion of an
+ ideal fluid without viscosity.
+ This kind of flow is known as potential flow and it is based on the assumption
+ that the flow is irrotational, that is, the vorticity of the field is zero
+ everywhere.
+ The vorticity is a kinematic flow variable defined as the curl of the velocity
+ field:
+\begin_inset Formula 
+\[
+\vec{\omega}=\vec{\nabla}\times\vec{V}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+One of the drawbacks of the potential flow theory is that it fails to predict
+ the drag felt by a body moving with constant velocity, relative to the
+ fluid, caused by the viscous stresses (it accounts for drag due to pressure
+ and acceleration though).
+ This is known as the D’Alembert’s paradox.
+\end_layout
+
+\begin_layout Itemize
+One of the most important results of the potential flow theory is the Kutta-Jouk
+owski lift theorem.
+ This theorem states that the lift force per unit of depth experienced by
+ a cylinder with arbitrary shape immersed in a fluid with uniform free-stream
+ velocity 
+\begin_inset Formula $V_{\infty}$
+\end_inset
+
+ and constant density 
+\begin_inset Formula $\rho$
+\end_inset
+
+ is given by:
+\begin_inset Formula 
+\[
+L=-\rho V_{\infty}\tag{eq 4}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ is the circulation around the solid body, which is defined as
+\begin_inset Formula 
+\[
+\Gamma=\ointop_{C}\vec{V}\cdot\text{d}\vec{l}\tag{eq 5}
+\]
+
+\end_inset
+
+The integral in eq 5 is performed in a counter clockwise sense and the minus
+ sign of eq 4 indicates that a negative circulation leads to a positive
+ force
+\end_layout
+
+\begin_layout Itemize
+At the beginning the velocity is zero everywhere and so is the circulation
+ around the airfoil.
+ When the airfoil starts to move, the fluid flows around the airfoil, but
+ the circulation will still be zero because the vorticity is zero everywhere...
+\begin_inset Formula 
+\[
+\Gamma=\ointop_{C}\vec{V}\cdot\text{d}\vec{l}=\iintop_{S}\vec{\nabla}\times\vec{v}\cdot\text{d}S=\iintop_{S}\vec{\omega}\cdot\text{d}\vec{S}
+\]
+
+\end_inset
+
+The inconsistency of the potential flow theory is now apparent, it predicts
+ that the lift force is proportional to the circulation, but at the same
+ time the circulation must be zero because the flow is irrotational.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I should consider the circulation around the airfoil surface?
+\end_layout
+
+\begin_layout Plain Layout
+Stokes' theorem
+\begin_inset Formula 
+\[
+\ointop_{C}\vec{F}\cdot\text{d}\vec{r}=\iintop_{S}\left(\vec{\nabla}\times\vec{F}\right)\cdot\hat{n}\,\text{d}S
+\]
+
+\end_inset
+
+if 
+\begin_inset Formula $C$
+\end_inset
+
+ is a closed curve and 
+\begin_inset Formula $S$
+\end_inset
+
+ is any surface bounded by 
+\begin_inset Formula $C$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{F}$
+\end_inset
+
+ defined everywhere in 
+\begin_inset Formula $S$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+http://tutorial.math.lamar.edu/Classes/CalcIII/StokesTheorem.aspx
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Kelvin’s theorem is an important result related with circulation and vorticity.
+ This theorem states that in an inviscid, constant density flow with conservativ
+e body forces, the circulation associated with a closed curve moving with
+ the fluid does not change with time.
+\begin_inset Formula 
+\[
+\frac{\text{d}\Gamma}{\text{d}t}=0
+\]
+
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I should be able to check and verify this
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Viscous Flow
+\end_layout
+
+\begin_layout Itemize
+Consider now an airfoil at rest within a stationary viscous fluid that is
+ suddenly accelerated to 
+\begin_inset Formula $V_{\infty}$
+\end_inset
+
+ at 
+\begin_inset Formula $t=0^{+}$
+\end_inset
+
+.
+ The Γ = ~ V · d ~ l (5) arguments presented in this section are briefly
+ considered in (White, 2011, Chapter 7 and 8) and (National Committee for
+ Fluid Mechanics Films, 1972), and discussed in more detail in (Kundu and
+ Cohen, 2002, Chapter 15) and (Batchelor, 2000, Chapter 6).
+\end_layout
+
+\begin_layout Itemize
+When the fluid is at rest the velocity and vorticity are zero everywhere
+ so is the circulation around any closed contour 
+\begin_inset Formula $C$
+\end_inset
+
+ that contains the airfoil.
+ When the fluid motion starts the viscous boundary layers start to grow
+ close to the surfaces of the airfoil, but at 
+\begin_inset Formula $t=0^{+}$
+\end_inset
+
+ the vorticity is still zero everywhere and the potential solution corresponding
+ to 
+\begin_inset Formula $\Gamma=0$
+\end_inset
+
+, as shown in Figure 2, still holds.
+ The flow pattern contains two stagnation points, one in the leading edge
+ of the airfoil and the other on the upper side, close to the trailing edge.
+ The trailing stagnation point is not exactly at the trailing edge the the
+ flow turns abruptly at flow the lower side to the upper side at the trailing
+ edge.
+ In fact, the potential flow theory predicts an unphysical infinite velocity
+ at the trailing edge.
+\begin_inset Newline newline
+\end_inset
+
+The potential flow solution is valid at 
+\begin_inset Formula $t=0^{+}$
+\end_inset
+
+, even if the fluid has viscosity, because the vorticity is generated at
+ the finite rate close to the airfoil walls and it needs time to be convected
+ and diffused to the main flow.
+ The transport of vorticity in 2D incompressible flow is described by
+\begin_inset Formula 
+\[
+\frac{\text{D}\vec{\omega}}{\text{D}t}=\nu\nabla^{2}\vec{\omega}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+When 
+\begin_inset Formula $t>0$
+\end_inset
+
+ the boundary layers start to grow and the vorticity generated close to
+ the walls is transported by the flow.
+ Clockwise vorticity is generated on the upper side of the airfoil while
+ counter-clockwise vorticity is created on the lower side of the airfoil.
+ The velocity of the fluid is large at the trailing edge as it flows from
+ the lower to the upper side (see Figure 3) and the flow is decelerated
+ as it approaches the stagnation point.
+ This deceleration causes an adverse pressure gradient that in turn leads
+ to the separation of the boundary layer and backflow.
+ As a result of this backflow, a counter-clockwise vortex is formed at the
+ trailing edge of the airfoil.
+ With the passing of time, the stagnation point is displaced closer the
+ the trailing edge and the vortex is convected downstream by the flow.
+ Eventually, the stagnation point occurs at the trailing edge, as pictured
+ in Figure 4 and Figure 5.
+ This situation is known as the Kutta condition.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+When the flow is accelerated, it could be useful to show what the velocity
+ field is doing at that point
+\end_layout
+
+\begin_layout Plain Layout
+Look at the pressure gradient of the upper surface and maybe how the stagnation
+ point moves
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The reason why both integrals have to sum zero is explained with Kelvin’s
+ circulation theorem.
+ If the circulation integral of Figure 6 is evaluated around an inviscid
+ integration path far away from the airfoil, then the value of the circulation
+ must have remained constant at all times and, since 
+\begin_inset Formula $Γ=0$
+\end_inset
+
+ at 
+\begin_inset Formula $t=0$
+\end_inset
+
+, the circulation around < aefgcd > must be zero at all times
+\begin_inset Formula 
+\[
+\ointop_{aefgcd}\vec{V}\cdot\text{d}\vec{l}=\ointop_{abcd}\vec{V}\cdot\text{d}\vec{l}+\ointop_{efgh}\vec{V}\cdot\text{d}\vec{l}
+\]
+
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Note that all these paths are counter clockwise for consistency
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The situation when an airfoil starts its motion within a fluid at rest is
+ very similar.
+ In this case a starting vortex is also formed but instead of being convected
+ downstream with the flow, it remains in the same location where it was
+ generated while the airfoil moves away from the vortex.
+ On the other hand, if the vortex is rapidly decelerated a clockwise stopping
+ vortex will also be formed.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Why? Velocity gradients again? Kelvin's circulation theorem?
+\end_layout
+
+\begin_layout Plain Layout
+Where will the stopping vortices occur?
+\end_layout
+
+\begin_layout Plain Layout
+Maybe I should have three integration regions, one around the airfoil, one
+ above the airfoil, one below the airfoil, one behind the airfoil.
+\end_layout
+
+\begin_layout Plain Layout
+Regions above and below the airfoil are to check for the leading edge vortices?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Convergence Study
+\end_layout
+
+\begin_layout Itemize
+Convergence appears to be based on coefficients 
+\begin_inset Formula $C_{T}$
+\end_inset
+
+, 
+\begin_inset Formula $C_{D}$
+\end_inset
+
+, 
+\begin_inset Formula $C_{L}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Boundary Conditions
+\end_layout
+
+\begin_layout Itemize
+Impose a inlet velocity boundary condition
+\end_layout
+
+\begin_layout Itemize
+Impose no slip velocity boundary condition on the surface of the airfoil
+ and a zero gradient boundary condition for the pressure which is a good
+ approximation for viscous flows
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Why a zero gradient BC for pressure?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Impose a slip boundary condition for the velocity and pressure fields at
+ the top and bottom boundaries.
+ Zero gradient boundary condition for the pressure as well.
+ Simulates that the far field behaves as an inviscid fluid.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+So if the starting/stopping vortices are close to the top/bottom edges of
+ the mesh then the results will be effected?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Impose zero gradient boundary condition to simulate that the flow is fully
+ developed downstream of the airfoil.
+ A value of zero is chosen for the pressure field at the outlet to set a
+ reference level for the preessure
+\end_layout
+
+\begin_layout Standard
+OpenFOAM solution
+\end_layout
+
+\begin_layout Itemize
+The incompressible Navier-Stokes equations solved are
+\begin_inset Formula 
+\[
+\nabla\cdot\vec{V}=0,\quad\frac{\text{D}\vec{V}}{\text{D}t}=-\frac{\vec{\nabla}p}{\rho}+\nu\nabla^{2}\vec{V}\tag{Eq 14}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The displacement of the airfoil as a function of time is plot in Figure
+ 12 for the case of the suddenly started airfoil and in Figure 15 for the
+ case of the suddenly started and stopped airfoil.
+ However, when the airfoil accelerates from rest, the frame of reference
+ for the relative velocity field is non-inetial and Eq.
+ 14 has to be modified to include the non-inertial effects (fictitious forces):
+\begin_inset Formula 
+\[
+\frac{\text{D}\vec{V}}{\text{D}t}=-\frac{\vec{\nabla}p}{\rho}+\nu\nabla^{2}\vec{V}-\vec{a}\tag{Eq 16}
+\]
+
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+This is the explanation of how 
+\begin_inset Formula $\vec{a}$
+\end_inset
+
+ appears in the equation 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+As it can be seen from Eq.
+ 16, the acceleration term behaves as a body force (similar to gravity)
+ acting in the direction opposite to the acceleration of the airfoil.
+\end_layout
+
+\begin_layout Itemize
+Acceleration was ignored in this solution...
+ body forces not solved...
+ For this velocity distribution the acceleration term peaked at a ≈ 25 m/s
+ 2 ≈ 2.5g.
+ The gravity term is usu- ally negligible in most aerodynamic applications
+ and, in this problem, the forces due to the acceleration term are of the
+ same order of magnitude as gravity.
+ In addition, the acceleration term is only acting for very short periods
+ of time when the airfoil is impulsively started or stopped.
+ For these reasons, it seems reasonable to neglect the effect of the acceleratio
+n in this problem.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+For semtex, I believe the body forces are solved in the MOD_A token
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+...
+ the incompressible Navier-Stokes equations with constant viscosity can
+ be written in dimensionless form, see (White, 2011, Chapter 5) for details:
+\begin_inset Formula 
+\[
+\frac{\text{D}\vec{V}}{\text{D}t}=-\vec{\nabla}p+\frac{1}{\text{Re}}\nabla^{2}\vec{V}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Results
+\end_layout
+
+\begin_layout Itemize
+The most remarkable result is the sudden jump of the lift and drag when
+ the acceleration occurs and the little impact that viscosity has on the
+ value of the coefficients during this acceleration.
+ The low influence of the viscous stresses is striking considering that,
+ as discussed in Section 2.3, viscosity is responsible for the formation
+ of the starting vortex and the development of the circulation that leads
+ to the lift force in steady state.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Do 
+\begin_inset Formula $C_{L}$
+\end_inset
+
+ viscous and pressure always act in the same direction? From the graph,
+ they actually appear to be acting in opposite directions!
+\end_layout
+
+\begin_layout Plain Layout
+I should also check this using semtex output
+\end_layout
+
+\begin_layout Plain Layout
+Is there a 
+\begin_inset Quotes eld
+\end_inset
+
+settling time
+\begin_inset Quotes erd
+\end_inset
+
+ associated?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The large drag during acceleration is not caused by the viscous stresses,
+ instead it is an added mass effect resulting from the pressure distribution
+ that arises when the airfoil accelerates the fluid around it (note the
+ close relation between the acceleration peaks and the lift and drag peaks).
+ Another interesting result is the negative peak of lift and drag when the
+ airfoil is decelerated.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Can I calculate the added mass effect?
+\end_layout
+
+\begin_layout Plain Layout
+Why is the lift negative during deceleration? Is it due to the circulation
+ falling to zero?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Verification of Kelvin's and Stokes' Theorems
+\end_layout
+
+\begin_layout Itemize
+The general equations used where
+\begin_inset Formula 
+\[
+\Gamma=\ointop_{C}\left(u,v\right)\cdot\left(\text{d}x,\text{d}y\right)=\iintop_{D}\omega\left(x,y\right)\cdot\text{d}x\,\text{d}y
+\]
+
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Have a think about how to discretise Stokes' theorem, does it make sense?
+ 
+\end_layout
+
+\begin_layout Plain Layout
+Is 
+\begin_inset Formula $\text{d}x\,\text{d}y$
+\end_inset
+
+ the same as the 
+\begin_inset Quotes eld
+\end_inset
+
+area
+\begin_inset Quotes erd
+\end_inset
+
+ output from semtex that I have collected?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The reason why the other area integrals did not converge is that the airfoil
+ is a discontinuity of vorticity in a non-linear region that the Cartesian
+ integration algorithms of MATLAB can not handle effectively.
+ Despite this the values of line and area integrals are virtually identical.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I should watch out for this
+\end_layout
+
+\begin_layout Plain Layout
+To validate:
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Net
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Left
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Right
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Line 
+\begin_inset Formula $\ointop$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+C
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Surface 
+\begin_inset Formula $\iintop$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+X
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Z
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Make sure that A = X, B = Y, C = Z and A = B + C and X = Y + Z
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Further Works
+\end_layout
+
+\begin_layout Itemize
+The inclusion of the non inertial term in the Navier-Stokes equations could
+ be considered in future works to show if its influence is indeed negligible
+ or not.
+ In addition, other transient effects such as the vortices shed when the
+ angle of attack is abruptly changed could be analyzed.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Semtex is a full N-S solver which includes the non-inertial term as a body
+ force.
+ I could do this check
+\end_layout
+
+\begin_layout Plain Layout
+Make sure to reference this limitation of this study in my introduction!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Conclusion
+\end_layout
+
+\begin_layout Itemize
+Once the lift and drag coefficients were computed it was found that both
+ peaked during the accelerations and decelerations due to added mass effects
+ and that the effect of the viscous stresses on lift was modest even if
+ viscosity is responsible for the development of lift.
+ In addition, the solution was verified using the Kelvin’s circulation theorem.
+ Both the line integral of the velocity and the surface integral of vorticity
+ matched with reasonable accuracy and were almost equal to zero for an inviscid
+ contour and non-zero for viscid contours.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Ok so is the added mass effect an inviscid effect?? Mainly due to the pressure
+ field because the mass of fluid is displaced by pressure fields not viscous
+ effects?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Blackburn 1999: A study of two-dimensional flow past an oscillating cylinder
+\end_layout
+
+\begin_layout Standard
+Abstract & Introduction
+\end_layout
+
+\begin_layout Itemize
+In this paper we describe a detailed study of the wake structures and flow
+ dynamics associated with simulated two-dimensional flows past a circular
+ cylinder that is either stationary or in simple harmonic cross-flow oscillation.
+ Results are examined for Re = 500 and a fixed motion amplitude of y max
+ /D = 0.25
+\end_layout
+
+\begin_layout Itemize
+Results are interpreted using an analysis of vorticity generation and transport
+ in the base region of the cylinder.
+ We suggest that the dynamics of the change in phase of shedding arise from
+ a competition between two different mechanisms of vorticity production.
+\end_layout
+
+\begin_layout Itemize
+The Reynolds number was set sufficiently high for the switch phenomenon
+ to be observed at the oscillation amplitude employed.
+ The restriction to a single amplitude and Reynolds number, and especially
+ to two-dimensional computations, was made in order to contain the demand
+ on computer resources while still providing useful insight.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I could say something similar to explain my single airfoil analysis
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Objective and approach
+\end_layout
+
+\begin_layout Itemize
+Understanding this type of fluid–structure interaction is made more complicated
+ by the difficulty of visualizing and measuring the large-scale separated
+ flow near a moving body.
+ More fundamentally, the flows are complex and time-varying, and there are
+ few theoretical results available to guide interpretation.
+ We have taken a numerical simulation approach in order to overcome the
+ operational difficulties and better understand the physical processes involved.
+\end_layout
+
+\begin_layout Itemize
+A spectral element spatial discretization was employed in conjunction with
+ a second-order time-splitting scheme (Karniadakis, Israeli & Orszag 1991)
+ in order to solve the two-dimensional incompressible Navier–Stokes equations.
+ The solver uses a primitive-variable formulation.
+ Vorticity, when required for presentation of results, was computed in post-proc
+essing.
+ Details of the method, its application to two-dimensional and three-dimensional
+ simulations and stability analyses of fixed cylinder wakes, and comparisons
+ with experimental results are discussed in Hen- derson & Karniadakis (1995),
+ Henderson (1995), Barkley & Henderson (1996) and Henderson (1997).
+\begin_inset Formula 
+\[
+\frac{\partial\vec{u}}{\partial t}=-\nabla\vec{P}+N\left(\vec{u}\right)+\nu\nabla^{2}\vec{u}-\vec{a},\quad\nabla\vec{u}=0
+\]
+
+\end_inset
+
+...
+ and 
+\begin_inset Formula $N\left(\vec{u}\right)$
+\end_inset
+
+ represents the non-linear terms, here implemented in skew-symmetric form,
+ i.e.
+ 
+\begin_inset Formula $N\left(\vec{u}\right)=-\frac{1}{2}\left(\vec{u}\cdot\nabla\vec{u}+\nabla\cdot\vec{u}\vec{u}\right)$
+\end_inset
+
+ ...
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Why don't I have this 
+\begin_inset Formula $N\left(\vec{u}\right)$
+\end_inset
+
+ term?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The mesh used for the calculations had 422 conforming quadrilateral elements
+ with equal-order interpolants in all elements and is shown in figure 2.
+ The overall dimensions of the mesh in terms of cylinder diameter D are:
+ cross-flow 30, stream- wise 62, outflow 52.
+ A 236-element non-conforming mesh (not shown, for details see Blackburn
+ & Henderson 1995a) was used for cross-checking results; this mesh had overall
+ dimensions: cross-flow 30, streamwise 65, outflow 50.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I should give a similar description of the mesh
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Convergence Tests
+\end_layout
+
+\begin_layout Itemize
+In order to establish appropriate choices for the order of the tensor-product
+ GLL shape functions employed within each spectral element for the default
+ mesh, tests were conducted both with the cylinder held fixed, and with
+ the cylinder oscillating in cross-flow at an amplitude ratio A = 0.25 and
+ ...
+\end_layout
+
+\begin_layout Itemize
+Checked various total coefficients such as lift and drag
+\end_layout
+
+\begin_layout Itemize
+Table 1.
+ p-Convergence results for the fixed cylinder, where p is the order of the
+ tensor-product Lagrange interpolant shape function employed in each spectral
+ element...
+\begin_inset Newline newline
+\end_inset
+
+For all measures employed the variation between the values at p = 7 and
+ p = 9 was less than 1%, and p = 9 has been used for the bulk of the results
+ reported here.
+ Spot checks with p = 7, p = 10 and p = 11 have also been carried out.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I should give explanation of convergence
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+With the second-order time-splitting scheme, a check of temporal convergence
+ at 
+\begin_inset Formula $p=7$
+\end_inset
+
+...
+ 
+\begin_inset Newline newline
+\end_inset
+
+For the majority of results presented here, 0.0025 < 
+\begin_inset Formula $∆tU/D$
+\end_inset
+
+ < 0.004, as appropriate to maintain numerical (Courant) stability in the
+ explicit nonlinear substep of the time-splitting scheme.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I have not checked the temporal convergence
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Fixed Cylinder
+\end_layout
+
+\begin_layout Itemize
+Four key concepts can be used as aids to interpretation of vorticity contours.
+ First, continuity demands that separation and (re)attachment points must
+ occur in pairs for a two-dimensional flow.
+ Second, in the frame of reference of the body, separation and attachment
+ occur at points of zero surface vorticity, as may be verified by a study
+ of figure 4.
+ Both these concepts are dealt with in detail by Lighthill (1963).
+ Third, in an incompressible flow, vorticity production can only occur at
+ a solid boundary in response to wall-tangential components of pressure
+ gradient and/or boundary acceleration.
+ For a two-dimensional flow of a Newtonian incompressible fluid the equation
+ for the vorticity source strength at solid walls in an inertial reference
+ frame reads (Morton 1984; Hornung 1989):
+\begin_inset Formula 
+\[
+-\nu\vec{n}\cdot\nabla\vec{\omega}=-\vec{n}\times\left(\nabla\vec{P}+\vec{a}\right)\tag{Eq 6.1}
+\]
+
+\end_inset
+
+This equation expresses the idea that vorticity must diffuse away from a
+ solid boundary at the same rate that it is produced by local conditions.
+ Fourth, for flow past a body that has no angular acceleration, the integral
+ around the body perimeter of the flux of vorticity is zero at every instant,
+ which is a consequence of (6.1) and the continuity of the pressure field:
+\begin_inset Formula 
+\[
+\ointop-\nu\vec{n}\cdot\nabla\vec{\omega}\,\text{d}S=\ointop-\nu\frac{\partial\omega}{\partial n}\,\text{d}S=0
+\]
+
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I think that this was the line integral that Hugh wanted me to check was
+ zero!
+\end_layout
+
+\begin_layout Plain Layout
+Definite something to do!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The change in reference frame has a significant effect on the instantaneous
+ streamlines, but none on the contours of vorticity because 
+\begin_inset Formula $∇×a=0$
+\end_inset
+
+...
+ Instantaneous streamlines and separation–reattachment points are not provided,
+ in part because they depend on the frame of reference of the observer.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Right, this makes a lot of sense! The horizontal components of the velocity
+ should be modified to account for the accelerating reference frame
+\end_layout
+
+\begin_layout Plain Layout
+However, velocity and pressure contours should be unaffected??
+\end_layout
+
+\begin_layout Plain Layout
+If I wanted to show a velocity contour plot, I would need to adjust for
+ the reference frame? 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Must ask Hugh because it will affect my ability to visualise the stagnation
+ points
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Mechanics of phase switch
+\end_layout
+
+\begin_layout Itemize
+According to (6.1) this motion- induced vorticity production is related to
+ the body motion by
+\begin_inset Formula 
+\[
+-\nu\frac{\partial\omega}{\partial n}=-\vec{n}\times\vec{a}\tag{Eq 9.1}
+\]
+
+\end_inset
+
+The net rate of production, integrated around the perimeter of the cylinder,
+ both for this mechanism and the pressure-gradient component, is zero at
+ each instant if the cylinder moves only as a rigid body without rotation.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I should check that my line integral is also zero!
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+When the cylinder accelerates downwards (as in figures 5a–c and f–h) this
+ mechanism acts to produce fluxes of negative vorticity on the front cylinder
+ face and positive vorticity on the rear face.
+ Quantitatively these fluxes are of larger magnitude in figure 5(f–j ) since
+ the acceleration is larger than in 5(a–e) by the square of the ratio of
+ the frequency ratios (a factor of 1.24).
+\end_layout
+
+\begin_layout Itemize
+Competition between vorticity generation mechanisms:
+\begin_inset Newline newline
+\end_inset
+
+The key feature is the relative strengths of, and competition between, the
+ pressure gradient and motion-induced vorticity production on the basal
+ surface.
+ In the case of low-frequency oscillations (e.g.
+ figure 5 a–e), shear layers are perturbed such that they roll up first
+ on the side of the wake towards which the body is moving.
+ Pressure gradients associated with this roll-up tend to induce vorticity
+ of opposite sign on the basal surface (as in figure 5b, c).
+ The surface-acceleration vorticity generation mechanism opposes this production
+, but is not strong enough to override it.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I think I see the same phenomenon on my airfoil too! 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+At higher oscillation frequencies (e.g.
+ figure 5 f–j ), the surface-acceleration production mechanism has been
+ able to override the pressure gradient mechanism on the basal surface of
+ the cylinder.
+ A very intense basal shear layer forms, inducing earlier roll-up of the
+ main shear layer from the opposite side of the cylinder than occurs in
+ the lower frequency case.
+ In turn there is a feedback effect whereby the pressure gradient produced
+ in the roll-up of the main shear layer gives rise to vorticity production
+ that reinforces the tangential acceleration mechanism.
+ The strength of the main shear layer that is rolling up is enhanced, in
+ order to achieve the balance indicated by the integral constraint (6.2).
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I haven't seen this effect in my simulations.
+ One reason why may be that my acceleration terms are too small??
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Simulations with reduced motion-induced vorticity production:
+\begin_inset Newline newline
+\end_inset
+
+In order to test the hypothesis that the controlling feature in the phase
+ switch is the relative importance of pressure-gradient and motion-induced
+ vorticity production, we have carried out simulations in which the motion-induc
+ed vorticity production was lowered artificially in the manner indicated
+ by (9.3).
+ No modification is required to the numerical solution technique, other
+ than to impose a set of time-varying velocity boundary conditions on the
+ cylinder surface.
+ Since the velocities are tangential, there is no direct interaction with
+ the pressure through the Neumann boundary condition (5.3).
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+So Hugh determined a 
+\begin_inset Formula $\vec{v}_{rel}$
+\end_inset
+
+ as a function of time (
+\begin_inset Formula $t$
+\end_inset
+
+) and location (
+\begin_inset Formula $\theta$
+\end_inset
+
+) on the surface that would reduce the motion-induced vorticity production
+ by a factor of 
+\begin_inset Formula $\beta$
+\end_inset
+
+.
+ This was then imposed as a BC
+\end_layout
+
+\begin_layout Plain Layout
+For me to do a similar thing, I would need to work out the relative acceleration
+ at each location on the airfoil and impose that as a time varying BC.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+That's a lot of work!
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Starting from the Kármán wake solutions obtained for F = 0.875 and F = 0.975
+ (as for figure 5), the relative motion of the cylinder surface was gradually
+ increased from rest, by increasing 
+\begin_inset Formula $β$
+\end_inset
+
+ from 0 to 1 over a period T U/D = 100 until the motion- induced vorticity
+ production was zero everywhere on the circumference.
+ This resulted in the F = 0.875 solution changing to another with a periodic
+ Kármán street wake, and an increased value of E.
+ In contrast, the periodicity of the F = 0.975 solution was destroyed by
+ this procedure, leading to a chaotic wake flow.
+ Subsequently it was discovered that a periodic solution could also be obtained
+ at F = 0.975 if the motion-induced vorticity production was reduced by a
+ lesser amount.
+ With 
+\begin_inset Formula $β$
+\end_inset
+
+ max = 0.5 this produced a Kármán street wake, with a negative value of E,
+ similar in magnitude to that for the cylinder with the fixed surface at
+ the same value of F.
+\end_layout
+
+\begin_layout Section
+Blackburn 2004: 
+\end_layout
+
+\end_body
+\end_document
