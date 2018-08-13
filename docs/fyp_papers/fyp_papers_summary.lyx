@@ -151,6 +151,41 @@ Agromayer 2017: Simulation of Starting and Stopping Vortices of an Airfoil
 \end_layout
 
 \begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Found because it reference Vincent 2014.
+ Appears to be a similar study but with more explanations and rigour.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+Should be referenced for my paper.
+ Note the limitation about no body forces.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Abstract & Introduction
 \end_layout
 
@@ -226,9 +261,39 @@ owski lift theorem.
  is given by:
 \begin_inset Formula 
 \[
-L=-\rho V_{\infty}\tag{eq 4}
+L=-\rho V_{\infty}\Gamma\tag{eq 4}
 \]
 
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I should be able to easily check if this is always true! Take the forces
+ from the force output and the circulation by taking a contour integral
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
 \end_inset
 
 where 
@@ -1275,6 +1340,40 @@ Blackburn 1999: A study of two-dimensional flow past an oscillating cylinder
 \end_layout
 
 \begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Style for my report should emulate this paper.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+Talk about vorticity production should be noted and a similar explanation
+ given for my airfoil (look at pressure gradients and flow behaviour, etc.)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Abstract & Introduction
 \end_layout
 
@@ -1830,6 +1929,20 @@ I haven't seen this effect in my simulations.
  One reason why may be that my acceleration terms are too small??
 \end_layout
 
+\begin_layout Plain Layout
+So if I increase my acceleration more and more to try find where it is greater
+ than the pressure generation mechanism, my 
+\begin_inset Quotes eld
+\end_inset
+
+shape
+\begin_inset Quotes erd
+\end_inset
+
+ will be more and more like an impulsive start.
+ Morton has some words on this, hmm!
+\end_layout
+
 \end_inset
 
 
@@ -1937,6 +2050,375 @@ Starting from the Kármán wake solutions obtained for F = 0.875 and F = 0.975
 \begin_layout Section
 Blackburn 2004: Formulation of a Galerkin spectral element–Fourier method
  for three-dimensional incompressible flows in cylindrical geometries
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Key reference for semtex.
+ Explains semtex as well if I have any detailed questions.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Jones 2011: Leading Edge Vortex Development on a Waving Wing at Reynolds
+ Numbers Between 10,000 and 60,000
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Referenced by Vincent, does not appear to be very relevant as a paper for
+ me...
+\end_layout
+
+\begin_layout Plain Layout
+Note that turbulent 
+\begin_inset Formula $\ne$
+\end_inset
+
+ unsteady
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Lei 2013: Numerical study of separation on the trailing edge of a symmetrical
+ airfoil at a low Reynolds number
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Referenced by Vincent, also does not appear to be very relevant as a paper
+ for me...
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Abstract and Introduction
+\end_layout
+
+\begin_layout Itemize
+This study focuses on the trailing-edge separation of a symmetrical airfoil
+ at a low Reynolds number.
+ Finite volume method is adopted to solve the unsteady Reynolds-averaged
+ Navier–Stokes (RANS) equation.
+ Flow of the symmetrical airfoil SD8020 at a low Reynolds number has been
+ simulated.
+\end_layout
+
+\begin_layout Itemize
+It is well-known that many significant aerodynamics prob- lems occur below
+ chord Reynolds numbers of about 
+\begin_inset Formula $5\times10^{5}$
+\end_inset
+
+ .
+ Compared to high Reynolds numbers, low Reynolds number aerodynamics is
+ quite different.
+\end_layout
+
+\begin_layout Itemize
+He also found hysteresis loops in the lift curve for some airfoils and considere
+d whether counterclockwise or clockwise hysteresis loop can occur for a
+ given Re
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Mainly a point of interest, is there a lag in the lift? Hysteresis?
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Point of interest about different types of mesh http://www.innovative-cfd.com/cfd-
+grid.html
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Presentation of the Result
+\end_layout
+
+\begin_layout Itemize
+Time-averaged streamlines at different AOAs
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Didn't know this was possible, interesting
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Wilbert 2018: PIV Analysis of Ludwig Prandtl’s Historic Flow Visualization
+ Films
+\end_layout
+
+\begin_layout Standard
+Abstract & Introduction
+\end_layout
+
+\begin_layout Itemize
+Processing these image data with modern PIV algorithms allows the visualization
+ of flow quantities (e.g.
+ vorticity) that were unavailable prior to the development of the PIV technique.
+ The accompanying fluid dynamics video consists of selected original film
+ sequences overlaid with visualizations obtained through PIV processing.
+\end_layout
+
+\begin_layout Standard
+Particle Image velocimetry 
+\end_layout
+
+\begin_layout Itemize
+Given the time series of surface flow visualizations it is a simple and
+ elucidating exercise to use today’s computer based PIV algorithms to extract
+ the displacement and corresponding velocity and vorticity fields.
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Consider adding the recovered velocity and vorticity field image into my
+ paper
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Further analysis of the displacement (velocity) data show a periodic jitter
+ which is caused by frame-to-frame image registration jitter, most likely
+ introduced during the orig- inal recording process ...
+ It is also removed when finite difference are applied to the displacement
+ fields and therefore does not appear in the presented vorticity maps.
+\end_layout
+
+\begin_layout Section
+Xu 2016: Numerical study of viscous starting flow past wedges
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Good explanation of flow based a (trailing edge) wedge, for example if an
+ airfoil was plunged up and down.
+\end_layout
+
+\begin_layout Plain Layout
+May be applicable to the start where there is a large vertical velocity?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Abstract & Introduction
+\end_layout
+
+\begin_layout Itemize
+Much research has been done on the limiting case of a flat plate, which
+ corresponds to a wedge of zero angles.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I.e.
+ this is for the flow vertically past the wedge (plunging airfoil) not in
+ the translational direction of motion (ugh)
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body
