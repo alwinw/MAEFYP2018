@@ -1483,7 +1483,241 @@ tion (or concentration) of vorticity by stretching and tilting the vortex
  filaments.
  The second term on the right represents viscous diffusion, i.e.
  the spreading of vorticity due to viscosity.
- For homogeneous fluid, 
+ For homogeneous fluid, vorticity is generated only at boundaries.
+ Batchelor (1967) concluded that the boundary conditions on vorticity are
+ given, in effect, by those on velocity.
+\begin_inset Newline newline
+\end_inset
+
+Morton (2984) sought a dynamic formation for the generation of vorticity:
+ he focused on the flow next to a solid wall and concluded that vorticity
+ is generated at boundaries by the relative acceleration of fluid and wall.
+ This vorticity is produced instantaneously, either from the fluid side
+ by tangential pressure gradients, or from the wall side by acceleration
+ of the boundary, and this generation is partially masked by viscous diffusion
+ when there is continuing production.
+ Morton (1984) also found that for an impulsive change,w all stress does
+ not produce vorticity, and that the only means of decay or loss of circulation
+ is by cross-diffusion and annihilation of vorticity of opposite signs.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+So after the starting phase, my airfoil is no longer accelerating (body
+ force).
+ So, in 
+\begin_inset Quotes eld
+\end_inset
+
+steady state
+\begin_inset Quotes erd
+\end_inset
+
+ the relative acceleration between the fluid and the wall is due to pressure
+ gradients speeding up and slowing down the fluid
+\end_layout
+
+\begin_layout Plain Layout
+I should also try to compare the starting –> steady case to a simple impulsively
+ started flow for steady case to see how well the results asymptotically
+ converge 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Lundgren & Koumoutsakos (1999) examined the case of a free surface and showed
+ that vorticity is conserved.
+ That is, vorticity is not lost through the free surface, but rather is
+ 
+\begin_inset Quotes eld
+\end_inset
+
+stored
+\begin_inset Quotes erd
+\end_inset
+
+ in the vortex sheet representing the free surface.
+ This is an important result that has often been debated in literature,
+ but which also needs to emerge in our present formation.
+ Furthermore, enforcing the condition of zero shear stress, they found that
+ vorticity 
+\begin_inset Quotes eld
+\end_inset
+
+develops
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+leaks
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+is generated
+\begin_inset Quotes erd
+\end_inset
+
+ at a curved free surface, along which there is a relative flow
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Is my airfoil a 
+\begin_inset Quotes eld
+\end_inset
+
+free surface
+\begin_inset Quotes erd
+\end_inset
+
+? What does it mean for vorticity to be stored?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Vorticity at the interface of two fluids
+\end_layout
+
+\begin_layout Itemize
+Two fluids in contact with each other without boundaries or interfaces.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+A right handed coordinate system is created where 
+\begin_inset Quotes eld
+\end_inset
+
+x
+\begin_inset Quotes erd
+\end_inset
+
+ is 
+\begin_inset Formula $\vec{n}$
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+y
+\begin_inset Quotes erd
+\end_inset
+
+ is 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+...
+ Here, 
+\begin_inset Formula $s$
+\end_inset
+
+ is the curvilinear distance (arclength) along the contour 
+\begin_inset Formula $C$
+\end_inset
+
+, and 
+\begin_inset Formula $\text{d}s$
+\end_inset
+
+ a (vector) line element of this contour.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+To finish!
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -2275,6 +2509,10 @@ Note that turbulent
 \end_layout
 
 \begin_layout Section
+Gaunaa 2002: 
+\end_layout
+
+\begin_layout Section
 Lei 2013: Numerical study of separation on the trailing edge of a symmetrical
  airfoil at a low Reynolds number
 \end_layout
@@ -2432,6 +2670,15 @@ Didn't know this was possible, interesting
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+Liu 2013: Unsteady Thin-Airfoil Theory Revisited: Application of a Simple
+ Lift Formula
+\end_layout
+
+\begin_layout Standard
+Added mass lift per unit span!
 \end_layout
 
 \begin_layout Section
