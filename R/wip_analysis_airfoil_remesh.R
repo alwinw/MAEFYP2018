@@ -42,7 +42,7 @@ data_dump <- data.frame(
 rm(airfoil, folderpath, seshpath, dumppath)
 
 #--- Airfoil Calculation                                          ----
-#--- * Boundary Data                                               ----
+#--- * Boundary Data                                              ----
 bndry <- LoadBndry(data_airfoil$folder)
 #--- * Wall Mesh Data                                             ----
 wallmesh <- LoadWallGrad(data_airfoil$seshpath)
@@ -110,7 +110,7 @@ long$wall <-  list_airfoil$long_wall
 long$wall <- LongWall(long$wall, long$mesh)
 #--- * Local Data                                                 ----
 long$mesh <- LocalMesh(long$mesh, long$wall)
-if (TRUE) {
+if (FALSE) {
   # Plot setup
   plot_mesh <- ggplot(long$mesh,
                       aes(x, y, group=enum, colour=local)) +
@@ -135,3 +135,88 @@ if (TRUE) {
     xlim = c(-0.475, 0.675), ylim = c(-0.4, 0.4), expand = FALSE) +
     scale_size(guide="none", range=c(1*0.4, 6*4))
 }
+
+# Remesh Airfoil                                                  ----
+# Note that this assumes the original airfoil is being used
+# and that the direction of s is clockwise!
+
+adjm      <- list()
+# List of elements to be split
+adjm$adjm <- data.frame(
+  anum = seq(1, 60), 
+  enum = c( 90,  57,  58,  59,  60, 381, 382, 383, 384, 361,  # LE local = 1
+           116,  61,  62,  63,  64, 377, 378, 379, 380, 349,  # LE local = 2
+           142, 149, 150, 151, 152, 373, 374, 375, 376, 337,  # LE local = 3
+            66,  65, 144, 143, 704, 703, 336, 335, 372, 371,  # TE local = 1
+            92,  91, 146, 145, 705, 702, 334, 333, 360, 359,  # TE local = 2
+           118, 117, 148, 147, 706, 701, 332, 331, 348, 347), # TE local = 3
+  local = rep(c(rep(1, 10), rep(2, 10), rep(3, 10)),  2),
+  up    = rep(c(rep(TRUE, 5), rep(FALSE, 5)), 6),
+  spls  = c(rep(c(0.4, rep(0.5, 8), 0.6), 3),
+           rep(c(0.6, 0.5, rep(0.33, 2), rep(0.25, 2), rep(0.33, 2), 0.5, 0.4), 3)),
+  spln  = rep(c(rep(0, 20), rep(0.5, 10)), 2)
+)
+# Double splits
+adjm$doub <- adjm$adjm %>% 
+  filter(spls %in% c(0.33, 0.25)) %>% 
+  mutate(spls = spls + 0.33)
+# Combine in double splits
+adjm$adjm <- rbind(adjm$adjm, adjm$doub) %>% 
+  arrange(anum, spls) %>% 
+  mutate(anum = 1:n())
+# Determine s value on surface
+adjm$wall <- long$wall %>% 
+  filter(enum %in% adjm$adjm$enum, node) %>% 
+  select(x, y, s, enum, aveh) %>% 
+  arrange(enum, s) %>% 
+  group_by(enum) %>% 
+  mutate(dels = lead(s) - s) %>% 
+  ungroup()
+adjm$wall <- left_join(adjm$wall, adjm$adjm, by = "enum") %>% 
+  mutate(ints = s + spls*dels) %>% 
+  filter(!is.na(ints)) %>% 
+  arrange(ints)
+# Interpolate (x, y) on surface
+adjm$uniw <- long$wall %>% 
+  select(x, y, s)
+adjm$uniw <- unique(adjm$uniw)
+adjm$wall$intx <- cubicspline(adjm$uniw$s, adjm$uniw$x, xi = adjm$wall$ints)
+adjm$wall$inty <- cubicspline(adjm$uniw$s, adjm$uniw$y, xi = adjm$wall$ints)
+# Join surface interpolation into the session data
+adjm$sesh <- long$sesh %>% 
+  filter(enum %in% adjm$adjm$enum) %>% 
+  # left_join(select(adjm$wall, x, y, local), 
+  #           by = c("x", "y")) %>% 
+  left_join(select(adjm$wall, -enum), 
+            by = c("x", "y")) %>% 
+  unique(.)
+# Determine relevant edges
+adjm$edge <- adjm$sesh %>% 
+  group_by(enum) %>% 
+  mutate(temp = sum(local, na.rm = TRUE)) %>% 
+  mutate(local = ifelse(is.na(local) & temp == 2, 2, local))
+
+adjm$edge <- adjm$edge %>% 
+  ungroup() %>% 
+  group_by(x, y) %>% 
+  mutate(temp = sum(local == 2, na.rm = TRUE)) %>% 
+  filter(!is.na(local))
+
+
+if (FALSE) {
+  ggplot(long$sesh %>% filter(enum %in% adjm$adjm$enum), 
+         aes(x, y, group = enum)) +
+    geom_polygon(colour = "black", fill = NA)
+  
+  ggplot(long$wall %>% filter(enum %in% adjm$adjm$enum, node), 
+         aes(x, y, group = enum)) +
+    geom_point(colour = "black", shape = "O") +
+    geom_point(aes(intx, inty), colour = "red",
+               data = adjm$wall)
+  
+  ggplot(adjm$edge, aes(x, y, group = enum)) + 
+    geom_polygon(colour = "black", fill = NA) + 
+    geom_point(aes(intx, inty), colour = "red", 
+               data = adjm$edge)
+}
+
