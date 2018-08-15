@@ -174,7 +174,9 @@ adjm$wall <- long$wall %>%
   ungroup()
 adjm$wall <- left_join(adjm$wall, adjm$adjm, by = "enum") %>% 
   mutate(ints = s + spls*dels) %>% 
-  filter(!is.na(ints)) %>% 
+  group_by(anum) %>%
+  mutate(ints = sum(ints, na.rm = TRUE)) %>% 
+  ungroup() %>% 
   arrange(ints)
 # Interpolate (x, y) on surface
 adjm$uniw <- long$wall %>% 
@@ -182,25 +184,20 @@ adjm$uniw <- long$wall %>%
 adjm$uniw <- unique(adjm$uniw)
 adjm$wall$intx <- cubicspline(adjm$uniw$s, adjm$uniw$x, xi = adjm$wall$ints)
 adjm$wall$inty <- cubicspline(adjm$uniw$s, adjm$uniw$y, xi = adjm$wall$ints)
-# Join surface interpolation into the session data
-adjm$sesh <- long$sesh %>% 
-  filter(enum %in% adjm$adjm$enum) %>% 
-  # left_join(select(adjm$wall, x, y, local), 
-  #           by = c("x", "y")) %>% 
-  left_join(select(adjm$wall, -enum), 
-            by = c("x", "y")) %>% 
-  unique(.)
-# Determine relevant edges
-adjm$edge <- adjm$sesh %>% 
-  group_by(enum) %>% 
-  mutate(temp = sum(local, na.rm = TRUE)) %>% 
-  mutate(local = ifelse(is.na(local) & temp == 2, 2, local))
 
-adjm$edge <- adjm$edge %>% 
-  ungroup() %>% 
-  group_by(x, y) %>% 
-  mutate(temp = sum(local == 2, na.rm = TRUE)) %>% 
-  filter(!is.na(local))
+
+adjm$edge <- long$sesh %>%  
+  filter(enum %in% adjm$adjm$enum) %>%  
+  left_join(select(adjm$adjm, anum, enum), by = "enum") %>% 
+  left_join(select(adjm$wall, x, y, local),
+            by = c("x", "y")) %>% 
+  unique(.) %>% 
+  group_by(enum, anum) %>%  
+  mutate(temp = sum(local, na.rm = TRUE)) %>%  
+  mutate(local = ifelse(is.na(local) & temp == 2, 2, local)) %>% 
+  select(-temp) %>% 
+  filter(local %in% c(1, 2)) %>% 
+  arrange(local, anum)
 
 
 if (FALSE) {
@@ -214,9 +211,9 @@ if (FALSE) {
     geom_point(aes(intx, inty), colour = "red",
                data = adjm$wall)
   
-  ggplot(adjm$edge, aes(x, y, group = enum)) + 
-    geom_polygon(colour = "black", fill = NA) + 
-    geom_point(aes(intx, inty), colour = "red", 
-               data = adjm$edge)
+  ggplot(adjm$edge, aes(x, y, group = enum)) +
+    geom_polygon(colour = "black", fill = NA) +
+    geom_point(aes(intx, inty), colour = "red",
+               data = adjm$wall)
 }
 
