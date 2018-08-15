@@ -182,22 +182,88 @@ adjm$wall <- left_join(adjm$wall, adjm$adjm, by = "enum") %>%
 adjm$uniw <- long$wall %>% 
   select(x, y, s)
 adjm$uniw <- unique(adjm$uniw)
-adjm$wall$intx <- cubicspline(adjm$uniw$s, adjm$uniw$x, xi = adjm$wall$ints)
-adjm$wall$inty <- cubicspline(adjm$uniw$s, adjm$uniw$y, xi = adjm$wall$ints)
+adjm$wall$inpx <- cubicspline(adjm$uniw$s, adjm$uniw$x, xi = adjm$wall$ints)
+adjm$wall$inpy <- cubicspline(adjm$uniw$s, adjm$uniw$y, xi = adjm$wall$ints)
 
+adjm$edge <- read.table(paste0(saveplot, "remeshedge.dat"), header = TRUE)
+temp <- left_join(
+  rename(adjm$edge, nnum = nnum1), 
+  unique(select(long$sesh, x, y, nnum)), 
+  by = "nnum") %>% 
+  rename(x1 = x, y1 = y)
+adjm$edge <- cbind(adjm$edge, select(temp, x1, y1))
+temp <- left_join(
+  rename(adjm$edge, nnum = nnum2), 
+  unique(select(long$sesh, x, y, nnum)), 
+  by = "nnum") %>% 
+  rename(x2 = x, y2 = y)
+adjm$edge <- cbind(adjm$edge, select(temp, x2, y2))
 
-adjm$edge <- long$sesh %>%  
-  filter(enum %in% adjm$adjm$enum) %>%  
-  left_join(select(adjm$adjm, anum, enum), by = "enum") %>% 
-  left_join(select(adjm$wall, x, y, local),
-            by = c("x", "y")) %>% 
-  unique(.) %>% 
-  group_by(enum, anum) %>%  
-  mutate(temp = sum(local, na.rm = TRUE)) %>%  
-  mutate(local = ifelse(is.na(local) & temp == 2, 2, local)) %>% 
-  select(-temp) %>% 
-  filter(local %in% c(1, 2)) %>% 
-  arrange(local, anum)
+adjm$edge <- adjm$edge %>% 
+  mutate(intx = (x2 - x1)*spls + x1,
+         inty = (y2 - y1)*spls + y1)
+
+write.table(select(adjm$edge, spnum, intx, inty), 
+            paste0(saveplot, "remeshedgeout.dat"),
+            row.names = FALSE)
+
+adjm$shifted <- adjm$wall %>% 
+  filter(!is.na(dels)) %>% 
+  arrange(anum) %>% 
+  select(inpx, inpy)
+adjm$shifted$newnum <- 
+  c(986, 978, 977, 969, 968, 960, 959, 951, 950, 942,
+    987, 995, 996, 1003, 1004, 1011, 1026, 1033, 1034, 1041, 1042, 1050)
+
+adjm$shifted <- left_join(adjm$edge, adjm$shifted, by = "newnum")
+adjm$shifted$shift <- 
+  ifelse(!is.na(lag(adjm$shifted$inpx)) & is.na(adjm$shifted$inpx), "lag", "no")
+adjm$shifted$shift <- 
+  ifelse(!is.na(lead(adjm$shifted$inpx)) & is.na(adjm$shifted$inpx), "lead", adjm$shifted$shift)
+
+adjm$shifted$inpx <- 
+  ifelse(adjm$shifted$shift == "lag", adjm$shifted$intx + lag(adjm$shifted$inpx - adjm$shifted$intx, 1), adjm$shifted$inpx)
+adjm$shifted$inpy <- 
+  ifelse(adjm$shifted$shift == "lag", adjm$shifted$inty + lag(adjm$shifted$inpy - adjm$shifted$inty, 1), adjm$shifted$inpy)
+adjm$shifted$inpx <- 
+  ifelse(adjm$shifted$shift == "lead", adjm$shifted$intx + lead(adjm$shifted$inpx - adjm$shifted$intx, 1), adjm$shifted$inpx)
+adjm$shifted$inpy <- 
+  ifelse(adjm$shifted$shift == "lead", adjm$shifted$inty + lead(adjm$shifted$inpy - adjm$shifted$inty, 1), adjm$shifted$inpy)
+
+adjm$shifted$shift <- 
+  ifelse(!is.na(lag(adjm$shifted$inpx)) & is.na(adjm$shifted$inpx), "lag", "no")
+adjm$shifted$shift <- 
+  ifelse(!is.na(lead(adjm$shifted$inpx)) & is.na(adjm$shifted$inpx), "lead", adjm$shifted$shift)
+adjm$shifted$inpx <- 
+  ifelse(adjm$shifted$shift == "lag", adjm$shifted$intx + lag(adjm$shifted$inpx - adjm$shifted$intx, 2), adjm$shifted$inpx)
+adjm$shifted$inpy <- 
+  ifelse(adjm$shifted$shift == "lag", adjm$shifted$inty + lag(adjm$shifted$inpy - adjm$shifted$inty, 2), adjm$shifted$inpy)
+adjm$shifted$inpx <- 
+  ifelse(adjm$shifted$shift == "lead", adjm$shifted$intx + lead(adjm$shifted$inpx - adjm$shifted$intx, 2), adjm$shifted$inpx)
+adjm$shifted$inpy <- 
+  ifelse(adjm$shifted$shift == "lead", adjm$shifted$inty + lead(adjm$shifted$inpy - adjm$shifted$inty, 2), adjm$shifted$inpy)
+
+adjm$shifted$shift <- 
+  ifelse(!is.na(lag(adjm$shifted$inpx)) & is.na(adjm$shifted$inpx), "lag", "no")
+adjm$shifted$shift <- 
+  ifelse(!is.na(lead(adjm$shifted$inpx)) & is.na(adjm$shifted$inpx), "lead", adjm$shifted$shift)
+adjm$shifted$inpx <- 
+  ifelse(adjm$shifted$shift == "lag", adjm$shifted$intx + lag(adjm$shifted$inpx - adjm$shifted$intx, 3), adjm$shifted$inpx)
+adjm$shifted$inpy <- 
+  ifelse(adjm$shifted$shift == "lag", adjm$shifted$inty + lag(adjm$shifted$inpy - adjm$shifted$inty, 3), adjm$shifted$inpy)
+adjm$shifted$inpx <- 
+  ifelse(adjm$shifted$shift == "lead", adjm$shifted$intx + lead(adjm$shifted$inpx - adjm$shifted$intx, 3), adjm$shifted$inpx)
+adjm$shifted$inpy <- 
+  ifelse(adjm$shifted$shift == "lead", adjm$shifted$inty + lead(adjm$shifted$inpy - adjm$shifted$inty, 3), adjm$shifted$inpy)
+
+adjm$shifted$inpx <- 
+  ifelse(is.na(adjm$shifted$inpx), adjm$shifted$intx, adjm$shifted$inpx)
+adjm$shifted$inpy <- 
+  ifelse(is.na(adjm$shifted$inpy), adjm$shifted$inty, adjm$shifted$inpy)
+
+write.table(select(adjm$shifted, newnum, inpx, inpy), 
+            paste0(saveplot, "remeshedgeout.dat"),
+            row.names = FALSE)
 
 
 if (FALSE) {
@@ -211,9 +277,13 @@ if (FALSE) {
     geom_point(aes(intx, inty), colour = "red",
                data = adjm$wall)
   
-  ggplot(adjm$edge, aes(x, y, group = enum)) +
-    geom_polygon(colour = "black", fill = NA) +
-    geom_point(aes(intx, inty), colour = "red",
-               data = adjm$wall)
+  ggplot(adjm$edge) +
+    geom_point(aes(x1, y1), colour = "red", shape = "O") +
+    geom_point(aes(x2, y2), colour = "red", shape = "O") +
+    geom_point(aes(intx, inty), colour = "blue", shape = "O") +
+    geom_path(aes(intx, inty, group = sgrp), colour = "blue") +
+    # geom_text(aes(intx, inty, label = newnum), size = 3)
+    geom_point(aes(inpx, inpy), colour = "green",
+              data = adjm$shifted)
 }
 
