@@ -265,6 +265,10 @@ write.table(select(adjm$shifted, newnum, inpx, inpy),
             paste0(saveplot, "remeshedgeout.dat"),
             row.names = FALSE)
 
+cat(
+  sprintf("%5d %20.10E%20.10E%20.10E\n", adjm$shifted$newnum, adjm$shifted$inpx, adjm$shifted$inpy, rep(0, nrow(adjm$shifted))),
+  file = paste0(saveplot, "remeshedgecat.dat"))
+
 
 if (FALSE) {
   ggplot(long$sesh %>% filter(enum %in% adjm$adjm$enum), 
