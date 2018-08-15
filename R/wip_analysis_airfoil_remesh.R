@@ -127,4 +127,7 @@ if (TRUE) {
   plot_mesh + coord_fixed(                                        # Leading edge
     xlim = c(-0.5, -0.2), ylim = c(-0.10, 0.13), expand = FALSE) +
     scale_size(guide="none", range=c(1*2, 6*8))
+  plot_mesh + coord_fixed(                                        # Airfoil
+    xlim = c(-0.475, 0.675), ylim = c(-0.4, 0.4), expand = FALSE) +
+    scale_size(guide="none", range=c(1*0.8, 6*4))
 }
