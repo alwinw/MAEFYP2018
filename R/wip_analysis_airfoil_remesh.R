@@ -119,15 +119,19 @@ if (TRUE) {
                  data = long$mesh %>% filter(node) %>% arrange(ncorner)) +
     geom_text(aes(elabx, elaby, label=enum, size=area),
               data = filter(long$mesh, ncorner=="n1")) +
-    scale_color_gradientn(colours=spectralpalette(20))
+    geom_label(aes(x = x, y = y, label = nnum, size = area*0.2), 
+               label.padding = unit(0.1, "lines"),
+              data = long$mesh %>% ungroup() %>% group_by(nnum) %>% top_n(-1, area)) +
+    scale_color_gradientn(colours=spectralpalette(20),
+                          guide = "none")
   # Plot outputs
   plot_mesh + coord_fixed(                                        # Trailing edge
-    xlim = c(0.4, 0.8), ylim = c(-0.2, 0.045), expand = FALSE) +
-    scale_size(guide="none", range=c(1*2, 6*8))
+    xlim = c(0.4, 0.8), ylim = c(-0.16, 0.07), expand = FALSE) +
+    scale_size(guide="none", range=c(1*1, 6*8))
   plot_mesh + coord_fixed(                                        # Leading edge
     xlim = c(-0.5, -0.2), ylim = c(-0.10, 0.13), expand = FALSE) +
-    scale_size(guide="none", range=c(1*2, 6*8))
+    scale_size(guide="none", range=c(1*1, 6*8))
   plot_mesh + coord_fixed(                                        # Airfoil
     xlim = c(-0.475, 0.675), ylim = c(-0.4, 0.4), expand = FALSE) +
-    scale_size(guide="none", range=c(1*0.8, 6*4))
+    scale_size(guide="none", range=c(1*0.4, 6*4))
 }
