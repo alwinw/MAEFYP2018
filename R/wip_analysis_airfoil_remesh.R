@@ -285,9 +285,57 @@ if (FALSE) {
     geom_point(aes(x1, y1), colour = "red", shape = "O") +
     geom_point(aes(x2, y2), colour = "red", shape = "O") +
     geom_point(aes(intx, inty), colour = "blue", shape = "O") +
-    geom_path(aes(intx, inty, group = sgrp), colour = "blue") +
-    # geom_text(aes(intx, inty, label = newnum), size = 3)
+    # geom_path(aes(intx, inty, group = sgrp), colour = "blue") +
+    geom_text(aes(intx, inty, label = newnum), size = 3)
     geom_point(aes(inpx, inpy), colour = "green",
               data = adjm$shifted)
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+#--- * Required Paths                                             ----
+airfoil    = "NACA0012_remesh"
+folderpath = "../src-example/NACA0012_remesh/"
+seshpath   = "NACA0012_remesh"
+# Required input dataframes
+data_airfoil <- data.frame(
+  airfoil  = airfoil, 
+  seshname = seshpath,
+  folder   = folderpath,
+  seshpath = paste0(folderpath, seshpath),
+  stringsAsFactors = FALSE)
+data_mesh <- data.frame(
+  data_airfoil,
+  tokenword  = "N_P",
+  tokenvalue = 8,
+  ID         = "NACA0012-AoA04-N_P5",
+  stringsAsFactors = FALSE)
+# Required input dataframes
+data_airfoil <- data.frame(
+  airfoil  = airfoil, 
+  seshname = seshpath,
+  folder   = folderpath,
+  seshpath = paste0(folderpath, seshpath),
+  stringsAsFactors = FALSE)
+data_mesh <- data.frame(
+  data_airfoil,
+  tokenword  = "N_P",
+  tokenvalue = 8,
+  ID         = "NACA0012-AoA04-N_P5",
+  stringsAsFactors = FALSE)
+
+long$mesh <- LoadMesh(data_mesh$seshpath)
+ggplot(long$mesh, aes(x, y, group = enum)) +
+  geom_point() +
+  # coord_cartesian(xlim = c(-0.45, -0.2), ylim = c(-0.1, 0.1))
+  coord_cartesian(xlim = c(0.45, 0.7), ylim = c(-0.15, 0.1))
