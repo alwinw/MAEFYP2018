@@ -1483,7 +1483,9 @@ tion (or concentration) of vorticity by stretching and tilting the vortex
  filaments.
  The second term on the right represents viscous diffusion, i.e.
  the spreading of vorticity due to viscosity.
- For homogeneous fluid, 
+ For homogeneous fluid, vorticity is generated only at boundaries.
+ Batchelor (1967) concluded that the boundary conditions on vorticity are
+ given, in effect, by those on velocity.
 \end_layout
 
 \begin_layout Section
@@ -1885,13 +1887,13 @@ But, we're at low Reynolds numbers so there is vorticity diffusing through
 \end_layout
 
 \begin_layout Plain Layout
-Also, where the contour passes through teh wake, in steady state we can
+Also, where the contour passes through the wake, in steady state we can
  assume that the positive (lower) and negative (upper) vortices cancel to
  zero - not true at the start!
 \end_layout
 
 \begin_layout Plain Layout
-Rotating cylinder <–> lifting airfoil, 
+Rotating cylinder <–> lifting airfoil, typ assume small vorticity layer
 \end_layout
 
 \end_inset
@@ -2705,6 +2707,40 @@ Misinterpretations of added mass persist in the literature, wherein the
  data sets.
  Investigation of the experimental utility of the presented force formulation
  is left for future work.
+\end_layout
+
+\begin_layout Section
+Theodorsen 1935: General Theory of Aerodynamic Instability and Mechanism
+ of Flutter
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Interesting paper but (apparently according to Gaunaa 2002) it ignores horizonta
+l acceleration/etc
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
