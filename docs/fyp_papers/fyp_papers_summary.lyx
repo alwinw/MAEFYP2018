@@ -3039,6 +3039,281 @@ l acceleration/etc
 \end_layout
 
 \begin_layout Section
+von Karman 1935: Airfoil Theory for Non-Uniform Motion
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I remember this was a good find
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Abstract & Introduction
+\end_layout
+
+\begin_layout Itemize
+After a calculation of the induction effects of a wake vortex, formulae
+ for the lift and moment are obtained which are applicable to all cases
+ of motion of a two-dimensional thin airfoil in which the wake produced
+ is approximately flat; i.e., in which the movement of the airfoil normal
+ to its mean path is small.
+\begin_inset Newline newline
+\end_inset
+
+The airfoil put into motion creates a circulation around it- self due to
+ the presence of the sharp trailing edge; however, according to the theorem
+ of conservation of moment of momentum, a counter-circulation develops in
+ the fluid, called the "starting vortex.'' The airfoil and the starting vortex
+ constitute a vortex-pair with an increasing distance between the two vortex
+ lines, be- cause the starting vortex remains at the place where it was
+ created (neglecting its slow displacement perpen- dicular to the flight
+ direction).
+ Hence the momentum of the vortex pair, being proportional to the product
+ of the circulation and the distance between the two vortices, increases
+ continuously.
+ The rate of this in-crease of the momentum is equal to the lift.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Is this similar to the vortex-impulse Hugh talked about?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Combined with the assumption that the starting vortex is so far behind the
+ airfoil that it does not influence the flow at the airfoil, this leads
+ to the so-called ''stationary'' theory of thin airfoils.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Maybe I will use this terminology too
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ However, if the total circulation around the airfoil is variable, because
+ of non-uniformity of the motion, the airfoil leaves a wake composed of
+ continuously distributed vortex lines behind itself, and the influence
+ of this wake must be taken into account.
+ The intensity of the vortex lines which constitute the wake is determined
+ in this case by two conditions: (a) that the total circulation of the whole
+ system is invariably equal to zero, and (b) that the wake vortices move
+ with the fluid, e.g., if the undisturbed fluid is at rest they keep their
+ positions in space while the airfoil proceeds.
+\end_layout
+
+\begin_layout Itemize
+The method presented in this paper is based on the idea that the momentum
+ per unit span o£ the system can be expressed by the sum of the momentum
+ of the vortex pairs which constitute the system, where the momentum of
+ each particular vortex pair is given by the product of the circulation
+ and the distance between the individual vortices.
+ ...
+\begin_inset Newline newline
+\end_inset
+
+If the strengths of the two vortices of a particular vortex pair are denoted
+ by 
+\begin_inset Formula $\pm\Gamma$
+\end_inset
+
+, and the X-coordinates of the two vortices by 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+ , then the magnitude of the momentum is 
+\begin_inset Formula $\rho\Gamma\left(x_{2}-x_{1}\right)$
+\end_inset
+
+ and the line of action of the momentum, due to symmetry, is given by 
+\begin_inset Formula $x=\left(x_{1}+x_{2}\right)/2$
+\end_inset
+
+.
+ Consequently, the moment of the momentum with respect to the origin of
+ the coordinate system is equal to 
+\begin_inset Formula $\rho\Gamma\left(x_{2}^{2}-x_{1}^{2}\right)/2$
+\end_inset
+
+ and it is seen that the total moment of momentum of the system is given
+ by the sum 
+\begin_inset Formula $\left(\frac{1}{2}\rho\sum\left(\Gamma_{i}x_{i}^{2}\right)\right)$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Hence the two equations 
+\begin_inset Formula 
+\[
+L=-\rho\frac{\text{d}}{\text{d}t}\sum\left(\Gamma_{i}x_{i}\right)
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+M=-\frac{\rho}{2}\frac{\text{d}}{\text{d}t}\sum\left(\Gamma_{i}x_{i}^{2}\right)
+\]
+
+\end_inset
+
+determine the lift and the moment acting on the airfoil per unit span.
+ 
+\end_layout
+
+\begin_layout Standard
+Calculations of the Effects of the Vortices in the Wake
+\end_layout
+
+\begin_layout Standard
+General Expressions for the Lift and Moment
+\end_layout
+
+\begin_layout Itemize
+...
+ the lift becomes
+\begin_inset Formula 
+\[
+L=-\frac{\text{d}I}{\text{d}t}=...
+\]
+
+\end_inset
+
+...
+ the lift may also be written in the form
+\begin_inset Formula 
+\[
+L=-\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{dx}+\rho U\Gamma_{0}-\rho U\intop_{1}^{\infty}\gamma\left(\varepsilon\right)\frac{\text{d}\varepsilon}{\sqrt{\varepsilon^{2}-1}}
+\]
+
+\end_inset
+
+Thus the lift consists of three parts:
+\begin_inset Newline newline
+\end_inset
+
+TO FINISH
+\end_layout
+
+\begin_layout Standard
+General Method for Transient Phenomena 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Definitely interesting, 
+\begin_inset Quotes eld
+\end_inset
+
+Lift Deficiency
+\begin_inset Quotes erd
+\end_inset
+
+ should be investigated
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Wilbert 2018: PIV Analysis of Ludwig Prandtl’s Historic Flow Visualization
  Films
 \end_layout
