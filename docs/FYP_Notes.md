@@ -48,3 +48,5 @@ ctrl+shift+m gives %>%
  - Look at flow field using tecplot to see if Kutta condition at TE or near TE
  - Check the integration around the airfoil (research how) and other areas
  - Examine the added mass force for a lift generating airfoil to explain CD (but CL?)
+
+ - To do: read N_P and inflow velocity equation

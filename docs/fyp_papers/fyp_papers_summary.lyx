@@ -448,6 +448,31 @@ Unsteady Viscous Flows
 
 \begin_layout Itemize
 von Karman 1935: 
+\begin_inset Formula 
+\[
+L=-\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{dx}+\rho U\Gamma_{0}-\rho U\intop_{1}^{\infty}\gamma\left(\varepsilon\right)\frac{\text{d}\varepsilon}{\sqrt{\varepsilon^{2}-1}}
+\]
+
+\end_inset
+
+contribution of apparent mass, quasi-steady lift and vorticity distribution
+ in the wake where 
+\begin_inset Formula $x\in\left[-1,1\right]$
+\end_inset
+
+ (chord length of 
+\begin_inset Formula $2$
+\end_inset
+
+) and 
+\begin_inset Formula $\xi$
+\end_inset
+
+ is defined from 
+\begin_inset Formula $x=0$
+\end_inset
+
+ (mid chord).
 \end_layout
 
 \begin_layout Itemize
@@ -598,6 +623,43 @@ Added-Mass Drag
 \end_layout
 
 \begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Practical use
+\end_layout
+
+\begin_layout Itemize
+Change in lift due to change in velocity (dynamic stability, etc.), yaw where
+ the wings have different acceleration
+\end_layout
+
+\begin_layout Itemize
+Could be included into VLM solvers?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
 
@@ -648,6 +710,253 @@ FINISHED
 \end_inset
 
  LyX comment, assume not finished.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Anderson 20XX: Chapter 4: Incompressible Flow over Airfoil
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Determining the vortex sheet on the camber line
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+For the camber line to be a streamline, the component of the velocity normal
+ to the camber line must be zero at all points along the camber...
+\begin_inset Formula 
+\[
+V_{\infty,n}+w'\left(s\right)=0\tag{Eq 4.12}
+\]
+
+\end_inset
+
+ At any point 
+\begin_inset Formula $P$
+\end_inset
+
+ on the camber line, where the slope of the camber line is 
+\begin_inset Formula $\frac{\text{d}z}{\text{d}x}$
+\end_inset
+
+, the geometry of Figure 4.23 yields
+\begin_inset Formula 
+\[
+V_{\infty,n}=V_{\infty}\sin\left(\alpha+\tan^{-1}\left(-\frac{\text{d}z}{\text{d}x}\right)\right)\tag{Eq 4.13}
+\]
+
+\end_inset
+
+Using trigonometric approximations...
+\begin_inset Formula 
+\[
+V_{\infty,n}=V_{\infty}\left(\alpha-\frac{\text{d}z}{\text{d}x}\right)\tag{Eq 4.14}
+\]
+
+\end_inset
+
+...
+\begin_inset Formula $w'\left(s\right)$
+\end_inset
+
+ is the component of the velocity normal to the camber line induced by the
+ vortex sheet...If the airfoil is thin, the camber line is close to the chord
+ line, and it is consistent with thin airfoil theory to make the approximation
+ that
+\begin_inset Formula 
+\[
+w'\left(s\right)\approx w\left(x\right)\tag{Eq 4.15}
+\]
+
+\end_inset
+
+...The velocity 
+\begin_inset Formula $\text{d}w$
+\end_inset
+
+ at point 
+\begin_inset Formula $x$
+\end_inset
+
+ induced by the elemntal vortex at point 
+\begin_inset Formula $\xi$
+\end_inset
+
+ is given by Equation 4.1 as
+\begin_inset Formula 
+\[
+\text{d}w=-\frac{\gamma\left(\xi\right)\,\text{d}\xi}{2\pi\left(x-\xi\right)}\tag{Eq 4.16}
+\]
+
+\end_inset
+
+...
+ Recall Equation 4.12 is the boundary condition...
+ substituting
+\begin_inset Formula 
+\[
+\frac{1}{2\pi}\intop_{0}^{c}\frac{\gamma\left(\xi\right)\,\text{d}\xi}{x-\xi}=V_{\infty}\left(\alpha-\frac{\text{d}z}{\text{d}x}\right)\tag{Eq 4.18}
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+This is the increment in 
+\begin_inset Formula $w$
+\end_inset
+
+ (there could be many 
+\begin_inset Formula $\text{d}w$
+\end_inset
+
+ that sum to 
+\begin_inset Formula $w$
+\end_inset
+
+) due to an elemental vortex of strength 
+\begin_inset Formula $\gamma\,\text{d}\xi$
+\end_inset
+
+ at distance 
+\begin_inset Formula $\xi.$
+\end_inset
+
+ I.e.
+ 
+\begin_inset Formula $\gamma\left(\xi\right)$
+\end_inset
+
+ is a vortex sheet 
+\begin_inset Quotes eld
+\end_inset
+
+density
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+...integrating...
+\begin_inset Formula 
+\[
+w\left(x\right)=-\intop_{0}^{c}\frac{\gamma\left(\xi\right)\,\text{d}\xi}{2\pi\left(x-\xi\right)}\tag{Eq 4.17}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I will need to reformulate this with different terminals due to the problem
+ presented in von Karman
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I could always make a VLM without these approximations.
+ It would just be a lot slower! I wonder what the difference would be.
 \end_layout
 
 \end_inset
@@ -3787,22 +4096,609 @@ determine the lift and the moment acting on the airfoil per unit span.
 Calculations of the Effects of the Vortices in the Wake
 \end_layout
 
+\begin_layout Itemize
+The effect of an element of vorticity, 
+\begin_inset Formula $\Gamma'$
+\end_inset
+
+, at a point 
+\begin_inset Formula $\xi$
+\end_inset
+
+ in the wake may be evaluated by the method of conformation transformation
+ as pictures in Fig 2.
+ The transformation relating the two planes is
+\begin_inset Formula 
+\[
+2z=z'+\frac{1}{z'}\tag{Eq 3}
+\]
+
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $z$
+\end_inset
+
+ is the plane for the airfoil with leading edge at 
+\begin_inset Formula $x=-1$
+\end_inset
+
+, trailing edge at 
+\begin_inset Formula $x=1$
+\end_inset
+
+ and vortex of strength 
+\begin_inset Formula $\Gamma'$
+\end_inset
+
+ of distance 
+\begin_inset Formula $\xi$
+\end_inset
+
+ from 
+\begin_inset Formula $0$
+\end_inset
+
+ (half chord)
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula $z'$
+\end_inset
+
+ is the plane for a cylinder with a mirror vortex at distance 
+\begin_inset Formula $\frac{1}{\eta}$
+\end_inset
+
+ and vortex 
+\begin_inset Formula $\Gamma'$
+\end_inset
+
+ at 
+\begin_inset Formula $\eta$
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+In the 
+\begin_inset Formula $z'$
+\end_inset
+
+-plane the vortex 
+\begin_inset Formula $-\Gamma'$
+\end_inset
+
+ is placed at 
+\begin_inset Formula $\frac{1}{\eta}$
+\end_inset
+
+ to make the unit circle a streamline, by the usual method of 
+\begin_inset Quotes eld
+\end_inset
+
+image
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This means that the resultant velocity is tangential at all points on the
+ circle.
+ Its magnitude is
+\begin_inset Formula 
+\[
+v_{\theta_{1}}=\frac{\Gamma'}{2\pi}\left|\frac{1}{z'-\eta}-\frac{1}{z'-\frac{1}{\eta}}\right|_{z'=e^{i\theta}}\tag{Eq 4}
+\]
+
+\end_inset
+
+By simple algebra, using the relations from Eq (3), 
+\begin_inset Formula $\eta+\frac{1}{\eta}=2\xi$
+\end_inset
+
+ and 
+\begin_inset Formula $\eta-\frac{1}{\eta}=2\sqrt{\xi^{2}-1}$
+\end_inset
+
+, this becomes
+\begin_inset Formula 
+\[
+v_{\theta_{1}}=\frac{\Gamma'}{2\pi}\frac{\sqrt{\xi^{2}-1}}{\xi-\cos\left(\theta\right)}\tag{Eq 5}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+In particular, the velocity at the trailing edge, where 
+\begin_inset Formula $\cos\left(\theta\right)=1$
+\end_inset
+
+, is equal to 
+\begin_inset Formula 
+\[
+\frac{\Gamma'}{2\pi}\frac{\sqrt{\xi+1}}{\sqrt{\xi-1}}
+\]
+
+\end_inset
+
+In accordance with assumption (c) above, a circulation about the airfoil
+ arises which is just great enough to cancel this velocity.
+ Hence a second uniform velocity 
+\begin_inset Formula 
+\[
+v_{\theta_{2}}=-\frac{\Gamma'}{2\pi}\frac{\sqrt{\xi+1}}{\sqrt{\xi-1}}
+\]
+
+\end_inset
+
+is added to 
+\begin_inset Formula $v_{\theta_{1}}$
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+(c) requires the flow to leave the trailing edge tangentially.
+ So if there is an extra (vertical) velocity the flow will not leave tangentiall
+y, so we require a 
+\begin_inset Quotes eld
+\end_inset
+
+fix
+\begin_inset Quotes erd
+\end_inset
+
+ with 
+\begin_inset Formula $v_{\theta_{2}}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Then the total tangential velocity becomes
+\begin_inset Formula 
+\[
+v_{\theta}=\frac{\Gamma'}{2\pi}\left[\frac{\sqrt{\xi^{2}-1}}{\xi-\cos\left(\theta\right)}-\sqrt{\frac{\xi+1}{\xi-1}}\right]=-\frac{\Gamma'}{2\pi}\frac{1-\cos\left(\theta\right)}{\xi-\cos\left(\theta\right)}\sqrt{\frac{\xi+1}{\xi-1}}\tag{Eq 6}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The relation between the velocity 
+\begin_inset Formula $v_{\theta}$
+\end_inset
+
+ and the vorticity distributed over the airfoil, 
+\begin_inset Formula $\gamma\left(x\right)$
+\end_inset
+
+, is given by the formula 
+\begin_inset Formula $\gamma\left(x\right)=-\frac{2v_{\theta}}{\sin\left(\theta\right)}$
+\end_inset
+
+ (cf von Karman and Burgers, 2 page 46, noting that their transformation
+ differs by a factor of 2 from the one given in Eq.
+ (3))
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Definition of chord length here is 2 since 
+\begin_inset Formula $x=-1$
+\end_inset
+
+ to 
+\begin_inset Formula $x=1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Thus, from Eq.
+ (6), it follows that
+\begin_inset Formula 
+\[
+\gamma\left(x\right)=\frac{1}{\pi}\frac{\Gamma'}{\xi-x}\sqrt{\frac{1-x}{1+x}}\sqrt{\frac{\xi+1}{\xi-1}}\tag{Eq 7}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+...
+ The total circulation is obtained by integration of Eq 7, and is
+\begin_inset Formula 
+\[
+\Gamma=\intop_{-1}^{1}\gamma\left(x\right)\,\text{d}x=\Gamma'\left(\sqrt{\frac{\xi+1}{\xi-1}}-1\right)\tag{Eq 8}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 General Expressions for the Lift and Moment
 \end_layout
 
 \begin_layout Itemize
+\begin_inset Formula $x\in\left[-1,1\right]$
+\end_inset
+
 ...
- the lift becomes
+ Hence the vorticity bound to the airfoil is denoted by 
+\begin_inset Formula $\gamma\left(x\right)$
+\end_inset
+
+ and that in the wake by 
+\begin_inset Formula $\gamma\left(\xi\right)$
+\end_inset
+
+.
+ The vorticity 
+\begin_inset Formula $\gamma\left(x\right)$
+\end_inset
+
+ is composed of two parts:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(a) the vorticity, 
+\begin_inset Formula $\gamma_{0}\left(x\right)$
+\end_inset
+
+, which would be produced, according to thin airfoil theory, by the motion
+ of the airfoil or the given velocity distribution (gust) in the air, if
+ the wake had no effect.
+ 
+\begin_inset Formula $\gamma_{0}\left(x\right)$
+\end_inset
+
+ is called the 
+\begin_inset Quotes eld
+\end_inset
+
+quasi-steady
+\begin_inset Quotes erd
+\end_inset
+
+ vorticity distribution;
+\end_layout
+
+\begin_layout Itemize
+(b) the vorticity, 
+\begin_inset Formula $\gamma_{1}\left(x\right)$
+\end_inset
+
+, which is induced by the wake, as calculated in the preceding section
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+The circulation resulting from (a) is denoted by 
+\begin_inset Formula $\Gamma_{0}$
+\end_inset
+
+, and that from (b) by 
+\begin_inset Formula $\Gamma_{1}$
+\end_inset
+
+; the total circulation about the airfoil is then 
+\begin_inset Formula $\Gamma=\Gamma_{0}+\Gamma_{1}$
+\end_inset
+
+...
 \begin_inset Formula 
 \[
-L=-\frac{\text{d}I}{\text{d}t}=...
+\Gamma+\intop_{1}^{\infty}\gamma\left(\xi\right)\,\text{d}\xi=0\tag{Eq 9}
+\]
+
+\end_inset
+
+The contribution 
+\begin_inset Formula $\Gamma_{1}$
+\end_inset
+
+ of the wake can be calculated using Eq 8.
+ Putting 
+\begin_inset Formula $\Gamma'=\gamma\left(\xi\right)\,\text{d}\xi$
+\end_inset
+
+ and integrating over the whole length of the wake,
+\begin_inset Formula 
+\[
+\Gamma_{1}=\intop_{1}^{\infty}\left(\sqrt{\frac{\xi+1}{\xi-1}}-1\right)\gamma\left(\xi\right)\,\text{d}\xi\tag{Eq 10}
+\]
+
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+The total circulation of the airfoil is given by 
+\begin_inset Formula 
+\[
+\Gamma'\left(\sqrt{\frac{\xi+1}{\xi-1}}-1\right)=\gamma\left(\xi\right)\,\text{d}\xi\left(\sqrt{\frac{\xi+1}{\xi-1}}-1\right)
+\]
+
+\end_inset
+
+using 
+\begin_inset Formula $\Gamma'=\gamma\left(\xi\right)\,\text{d}\xi$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Question: From before, it was an element of vorticity at 
+\begin_inset Formula $\xi$
+\end_inset
+
+ with strength 
+\begin_inset Formula $\Gamma'$
+\end_inset
+
+.
+ But, 
+\begin_inset Formula $\Gamma'=\gamma\left(\xi\right)\,\text{d}\xi$
+\end_inset
+
+ can from differentiating Eq 9? Or? Or is 
+\begin_inset Formula $\Gamma'$
+\end_inset
+
+ representing a small region of the vortex sheet in the wake?
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Hence the circulation about the airfoil at any instant is given by
+\begin_inset Formula 
+\[
+\Gamma=\Gamma_{0}+\intop_{1}^{\infty}\left(\sqrt{\frac{\xi+1}{\xi-1}}-1\right)\gamma\left(\xi\right)\,\text{d}\xi\tag{Eq 10a}
+\]
+
+\end_inset
+
+From Eq 9 it is seen that the following relation holds between the quasi-steady
+ state circulation and the vorticity in the wake
+\begin_inset Formula 
+\[
+\Gamma_{0}+\intop_{1}^{\infty}\gamma\left(\xi\right)\sqrt{\frac{\xi+1}{\xi-1}}\,\text{d}\xi=0\tag{Eq 11}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+...the total momentum per unit length of a two-dimensional system of vortex
+ pairs lying along the 
+\begin_inset Formula $x$
+\end_inset
+
+ axis is equal to 
+\begin_inset Formula $\rho\sum\Gamma_{i}x_{i}$
+\end_inset
+
+.
+ Hence the total momentum of the system of continuously distributed vortices
+ consisting of an airfoil and its wake is
+\begin_inset Formula 
+\[
+I=\rho\intop_{-1}^{1}\gamma\left(x\right)x\,\text{d}x+\rho\intop_{1}^{\infty}\gamma\left(\xi\right)\xi\,\text{d}\xi\tag{Eq 12}
 \]
 
 \end_inset
 
 ...
- the lift may also be written in the form
+ and therefore 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Note there was a typo, 
+\begin_inset Formula $\gamma_{1}$
+\end_inset
+
+ instead of 
+\begin_inset Formula $\gamma_{0}$
+\end_inset
+
+ which I've corrected
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+I=\rho\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{d}x+\rho\intop_{1}^{\infty}\gamma\left(\xi\right)\sqrt{\xi^{2}-1}\,\text{d}\xi\tag{Eq 14}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+...since 
+\begin_inset Formula $\frac{\partial}{\xi}\gamma\left(\xi\right)$
+\end_inset
+
+ may be discontinuous at certain points in the wake...
+ the use of an integration by parts is not allowable for the second term...
+ it is desirable to consider a general integral in the form
+\begin_inset Formula 
+\[
+A=\intop_{1}^{\infty}\gamma\left(\xi\right)f\left(\xi\right)\,\text{d}\xi\approx...\approx...\Rightarrow\frac{\text{d}A}{\text{d}t}=U\intop_{1}^{\infty}\gamma\left(\xi\right)f'\left(\xi\right)\,\text{d}\xi\tag{Eq 15}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Applying this result to the differentiation of the second term of Eq 14,
+ the lift becomes
+\begin_inset Formula 
+\[
+L=-\frac{\text{d}I}{\text{d}t}=-\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(\xi\right)x\,\text{d}x-\rho U\intop_{1}^{\infty}\gamma\left(\xi\right)\frac{\xi}{\sqrt{\xi^{2}-1}}\,\text{d}\xi\tag{Eq 16}
+\]
+
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Momentum is conserved.
+ Total momentum (VERTICALLY) of the system of vortices is given by 
+\begin_inset Formula $I$
+\end_inset
+
+ (considering the vertical velocity induced by a vortex sheet) and 
+\begin_inset Formula $I+\intop L\,\text{d}t=0$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Using Eq 11, the lift may also be written in the form
 \begin_inset Formula 
 \[
 L=-\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{dx}+\rho U\Gamma_{0}-\rho U\intop_{1}^{\infty}\gamma\left(\varepsilon\right)\frac{\text{d}\varepsilon}{\sqrt{\varepsilon^{2}-1}}
@@ -3811,17 +4707,443 @@ L=-\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text
 \end_inset
 
 Thus the lift consists of three parts:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(a) 
+\begin_inset Formula 
+\[
+L_{1}=-\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{d}x
+\]
+
+\end_inset
+
+ which will be called the contribution of apparent mass
 \begin_inset Newline newline
 \end_inset
 
-TO FINISH
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+This is due to the the body accelerating/decelerating the flow around it
+ (
+\begin_inset Formula $\gamma_{0}$
+\end_inset
+
+) is the vorticity produced according to thin airfoil theory, by the motion
+ of the airfoil, 
+\begin_inset Formula $\gamma_{0}$
+\end_inset
+
+ is called the 
+\begin_inset Quotes eld
+\end_inset
+
+quasi-steady
+\begin_inset Quotes erd
+\end_inset
+
+ vorticity distribution.
+ Note that if the circulation 
+\begin_inset Formula $\Gamma_{0}$
+\end_inset
+
+ is increasing, (b) does not account for how 
+\begin_inset Formula $\gamma_{0}$
+\end_inset
+
+ changes over time.
+ 
 \end_layout
 
-\begin_layout Standard
-General Method for Transient Phenomena 
+\begin_layout Plain Layout
+If it is a point vortex instead of a vortex sheet, I think it would be 
+\begin_inset Formula 
+\[
+L_{1}=-\rho\frac{\text{d}}{\text{d}t}\left(\Gamma_{j}\left(x_{j}\right)\right)
+\]
+
+\end_inset
+
+?? Not sure..
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
+(b)
+\begin_inset Formula 
+\[
+L_{0}=\rho U\Gamma_{0}
+\]
+
+\end_inset
+
+the quasi-steady lift
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+The quasi-steady state lift could be determined by VLM or by dns allowing
+ for the solution to converge? Or would dns give the exact result at 
+\begin_inset Formula $t=0$
+\end_inset
+
+? E.g.
+ laplace of 2*heav(0) and laplace of 2 give different results.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+(c)
+\begin_inset Formula 
+\[
+L_{2}=\rho U\intop_{1}^{\infty}\frac{\gamma\left(\xi\right)}{\sqrt{\xi^{2}-1}}\,\text{d}\xi
+\]
+
+\end_inset
+
+This is the only contribution which depends explicitly on 
+\begin_inset Formula $\gamma\left(\xi\right)$
+\end_inset
+
+, the vorticity distribution in the wake.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+When accelerating the bound circulation increases, so more vorticity is
+ left in the wake.
+ This has an effect on the lift the airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+...
+ moment derived in a similar manner ...
+\end_layout
+
+\begin_layout Itemize
+...let it be assumed that the airfoil carries out its motion without producing
+ circulation...
+ only forces acting on a body...are those corresponding to the apparent mass
+ of the body.
+ These can be obtained by integrating over the surface of the airfoil the
+ so-called 
+\begin_inset Quotes eld
+\end_inset
+
+impulsive pressures
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Formula $\rho\frac{\partial\varphi}{\partial t}$
+\end_inset
+
+, where 
+\begin_inset Formula $\varphi$
+\end_inset
+
+ is the velocity potential of the circulationless flow.
+ Hence, if 
+\begin_inset Formula $C$
+\end_inset
+
+ indicates a path of integration starting at some point 
+\begin_inset Formula $A$
+\end_inset
+
+ on the airfoil and going completely around the airfoil back to 
+\begin_inset Formula $A$
+\end_inset
+
+, the lift is
+\begin_inset Formula 
+\[
+\rho\ointop_{C}\frac{\partial\varphi}{\partial t}\,\text{d}s=\rho\frac{\partial}{\partial t}\ointop_{C}\varphi\,\text{d}s=\rho\frac{\partial}{\partial t}\left[\varphi s\big|_{A}^{A}-\ointop_{C}\frac{\partial\varphi}{\partial s}s\,\text{d}s\right]
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $s$
+\end_inset
+
+ represents the distance along the surface...
+ first term obtained is obviously equal to zero, since there is no circulation
+ and therefore 
+\begin_inset Formula $\varphi$
+\end_inset
+
+ is single-valued.
+ Also, for a thin airfoil, 
+\begin_inset Formula $\frac{\partial\varphi}{\partial s}$
+\end_inset
+
+, which is the velocity along the surface of the airfoil, is equal to 
+\begin_inset Formula $\frac{\gamma_{0}\left(s\right)}{2}$
+\end_inset
+
+ because the surface velocities on opposite sites of the airfoil at any
+ point are equal and opposite and 
+\begin_inset Formula $\gamma_{0}\left(s\right)$
+\end_inset
+
+, the vorticity at 
+\begin_inset Formula $s$
+\end_inset
+
+, is their difference...
+ 
+\begin_inset Newline newline
+\end_inset
+
+Therefore the term 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+ gives correctly the lift due to the apparent mass in the case of the airfoil
+ without circulation
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Can I test this with symmetrical airfoil at zero AoA?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Now the addition of circulation increases the function 
+\begin_inset Formula $\gamma_{0}\left(x\right)$
+\end_inset
+
+...
+ <more proof>
+\end_layout
+
+\begin_layout Itemize
+It should be noted that the determination of 
+\begin_inset Formula $\gamma_{0}\left(x\right)$
+\end_inset
+
+ involves only the solution of steady-motion problems and can be done in
+ any given case by the use of known formulae of the stationary airfoil theory
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+From dns I cannot directly get the distribution of 
+\begin_inset Formula $\gamma_{0}\left(x\right)$
+\end_inset
+
+.
+ I wonder if is possible to draw the chord line along the airfoil, then
+ remove all regions of vorticity (i.e.
+ boundary layer, wake, etc).
+ Then numerically determine the distribution of 
+\begin_inset Formula $\gamma_{0}\left(x\right)$
+\end_inset
+
+.
+ Is this basically VII but the BL thickness is used instead of vorticity
+ regions?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The contributions under (b)...
+ the lift 
+\begin_inset Formula $L_{0}$
+\end_inset
+
+ and moment 
+\begin_inset Formula $M_{0}$
+\end_inset
+
+, are easily interpreted...
+ the force and moment which would be produced if the instantaneous velocity
+ and angle of attack of an airfoil were permanently maintained...
+ also requires only the solution of stationary problems by the usual methods
+\end_layout
+
+\begin_layout Itemize
+The third contributions, 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $M_{2}$
+\end_inset
+
+, represent the influence of the wake...
+ simplified by considering ...
+ sudden change at the instant 
+\begin_inset Formula $t=0$
+\end_inset
+
+ and kept constant for 
+\begin_inset Formula $t>0$
+\end_inset
+
+...
+ For 
+\begin_inset Formula $t=\infty$
+\end_inset
+
+ the final values ...
+ will be 
+\begin_inset Formula $L_{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $M_{0}$
+\end_inset
+
+ because the conditions of the 
+\begin_inset Quotes eld
+\end_inset
+
+stationary
+\begin_inset Quotes erd
+\end_inset
+
+ case are approached.
+ Hence 
+\begin_inset Formula $-L_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $-M_{2}$
+\end_inset
+
+ can be called the 
+\begin_inset Quotes eld
+\end_inset
+
+deficiencies
+\begin_inset Quotes erd
+\end_inset
+
+ caused by non-uniformity of the motion of the airfoil...
+\begin_inset Newline newline
+\end_inset
+
+
 \begin_inset Box Shaded
 position "t"
 hor_pos "c"
@@ -3857,6 +5179,436 @@ Lift Deficiency
 
 \end_layout
 
+\begin_layout Itemize
+Eqs (16a) and (20)...
+ can be applied to the case of a n y thin airfoil with arbitrary shape,
+ performing an arbitrary (accelerated, oscillatory, or uniform) motion,
+ provided only that its deviation from a straight path is small, so that
+ the assumption of a wake distributed along a straight line is justified.
+\end_layout
+
+\begin_layout Standard
+General Method for Transient Phenomena 
+\end_layout
+
+\begin_layout Itemize
+There are many cases in which knowledge of the forces produced by a transient
+ phenomenon is of practical interest.
+ Examples of such cases are the reaction of an aeroplane to certain control
+ operations (aileron or rudder deflection, etc.), and the behaviour of an
+ aeroplane encountering gusts.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+The elementary cases, e.g., the airfoil put suddenly into motion or suddenly
+ given a certain angle of attack, have been treated by H.
+ Wagner.
+ 5 Kiissner 4 has developed a more general method using the conception of
+ the Fourier integral.
+\end_layout
+
+\begin_layout Plain Layout
+4 Kiissner, H .
+ G., Zusammenfas sender Bericht uber den insta- tiondren Auftrieb von Fliigeln,
+ Luftfahrtforschung, Bd.
+ 13, page 410, 1936.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+5 Wagner, H., Dynamischer Auftrieb von Tragfliigeln, Zeitschr.
+ f.
+ Angew.
+ Math.
+ u.
+ Mech., Bd.
+ 5, page 17, 1925.
+\end_layout
+
+\begin_layout Plain Layout
+I should check these out
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+In order to determine the response of the system to a 
+\begin_inset Quotes eld
+\end_inset
+
+unit disturbance
+\begin_inset Quotes erd
+\end_inset
+
+, it is first assumed that the velocity of flight, 
+\begin_inset Formula $U$
+\end_inset
+
+, is constant, and that the quasi-steady circulation, 
+\begin_inset Formula $\Gamma_{0}$
+\end_inset
+
+, suddenly changes from zero to unity at time 
+\begin_inset Formula $t=0$
+\end_inset
+
+ and remains constant for 
+\begin_inset Formula $t>0$
+\end_inset
+
+.
+ Then the wake extends from 
+\begin_inset Formula $\xi=1$
+\end_inset
+
+ to 
+\begin_inset Formula $\xi=1+Ut$
+\end_inset
+
+, and, according to Eq 11,
+\begin_inset Formula 
+\[
+\Gamma_{0}=1=-\intop_{1}^{1+Ut}\gamma\left(\xi\right)\sqrt{\frac{\xi+1}{\xi-1}}\,\text{d}\xi\tag{Eq 38}
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+We have 
+\begin_inset Formula $\Gamma_{0}=0$
+\end_inset
+
+ initially, then 
+\begin_inset Formula $\Gamma_{0}=1$
+\end_inset
+
+ due to the disturbance.
+ The length of the wake change is 
+\begin_inset Formula $Ut$
+\end_inset
+
+, assuming the flight speed is still 
+\begin_inset Formula $U$
+\end_inset
+
+ during the circulation change 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The vortex strength in the wake is a function of the distance 
+\begin_inset Formula $s$
+\end_inset
+
+ from the endpoint of the wake, 
+\begin_inset Formula $s=1+Ut-\xi$
+\end_inset
+
+, hence it may be written as 
+\begin_inset Formula $\gamma\left(\xi\right)=\mu\left(1+Ut-\xi\right)$
+\end_inset
+
+.
+ Eq 38 represents an integral equation for 
+\begin_inset Formula $\mu$
+\end_inset
+
+ in the form
+\begin_inset Formula 
+\[
+-\intop_{1}^{1+Ut}\mu\left(1+Ut-\xi\right)\sqrt{\frac{\xi+1}{\xi-1}}\,\text{d}\xi=1
+\]
+
+\end_inset
+
+or introducing the variable 
+\begin_inset Formula $s$
+\end_inset
+
+,
+\begin_inset Formula 
+\[
+-\intop_{0}^{Ut}\mu\left(s\right)\frac{\sqrt{2+Ut-s}}{\sqrt{Ut-s}}\,\text{d}s=1\tag{Eq 39}
+\]
+
+\end_inset
+
+The function 
+\begin_inset Formula $\mu\left(s\right)$
+\end_inset
+
+ has been determined by Wagner.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+So there is a vortex sheet being shed, but we don't know the distribution.
+ We call the distribution 
+\begin_inset Formula $\mu$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+...
+ main problem is the calculation of 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+, the contribution of the wake.
+ For the case being considered, 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+ is equal to (from Eq 16a)
+\begin_inset Formula 
+\[
+\rho U\intop_{1}^{1+Ut}\gamma\left(\xi\right)\frac{\text{d}\xi}{\sqrt{\xi^{2}-1}}=\rho U\intop_{1}^{1+Ut}\mu\left(1+Ut-\xi\right)\frac{\text{d}\xi}{\sqrt{\xi^{2}-1}}\tag{Eq 40}
+\]
+
+\end_inset
+
+where the function 
+\begin_inset Formula $\mu\left(s\right)$
+\end_inset
+
+is again the solution of the integral equation (Eq 39).
+ The function
+\begin_inset Formula 
+\[
+\Phi\left(Ut\right)=-\intop_{1}^{1+Ut}\mu\left(1+Ut-\xi\right)\frac{\text{d}\xi}{\sqrt{\xi^{2}-1}}\tag{Eq 41}
+\]
+
+\end_inset
+
+will be called the lift-deficiency function.
+ It represents the difference between the instantaneous and final values
+ of the lift in the case...
+\end_layout
+
+\begin_layout Itemize
+...
+ Assuming 
+\begin_inset Formula $\Gamma_{0}$
+\end_inset
+
+ changes at the instant 
+\begin_inset Formula $\tau$
+\end_inset
+
+ by the increment 
+\begin_inset Formula $\Delta\Gamma_{0}=\Gamma'_{0}\left(\tau\right)\Delta\tau$
+\end_inset
+
+, the deficiency in lift at 
+\begin_inset Formula $t=t$
+\end_inset
+
+, i.e.
+ after the airfoil has travelled a distance 
+\begin_inset Formula $U\left(t-\tau\right)$
+\end_inset
+
+, will be 
+\begin_inset Formula $\Gamma'_{0}\left(\tau\right)\Phi\left(U\left(t-\tau\right)\right)\Delta\tau$
+\end_inset
+
+ and the total deficiency in lift will be given by
+\begin_inset Formula 
+\[
+-L_{2}=\rho U\intop_{0}^{t}\Gamma_{0}'\left(\tau\right)\Phi\left(U\left(t-\tau\right)\right)\,\text{d}\tau\tag{Eq 42}
+\]
+
+\end_inset
+
+In this equation it is assumed that 
+\begin_inset Formula $\Gamma_{0}\left(0\right)=0$
+\end_inset
+
+.
+ If, at the instant 
+\begin_inset Formula $t=0$
+\end_inset
+
+, 
+\begin_inset Formula $\Gamma_{0}$
+\end_inset
+
+ is suddenly increased from 
+\begin_inset Formula $0$
+\end_inset
+
+ to 
+\begin_inset Formula $\Gamma\left(0\right)$
+\end_inset
+
+, a term equal to 
+\begin_inset Formula $\Gamma_{0}\Phi\left(Ut\right)$
+\end_inset
+
+ is to be added to the right-hand side of Eq 42.
+\begin_inset Newline newline
+\end_inset
+
+The elementary case of a sudden unit increment in 
+\begin_inset Formula $\Gamma_{0}$
+\end_inset
+
+ has been treated by Wagner, and the function 
+\begin_inset Formula $1-\Phi$
+\end_inset
+
+ is equal to his 
+\begin_inset Formula $\frac{A}{2b\pi\rho v_{p}^{2}\sin\left(\beta\right)}$
+\end_inset
+
+ (see page 31 of reference 5; also Fig 9 and Table 2).
+ Thus the lift and moment can be calculated by Eqs 16a and 20, for a given
+ 
+\begin_inset Formula $\gamma_{0}\left(x,t\right)$
+\end_inset
+
+ distribution...
+\begin_inset Newline newline
+\end_inset
+
+The function 
+\begin_inset Formula $\Phi\left(Ut\right)$
+\end_inset
+
+...
+ can be fairly closely approximated by the following relatively simple formulae...
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(a) for 
+\begin_inset Formula $0\le\sigma\le2$
+\end_inset
+
+ the following power series can be used
+\begin_inset Formula 
+\[
+\Phi\left(\sigma\right)=\frac{1}{2}-\frac{\sigma}{8}+\frac{\sigma^{2}}{32}-0.00554\sigma^{3}\tag{Eq 43}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+(b) for 
+\begin_inset Formula $0\le\sigma\le10$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Phi\left(\sigma\right)=\frac{e^{-\frac{\sigma}{2}}}{4}+\left(1+0.185\sigma\right)\frac{e^{-0.185\sigma}}{4}\tag{Eq 44}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+However, 
+\begin_inset Formula $1-\Phi$
+\end_inset
+
+ enters in the final result, and since 
+\begin_inset Formula $\Phi\left(\sigma\right)$
+\end_inset
+
+ is very small for 
+\begin_inset Formula $\sigma>10$
+\end_inset
+
+, Eq 44 can be applied for 
+\begin_inset Formula $0\le\sigma\le\infty$
+\end_inset
+
+ without introducing important errors.
+\end_layout
+
+\end_deeper
 \begin_layout Section
 Wilbert 2018: PIV Analysis of Ludwig Prandtl’s Historic Flow Visualization
  Films
