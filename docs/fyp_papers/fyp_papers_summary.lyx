@@ -447,6 +447,10 @@ Unsteady Viscous Flows
 \end_layout
 
 \begin_layout Itemize
+Anderson 20XX: thin airfoil theory
+\end_layout
+
+\begin_layout Itemize
 von Karman 1935: 
 \begin_inset Formula 
 \[
@@ -499,6 +503,10 @@ Additional detail (cover below)
 
 \begin_layout Itemize
 Liu 2013:
+\end_layout
+
+\begin_layout Itemize
+Giesing 1968: Numerical method to calculate shed vortex
 \end_layout
 
 \end_inset
@@ -614,7 +622,7 @@ Added-Mass Drag
 \end_layout
 
 \begin_layout Itemize
-?
+? Maybe compare to a cylinder ?
 \end_layout
 
 \end_inset

@@ -447,6 +447,10 @@ Unsteady Viscous Flows
 \end_layout
 
 \begin_layout Itemize
+Anderson 20XX: thin airfoil theory
+\end_layout
+
+\begin_layout Itemize
 von Karman 1935: 
 \begin_inset Formula 
 \[
@@ -468,7 +472,11 @@ contribution of apparent mass, quasi-steady lift and vorticity distribution
 \begin_inset Formula $\xi$
 \end_inset
 
- is 
+ is defined from 
+\begin_inset Formula $x=0$
+\end_inset
+
+ (mid chord).
 \end_layout
 
 \begin_layout Itemize
@@ -495,6 +503,10 @@ Additional detail (cover below)
 
 \begin_layout Itemize
 Liu 2013:
+\end_layout
+
+\begin_layout Itemize
+Giesing 1968: Numerical method to calculate shed vortex
 \end_layout
 
 \end_inset
@@ -610,7 +622,8 @@ Added-Mass Drag
 \end_layout
 
 \begin_layout Itemize
-?
+? Maybe compare to a cylinder \SpecialChar breakableslash
+
 \end_layout
 
 \end_inset
