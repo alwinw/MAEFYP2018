@@ -111,10 +111,510 @@ Alwin Wang
 2018
 \end_layout
 
+\begin_layout Section*
+Discussion Points
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Background of starting and stopping vortices
+\end_layout
+
+\begin_layout Itemize
+Prandtl 19XX: Presence of starting and stopping vortices from the trailing
+ edge
+\end_layout
+
+\begin_layout Itemize
+Wilbert 2018: PIV analysis of starting/stopping vortices
+\end_layout
+
+\begin_layout Itemize
+Xu 2016: Starting vortex shed off a wedge
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Reference other studies: Agromayer 2017, Vincent 2014
+\end_layout
+
+\begin_layout Itemize
+Vincent 2014: Same airfoil, same Reynolds number, leading edge stopping
+ vortices, peaks in lift and drag
+\begin_inset Formula 
+\[
+-\nu\vec{n}\cdot\nabla\omega=-\vec{n}\times\left(\nabla P+\vec{a}\right)
+\]
+
+\end_inset
+
+Check circulation of starting and stopping vortices are equal
+\end_layout
+
+\begin_layout Itemize
+Agromayer 2017: In depth discussion of how lift is generated, peaks in lift
+ and drag
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\Gamma=\ointop_{C}\vec{V}\cdot\text{d}\vec{l}=\iintop_{S}\vec{\nabla}\times\vec{v}\cdot\text{d}S=\iintop_{S}\vec{\omega}\cdot\text{d}\vec{S}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Gamma=\ointop_{C}\left(u,v\right)\cdot\left(\text{d}x,\text{d}y\right)=\iintop_{D}\omega\left(x,y\right)\cdot\text{d}x\,\text{d}y
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Convergence Study
+\end_layout
+
+\begin_layout Itemize
+Blackburn 1999: Similar manner, check 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $u,v,p$
+\end_inset
+
+ (primary)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\frac{\partial u}{\partial x},\frac{\partial v}{\partial y},\frac{\partial p}{\partial x},\frac{\partial p}{\partial y}$
+\end_inset
+
+ (first derivative)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\frac{\partial^{2}u}{\partial x^{2}},\frac{\partial^{2}v}{\partial y^{2}}$
+\end_inset
+
+ (second derivative)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $n_{x},n_{y}$
+\end_inset
+
+ (airfoil surface) 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\iintop_{\Omega}\omega\,\text{d}\Omega$
+\end_inset
+
+ (circulation per element)
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Vorticity Generation
+\end_layout
+
+\begin_layout Itemize
+Morton 1984: Generation of vorticity for a flat plate moving in its own
+ plane is from two mechanisms
+\begin_inset Formula 
+\[
+-\nu\left(\frac{\partial\vec{\omega}}{\partial z}\right)_{0}=-\frac{1}{\rho}\left[\left(\vec{n}\times\nabla\right)\vec{p}\right]_{0}-\vec{n}\times\frac{\text{d}V}{\text{d}t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Blackburn 1999: Mechanisms oppose each other for vorticity generation
+\begin_inset Formula 
+\[
+-\nu\vec{n}\cdot\nabla\vec{\omega}=-\vec{n}\times\left(\nabla\vec{P}+\vec{a}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\ointop-\nu\vec{n}\cdot\nabla\vec{\omega}\,\text{d}S=\ointop-\nu\frac{\partial\omega}{\partial n}\,\text{d}S=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Brons 2014: <To find discussion points>
+\end_layout
+
+\begin_layout Itemize
+Vincent 2014, Agromayer 2017: Check circulation is correct
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Link between vorticity, starting vortex and lift
+\end_layout
+
+\begin_layout Itemize
+Zhu 2015:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Stopping leading edge vortices
+\end_layout
+
+\begin_layout Itemize
+Vincent 2014
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Unsteady Viscous Flows
+\end_layout
+
+\begin_layout Itemize
+von Karman 1935: 
+\end_layout
+
+\begin_layout Itemize
+Limacher 2018: 
+\begin_inset Formula 
+\[
+P=P_{v}+P_{i}+P_{\phi}+P_{b}
+\]
+
+\end_inset
+
+shed-vorticity impulse, image-vorticity impulse, potential impulse and body-volu
+me impulse.
+ (2 circulatory force + 2 classical added-mass force)
+\begin_inset Formula 
+\[
+P=P_{v}+P_{b}
+\]
+
+\end_inset
+
+Additional detail (cover below)
+\end_layout
+
+\begin_layout Itemize
+Liu 2013:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Added-Mass Lift
+\end_layout
+
+\begin_layout Itemize
+von Karman 1935:
+\end_layout
+
+\begin_layout Itemize
+Limacher 2018: 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Lift immediately after acceleration
+\end_layout
+
+\begin_layout Itemize
+von Karman: Lift deficiency
+\end_layout
+
+\begin_layout Itemize
+Saffman: Wagner effect, initial lift is one-half the final lift and the
+ final lift is attained after a time 
+\begin_inset Formula $O\left(c/V\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+This is observed in the vorticity generation on the surface as well, it
+ is not a flow-related/vorticity phenomena 
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Added-Mass Drag
+\end_layout
+
+\begin_layout Itemize
+?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset CommandInset toc
 LatexCommand tableofcontents
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
 \end_inset
 
 
@@ -2267,7 +2767,7 @@ Key reference for semtex.
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Section*
 Jones 2011: Leading Edge Vortex Development on a Waving Wing at Reynolds
  Numbers Between 10,000 and 60,000
 \end_layout
@@ -2309,7 +2809,7 @@ Note that turbulent
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Section*
 Gaunaa 2002: Unsteady Aerodynamic Forces on NACA 0015 Airfoil in Harmonic
  Translatory Motion
 \end_layout
@@ -2343,7 +2843,7 @@ This has some interesting stuff in the theory section, but also appears
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Section*
 Lei 2013: Numerical study of separation on the trailing edge of a symmetrical
  airfoil at a low Reynolds number
 \end_layout
@@ -2504,6 +3004,10 @@ Didn't know this was possible, interesting
 \end_layout
 
 \begin_layout Section
+Lighthill 19XX
+\end_layout
+
+\begin_layout Section
 Limacher 2018: Generalized derivation of the added-mass and circulatory
  forces for viscous flows
 \end_layout
@@ -2627,7 +3131,7 @@ Lots of interesting stuff!
 
 \begin_layout Itemize
 The well-known decomposition of aerodynamic force into added-mass and circulator
-y com- ponents has its origins in potential flow theory.
+y components has its origins in potential flow theory.
  In the classical decomposition, shed vorticity is represented by vortex
  singularities, whose associated potential can be linearly superimposed
  onto the single-valued potential which gives rise to the added-mass force.
@@ -2716,6 +3220,42 @@ Misinterpretations of added mass persist in the literature, wherein the
  data sets.
  Investigation of the experimental utility of the presented force formulation
  is left for future work.
+\end_layout
+
+\begin_layout Section
+Morton 1984: The Generation and Decay of Vorticity
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Vorticity generation equation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Prandtl 19XX
 \end_layout
 
 \begin_layout Section
@@ -3005,6 +3545,10 @@ To finish off
 \end_layout
 
 \begin_layout Section
+Saffman 19XX
+\end_layout
+
+\begin_layout Section*
 Theodorsen 1935: General Theory of Aerodynamic Instability and Mechanism
  of Flutter
 \end_layout
@@ -3367,6 +3911,10 @@ Particle Image velocimetry
 Given the time series of surface flow visualizations it is a simple and
  elucidating exercise to use today’s computer based PIV algorithms to extract
  the displacement and corresponding velocity and vorticity fields.
+\begin_inset Newline newline
+\end_inset
+
+
 \begin_inset Box Shaded
 position "t"
 hor_pos "c"
@@ -3401,6 +3949,10 @@ Further analysis of the displacement (velocity) data show a periodic jitter
  introduced during the orig- inal recording process ...
  It is also removed when finite difference are applied to the displacement
  fields and therefore does not appear in the presented vorticity maps.
+\end_layout
+
+\begin_layout Section
+Vincent 2014
 \end_layout
 
 \begin_layout Section
