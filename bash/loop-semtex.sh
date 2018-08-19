@@ -48,32 +48,26 @@ for airfoil in */; do
       # Copy to extensionless file
       cp $sessionfile "$f"                              && echo "   > Copy Made"            &&
       # Generate the mesh
-      meshpr $f > "$f.msh"                              && echo "   > Meshpr Finished"      &&
+      meshpr $f > $f.msh                                && echo "   > Meshpr Finished"      &&
       # Add extra mesh info
-      meshpr -i $f > "$f.mshi"                          && echo "   > Meshpr -i Finished"   &&
+      meshpr -i $f > $f.mshi                            && echo "   > Meshpr -i Finished"   &&
       # Enumerate
-      enumerate $f > "$f.num"                           && echo "   > Enumerate Finished"   &&
-      # Compare
-      compare $f > "$f.rst"                             && echo "   > Compare Finished"     &&
-      # Generate wall mesh
-      wallmesh $f "$f.msh" > "$f.wallmsh"               && echo "   > Wall Mesh Finished"   &&
+      enumerate $f > $f.num                             && echo "   > Enumerate Finished"   &&
       # dns (verbosity -v turned off);
-      # use > /dev/null to hide stdout and 2>&1 to hide stderror as well
       dns $f | grep "Divergence Energy:"                && echo "   > DNS Finished"         &&
       # Add vorticity field t
-      # Note: new field file CANNOT be the same as the original one (else 0)
-      addfield -v -s $f "$f.fld" > "$f.vfld"            && echo "   > Vorticity Added"      &&
+      addvortfield -G -s $f $f.fld > $f.Gfld            && echo "   > VortGen Added"        &&
       # Convert to ascii
-      convert "$f.vfld" > "$f.flddump"                  && echo "   > Convert Finished"     &&
+      convert $f.Gfld > $f.flddump                      && echo "   > Convert Finished"     &&
+      # Generate wall grad
+      wallgrad $f $f.msh > $f.wallgrad                  && echo "   > Wall Grad Finished"   &&
       # Split the output file
-      csplit -z "$f.flddump" /Session/ '{*}' >/dev/null && echo "   > Split Finished"       &&
-      # Remove unneded dump file
-      rm "$f.flddump"                                   && echo "   > ASCII dump removed"   &&
-      rm "$f.fld"                                       && echo "   > Field dump removed"   &&
-      rm "$f.vfld"                                      && echo "   > V Field dump removed" &&
+      csplit -z $f.flddump /Session/ '{*}' >/dev/null   && echo "   > Split Finished"       &&
       # Rename split files
       for i in [xx]*; do 
-        mv $i "$f-${i#*xx}.dump"; done                  && echo "   > Renamed Finished"
+        mv $i "$f-${i#*xx}.dump"; done                  && echo "   > Renamed Finished"     &&
+      # Remove unneded dump file
+      rm $f.msh $f.num $f.fld $f.Gfld $f.mdl $f.flddump $f.his $f.flx
   done
   # Return to previous folder
   cd ..

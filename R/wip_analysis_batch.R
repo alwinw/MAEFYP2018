@@ -106,24 +106,16 @@ BatchLoadDump <- function(data_dump, outp_mesh) {
   dump$a    <- BC_mod_alpha_x(dump$time)
   dump$wall <- DumpAccel(dump$a, dump$wall)
   #--- * Pressure Data                                              ----
-  dump$wall <- DumpPres(dump$wall)
+  dump$wall <- DumpPres(dump$wall, interp = FALSE)
   #--- * Vorticity Data                                             ----
-  order = 3 # Ideally, scale should be order/N_P
-  dump$offs <- AirfoilOffset(dump$wall, nsteps = order, scale = (order)/data_dump$tokenvalue)
-  dump$offs <- DumpVortInterp(dump$offs, dump$dump,
-                              linear = TRUE, extrap = FALSE, round = NULL)
-  dump$offs <- FiniteDiff(dump$offs, "o", order = order)
-  dump$offs <- DumpVortGrad(dump$offs)
-  dump$wall <- DumpVortJoin(dump$wall, dump$offs, dump$kinvis)
-  # Reduce dump down to just the nodes for field comparison
-  dump$node <- filter(dump$dump, node)
+  dump$wall <- DumpVortOnly(dump$wall, dump$kinvis)
   #--- > Dump Calc Output                                           ----
   data_plot <- bind_rows(dump[c("time", "kinvis", "a")])
   data_plot <- cbind(data_dump, data_plot)
   list_dump <- c(
     data_plot = list(data_plot), 
-    dump = dump[c("wall", "offs", "node")])
-  names(list_dump) <- c("data_plot", "wall", "offs", "node")
+    dump = dump[c("wall")])
+  names(list_dump) <- c("data_plot", "wall")
   rm(data_dump, data_plot, dump, order)
   # output
   return(list_dump)
@@ -131,7 +123,7 @@ BatchLoadDump <- function(data_dump, outp_mesh) {
 
 #--- Batch Calculation                                            ----
 # Batch list to process
-batchfolder = "../src-example/NACA0012_convergence"
+batchfolder = "../session-output"
 df_batch <- ListSesh(batchfolder)
 # List of unique airfoils & N_P
 li_airfoil   <- split (df_batch, df_batch$airfoil)
@@ -161,75 +153,56 @@ outp <- list()
 outp$wall <- lapply(outp_dump, function(dump) cbind(dump$wall, 
   select(dump$data_plot, airfoil, seshname, tokenvalue, ID, time, kinvis, a)))
 outp$wall <- bind_rows(outp$wall)
-# Offs
-outp$offs <- lapply(outp_dump, function(dump) cbind(dump$offs, 
-  select(dump$data_plot, airfoil, seshname, tokenvalue, ID, time, kinvis, a)))
-outp$offs <- bind_rows(outp$offs)
-# Node
-outp$node <- lapply(outp_dump, function(dump) cbind(dump$node, 
-  select(dump$data_plot, airfoil, seshname, tokenvalue, ID, time, kinvis, a)))
-outp$node <- bind_rows(outp$node)
-rm(df_batch,     df_mesh,   df_dump, 
-   li_airfoil,   li_mesh,   li_dump,
-   outp_airfoil, outp_mesh, outp_dump,
-   tokenwords)
+# rm(df_batch,     df_mesh,   df_dump, 
+   # li_airfoil,   li_mesh,   li_dump,
+   # outp_airfoil, outp_mesh, outp_dump,
+   # tokenwords)
 
-#--- Convergence                                                ----
-conv <- list()
-# Navier-Stokes for vorticity convergence
-conv$wall <- outp$wall %>%
-  select(tokenvalue, s, LHSG, RHSG, nserrG) %>%
-  group_by(tokenvalue)
-conv$nsabserr <- conv$wall %>% 
-  summarise(mean = mean(abs(nserrG)),
-            max  = max (abs(nserrG)),
-            relmean = mean(abs(nserrG/RHSG)),
-            relmax  = max (abs(nserrG/RHSG)))
+#--- > Plots                                                    ----
+plot_setup <- data.frame(
+  smin  = min(outp$wall$s),
+  smax  = max(outp$wall$s)) %>% 
+  mutate(shal = (smax - smin)/2) %>%
+  mutate(tip1 = shal*0.01,
+         tip2 = shal*0.10) %>% 
+  mutate(telo1 = smin + tip1,
+         telo2 = smin + tip2,
+         lelo1 = shal - tip2,
+         lelo2 = shal - tip1,
+         leup1 = shal + tip1,
+         leup2 = shal + tip2,
+         teup1 = smax - tip2,
+         teup2 = smax - tip1)
 
-ggplot(conv$wall, 
-       aes(s, nserrG, group = tokenvalue, colour = tokenvalue)) +
-  geom_point(shape = 'o') +
-  geom_line (data = filter(conv$wall, tokenvalue == 9)) +
-  ggtitle("N-S [LHS - RHS] Error")
+plot_tevort <- outp$wall %>% 
+  select(s, up, u, v, p, o, dpdsG, dodzG, LHSG, RHSG, nserrG, seshname, tokenvalue, time, kinvis) %>% 
+  filter((s >= plot_setup$telo1 & s <= plot_setup$telo2) | 
+         (s >= plot_setup$teup1 & s <= plot_setup$teup2))
 
-ggplot(conv$wall, aes(s)) +
-  geom_point(aes(y=LHSG), data=filter(conv$wall, tokenvalue == 9), shape = 'O') +
-  geom_line (aes(y=RHSG), data=filter(conv$wall, tokenvalue == 9)) +
-  ggtitle("N-S Vorticity Generation N_P = 9")
+ggplot(plot_tevort, aes(x=time, y=o, group=seshname, colour=seshname)) +
+  geom_point(aes(shape=up)) +
+  # geom_line(data=filter(outp$wall, s == plot_setup$smin | s == plot_setup$smin)) +
+  ggtitle("Vorticity at trailing edge")
 
-ggplot(conv$nsabserr, aes(tokenvalue, mean)) +
-  geom_line() + geom_point() +
-  scale_y_continuous(trans='log10') +
-  ggtitle("Mean N-S Error vs N_P")  +
-  xlab("N_P") +
-  scale_x_continuous(breaks = 3:12)
+ggplot(plot_tevort, aes(x=time, y=dpdsG, group=seshname, colour=seshname)) +
+  geom_point(aes(shape=up)) +
+  # geom_line(data=filter(outp$wall, s == plot_setup$smin | s == plot_setup$smin)) +
+  ggtitle("Pressure differentials at trailing edge")
 
-ggplot(conv$nsabserr, aes(tokenvalue, max)) +
-  geom_line() + geom_point() +
-  scale_y_continuous(trans='log10') +
-  ggtitle("Max N-S Error vs N_P")  +
-  xlab("N_P") +
-  scale_x_continuous(breaks = 3:12)
+ggplot(plot_tevort, aes(x=time, y=LHSG, group=seshname, colour=seshname)) +
+  geom_point(aes(shape=up)) +``
+  ggtitle("Vorticity Generation at trailing edge")
 
-# Convergence of nxG nxyG?
-# Convergence of fields
-# u v p dodx dody dpdx dpdy o 
-conv$fld <- outp$node %>%
-  select(tokenvalue, u, v, p, dodx, dody, dpdx, dpdy, o)
-maxNP <- max(conv$fld$tokenvalue)
-conv_maxN <- filter(conv$fld, tokenvalue == maxNP) %>% 
-  mutate(tokenvalue = 0)
-conv_err  <- split(conv$fld, conv$fld$tokenvalue)
-conv_err  <- lapply(conv_err, function(df) abs(df - conv_maxN))
-conv_err  <- bind_rows(conv_err) %>%
-  filter(tokenvalue != maxNP) %>% 
-  group_by(tokenvalue)
-conv$flderr <- summarise_all(conv_err, funs(max))
+plot_levort <- outp$wall %>% 
+  select(s, up, u, v, p, o, dpdsG, dodzG, LHSG, RHSG, nserrG, seshname, tokenvalue, time, kinvis) %>% 
+  filter((s >= plot_setup$lelo1 & s <= plot_setup$lelo2) | 
+           (s >= plot_setup$leup1 & s <= plot_setup$leup2))
 
-conv_flderrplot <- gather(conv$flderr, var, norm_inf, -tokenvalue) %>%
-  mutate(order = ifelse(var %in% c("u", "v", "p"), "1", "2")) %>%
-  mutate(order = ifelse(var %in% c("dodx", "dody"), "3", order))
-ggplot(conv_flderrplot, aes(tokenvalue, norm_inf, group = var, colour = var)) +
-  geom_line() + geom_point(aes(shape = order)) +
-  scale_y_continuous(trans='log10') +
-  facet_wrap(~order, scales = "free_y")
+ggplot(plot_levort, aes(x=time, y=o, group=seshname, colour=seshname)) +
+  geom_point(aes(shape=up)) +
+  geom_line(data=filter(outp$wall, s == plot_setup$smin | s == plot_setup$smin)) +
+  ggtitle("Vorticity at leading edge")
+
+ggplot(plot_levort, aes(x=time, y=LHSG, group=seshname, colour=seshname)) +
+  geom_point(aes(shape=up)) +
+  ggtitle("Vorticity Generation at leading edge")

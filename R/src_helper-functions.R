@@ -374,25 +374,27 @@ DumpAccel <- function(a, long_wall) {
 }
 #--- * Pressure Data                                              ----
 # out: dump_wall = data.frame(<dump_wall>, dpdsG, dpdsS)
-DumpPres <- function(dump_wall) {
+DumpPres <- function(dump_wall, interp = TRUE) {
   # Wall Norm
   # Assumes clockwise direction
   dump_wall <- dump_wall %>%
     mutate(dpdsG = -nyG*dpdx +nxG*dpdy)
-  # Cublic spline
-  dump_pres <- dump_wall %>%
-    select(x, y, s, p) %>%
-    arrange(s) %>%
-    unique(.)
-  csp <- cubicspline(dump_pres$s, dump_pres$p)
-  dcsp = CubicSplineCalc(csp, -1)
-  dump_pres$dpdsS = ppval(dcsp, dump_pres$s)
-  dump_wall <- LongJoin(dump_wall, dump_pres)
-  # Checks
-  if (cor(dump_wall$dpdsG, dump_wall$dpdsS) < 0.99)
-    warning("Poor correlation between dpds methods")
-  if (sum(abs(dump_wall$dpdsG - dump_wall$dpdsS)/dump_wall$dpdsG > 0.01))
-    warning(paste(sum(abs(dump_wall$dpdsG - dump_wall$dpdsS)/dump_wall$dpdsG > 0.01)), " dpds error > 1%")
+  if (interp) {
+    # Cublic spline
+    dump_pres <- dump_wall %>%
+      select(x, y, s, p) %>%
+      arrange(s) %>%
+      unique(.)
+    csp <- cubicspline(dump_pres$s, dump_pres$p)
+    dcsp = CubicSplineCalc(csp, -1)
+    dump_pres$dpdsS = ppval(dcsp, dump_pres$s)
+    dump_wall <- LongJoin(dump_wall, dump_pres)
+    # Checks
+    if (cor(dump_wall$dpdsG, dump_wall$dpdsS) < 0.99)
+      warning("Poor correlation between dpds methods")
+    if (sum(abs(dump_wall$dpdsG - dump_wall$dpdsS)/dump_wall$dpdsG > 0.01))
+      warning(paste(sum(abs(dump_wall$dpdsG - dump_wall$dpdsS)/dump_wall$dpdsG > 0.01)), " dpds error > 1%")
+  }
   # out: dump_wall = data.frame(<dump_wall>, dpdsG, dpdsS)
   return(dump_wall)
 }
@@ -509,7 +511,7 @@ DumpVortGrad <- function(dump_offs) {
   return(dump_offs)
 }
 
-DumpVortJoin <- function(dump_wall, dump_offs, dump_kinvs) {
+DumpVortJoin <- function(dump_wall, dump_offs, dump_kinvis) {
   # Combine offset data into dump_wall
   dump_offs <- filter(dump_offs, nstep==0)
   if (sum(abs(dump_wall$s - dump_offs$s)) > 0)
@@ -520,12 +522,20 @@ DumpVortJoin <- function(dump_wall, dump_offs, dump_kinvs) {
     select(dump_offs, offseth, enumo, interpo, dodzS, dodzG))
   dump_wall <- dump_wall %>% 
     mutate(LHSS   = -as + dpdsS,
-           RHSS   = -dodzS*dump_kinvs,
+           RHSS   = -dodzS*dump_kinvis,
            nserrS =  LHSS - RHSS,
            LHSG   = -as + dpdsG,
-           RHSG   = -dodzG*dump_kinvs,
+           RHSG   = -dodzG*dump_kinvis,
            nserrG =  LHSG - RHSG)
   return(dump_wall)
+}
+
+DumpVortOnly <- function(dump_wall, dump_kinvis) {
+  dump_wall <- dump_wall %>% 
+    mutate(dodzG = -nxG*dodx - nyG*dody) %>% 
+    mutate(LHSG   = -as + dpdsG,
+           RHSG   = -dodzG*dump_kinvis,
+           nserrG =  LHSG - RHSG)
 }
 
 #--- Numerical Methods ----
