@@ -76,7 +76,7 @@ ggplot(plot, aes(t, a)) +
   xlab("Time (s)") +
   ylab(expression("Airfoil Acceleration, a (L / T"^2*")")) +
   scale_y_reverse()
-ggsave("BC_airfoil_accel.png", width = 15, height = 6, units = "cm")
+ggsave("BC_airfoil_accel.png", width = 15, height = 6, units = "cm", dpi = 600)
 
 ggplot(plot, aes(t, u)) +
   geom_path() +
@@ -86,7 +86,7 @@ ggplot(plot, aes(t, u)) +
                      limits = c(0, 2)) +
   xlab("Time (s)") +
   ylab("Inflow Velocity, V(t) (L / T)")
-ggsave("BC_inflow_vel.png", width = 15, height = 6, units = "cm")
+ggsave("BC_inflow_vel.png", width = 15, height = 6, units = "cm", dpi = 600)
 
 ggplot(plot, aes(t, x)) +
   geom_path() +
@@ -97,4 +97,4 @@ ggplot(plot, aes(t, x)) +
   xlab("Time (s)") +
   ylab("Airfoil Displacement, x (L)") +
   scale_y_reverse()
-ggsave("BC_airfoil_disp.png", width = 15, height = 6, units = "cm")
+ggsave("BC_airfoil_disp.png", width = 15, height = 6, units = "cm", dpi = 600)

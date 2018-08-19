@@ -742,7 +742,7 @@ https://en.wikipedia.org/wiki/Vorticity_equation
 
 \begin_inset Formula 
 \begin{equation}
-\sigma\equiv-\nu\frac{\partial\vec{\omega}}{\partial z}\Big|_{z=0}=-\vec{n}\times\left(\nabla\vec{P}+\vec{a}\right)\label{eq:Morton VortGen}
+-\sigma\equiv-\nu\frac{\partial\vec{\omega}}{\partial z}\Big|_{z=0}=-\vec{n}\times\left(\nabla\vec{P}+\vec{a}\right)\label{eq:Morton VortGen}
 \end{equation}
 
 \end_inset
@@ -810,11 +810,70 @@ noprefix "false"
 \end_inset
 
 .
- Thus, the vorticity production around the airfoil is given as 
+ Thus, the vorticity production around the airfoil is given by equation
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:VortGen"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ in vector form and equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:VortGenLegend"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ for a particular point on the airfoil.
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
 \begin{align}
-\sigma\equiv-\nu\vec{n}\cdot\nabla\vec{\omega} & =-\vec{n}\times\nabla\vec{P}-\vec{t}\cdot\vec{a}\label{eq:VortGen}
+-\nu\vec{n}\cdot\nabla\vec{\omega} & =-\vec{n}\times\nabla\vec{P}-\vec{t}\cdot\vec{a}\label{eq:VortGen}\\
+-v\frac{\partial\omega}{\partial z} & =-\frac{1}{\rho}\frac{\partial p}{\partial s}-\frac{\text{d}V}{\text{d}t}\label{eq:VortGenLegend}
 \end{align}
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+My legend for V has partials, not differentials.
+ Oh well.
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
 
 \end_inset
 
@@ -874,7 +933,7 @@ literal "false"
  which represents non-impulsively started flow to unity free-stream velocity
  (figure 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "fig:BC_airfoil"
 plural "false"
 caps "false"
@@ -1104,6 +1163,81 @@ status open
 
 \begin_layout Plain Layout
 Plot of N-S
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename NS_Vincent_NP5.png
+	lyxscale 20
+	width 95col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename NS_Remesh_NP8.png
+	lyxscale 20
+	width 95col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset VSpace -1em
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+TO DO
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:NS_Error"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This image needs to be fixed to be counter clockwise
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
