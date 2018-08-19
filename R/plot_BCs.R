@@ -58,6 +58,8 @@ eval(parse(text = paste0(
   "BC_", tolower("AIRFOIL_X"), " <- function(t) ", x)),
   envir = .GlobalEnv)
 
+if (FALSE) {
+
 t = seq(0, D_T*N_STEP, length.out = N_STEP + 1)
 
 plot <- data.frame(
@@ -98,3 +100,5 @@ ggplot(plot, aes(t, x)) +
   ylab("Airfoil Displacement, x (L)") +
   scale_y_reverse()
 ggsave("BC_airfoil_disp.png", width = 15, height = 6, units = "cm", dpi = 600)
+
+}

@@ -193,7 +193,7 @@ ggplot(conv$wall,
   geom_line (data = filter(conv$wall, tokenvalue == 9)) +
   ggtitle("N-S [LHS - RHS] Error")
 
-sample = 18
+sample = 15
 ggplot(conv$wall, aes(s)) +
   geom_point(aes(y=LHSG), data=filter(conv$wall, tokenvalue == sample), shape = 'O') +
   geom_line (aes(y=RHSG), data=filter(conv$wall, tokenvalue == sample)) +
@@ -240,8 +240,8 @@ conv_err  <- bind_rows(conv_err) %>%
 conv$flderr <- summarise_all(conv_err, funs(mean))
 
 conv_flderrplot <- gather(conv$flderr, var, norm_inf, -tokenvalue) %>%
-  mutate(order = ifelse(var %in% c("u", "v", "p"), "1", "2")) %>%
-  mutate(order = ifelse(var %in% c("dodx", "dody"), "3", order))
+  mutate(order = ifelse(var %in% c("u", "v", "p"), "0", "1")) %>%
+  mutate(order = ifelse(var %in% c("dodx", "dody"), "2", order))
 
 conv_flderrplot$var <- factor(conv_flderrplot$var,
                               c("u", "v", "p", "o", "dpdx", "dpdy", "dodx", "dody"))
@@ -250,7 +250,6 @@ ggplot(conv_flderrplot, aes(tokenvalue, norm_inf, group = var, colour = var)) +
   geom_line() + geom_point(aes(shape = order)) +
   scale_y_continuous(trans='log10') +
   facet_wrap(~order, scales = "free_y") +
-  xlim(3, 18) +
   scale_colour_manual(
     labels = c("u", "v", "p", 
                expression(omega), expression(frac(d*p, d*x)), expression(frac(d*p, d*y)),
@@ -261,7 +260,13 @@ ggplot(conv_flderrplot, aes(tokenvalue, norm_inf, group = var, colour = var)) +
         legend.text.align = 0.5,
         legend.direction = "vertical", 
         legend.position = "right") +
-  ylab("Norm Inf")
+  ylab("Norm Inf") +
+  xlab("Shape Function Order, p") +
+  scale_x_continuous(breaks = seq(3, 15, by = 3),
+                     limits = c(3, 15))
 
 ggsave("Convergence.png", scale = 1.5,
        width = 15, height = 7.5, units = "cm", dpi = 300)
+
+# This script takes AGES to run!! I should replace the spline length with a guass quad integral or something!!
+# Write my own integration

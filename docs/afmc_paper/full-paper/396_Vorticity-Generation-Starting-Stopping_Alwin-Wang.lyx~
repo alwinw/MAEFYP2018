@@ -176,7 +176,7 @@ I need to detail the viscosity and Re used somewhere...
 This paper presents a numerical study of vorticity generation around a 2D
  airfoil during the starting and stopping phases of motion.
  The study focuses on a single NACA0012 airfoil of unit chord at 
-\begin_inset Formula $4\text{\textdegree}$
+\begin_inset Formula $4\text{°}$
 \end_inset
 
  angle of attack where the two-dimensional Navier-Stokes equations are solved
@@ -229,7 +229,7 @@ status collapsed
 \end_layout
 
 \begin_layout Standard
-Around 1930 Prandtl, Tietjens and Müller recorded the motion of fine particles
+Around 1930, Prandtl, Tietjens and Müller recorded the motion of fine particles
  around an airfoil in the starting and stopping phases of motion to observe
  transient, unsteady flows
 \begin_inset CommandInset citation
@@ -314,9 +314,30 @@ noprefix "false"
 \end_inset
 
 , for vorticity around various contours.
- This paper extends on these studies by considering the vorticity generation
- mechanisms and exploring the physical phenomina behind leading edge vortices
- observed during the stopping phase.
+ This paper expands on these studies by considering the vorticity generation
+ mechanisms and exploring the physical phenomena behind vortices generated
+ during the starting and stopping phases.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+leading edge vortices observed during the stopping phase.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+lol I've talked about stopping vortices here
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
 \begin{equation}
 \Gamma=\ointop_{C}\vec{V}\cdot\text{d}\vec{l}=\iintop_{S}\vec{\nabla}\times\vec{v}\cdot\text{d}S=\iintop_{S}\vec{\omega}\cdot\text{d}\vec{S}\label{eq:Stokes}
@@ -362,8 +383,7 @@ https://journals.aps.org/prfluids/abstract/10.1103/PhysRevFluids.3.014701
 \end_inset
 
 It is recognised that the sources of vorticity must occur at the boundary
- of the fluid regions and for the starting and starting and stopping phases
- of motion.
+ of the fluid regions and for the starting and starting phases of motion.
  Morton 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -395,7 +415,7 @@ literal "false"
 
  for vortex shedding of oscillating cylinders and it was noted that the
  pressure-gradient generation mechanism could override the surface-acceleration
- generation mechanism and vice verse.
+ generation mechanism and vice versa.
 \begin_inset Formula 
 \begin{equation}
 -\nu\left(\frac{\partial\vec{\omega}}{\partial z}\right)_{0}=-\frac{1}{\rho}\left[\left(\vec{n}\times\nabla\right)\vec{p}\right]_{0}-\vec{n}\times\frac{\text{d}V}{\text{d}t}\label{eq:Morton Full VortGen}
@@ -412,7 +432,7 @@ literal "false"
 
 \end_inset
 
- investigated the casual mechanisms for airfoil circulation using vorticity
+ investigated the causal mechanisms for airfoil circulation using vorticity
  creation theory based on Lighthill's relations 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -433,12 +453,12 @@ noprefix "false"
 
 , instead of boundary-layer theory.
  Additionally, the realisation of the Kutta condition and creation of starting
- vortex was determined to be through a complex chain of processes which
- were also explained by considering boundary vorticity flux, 
+ vortex were determined through a complex chain of processes which were
+ also explained by considering boundary vorticity flux, 
 \begin_inset Formula $\sigma$
 \end_inset
 
-, also shown in equation 
+, equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:BVF"
@@ -456,7 +476,7 @@ noprefix "false"
 
 \end_inset
 
-Another phenomena of interest identified by Vincent and Blackburn 
+Another point of interest identified by Vincent and Blackburn 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vincent2014"
@@ -473,8 +493,7 @@ literal "false"
 \end_inset
 
  was the large value of lift during the starting (accelerating) phase.
- The explanation can be attributed to unsteady flows over airfoils given
- by Kármán and Sears 
+ Kármán and Sears 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Karman1938"
@@ -482,7 +501,8 @@ literal "false"
 
 \end_inset
 
- and later extended by Liu et al.
+ attributed this to unsteady flows over airfoils which was later extended
+ by Liu et al.
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -500,9 +520,9 @@ literal "false"
 \end_inset
 
 .
- After the starting phase when the airfoil had attained a uniform velocity,
+ After the starting phase, when the airfoil had attained a uniform velocity,
  it was also observed the lift force would asymptote to a steady-state value.
- An explanation given by Kármán and Sears 
+ An explanation for this was also provided by Kármán and Sears 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Karman1938"
@@ -510,7 +530,7 @@ literal "false"
 
 \end_inset
 
- was due to a 
+ due to a 
 \begin_inset Quotes eld
 \end_inset
 
@@ -518,7 +538,7 @@ lift deficiency
 \begin_inset Quotes erd
 \end_inset
 
- term due to the wake vorticity sheet generated during acceleration.
+ term from the effect of wake vorticity sheet generated during acceleration.
  This behaviour was also detailed in Saffman explaining latency in lift
  production known as the 
 \begin_inset Quotes eld
@@ -540,9 +560,8 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-Both of these effects will also be investigated when the vorticity is not
- contained to a thin region as is the case here due to the low Reynolds
- number and from a vorticity production perspective.
+Both of these effects will also be investigated in this study of vorticity
+ production as the vorticity is not contained to a thin region.
 \end_layout
 
 \begin_layout Section
@@ -593,7 +612,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Coordinate system used
+Coordinate system used in this analysis
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Coordinate-system-used"
@@ -705,7 +724,7 @@ Some reference by Fox et al in the Agro paper
 
 \end_inset
 
- The boundary conditions at prescribed-velocity boundaries are set as 
+ The boundary conditions at prescribed velocity boundaries are set as 
 \begin_inset Formula $\boldsymbol{u}=-V\left(t\right)$
 \end_inset
 
@@ -737,8 +756,8 @@ For motion of a two-dimensional plane boundary moving in its own plane with
 \begin_inset Formula $\boldsymbol{V}=\left(V\left(t\right),0\right)$
 \end_inset
 
-, the diffusive flux density (flow per unit lenth per unit time) of positive
- vorticity outwards from the wall is given as
+, the diffusive flux density (flow per unit length per unit time) of positive
+ vorticity outwards from the wall is given as:
 \begin_inset Note Note
 status collapsed
 
@@ -912,7 +931,7 @@ It is clear that the convergence of second derivatives for
 \begin_inset Formula $v$
 \end_inset
 
- will be required to accurately determine 
+ are required to accurately determine 
 \begin_inset Formula $\nabla\vec{\omega}$
 \end_inset
 
@@ -951,7 +970,7 @@ noprefix "false"
 \end_inset
 
 ).
- In Saffman's detail of the 
+ In Saffman's 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Saffman1993"
@@ -959,7 +978,7 @@ literal "false"
 
 \end_inset
 
- explaining the 
+ the explanation of the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -986,8 +1005,9 @@ literal "false"
 \end_inset
 
  of uniform flow between the starting and stopping phases allows the convergence
- of lift to be investigated without the need for an excessively long grid
- domain to prevent the starting vortex 
+ of lift to be investigated.
+ This prevents the need for an excessively long grid domain to prevent the
+ starting vortex 
 \begin_inset Quotes eld
 \end_inset
 
@@ -997,97 +1017,6 @@ leaving
 
  the solution domain in the reference frame of the airfoil.
  
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename BC_airfoil_accel.png
-	lyxscale 30
-	width 95col%
-	groupId BC_Airfoil
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename BC_inflow_vel.png
-	lyxscale 30
-	width 95col%
-	groupId BC_Airfoil
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename BC_airfoil_disp.png
-	lyxscale 30
-	width 95col%
-	groupId BC_Airfoil
-
-\end_inset
-
-
-\begin_inset VSpace -1em
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Airfoil during the starting and stopping phases.
- Note that the definition of 
-\begin_inset Formula $x$
-\end_inset
-
- is consistent with the solution domain the accelerating reference frame.
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:BC_airfoil"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-This image needs to be fixed to be counter clockwise
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -1143,7 +1072,7 @@ literal "false"
 \end_inset
 
  was performed to obtain convergence of second derivatives.
- The local mesh density at the leading edge and trailing edge were increased
+ The local mesh density at the leading and trailing edges were increased
  and the order of the tensor product nodal basis functions.
  Figure 
 \begin_inset CommandInset ref
@@ -1155,8 +1084,8 @@ noprefix "false"
 
 \end_inset
 
- shows the benefit on the second derivatives for increasing the mesh density
- and order.
+ shows the benefit of increasing the mesh density and order to reach converged
+ second derivatives.
 \end_layout
 
 \begin_layout Standard
@@ -1168,6 +1097,48 @@ To determine an appropriate choice for the order of the tensor-product GLL
 
  which corresponded to the maximum forwards (negative) acceleration of the
  airfoil.
+ A 
+\begin_inset Formula $p$
+\end_inset
+
+-Convergence test where 
+\begin_inset Formula $p$
+\end_inset
+
+ is the order of the tensor-product was performed.
+ Values of 
+\begin_inset Formula $p$
+\end_inset
+
+ between 
+\begin_inset Formula $3$
+\end_inset
+
+ and 
+\begin_inset Formula $15$
+\end_inset
+
+ were used and their results compared to 
+\begin_inset Formula $p=20$
+\end_inset
+
+.
+ The result is shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Convergence"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ A value of 
+\begin_inset Formula $p=15$
+\end_inset
+
+ was chosen .
  
 \begin_inset Note Note
 status open
@@ -1241,9 +1212,101 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
+	filename BC_airfoil_accel.png
+	lyxscale 25
+	width 90col%
+	groupId BC_Airfoil
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename BC_inflow_vel.png
+	lyxscale 25
+	width 90col%
+	groupId BC_Airfoil
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename BC_airfoil_disp.png
+	lyxscale 25
+	width 90col%
+	groupId BC_Airfoil
+
+\end_inset
+
+
+\begin_inset VSpace -1em
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Airfoil during the starting and stopping phases.
+ Note that the definition of 
+\begin_inset Formula $x$
+\end_inset
+
+ is consistent with the solution domain of accelerating reference frame.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:BC_airfoil"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This image needs to be fixed to be counter clockwise
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
 	filename NS_Vincent_NP5.png
-	lyxscale 20
-	width 95col%
+	lyxscale 25
+	width 90col%
+	groupId BC_Airfoil
 
 \end_inset
 
@@ -1255,8 +1318,9 @@ status open
 \align center
 \begin_inset Graphics
 	filename NS_Remesh_NP8.png
-	lyxscale 20
-	width 95col%
+	lyxscale 25
+	width 90col%
+	groupId BC_Airfoil
 
 \end_inset
 
@@ -1347,12 +1411,85 @@ This image needs to be fixed to be counter clockwise
 \end_layout
 
 \begin_layout Standard
-The final spectral element mesh used had X conforming quadrilateral spectral
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Convergence.png
+	lyxscale 20
+	width 95col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset VSpace -1em
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $p$
+\end_inset
+
+-Convergence study results
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Convergence"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The final spectral element mesh used had 989 conforming quadrilateral spectral
  elements as shown in Y.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+NEED A FIGURE
+\end_layout
+
+\end_inset
+
  Local mesh refinement was concentrated near the surface of the airfoil
  to resolve the boundary layer.
- X-order tensor-product nodal basis functions were used in each element,
- giving a total of X independent mesh nodes.
+ 8
+\begin_inset script superscript
+
+\begin_layout Plain Layout
+th
+\end_layout
+
+\end_inset
+
+-order tensor-product nodal basis functions were used in each element, giving
+ a total of X independent mesh nodes.
 \end_layout
 
 \begin_layout Subsection
@@ -1462,8 +1599,8 @@ where
 \begin_inset Formula $\Gamma_{0}$
 \end_inset
 
- are the vortex sheet strength and circulation respectively calculated from
- thin airfoil theory, equation 
+ are the vortex sheet strength and circulation respectively, calculated
+ from thin airfoil theory, equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:gamma theta"
@@ -1473,7 +1610,8 @@ noprefix "false"
 
 \end_inset
 
-, and 
+.
+ 
 \begin_inset Formula $\gamma\left(\varepsilon\right)$
 \end_inset
 
@@ -1525,7 +1663,7 @@ if I add an image, reference it here
 \begin_inset Formula $L_{1}$
 \end_inset
 
-) will be investigated.
+, are investigated.
 \begin_inset Note Note
 status open
 
@@ -1663,6 +1801,233 @@ References
 LatexCommand bibtex
 bibfiles "21AFMC_bibliography"
 options "afmc"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide true
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename V_LE_2.png
+	lyxscale 15
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename V_TE_2.png
+	lyxscale 15
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename V_LE_3.png
+	lyxscale 15
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename V_TE_3.png
+	lyxscale 15
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Vorticity on the airfoil surface
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I need letters/numbers per graph to caption
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide true
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename VG_LE_1.png
+	lyxscale 15
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename VG_TE_1.png
+	lyxscale 15
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename VG_LE_2.png
+	lyxscale 15
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename VG_TE_2.png
+	lyxscale 15
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename VG_LE_3.png
+	lyxscale 15
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename VG_TE_3.png
+	lyxscale 15
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename VG_LE_4.png
+	lyxscale 15
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename VG_TE_4.png
+	lyxscale 15
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename VG_LE_5.png
+	lyxscale 15
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename VG_TE_5.png
+	lyxscale 15
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Vorticity Production on the airfoil surface
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I need letters/numbers per graph to caption
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
