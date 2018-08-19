@@ -181,20 +181,10 @@ This paper presents a numerical study of vorticity generation around a 2D
 
  angle of attack where the two-dimensional Navier-Stokes equations are solved
  using a spectral element DNS code.
-\begin_inset Newline newline
-\end_inset
-
-TO COMPLETE 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-To complete
-\end_layout
-
-\end_inset
-
-
+ Peaks in the boundary vorticity flux on trailing edge surface support recent
+ arguments of how the Kutta condition is established.
+ The peaks in lift force during the starting and stopping phases appear
+ to be well-explained by thin airfoil theory for non-uniform motion.
 \end_layout
 
 \begin_layout Section
@@ -250,15 +240,21 @@ literal "false"
 \end_inset
 
  and the phenomena of starting and stopping vortices still remains of interest.
-\end_layout
+\begin_inset Note Note
+status collapsed
 
-\begin_layout Standard
+\begin_layout Plain Layout
 <IMAGE from Willert> 
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
 Should I include an image somewhere?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1006,7 +1002,12 @@ literal "false"
 
  of uniform flow between the starting and stopping phases allows the convergence
  of lift to be investigated.
- This prevents the need for an excessively long grid domain to prevent the
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This prevents the need for an excessively long grid domain to prevent the
  starting vortex 
 \begin_inset Quotes eld
 \end_inset
@@ -1017,6 +1018,11 @@ leaving
 
  the solution domain in the reference frame of the airfoil.
  
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1063,6 +1069,10 @@ Additional refinement of the mesh used by
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Additional refinement on the mesh used by Vincent and Blackburn 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1086,6 +1096,11 @@ noprefix "false"
 
  shows the benefit of increasing the mesh density and order to reach converged
  second derivatives.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1234,7 +1249,8 @@ status open
 \end_inset
 
 
-\end_layout
+\begin_inset Note Note
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -1244,6 +1260,11 @@ status open
 	lyxscale 25
 	width 90col%
 	groupId BC_Airfoil
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -1306,7 +1327,6 @@ status open
 	filename NS_Vincent_NP5.png
 	lyxscale 25
 	width 90col%
-	groupId BC_Airfoil
 
 \end_inset
 
@@ -1364,7 +1384,12 @@ literal "false"
 
 \end_inset
 
- mesh, 
+ mesh.
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
 \begin_inset Formula $p=5$
 \end_inset
 
@@ -1372,11 +1397,26 @@ literal "false"
 \begin_inset Newline newline
 \end_inset
 
-Bottom: Refined mesh, 
+
+\end_layout
+
+\end_inset
+
+Bottom: Refined mesh
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+, 
 \begin_inset Formula $p=8$
 \end_inset
 
 .
+\end_layout
+
+\end_inset
+
+
 \begin_inset Newline newline
 \end_inset
 
@@ -1466,8 +1506,132 @@ name "fig:Convergence"
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename mesh.png
+	lyxscale 10
+	width 95col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset VSpace -1em
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Spectral Element Mesh 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Mesh"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Unsteady.png
+	lyxscale 10
+	width 95col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset VSpace -1em
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Unsteady lift estimation using equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:unsteady lift"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Unsteady"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 The final spectral element mesh used had 989 conforming quadrilateral spectral
- elements as shown in Y.
+ elements as shown in figure 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:Mesh"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \begin_inset Note Note
 status open
 
@@ -1489,7 +1653,7 @@ th
 \end_inset
 
 -order tensor-product nodal basis functions were used in each element, giving
- a total of X independent mesh nodes.
+ a total of 63,296 independent mesh nodes.
 \end_layout
 
 \begin_layout Subsection
@@ -1510,6 +1674,10 @@ literal "false"
 \end_inset
 
 , can be determined as
+\begin_inset VSpace -0.5em*
+\end_inset
+
+
 \begin_inset Formula 
 \begin{equation}
 \frac{1}{2\pi}\intop_{-1}^{1}\frac{\gamma\left(\xi\right)}{x-\xi}=V_{\infty}\left(\alpha-\frac{\text{d}z}{\text{d}x}\right)\label{eq:TAT integral}
@@ -1517,6 +1685,17 @@ literal "false"
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace -1.5em*
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 where the terminals have been adjusted to match the definition provided
  in 
 \begin_inset CommandInset citation
@@ -1663,7 +1842,7 @@ if I add an image, reference it here
 
 , are investigated.
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 I should be able to get 
@@ -1710,6 +1889,78 @@ Starting Vortex and Establishing the Kutta Condition
 \end_layout
 
 \begin_layout Standard
+In figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Vplots"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ it can be seen that in second half of the starting phase, 
+\begin_inset Formula $t\in\left[0.15,0.25\right]\,\text{s}$
+\end_inset
+
+, the vorticity on the upper and lower surfaces are not equal.
+ When 
+\begin_inset Formula $t\in\left[0.25,0.85\right]\,\text{s}$
+\end_inset
+
+ it can be seen that the vorticity on the upper and lower surfaces approach
+ each other and, given sufficient time, will be equal at the trailing edge
+ and satisfy the Kutta condition.
+ In comparison, it is noted that the leading edge vorticity appears to have
+ reached a steady-state much faster.
+\end_layout
+
+\begin_layout Standard
+When analysing the key stages in establishing the Kutta condition, Zhu 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhu2015"
+literal "false"
+
+\end_inset
+
+ recognised the importance of sharp BVF peaks on both sides of the trailing
+ edge as shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:VGplots"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ These peaks are also present in this non-impulsively-started flow which
+ supports this argument.
+ 
+\end_layout
+
+\begin_layout Standard
+It is noticed that the leading edge also has sharp BVF peaks that vary with
+ time during the stopping phase, 
+\begin_inset Formula $t\in\left[0.85,1.05\right]\,\text{s}$
+\end_inset
+
+ in a similar fashion to the trailing edge.
+ This could contribute to the formation of leading edge stopping vortices
+ observed by Vincent and Blackburn 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vincent2014"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -1735,10 +1986,16 @@ Show a plot of the kutta condition being enforced through vorticity generation
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Vorticity Generation Mechanism
 \end_layout
 
-\begin_layout Subsection
-Vorticity Generation Mechanism
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1760,48 +2017,17 @@ Unsteady Thin-Airfoil Theory
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-Discretised steps vs smoothed top had vs const acceleration trapezium shape
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename Unsteady.png
-	lyxscale 10
-	width 95col%
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:unsteady lift"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset VSpace -1em
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Unsteady lift estimation using equation 
+ compares the quasi-steady and apparent mass terms of equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:unsteady lift"
@@ -1811,19 +2037,40 @@ noprefix "false"
 
 \end_inset
 
-
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Unsteady"
+ with the result from DNS.
+ Immediately it is clear that apparent mass is the major contributor to
+ the large lift force during the starting and stopping phases.
+ At the end of the stopping phase, the DNS lift is approximately one half
+ of the quasi-steady lift which is in agreement with Saffman's statement
+ that the initial lift is one-half of the final steady-state lift 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Saffman1993"
+literal "false"
 
 \end_inset
 
+.
+ Even without the wake-effect term, it appears that equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:unsteady lift"
+plural "false"
+caps "false"
+noprefix "false"
 
+\end_inset
+
+ well describes the phenomena observed.
+ 
 \end_layout
 
-\end_inset
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
 
-
+\begin_layout Plain Layout
+Discretised steps vs smoothed top had vs const acceleration trapezium shape
 \end_layout
 
 \end_inset
@@ -1836,8 +2083,12 @@ Conclusions
 \end_layout
 
 \begin_layout Standard
-You should include a brief conclusion section which summarises the results
- of your paper.
+This paper further develops the study of vorticity generation mechanisms
+ by applying them to the starting and stopping phases of airfoil motion.
+ The results corroborate phenomena observed by other authors in a non-impulsivel
+y-started flow.
+ Unsteady thin airfoil theory was also applied to explain the vertical forces
+ observed during the starting and stopping phases.
 \end_layout
 
 \begin_layout Standard
@@ -1875,7 +2126,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename V_LE_2.png
-	lyxscale 15
+	lyxscale 20
 	height 3cm
 	groupId VGOut
 
@@ -1884,7 +2135,7 @@ status open
 
 \begin_inset Graphics
 	filename V_TE_2.png
-	lyxscale 15
+	lyxscale 20
 	height 3cm
 	groupId VGOut
 
@@ -1898,7 +2149,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename V_LE_3.png
-	lyxscale 15
+	lyxscale 20
 	height 3cm
 	groupId VGOut
 
@@ -1907,7 +2158,7 @@ status open
 
 \begin_inset Graphics
 	filename V_TE_3.png
-	lyxscale 15
+	lyxscale 20
 	height 3cm
 	groupId VGOut
 
@@ -1920,7 +2171,8 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Vorticity on the airfoil surface
+Vorticity on the airfoil surface for the first 10% of the chord and last
+ 10% of the chord
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Vplots"
@@ -1961,7 +2213,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename VG_LE_1.png
-	lyxscale 15
+	lyxscale 20
 	height 3cm
 	groupId VGOut
 
@@ -1970,7 +2222,7 @@ status open
 
 \begin_inset Graphics
 	filename VG_TE_1.png
-	lyxscale 15
+	lyxscale 20
 	height 3cm
 	groupId VGOut
 
@@ -1984,7 +2236,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename VG_LE_2.png
-	lyxscale 15
+	lyxscale 20
 	height 3cm
 	groupId VGOut
 
@@ -1993,7 +2245,7 @@ status open
 
 \begin_inset Graphics
 	filename VG_TE_2.png
-	lyxscale 15
+	lyxscale 20
 	height 3cm
 	groupId VGOut
 
@@ -2007,7 +2259,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename VG_LE_3.png
-	lyxscale 15
+	lyxscale 20
 	height 3cm
 	groupId VGOut
 
@@ -2016,7 +2268,7 @@ status open
 
 \begin_inset Graphics
 	filename VG_TE_3.png
-	lyxscale 15
+	lyxscale 20
 	height 3cm
 	groupId VGOut
 
@@ -2030,7 +2282,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename VG_LE_4.png
-	lyxscale 15
+	lyxscale 20
 	height 3cm
 	groupId VGOut
 
@@ -2039,7 +2291,7 @@ status open
 
 \begin_inset Graphics
 	filename VG_TE_4.png
-	lyxscale 15
+	lyxscale 20
 	height 3cm
 	groupId VGOut
 
@@ -2053,7 +2305,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename VG_LE_5.png
-	lyxscale 15
+	lyxscale 20
 	height 3cm
 	groupId VGOut
 
@@ -2062,7 +2314,7 @@ status open
 
 \begin_inset Graphics
 	filename VG_TE_5.png
-	lyxscale 15
+	lyxscale 20
 	height 3cm
 	groupId VGOut
 
@@ -2075,7 +2327,8 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Vorticity production on the airfoil surface
+Vorticity production on the airfoil surface for the first 10% of the chord
+ and last 10% of the chord
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:VGplots"

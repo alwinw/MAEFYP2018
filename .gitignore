@@ -102,3 +102,5 @@ rsconnect/
 !/docs/afmc_paper/*
 
 R/\.RData
+
+*.lyx#

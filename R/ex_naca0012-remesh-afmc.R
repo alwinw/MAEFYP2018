@@ -313,3 +313,19 @@ for (i in 1:nrow(quick)) {
          scale = globscale, width = 15, height = globheight, units = "cm", dpi = 300)
 }
 
+
+lineint <- outp$wall %>% 
+  group_by(time) %>% 
+  mutate(
+    dodnint = kinvis*dodzG*(lead(s) - s)) %>% 
+  mutate(dodnintes = sum(dodnint, na.rm = TRUE))
+
+ggplot(lineint, aes(time, dodnintes)) +
+  geom_line() +
+  ylab(expression(integral(~nu~frac(partialdiff*omega, partialdiff*n)~d*s))) + 
+  scale_x_continuous(breaks = c(0, seq(0.05, 2.05, 0.2)),
+                     minor_breaks = c(0, seq(0.05, 2.05, 0.1)),
+                     labels = function(x) ifelse(x==0, "", sprintf("%.2f", x)),
+                     limits = c(0, 2))
+ggsave("Vorticity Flux Integral.png", scale = 1.5,
+       width = 15, height = 6, units = "cm", dpi = 600)

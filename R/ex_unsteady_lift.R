@@ -58,5 +58,6 @@ ggplot(flx, aes(t)) +
                      minor_breaks = c(0, seq(0.05, 2.05, 0.1)),
                      labels = function(x) ifelse(x==0, "", sprintf("%.2f", x)),
                      limits = c(0, 2))
-
+ggsave("Viscous Lift.png", scale = 1.5,
+       width = 15, height = 6, units = "cm", dpi = 600)
              
