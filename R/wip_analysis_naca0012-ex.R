@@ -306,6 +306,18 @@ print(plot_nsS)
 print(plot_nsG)
 
 
+#--- Look at integrals ----
+ggplot(plot$dump %>% filter(enum == 100), 
+       aes(x, y)) +
+  geom_text(aes(label = jnum)) +
+  geom_label(aes(label = ncorner)) +
+  geom_point(aes(colour = ifelse(node, "node", "poly")), shape = "O") +
+  coord_fixed()
 
+N_P = 5
 
+cont <- c(1:N_P, (1:N_P)*N_P, (N_P^2:1)[1:N_P], (N_P:1)*N_P - (N_P - 1))
+cont <- c(unique(cont), cont[1])
+
+inte_test <- plot$dump %>% filter(enum == 100)
 
