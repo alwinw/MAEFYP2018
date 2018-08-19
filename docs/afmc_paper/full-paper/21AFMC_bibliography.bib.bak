@@ -1,47 +1,5 @@
 % Encoding: windows-1252
 
-@ARTICLE{Cooley_Tukey_1965,
-  author = {J. W. Cooley and J. W. Tukey},
-  title = {An {A}lgorithm for the {M}achine {C}omputation of {C}omplex {F}ourier
-	{S}eries},
-  journal = {Math. Comp.},
-  year = {1965},
-  volume = {19},
-  pages = {297-301},
-  owner = {a1060812},
-  timestamp = {2018.03.06}
-}
-
-@BOOK{Goosens_etal_1994,
-  title = {The \LaTeX\ Companion},
-  publisher = {Addison-Wesley},
-  year = {1994},
-  author = {M. Goosens and F. Mittlebach and A. Samarin},
-  owner = {a1060812},
-  timestamp = {2018.03.06}
-}
-
-@INCOLLECTION{McCormick_1994,
-  author = {S. Mc{C}ormick},
-  title = {Multilevel {P}rojection {M}ethodology},
-  booktitle = {Computational Techniques and Applications: CTAC93},
-  publisher = {World Scientific},
-  year = {1994},
-  editor = {D. Stewart and H. Gardner and D. Singleton},
-  pages = {54-57},
-  owner = {a1060812},
-  timestamp = {2018.03.06}
-}
-
-@BOOK{Rosenhead_1963,
-  title = {Laminar {B}oundary {L}ayers},
-  publisher = {Oxford Clarendon Press},
-  year = {1963},
-  editor = {L. Rosenhead},
-  owner = {a1060812},
-  timestamp = {2018.03.06}
-}
-
 @InProceedings{Agromayor2017,
   author    = {Roberto Agromayor and Jairo R{\'{u}}a and Reidar Kristoffersen},
   title     = {Simulation of {S}tarting and {S}topping {V}ortices of an {A}irfoil},
@@ -198,6 +156,66 @@
   language      = {English},
   subjects      = { Fluid mechanics; Aerodynamics },
   type          = {Book; Book/Illustrated},
+}
+
+@Article{Zhu2015,
+  author    = {J. Y. Zhu and T. S. Liu and L. Q. Liu and S. F. Zou and J. Z. Wu},
+  title     = {Causal mechanisms in airfoil-circulation formation},
+  journal   = {Physics of Fluids},
+  year      = {2015},
+  volume    = {27},
+  number    = {12},
+  pages     = {123601},
+  month     = {dec},
+  doi       = {10.1063/1.4937348},
+  publisher = {{AIP} Publishing},
+}
+
+@Book{Lighthill1986,
+  title     = {An {I}nformal {I}ntroduction to {T}heoretical {F}luid {M}echanics},
+  publisher = {Oxford University Press},
+  year      = {1986},
+  author    = {James Lighthill},
+  isbn      = {0198536313},
+  url       = {https://www.amazon.com/Introduction-Theoretical-Mechanics-Mathematics-Applications/dp/0198536313?SubscriptionId=AKIAIOBINVZYXZQZ2U3A&tag=chimbori05-20&linkCode=xm2&camp=2025&creative=165953&creativeASIN=0198536313},
+}
+
+@Article{Karman1938,
+  author    = {T{h}. Von. Kármán and W. R. Sears},
+  title     = {Airfoil {T}heory for {N}on-{U}niform {M}otion},
+  journal   = {Journal of the Aeronautical Sciences},
+  year      = {1938},
+  volume    = {5},
+  number    = {10},
+  pages     = {379--390},
+  month     = {aug},
+  doi       = {10.2514/8.674},
+  publisher = {American Institute of Aeronautics and Astronautics ({AIAA})},
+}
+
+@Article{Liu2015,
+  author    = {Tianshu Liu and Shizhao Wang and Xing Zhang and Guowei He},
+  title     = {Unsteady {T}hin-{A}irfoil {T}heory {R}evisited: {A}pplication of a {S}imple {L}ift {F}ormula},
+  journal   = {{AIAA} Journal},
+  year      = {2015},
+  volume    = {53},
+  number    = {6},
+  pages     = {1492--1502},
+  month     = {jun},
+  doi       = {10.2514/1.j053439},
+  publisher = {American Institute of Aeronautics and Astronautics ({AIAA})},
+}
+
+@Article{Limacher2018,
+  author    = {Eric Limacher and Chris Morton and David Wood},
+  title     = {Generalized derivation of the added-mass and circulatory forces for viscous flows},
+  journal   = {Physical Review Fluids},
+  year      = {2018},
+  volume    = {3},
+  number    = {1},
+  month     = {jan},
+  doi       = {10.1103/physrevfluids.3.014701},
+  publisher = {American Physical Society ({APS})},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}

@@ -219,7 +219,7 @@
 }
 
 @Book{Saffman1993,
-  title     = {{V}ortex {D}ynamics ({C}ambridge {M}onographs on {M}echanics)},
+  title     = {Vortex Dynamics (Cambridge Monographs on Mechanics)},
   publisher = {Cambridge University Press},
   year      = {1993},
   author    = {P. G. Saffman},

@@ -447,7 +447,7 @@ Unsteady Viscous Flows
 \end_layout
 
 \begin_layout Itemize
-Anderson 20XX: thin airfoil theory
+Anderson 2010: thin airfoil theory
 \end_layout
 
 \begin_layout Itemize
@@ -726,7 +726,7 @@ FINISHED
 \end_layout
 
 \begin_layout Section
-Anderson 20XX: Chapter 4: Incompressible Flow over Airfoil
+Anderson 2010: Chapter 4: Incompressible Flow over Airfoil
 \end_layout
 
 \begin_layout Standard
@@ -3160,747 +3160,8 @@ This has some interesting stuff in the theory section, but also appears
 
 \end_layout
 
-\begin_layout Section*
-Lei 2013: Numerical study of separation on the trailing edge of a symmetrical
- airfoil at a low Reynolds number
-\end_layout
-
-\begin_layout Standard
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-Referenced by Vincent, also does not appear to be very relevant as a paper
- for me...
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Abstract and Introduction
-\end_layout
-
-\begin_layout Itemize
-This study focuses on the trailing-edge separation of a symmetrical airfoil
- at a low Reynolds number.
- Finite volume method is adopted to solve the unsteady Reynolds-averaged
- Navier–Stokes (RANS) equation.
- Flow of the symmetrical airfoil SD8020 at a low Reynolds number has been
- simulated.
-\end_layout
-
-\begin_layout Itemize
-It is well-known that many significant aerodynamics prob- lems occur below
- chord Reynolds numbers of about 
-\begin_inset Formula $5\times10^{5}$
-\end_inset
-
- .
- Compared to high Reynolds numbers, low Reynolds number aerodynamics is
- quite different.
-\end_layout
-
-\begin_layout Itemize
-He also found hysteresis loops in the lift curve for some airfoils and considere
-d whether counterclockwise or clockwise hysteresis loop can occur for a
- given Re
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Box Shaded
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100line%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-Mainly a point of interest, is there a lag in the lift? Hysteresis?
-\end_layout
-
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Box Shaded
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100line%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-Point of interest about different types of mesh http://www.innovative-cfd.com/cfd-
-grid.html
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Presentation of the Result
-\end_layout
-
-\begin_layout Itemize
-Time-averaged streamlines at different AOAs
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Box Shaded
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100line%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-Didn't know this was possible, interesting
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
-Lighthill 19XX
-\end_layout
-
-\begin_layout Section
-Limacher 2018: Generalized derivation of the added-mass and circulatory
- forces for viscous flows
-\end_layout
-
-\begin_layout Standard
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-Really nice talk about added mass per unit span!
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Notes not taken yet
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Equivalence to the unsteady airfoil theory of von Karman and Sears
-\end_layout
-
-\begin_layout Itemize
-von Kármán and Sears [2] presented a theory of airfoils in unsteady motion
- using the concept of impulse.
- Given their assumptions of small-amplitude motions and a planar wake, Eq.
- (84) reduces to their expression of impulse.
- Changes in notation from [2] have been made for consistency with the present
- paper.
-\begin_inset Newline newline
-\end_inset
-
-von Kármán and Sears [2] express the instantaneous lift on an airfoil as
- the time derivative of total impulse, whose magnitude 
-\begin_inset Formula $|P|$
-\end_inset
-
- is
-\begin_inset Formula 
-\[
-\left|P\right|=\intop_{-\frac{c}{2}}^{\frac{c}{2}}\gamma_{0}\left(x\right)x\,\text{d}x+\intop_{\frac{c}{2}}^{\infty}\gamma\left(x\right)x\,\text{d}x+\intop_{\frac{c}{2}}^{\infty}\gamma\left(x\right)\left[\sqrt{x^{2}-\left(\frac{c}{2}\right)^{2}}-x\right]\,\text{d}x
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula $\gamma_{0}$
-\end_inset
-
- represents the distribution of vorticity on the chord associated with the
- freestream velocity and body motion.
- The three integrals are on the right-hand side of Eq.
- (86) are the potential, shed- vorticity, and image-vorticity impulses,
- in that order.
- Through simple algebra, it can be shown that
-\begin_inset Formula 
-\[
-\sqrt{x^{2}-\left(\frac{c}{2}\right)^{2}}-x=-\frac{c}{2}\left(\frac{1}{2x^{*}+\sqrt{\left(2x^{*}\right)^{2}-1}}\right)
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula $x^{*}=\frac{x}{c}$
-\end_inset
-
-.
- The term in large parentheses on the right-hand side is equivalent to the
- right-hand side of Eq.
- (85) when one assumes that all shed-vorticity fluid elements lie on the
- positive x axis (real line).
- When the pitch amplitude is assumed to be small, it can be assumed that
- P = P and Eq.
- (84) represents a generalization of the impulse formula of von Kármán and
- Sears [2] which removes the planar-wake restriction.
- When pitch amplitudes are not small, P can be rotated to yield P using
- Eq.
- (78), providing a general means of calculating force which is valid for
- any motion of the plate and any concomitant vorticity-field evolution.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Lots of interesting stuff!
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-The well-known decomposition of aerodynamic force into added-mass and circulator
-y components has its origins in potential flow theory.
- In the classical decomposition, shed vorticity is represented by vortex
- singularities, whose associated potential can be linearly superimposed
- onto the single-valued potential which gives rise to the added-mass force.
- The present work shows that this decomposition is also valid for viscous,
- separated flows containing continuous distributions of vorticity, as demonstrat
-ed by means of a Helmholtz decomposition of the velocity field.
- The resulting equations are valid for an impermeable body of arbitrary
- geometry, in two or three dimensions, undergoing arbitrary motion through
- an unbounded, incompressible fluid domain.
- The force acting on the body is related to the time derivative of total
- impulse P defined as
-\begin_inset Formula 
-\[
-P=P_{v}+P_{i}+P_{\phi}+P_{b}
-\]
-
-\end_inset
-
-The four terms on the right-hand side are the shed-vorticity impulse, the
- image-vorticity impulse, the potential impulse, and the body-volume impulse,
- respectively.
- Upon time differentiation, the first two terms give rise to the circulatory
- force and the latter two combine to give the classical added-mass force.
- The generality of the derivation demonstrates that the added-mass force
- is a valid component of total force regardless of the presence of a vortical
- wake.
- The presented force formulation was shown to be equivalent to existing
- theoretical work, under the specific conditions and assumptions of previous
- studies [2,5,7,21,23].
- The force formulation was also validated using a numerical data set generated
- by Wang and Eldredge [21], wherein the flow around a pitching plate in
- a steady freestream was simulated.
- The calculated force shows fairly good agreement with the force reported
- by Wang and Eldredge [21], although minor discrepancies indicate that further
- work must be done to quantify errors due to discretization.
- 
-\begin_inset Newline newline
-\end_inset
-
-When the no-slip condition holds, it was shown that the total impulse can
- be equivalently expressed as
-\begin_inset Formula 
-\[
-P=P_{v}+P_{b}
-\]
-
-\end_inset
-
-which indicates that the no-slip condition causes the potential impulse
- and image-vorticity impulse terms to cancel for all time, i.e., 
-\begin_inset Formula $P_{i}+P_{\phi}\equiv0$
-\end_inset
-
- .
- Such cancellation was indeed shown to hold in the Wang-Eldredge data set
- [21].
- This relationship could prove valuable to future predictive aerodynamic
- models; the potential impulse can be calculated for all time a priori based
- on body geometry and motion, which in turn places an integral restriction
- on the evolution of the vorticity field.
-\begin_inset Newline newline
-\end_inset
-
-Two key insights regarding the classical added-mass force were emphasized.
- First, for bodies of nonzero volume, the added-mass force differs depending
- on whether body itself accelerates or whether the freestream flow accelerates
- relative to the body.
- This is a known phenomenon in the marine literature, but may be overlooked
- in other fields.
- Second, the most general expression for the added-mass force acting on
- an accelerating flat plate includes a tangential component.
-\begin_inset Newline newline
-\end_inset
-
-Misinterpretations of added mass persist in the literature, wherein the
- added-mass force is attributed to the acceleration of fluid that must move
- with the body.
- By inspection of the derived impulse terms, the authors adhere to the more
- physically accurate interpretation that the added-mass force accounts for
- the dynamic effect of the near-body vorticity distribution, without defining
- a specific contour or associated region of fluid.
- This interpretation arises due to the cancellation of the shed-vorticity
- and image-vorticity impulse terms near the body surface.
- Such cancellation reduces the importance of acquiring accurate near-body
- vorticity data, which could be advantageous in application to experimental
- data sets.
- Investigation of the experimental utility of the presented force formulation
- is left for future work.
-\end_layout
-
-\begin_layout Section
-Morton 1984: The Generation and Decay of Vorticity
-\end_layout
-
-\begin_layout Standard
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-Vorticity generation equation
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-Prandtl 19XX
-\end_layout
-
-\begin_layout Section
-Liu 2013: Unsteady Thin-Airfoil Theory Revisited: Application of a Simple
- Lift Formula
-\end_layout
-
-\begin_layout Standard
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-Added mass lift per unit span!
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Abstract & Introduction
-\end_layout
-
-\begin_layout Itemize
-The thin-airfoil lift formula is derived by using the simple lift formula
- that contains the vortex lift and the lift associated with the fluid accelerati
-on.
-\end_layout
-
-\begin_layout Itemize
-Thin-airfoil theory originally developed by Munk [1] uses a vortex sheet
- in a potential flow to model an actual flow over a thin airfoil, in which
- the Kutta condition is imposed at the trailing edge to calculate the lift
- and moment...
- Recently, because of the renewed interests in active flutter control and
- flapping flight, considerable efforts have been made to apply thin-airfoil
- theory to unsteady flows associated with aeroelastic, flapping, and flexible
- wings
-\end_layout
-
-\begin_layout Itemize
-The formulation given by von Kármán and Sears [6] based on the application
- of the vortex impulse is particularly insightful because the unsteady lift
- is explicitly expressed as a sum of the quasi-steady Kutta–Joukowski lift,
- the added-mass lift, and the wake-induced contribution.
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Box Shaded
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100line%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-I should also consider this method to calculate the unsteady lift
-\end_layout
-
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-The wake-induced term leads to the so-called deficiency preventing the instantan
-eous lift from attaining the quasi-steady state immediately.
- Interestingly, the von Kármán– Sears formulation remains the same when
- the nonlinear effects induced by the wake are incorporated by McCune and
- Tavares [14].
- This implies that the von Kármán–Sears lift formula could be more generic
- in terms of its physical foundations.
-\end_layout
-
-\begin_layout Itemize
-The physical foundations of thin-airfoil theory were discussed by Glauert
- [15].
- His argument is that a vortex sheet is a limiting model of a boundary layer
- on the airfoil surface as the viscosity approaches to zero and the integration
- of the vortex sheet strength is equal to the magnitude of the circulation
- generating the lift.
- The relationship between unsteady boundary-layer vorticity and bound-vortex
- sheet strength was further discussed by Sears [16] along with the generalized
- Kutta–Joukowski condition for a blunt trailing edge.
- It is clear that a bound-vortex sheet in thin-airfoil theory represents
- the airfoil plus its boundary layer, and the circulation is intimately
- connected with the boundary-layer.
- It is proposed by Sears [16] that the lift and moment are calculated by
- using thin-airfoil theory, and the circulation is determined by boundary-layer
- calculation such that thin-airfoil theory could be applied to a body with
- boundary-layer separation near the blunt trailing edge.
- Although these conceptual arguments are physically compelling, a derivation
- of unsteady thin- airfoil theory from the Navier–Stokes (NS) equations
- has not been systematically given in the general framework of viscous flows.
- The feasible derivation should be based on a general force expression for
- viscous flows.
-\end_layout
-
-\begin_layout Itemize
-In an incompressible viscous flow, as shown in Fig.
- 1, the force acting on a solid body is given by
-\begin_inset Formula 
-\[
-\vec{F}=-\ointop_{\partial B}\left(-p\vec{n}+\vec{\tau}\right)\,\text{d}S=-\rho\iiintop_{V_{f}}\vec{a}\,\text{d}V+\ointop_{\Sigma}\left(-p\vec{n}+\vec{\tau}\right)\,\text{d}S\tag{Eq 1}
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula $p$
-\end_inset
-
- is the pressure, 
-\begin_inset Formula $\vec{\tau}$
-\end_inset
-
- is the surface shear-stress vector, 
-\begin_inset Formula $\vec{a}=\frac{\text{D}\vec{u}}{Dt}$
-\end_inset
-
- is the acceleration, 
-\begin_inset Formula $\rho$
-\end_inset
-
- is the fluid density, 
-\begin_inset Formula $\partial B$
-\end_inset
-
- denotes a solid boundary of the body (wing) domain 
-\begin_inset Formula $B$
-\end_inset
-
-, 
-\begin_inset Formula $V_{f}$
-\end_inset
-
- denotes the control volume of the fluid, 
-\begin_inset Formula $\Sigma$
-\end_inset
-
- denotes an outer control surface in which the body is enclosed, and 
-\begin_inset Formula $\vec{n}$
-\end_inset
-
- is the unit normal vector pointing to the outside of a control surface.
- By using the equation 
-\begin_inset Formula $\vec{a}=\frac{\partial\vec{u}}{\partial t}+\vec{\omega}\times\vec{u}+\nabla\left(\frac{q^{2}}{2}\right)$
-\end_inset
-
-, Eq (1) becomes
-\begin_inset Formula 
-\begin{align*}
-F & =\rho\iiintop_{V_{f}}\vec{u}\times\vec{\omega}\,\text{d}V-\rho\iiintop_{V_{f}}\frac{\partial\vec{u}}{\partial t}\,\text{d}V-\ointop_{\Sigma}\left(p+\rho\frac{q^{2}}{2}\right)\vec{n}\,\text{d}S\\
- & \qquad+\ointop_{\Sigma}\vec{\tau}\,\text{d}S-\rho\ointop_{\partial B}\left(\frac{q^{2}}{2}\right)\vec{n}\,\text{d}S\tag{Eq 2}
-\end{align*}
-
-\end_inset
-
-where 
-\begin_inset Formula $u$
-\end_inset
-
- is the velocity, 
-\begin_inset Formula $\omega$
-\end_inset
-
- is the vorticity, and 
-\begin_inset Formula $q=\left|\vec{u}\right|$
-\end_inset
-
-.
- The first term in the right-hand side (RHS) of Eq.
- (2) is a volume integral of the Lamb vector 
-\begin_inset Formula $\vec{l}=\vec{u}×\vec{ω}$
-\end_inset
-
- that represents the vortex force.
- The second term is a volume integral of the local acceleration of fluid,
- re- presenting the unsteady inertial effect induced by a moving solid body
- and self-excited unsteady flow itself.
- The third and fourth terms are the surface integrals of the total pressure
- 
-\begin_inset Formula $P=p+\rho\frac{q^{2}}{2}$
-\end_inset
-
- and the surface shear stress on the control surface 
-\begin_inset Formula $Σ$
-\end_inset
-
-.
- The fifth term is the boundary term of the kinetic energy.
-\end_layout
-
-\begin_layout Itemize
-...Wang et al.
- [26] circumvented this pressure problem by selecting a rectangular control
- volume to obtain a very simple but sufficiently accurate lift formula.
- It is found that, for a rectangular control surface whose upper and lower
- faces are sufficiently far away from a wing, the contributions of the third
- and fourth terms in the RHS of Eq.
- (2) to the lift generation can be neglected.
- Thus, the lift can be approximately decomposed into the two dominant terms:
- the vortex force and the fluid acceleration.
- This leads to the simple lift formula that is useful in an analysis of
- the connection between vortical structures and lift generation in complex
- unsteady flows associated with flapping wings.
- The accuracy of the simple lift formula has been evaluated via direct numerical
- simulation (DNS) for unsteady low-Reynolds- number flows [26].
-\end_layout
-
-\begin_layout Standard
-Simple Lift Formula
-\end_layout
-
-\begin_layout Itemize
-For a rectangular outer control surface 
-\begin_inset Formula $Σ$
-\end_inset
-
- whose upper and lower faces are sufficiently far away from the wing, the
- contributions of the third and fourth terms in the RHS of Eq.
- (2) to the lift generation can be neglected.
- Therefore, the simple lift formula (SLF) given by Wang et al.
- [26] is expressed in the two dominant terms, i.e.,
-\begin_inset Formula 
-\[
-L\approx L_{\text{vor}}+L_{\text{a}}\tag{Eq 3}
-\]
-
-\end_inset
-
-In Eq 3, the vortex lift is given by
-\begin_inset Formula 
-\[
-L_{\text{vor}}=\rho\vec{k}\cdot\iintop_{V_{f}}\vec{u}\times\vec{\omega}\,\text{d}V
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula $\vec{k}$
-\end_inset
-
- is the unit vector normal to the freestream velocity.
- The lift associated with the fluid acceleration becomes
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-To finish off
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-Saffman 19XX
-\end_layout
-
-\begin_layout Section*
-Theodorsen 1935: General Theory of Aerodynamic Instability and Mechanism
- of Flutter
-\end_layout
-
-\begin_layout Standard
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-Interesting paper but (apparently according to Gaunaa 2002) it ignores horizonta
-l acceleration/etc
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-von Karman 1935: Airfoil Theory for Non-Uniform Motion
+Karman 1935: Airfoil Theory for Non-Uniform Motion
 \end_layout
 
 \begin_layout Standard
@@ -5617,6 +4878,774 @@ However,
 \end_layout
 
 \end_deeper
+\begin_layout Section*
+Lei 2013: Numerical study of separation on the trailing edge of a symmetrical
+ airfoil at a low Reynolds number
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Referenced by Vincent, also does not appear to be very relevant as a paper
+ for me...
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Abstract and Introduction
+\end_layout
+
+\begin_layout Itemize
+This study focuses on the trailing-edge separation of a symmetrical airfoil
+ at a low Reynolds number.
+ Finite volume method is adopted to solve the unsteady Reynolds-averaged
+ Navier–Stokes (RANS) equation.
+ Flow of the symmetrical airfoil SD8020 at a low Reynolds number has been
+ simulated.
+\end_layout
+
+\begin_layout Itemize
+It is well-known that many significant aerodynamics prob- lems occur below
+ chord Reynolds numbers of about 
+\begin_inset Formula $5\times10^{5}$
+\end_inset
+
+ .
+ Compared to high Reynolds numbers, low Reynolds number aerodynamics is
+ quite different.
+\end_layout
+
+\begin_layout Itemize
+He also found hysteresis loops in the lift curve for some airfoils and considere
+d whether counterclockwise or clockwise hysteresis loop can occur for a
+ given Re
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Mainly a point of interest, is there a lag in the lift? Hysteresis?
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Point of interest about different types of mesh http://www.innovative-cfd.com/cfd-
+grid.html
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Presentation of the Result
+\end_layout
+
+\begin_layout Itemize
+Time-averaged streamlines at different AOAs
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Didn't know this was possible, interesting
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Lighthill 19XX
+\end_layout
+
+\begin_layout Section
+Limacher 2018: Generalized derivation of the added-mass and circulatory
+ forces for viscous flows
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Really nice talk about added mass per unit span!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Notes not taken yet
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Equivalence to the unsteady airfoil theory of von Karman and Sears
+\end_layout
+
+\begin_layout Itemize
+von Kármán and Sears [2] presented a theory of airfoils in unsteady motion
+ using the concept of impulse.
+ Given their assumptions of small-amplitude motions and a planar wake, Eq.
+ (84) reduces to their expression of impulse.
+ Changes in notation from [2] have been made for consistency with the present
+ paper.
+\begin_inset Newline newline
+\end_inset
+
+von Kármán and Sears [2] express the instantaneous lift on an airfoil as
+ the time derivative of total impulse, whose magnitude 
+\begin_inset Formula $|P|$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+\left|P\right|=\intop_{-\frac{c}{2}}^{\frac{c}{2}}\gamma_{0}\left(x\right)x\,\text{d}x+\intop_{\frac{c}{2}}^{\infty}\gamma\left(x\right)x\,\text{d}x+\intop_{\frac{c}{2}}^{\infty}\gamma\left(x\right)\left[\sqrt{x^{2}-\left(\frac{c}{2}\right)^{2}}-x\right]\,\text{d}x
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\gamma_{0}$
+\end_inset
+
+ represents the distribution of vorticity on the chord associated with the
+ freestream velocity and body motion.
+ The three integrals are on the right-hand side of Eq.
+ (86) are the potential, shed- vorticity, and image-vorticity impulses,
+ in that order.
+ Through simple algebra, it can be shown that
+\begin_inset Formula 
+\[
+\sqrt{x^{2}-\left(\frac{c}{2}\right)^{2}}-x=-\frac{c}{2}\left(\frac{1}{2x^{*}+\sqrt{\left(2x^{*}\right)^{2}-1}}\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $x^{*}=\frac{x}{c}$
+\end_inset
+
+.
+ The term in large parentheses on the right-hand side is equivalent to the
+ right-hand side of Eq.
+ (85) when one assumes that all shed-vorticity fluid elements lie on the
+ positive x axis (real line).
+ When the pitch amplitude is assumed to be small, it can be assumed that
+ P = P and Eq.
+ (84) represents a generalization of the impulse formula of von Kármán and
+ Sears [2] which removes the planar-wake restriction.
+ When pitch amplitudes are not small, P can be rotated to yield P using
+ Eq.
+ (78), providing a general means of calculating force which is valid for
+ any motion of the plate and any concomitant vorticity-field evolution.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Lots of interesting stuff!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The well-known decomposition of aerodynamic force into added-mass and circulator
+y components has its origins in potential flow theory.
+ In the classical decomposition, shed vorticity is represented by vortex
+ singularities, whose associated potential can be linearly superimposed
+ onto the single-valued potential which gives rise to the added-mass force.
+ The present work shows that this decomposition is also valid for viscous,
+ separated flows containing continuous distributions of vorticity, as demonstrat
+ed by means of a Helmholtz decomposition of the velocity field.
+ The resulting equations are valid for an impermeable body of arbitrary
+ geometry, in two or three dimensions, undergoing arbitrary motion through
+ an unbounded, incompressible fluid domain.
+ The force acting on the body is related to the time derivative of total
+ impulse P defined as
+\begin_inset Formula 
+\[
+P=P_{v}+P_{i}+P_{\phi}+P_{b}
+\]
+
+\end_inset
+
+The four terms on the right-hand side are the shed-vorticity impulse, the
+ image-vorticity impulse, the potential impulse, and the body-volume impulse,
+ respectively.
+ Upon time differentiation, the first two terms give rise to the circulatory
+ force and the latter two combine to give the classical added-mass force.
+ The generality of the derivation demonstrates that the added-mass force
+ is a valid component of total force regardless of the presence of a vortical
+ wake.
+ The presented force formulation was shown to be equivalent to existing
+ theoretical work, under the specific conditions and assumptions of previous
+ studies [2,5,7,21,23].
+ The force formulation was also validated using a numerical data set generated
+ by Wang and Eldredge [21], wherein the flow around a pitching plate in
+ a steady freestream was simulated.
+ The calculated force shows fairly good agreement with the force reported
+ by Wang and Eldredge [21], although minor discrepancies indicate that further
+ work must be done to quantify errors due to discretization.
+ 
+\begin_inset Newline newline
+\end_inset
+
+When the no-slip condition holds, it was shown that the total impulse can
+ be equivalently expressed as
+\begin_inset Formula 
+\[
+P=P_{v}+P_{b}
+\]
+
+\end_inset
+
+which indicates that the no-slip condition causes the potential impulse
+ and image-vorticity impulse terms to cancel for all time, i.e., 
+\begin_inset Formula $P_{i}+P_{\phi}\equiv0$
+\end_inset
+
+ .
+ Such cancellation was indeed shown to hold in the Wang-Eldredge data set
+ [21].
+ This relationship could prove valuable to future predictive aerodynamic
+ models; the potential impulse can be calculated for all time a priori based
+ on body geometry and motion, which in turn places an integral restriction
+ on the evolution of the vorticity field.
+\begin_inset Newline newline
+\end_inset
+
+Two key insights regarding the classical added-mass force were emphasized.
+ First, for bodies of nonzero volume, the added-mass force differs depending
+ on whether body itself accelerates or whether the freestream flow accelerates
+ relative to the body.
+ This is a known phenomenon in the marine literature, but may be overlooked
+ in other fields.
+ Second, the most general expression for the added-mass force acting on
+ an accelerating flat plate includes a tangential component.
+\begin_inset Newline newline
+\end_inset
+
+Misinterpretations of added mass persist in the literature, wherein the
+ added-mass force is attributed to the acceleration of fluid that must move
+ with the body.
+ By inspection of the derived impulse terms, the authors adhere to the more
+ physically accurate interpretation that the added-mass force accounts for
+ the dynamic effect of the near-body vorticity distribution, without defining
+ a specific contour or associated region of fluid.
+ This interpretation arises due to the cancellation of the shed-vorticity
+ and image-vorticity impulse terms near the body surface.
+ Such cancellation reduces the importance of acquiring accurate near-body
+ vorticity data, which could be advantageous in application to experimental
+ data sets.
+ Investigation of the experimental utility of the presented force formulation
+ is left for future work.
+\end_layout
+
+\begin_layout Section
+Morton 1984: The Generation and Decay of Vorticity
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Vorticity generation equation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Prandtl 19XX
+\end_layout
+
+\begin_layout Section
+Liu 2013: Unsteady Thin-Airfoil Theory Revisited: Application of a Simple
+ Lift Formula
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Added mass lift per unit span!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Abstract & Introduction
+\end_layout
+
+\begin_layout Itemize
+The thin-airfoil lift formula is derived by using the simple lift formula
+ that contains the vortex lift and the lift associated with the fluid accelerati
+on.
+\end_layout
+
+\begin_layout Itemize
+Thin-airfoil theory originally developed by Munk [1] uses a vortex sheet
+ in a potential flow to model an actual flow over a thin airfoil, in which
+ the Kutta condition is imposed at the trailing edge to calculate the lift
+ and moment...
+ Recently, because of the renewed interests in active flutter control and
+ flapping flight, considerable efforts have been made to apply thin-airfoil
+ theory to unsteady flows associated with aeroelastic, flapping, and flexible
+ wings
+\end_layout
+
+\begin_layout Itemize
+The formulation given by von Kármán and Sears [6] based on the application
+ of the vortex impulse is particularly insightful because the unsteady lift
+ is explicitly expressed as a sum of the quasi-steady Kutta–Joukowski lift,
+ the added-mass lift, and the wake-induced contribution.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I should also consider this method to calculate the unsteady lift
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The wake-induced term leads to the so-called deficiency preventing the instantan
+eous lift from attaining the quasi-steady state immediately.
+ Interestingly, the von Kármán– Sears formulation remains the same when
+ the nonlinear effects induced by the wake are incorporated by McCune and
+ Tavares [14].
+ This implies that the von Kármán–Sears lift formula could be more generic
+ in terms of its physical foundations.
+\end_layout
+
+\begin_layout Itemize
+The physical foundations of thin-airfoil theory were discussed by Glauert
+ [15].
+ His argument is that a vortex sheet is a limiting model of a boundary layer
+ on the airfoil surface as the viscosity approaches to zero and the integration
+ of the vortex sheet strength is equal to the magnitude of the circulation
+ generating the lift.
+ The relationship between unsteady boundary-layer vorticity and bound-vortex
+ sheet strength was further discussed by Sears [16] along with the generalized
+ Kutta–Joukowski condition for a blunt trailing edge.
+ It is clear that a bound-vortex sheet in thin-airfoil theory represents
+ the airfoil plus its boundary layer, and the circulation is intimately
+ connected with the boundary-layer.
+ It is proposed by Sears [16] that the lift and moment are calculated by
+ using thin-airfoil theory, and the circulation is determined by boundary-layer
+ calculation such that thin-airfoil theory could be applied to a body with
+ boundary-layer separation near the blunt trailing edge.
+ Although these conceptual arguments are physically compelling, a derivation
+ of unsteady thin- airfoil theory from the Navier–Stokes (NS) equations
+ has not been systematically given in the general framework of viscous flows.
+ The feasible derivation should be based on a general force expression for
+ viscous flows.
+\end_layout
+
+\begin_layout Itemize
+In an incompressible viscous flow, as shown in Fig.
+ 1, the force acting on a solid body is given by
+\begin_inset Formula 
+\[
+\vec{F}=-\ointop_{\partial B}\left(-p\vec{n}+\vec{\tau}\right)\,\text{d}S=-\rho\iiintop_{V_{f}}\vec{a}\,\text{d}V+\ointop_{\Sigma}\left(-p\vec{n}+\vec{\tau}\right)\,\text{d}S\tag{Eq 1}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $p$
+\end_inset
+
+ is the pressure, 
+\begin_inset Formula $\vec{\tau}$
+\end_inset
+
+ is the surface shear-stress vector, 
+\begin_inset Formula $\vec{a}=\frac{\text{D}\vec{u}}{Dt}$
+\end_inset
+
+ is the acceleration, 
+\begin_inset Formula $\rho$
+\end_inset
+
+ is the fluid density, 
+\begin_inset Formula $\partial B$
+\end_inset
+
+ denotes a solid boundary of the body (wing) domain 
+\begin_inset Formula $B$
+\end_inset
+
+, 
+\begin_inset Formula $V_{f}$
+\end_inset
+
+ denotes the control volume of the fluid, 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ denotes an outer control surface in which the body is enclosed, and 
+\begin_inset Formula $\vec{n}$
+\end_inset
+
+ is the unit normal vector pointing to the outside of a control surface.
+ By using the equation 
+\begin_inset Formula $\vec{a}=\frac{\partial\vec{u}}{\partial t}+\vec{\omega}\times\vec{u}+\nabla\left(\frac{q^{2}}{2}\right)$
+\end_inset
+
+, Eq (1) becomes
+\begin_inset Formula 
+\begin{align*}
+F & =\rho\iiintop_{V_{f}}\vec{u}\times\vec{\omega}\,\text{d}V-\rho\iiintop_{V_{f}}\frac{\partial\vec{u}}{\partial t}\,\text{d}V-\ointop_{\Sigma}\left(p+\rho\frac{q^{2}}{2}\right)\vec{n}\,\text{d}S\\
+ & \qquad+\ointop_{\Sigma}\vec{\tau}\,\text{d}S-\rho\ointop_{\partial B}\left(\frac{q^{2}}{2}\right)\vec{n}\,\text{d}S\tag{Eq 2}
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula $u$
+\end_inset
+
+ is the velocity, 
+\begin_inset Formula $\omega$
+\end_inset
+
+ is the vorticity, and 
+\begin_inset Formula $q=\left|\vec{u}\right|$
+\end_inset
+
+.
+ The first term in the right-hand side (RHS) of Eq.
+ (2) is a volume integral of the Lamb vector 
+\begin_inset Formula $\vec{l}=\vec{u}×\vec{ω}$
+\end_inset
+
+ that represents the vortex force.
+ The second term is a volume integral of the local acceleration of fluid,
+ re- presenting the unsteady inertial effect induced by a moving solid body
+ and self-excited unsteady flow itself.
+ The third and fourth terms are the surface integrals of the total pressure
+ 
+\begin_inset Formula $P=p+\rho\frac{q^{2}}{2}$
+\end_inset
+
+ and the surface shear stress on the control surface 
+\begin_inset Formula $Σ$
+\end_inset
+
+.
+ The fifth term is the boundary term of the kinetic energy.
+\end_layout
+
+\begin_layout Itemize
+...Wang et al.
+ [26] circumvented this pressure problem by selecting a rectangular control
+ volume to obtain a very simple but sufficiently accurate lift formula.
+ It is found that, for a rectangular control surface whose upper and lower
+ faces are sufficiently far away from a wing, the contributions of the third
+ and fourth terms in the RHS of Eq.
+ (2) to the lift generation can be neglected.
+ Thus, the lift can be approximately decomposed into the two dominant terms:
+ the vortex force and the fluid acceleration.
+ This leads to the simple lift formula that is useful in an analysis of
+ the connection between vortical structures and lift generation in complex
+ unsteady flows associated with flapping wings.
+ The accuracy of the simple lift formula has been evaluated via direct numerical
+ simulation (DNS) for unsteady low-Reynolds- number flows [26].
+\end_layout
+
+\begin_layout Standard
+Simple Lift Formula
+\end_layout
+
+\begin_layout Itemize
+For a rectangular outer control surface 
+\begin_inset Formula $Σ$
+\end_inset
+
+ whose upper and lower faces are sufficiently far away from the wing, the
+ contributions of the third and fourth terms in the RHS of Eq.
+ (2) to the lift generation can be neglected.
+ Therefore, the simple lift formula (SLF) given by Wang et al.
+ [26] is expressed in the two dominant terms, i.e.,
+\begin_inset Formula 
+\[
+L\approx L_{\text{vor}}+L_{\text{a}}\tag{Eq 3}
+\]
+
+\end_inset
+
+In Eq 3, the vortex lift is given by
+\begin_inset Formula 
+\[
+L_{\text{vor}}=\rho\vec{k}\cdot\iintop_{V_{f}}\vec{u}\times\vec{\omega}\,\text{d}V
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\vec{k}$
+\end_inset
+
+ is the unit vector normal to the freestream velocity.
+ The lift associated with the fluid acceleration becomes
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+To finish off
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Saffman 19XX
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Have a look at this for the Wagner effect: http://lorenabarba.com/blog/student-gu
+est-blog-post-the-wagner-effect/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Theodorsen 1935: General Theory of Aerodynamic Instability and Mechanism
+ of Flutter
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Interesting paper but (apparently according to Gaunaa 2002) it ignores horizonta
+l acceleration/etc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Wilbert 2018: PIV Analysis of Ludwig Prandtl’s Historic Flow Visualization
  Films

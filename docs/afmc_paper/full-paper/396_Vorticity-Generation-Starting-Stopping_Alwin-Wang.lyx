@@ -274,27 +274,29 @@ literal "false"
 
  using OpenFOAM.
  Both studies determined coefficients of lift and drag during the starting
- and stopping phases and verified Kelvin's and Stoke's theorems for vorticity
- around various contours.
- This paper extends on these studies by considering the vorticity generation
- mechanisms and exploring the physical phenomina behind leading edge vortices
- observed during the stopping phase 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Ref V&B
-\end_layout
+ and stopping phases and verified Kelvin's and Stoke's theorems (shown in
+ Eq 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Stokes"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-.
-\end_layout
+)for vorticity around various contours.
+ This paper extends on these studies by considering the vorticity generation
+ mechanisms and exploring the physical phenomina behind leading edge vortices
+ observed during the stopping phase.
+\begin_inset Formula 
+\begin{equation}
+\Gamma=\ointop_{C}\vec{V}\cdot\text{d}\vec{l}=\iintop_{S}\vec{\nabla}\times\vec{v}\cdot\text{d}S=\iintop_{S}\vec{\omega}\cdot\text{d}\vec{S}\label{eq:Stokes}
+\end{equation}
 
-\begin_layout Standard
-Studies have been performed on the vortex shedding that occurs at the trailing
- edge <Kutta condition> <Xu paper> <Lei paper> etc.
- 
+\end_inset
+
+
 \begin_inset Note Note
 status open
 
@@ -302,12 +304,14 @@ status open
 Include the Kutta condition
 \end_layout
 
+\begin_layout Plain Layout
+Studies have been performed on the vortex shedding that occurs at the trailing
+ edge <Kutta condition> <Xu paper> <Lei paper> etc.
+\end_layout
+
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -329,10 +333,6 @@ https://journals.aps.org/prfluids/abstract/10.1103/PhysRevFluids.3.014701
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
 It is recognised that the sources of vorticity must occur at the boundary
  of the fluid regions and for the starting and starting and stopping phases
  of motion, Morton 
@@ -345,7 +345,17 @@ literal "false"
 
  outlines two production mechanisms for vorticity: tangential pressure gradients
  from the fluid side, and the acceleration of the surface from the wall
- side.
+ side (shown in Eq 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Morton Full VortGen"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
  These contributions were investigated by Blackburn and Henderson 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -357,7 +367,152 @@ literal "false"
  for vortex shedding of oscillating cylinders and it was noted that the
  pressure-gradient generation mechanism could override the surface-acceleration
  generation mechanism and vice verse.
+\begin_inset Formula 
+\begin{equation}
+-\nu\left(\frac{\partial\vec{\omega}}{\partial z}\right)_{0}=-\frac{1}{\rho}\left[\left(\vec{n}\times\nabla\right)\vec{p}\right]_{0}-\vec{n}\times\frac{\text{d}V}{\text{d}t}\label{eq:Morton Full VortGen}
+\end{equation}
+
+\end_inset
+
+Zhu et al.
  
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhu2015"
+literal "false"
+
+\end_inset
+
+ investigated the casual mechanisms for airfoil circulation using vorticity
+ creation theory based on Lighthill's relations 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lighthill1986"
+literal "false"
+
+\end_inset
+
+ (shown in Eq 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:BVF"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+)instead of boundary-layer theory.
+ Additionally, the realisation of the Kutta condition and creation of starting
+ vortex was determined to be through a complex chain of processes which
+ were also explained by considering boundary vorticity flux (BVF), 
+\begin_inset Formula $\sigma$
+\end_inset
+
+, also shown in Eq 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:BVF"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Formula 
+\begin{equation}
+\frac{1}{\rho}=\frac{\partial p}{\partial s}=\nu\frac{\partial\omega}{\partial n}\equiv\sigma\label{eq:BVF}
+\end{equation}
+
+\end_inset
+
+Another phenomena of interest identified by Vincent and Blackburn 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vincent2014"
+literal "false"
+
+\end_inset
+
+ and Agromayo, Rúa and Kristoffersen 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Agromayor2017"
+literal "false"
+
+\end_inset
+
+ was the large value of lift during the starting phase.
+ The explanation can be attributed to unsteady viscous flows over airfoils
+ given by Kármán and Sears 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Karman1938"
+literal "false"
+
+\end_inset
+
+ and later extended by Liu et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Liu2015"
+literal "false"
+
+\end_inset
+
+ and Limacher, Morton and Wood 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Limacher2018"
+literal "false"
+
+\end_inset
+
+.
+ After the starting phase when the airfoil has attained a uniform velocity,
+ it was also observed the lift force would asymptote to a steady-state value.
+ An explanation given by Kármán and Sears 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Karman1938"
+literal "false"
+
+\end_inset
+
+ was due to a 
+\begin_inset Quotes eld
+\end_inset
+
+lift deficiency
+\begin_inset Quotes erd
+\end_inset
+
+ term due to a vorticity sheet in the wake.
+ This behaviour was also detailed in Saffman 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Saffman1993"
+literal "false"
+
+\end_inset
+
+ explaining the 
+\begin_inset Quotes eld
+\end_inset
+
+Wagner effect
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Both of these effects will be investigated when the vorticity is not contained
+ to a thin region as is the case here due to the low Reynolds number and
+ from a vorticity production perspective.
 \end_layout
 
 \begin_layout Section
@@ -429,8 +584,8 @@ ref
  equations in the moving reference frame fixed to the airfoil,
 \begin_inset Formula 
 \begin{align}
-\nabla\cdot\boldsymbol{u} & =0\\
-\frac{\partial\boldsymbol{u}}{\partial t}+\boldsymbol{u}\cdot\nabla\boldsymbol{u} & =-\boldsymbol{\nabla}P+\frac{1}{\text{Re}}\nabla^{2}\boldsymbol{u}-\boldsymbol{a}
+\nabla\cdot\boldsymbol{u} & =0\label{eq:continuity}\\
+\frac{\partial\boldsymbol{u}}{\partial t}+\boldsymbol{u}\cdot\nabla\boldsymbol{u} & =-\boldsymbol{\nabla}P+\frac{1}{\text{Re}}\nabla^{2}\boldsymbol{u}-\boldsymbol{a}\label{eq:non-dim NS}
 \end{align}
 
 \end_inset
@@ -513,7 +668,7 @@ https://en.wikipedia.org/wiki/Vorticity_equation
 
 \begin_inset Formula 
 \begin{equation}
--\nu\frac{\partial\boldsymbol{\omega}}{\partial z}\Big|_{z=0}=-\boldsymbol{n}\times\left(\nabla\boldsymbol{P}+\boldsymbol{a}\right)
+-\nu\frac{\partial\boldsymbol{\omega}}{\partial z}\Big|_{z=0}=-\boldsymbol{n}\times\left(\nabla\boldsymbol{P}+\boldsymbol{a}\right)\label{eq:Morton VortGen}
 \end{equation}
 
 \end_inset
@@ -713,6 +868,20 @@ Ref
 
 \begin_layout Section
 Results and Discussion
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Chose gap between start and stop so vortices separated and Wagner effect
+ nullified O(c/V)
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
