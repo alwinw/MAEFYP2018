@@ -454,7 +454,7 @@ Anderson 2010: thin airfoil theory
 von Karman 1935: 
 \begin_inset Formula 
 \[
-L=-\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{dx}+\rho U\Gamma_{0}-\rho U\intop_{1}^{\infty}\gamma\left(\varepsilon\right)\frac{\text{d}\varepsilon}{\sqrt{\varepsilon^{2}-1}}
+L=-\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{dx}+\rho U\Gamma_{0}-\rho U\intop_{1}^{\infty}\gamma\left(\xi\right)\frac{\text{d}\xi}{\sqrt{\xi^{2}-1}}
 \]
 
 \end_inset
@@ -3970,7 +3970,7 @@ Momentum is conserved.
 Using Eq 11, the lift may also be written in the form
 \begin_inset Formula 
 \[
-L=-\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{dx}+\rho U\Gamma_{0}-\rho U\intop_{1}^{\infty}\gamma\left(\varepsilon\right)\frac{\text{d}\varepsilon}{\sqrt{\varepsilon^{2}-1}}
+L=-\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{dx}+\rho U\Gamma_{0}-\rho U\intop_{1}^{\infty}\gamma\left(\xi\right)\frac{\text{d}\xi}{\sqrt{\xi^{2}-1}}
 \]
 
 \end_inset
@@ -5581,6 +5581,35 @@ To finish off
 
 \begin_layout Section
 Saffman 19XX
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Have a look at this for the Wagner effect: http://lorenabarba.com/blog/student-gu
+est-blog-post-the-wagner-effect/
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*

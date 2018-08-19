@@ -454,7 +454,7 @@ Anderson 2010: thin airfoil theory
 von Karman 1935: 
 \begin_inset Formula 
 \[
-L=-\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{dx}+\rho U\Gamma_{0}-\rho U\intop_{1}^{\infty}\gamma\left(\varepsilon\right)\frac{\text{d}\varepsilon}{\sqrt{\varepsilon^{2}-1}}
+L=-\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{dx}+\rho U\Gamma_{0}-\rho U\intop_{1}^{\infty}\gamma\left(\xi\right)\frac{\text{d}\xi}{\sqrt{\xi^{2}-1}}
 \]
 
 \end_inset
@@ -3210,9 +3210,8 @@ The airfoil put into motion creates a circulation around it- self due to
  of conservation of moment of momentum, a counter-circulation develops in
  the fluid, called the "starting vortex.'' The airfoil and the starting vortex
  constitute a vortex-pair with an increasing distance between the two vortex
- lines, be- cause the starting vortex remains at the place where it was
- created (neglecting its slow displacement perpen- dicular to the flight
- direction).
+ lines, because the starting vortex remains at the place where it was created
+ (neglecting its slow displacement perpendicular to the flight direction).
  Hence the momentum of the vortex pair, being proportional to the product
  of the circulation and the distance between the two vortices, increases
  continuously.
@@ -3970,7 +3969,7 @@ Momentum is conserved.
 Using Eq 11, the lift may also be written in the form
 \begin_inset Formula 
 \[
-L=-\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{dx}+\rho U\Gamma_{0}-\rho U\intop_{1}^{\infty}\gamma\left(\varepsilon\right)\frac{\text{d}\varepsilon}{\sqrt{\varepsilon^{2}-1}}
+L=-\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{dx}+\rho U\Gamma_{0}-\rho U\intop_{1}^{\infty}\gamma\left(\xi\right)\frac{\text{d}\xi}{\sqrt{\xi^{2}-1}}
 \]
 
 \end_inset

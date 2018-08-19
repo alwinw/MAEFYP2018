@@ -218,4 +218,13 @@
   publisher = {American Physical Society ({APS})},
 }
 
+@Book{Saffman1993,
+  title     = {{V}ortex {D}ynamics ({C}ambridge {M}onographs on {M}echanics)},
+  publisher = {Cambridge University Press},
+  year      = {1993},
+  author    = {P. G. Saffman},
+  isbn      = {052142058X},
+  url       = {https://www.amazon.com/Vortex-Dynamics-Cambridge-Monographs-Mechanics/dp/052142058X?SubscriptionId=AKIAIOBINVZYXZQZ2U3A&tag=chimbori05-20&linkCode=xm2&camp=2025&creative=165953&creativeASIN=052142058X},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
