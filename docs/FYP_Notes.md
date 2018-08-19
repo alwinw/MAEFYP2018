@@ -41,6 +41,8 @@ ctrl+shift+m gives %>%
 
 Look for .flx for forces
 
+Look for .flx for forces
+
 # Convergence
  - Increased N_P to 9 for convergence of derivatives
  - Needed to decrease D_T to 0.0005
