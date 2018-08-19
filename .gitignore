@@ -100,3 +100,5 @@ rsconnect/
 # Exception for reports
 #--------------------------------------
 !/docs/afmc_paper/*
+
+R/\.RData

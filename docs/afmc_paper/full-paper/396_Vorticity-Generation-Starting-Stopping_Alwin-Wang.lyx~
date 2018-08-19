@@ -296,7 +296,7 @@ literal "false"
  using OpenFOAM.
  Both studies determined coefficients of lift and drag during the starting
  and stopping phases and verified Kelvin's and Stoke's theorems (shown in
- Eq 
+ equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:Stokes"
@@ -366,7 +366,7 @@ literal "false"
 
  outlines two production mechanisms for vorticity: tangential pressure gradients
  from the fluid side, and the acceleration of the surface from the wall
- side (shown in Eq 
+ side (shown in equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:Morton Full VortGen"
@@ -413,7 +413,7 @@ literal "false"
 
 \end_inset
 
- (shown in Eq 
+ (shown in equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:BVF"
@@ -430,7 +430,7 @@ noprefix "false"
 \begin_inset Formula $\sigma$
 \end_inset
 
-, also shown in Eq 
+, also shown in equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:BVF"
@@ -571,6 +571,10 @@ status open
 	lyxscale 30
 	width 100col%
 
+\end_inset
+
+
+\begin_inset VSpace -1em
 \end_inset
 
 
@@ -832,17 +836,7 @@ Check the -ve signs AND the definition of dV(t)/dt etc for acceleration
 
 \end_inset
 
-It is clear from Eq 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:VortGen"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- that convergence of second derivatives for 
+It is clear that the convergence of second derivatives for 
 \begin_inset Formula $u$
 \end_inset
 
@@ -877,7 +871,18 @@ literal "false"
 
 \end_inset
 
- which represents non-impulsively started flow to unity free-stream velocity.
+ which represents non-impulsively started flow to unity free-stream velocity
+ (figure 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:BC_airfoil"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
  In Saffman's detail of the 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -924,6 +929,97 @@ exiting
 
  the reference frame of the airfoil.
  
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename BC_airfoil_accel.png
+	lyxscale 30
+	width 95col%
+	groupId BC_Airfoil
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename BC_inflow_vel.png
+	lyxscale 30
+	width 95col%
+	groupId BC_Airfoil
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename BC_airfoil_disp.png
+	lyxscale 30
+	width 95col%
+	groupId BC_Airfoil
+
+\end_inset
+
+
+\begin_inset VSpace -1em
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Airfoil during the starting and stopping phases.
+ Note that the definition of 
+\begin_inset Formula $x$
+\end_inset
+
+ is consistent with the solution domain the accelerating reference frame.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:BC_airfoil"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This image needs to be fixed to be counter clockwise
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -994,7 +1090,7 @@ literal "false"
 status open
 
 \begin_layout Plain Layout
-Plot of 
+Plot of Error
 \end_layout
 
 \end_inset
@@ -1131,7 +1227,7 @@ literal "false"
 \end_inset
 
  derived the lift for an airfoil in non-uniform motion using the principles
- of thin airfoil theory to arrive at Eq 
+ of thin airfoil theory to arrive at equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:unsteady lift"
@@ -1158,7 +1254,7 @@ where
 \end_inset
 
  are is the vortex sheet strength and circulation respectively calculated
- from thin airfoil theory (Eq 
+ from thin airfoil theory (equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:gamma theta"
