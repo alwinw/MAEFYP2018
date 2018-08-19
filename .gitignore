@@ -95,3 +95,8 @@ rsconnect/
 *.exe
 *.out
 *.app
+
+#======================================
+# Exception for reports
+#--------------------------------------
+!/docs/afmc_paper/*

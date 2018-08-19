@@ -13,6 +13,13 @@
 %% 21st Australasian Fluid Mechanics Conference (21AFMC)
 
 \usepackage{graphicx}
+
+% Adjust hyphenation
+\pretolerance=3000
+\tolerance=3000         % Extra white space added instead of hypen
+\emergencystretch=0pt   % Don't ever write on the margin
+\righthyphenmin=3       % Min X characters on right
+\lefthyphenmin=3        % Min Y characters on left
 \end_preamble
 \options twocolumn
 \use_default_options true
@@ -110,8 +117,8 @@ title{Examination of the Details of 2D Vorticity Generation Around the Airfoil
 
 
 \backslash
-author{A.~R.
- Wang and H.~M.
+author{Alwin R.
+ Wang and Hugh M.
  Blackburn} 
 \end_layout
 
@@ -151,6 +158,20 @@ maketitle
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I need to detail the viscosity and Re used somewhere...
+ and density = 1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Abstract
 This paper presents a numerical study of vorticity generation around a 2D
  airfoil during the starting and stopping phases of motion.
@@ -176,7 +197,7 @@ Introduction
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 - Starting and stopping vortices shown by PTM (1957) and analysed by Willert
@@ -274,40 +295,65 @@ literal "false"
 
  using OpenFOAM.
  Both studies determined coefficients of lift and drag during the starting
- and stopping phases and verified Kelvin's and Stoke's theorems for vorticity
- around various contours.
- This paper extends on these studies by considering the vorticity generation
- mechanisms and exploring the physical phenomina behind leading edge vortices
- observed during the stopping phase 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Ref V&B
-\end_layout
+ and stopping phases and verified Kelvin's and Stoke's theorems (shown in
+ Eq 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Stokes"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-.
-\end_layout
+)for vorticity around various contours.
+ This paper extends on these studies by considering the vorticity generation
+ mechanisms and exploring the physical phenomina behind leading edge vortices
+ observed during the stopping phase.
+\begin_inset Formula 
+\begin{equation}
+\Gamma=\ointop_{C}\vec{V}\cdot\text{d}\vec{l}=\iintop_{S}\vec{\nabla}\times\vec{v}\cdot\text{d}S=\iintop_{S}\vec{\omega}\cdot\text{d}\vec{S}\label{eq:Stokes}
+\end{equation}
 
-\begin_layout Standard
-Studies have been performed on the vortex shedding that occurs at the trailing
- edge <Kutta condition> <Xu paper> <Lei paper> etc.
- 
+\end_inset
+
+
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Include the Kutta condition
 \end_layout
 
+\begin_layout Plain Layout
+Studies have been performed on the vortex shedding that occurs at the trailing
+ edge <Kutta condition> <Xu paper> <Lei paper> etc.
+\end_layout
+
 \end_inset
 
 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Acceleration of a body (dense particles) through a fluid will accelerate
+ the fluid surrounding the body as a result of work done by body on fluid.
+ Thus this body-induced acceleration can be related to an additional mass
+ (F=ma) and eventually a virtual mass that is called added mass.
+\begin_inset Newline newline
+\end_inset
+
+https://www.researchgate.net/post/What_is_the_physical_interpretation_of_the_added
+_mass_term_in_the_Maxey-Riley-Gatignol_Equation
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
+https://journals.aps.org/prfluids/abstract/10.1103/PhysRevFluids.3.014701
+\end_layout
+
+\end_inset
+
 It is recognised that the sources of vorticity must occur at the boundary
  of the fluid regions and for the starting and starting and stopping phases
  of motion, Morton 
@@ -320,7 +366,17 @@ literal "false"
 
  outlines two production mechanisms for vorticity: tangential pressure gradients
  from the fluid side, and the acceleration of the surface from the wall
- side.
+ side (shown in Eq 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Morton Full VortGen"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
  These contributions were investigated by Blackburn and Henderson 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -332,7 +388,152 @@ literal "false"
  for vortex shedding of oscillating cylinders and it was noted that the
  pressure-gradient generation mechanism could override the surface-acceleration
  generation mechanism and vice verse.
+\begin_inset Formula 
+\begin{equation}
+-\nu\left(\frac{\partial\vec{\omega}}{\partial z}\right)_{0}=-\frac{1}{\rho}\left[\left(\vec{n}\times\nabla\right)\vec{p}\right]_{0}-\vec{n}\times\frac{\text{d}V}{\text{d}t}\label{eq:Morton Full VortGen}
+\end{equation}
+
+\end_inset
+
+Zhu et al.
  
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhu2015"
+literal "false"
+
+\end_inset
+
+ investigated the casual mechanisms for airfoil circulation using vorticity
+ creation theory based on Lighthill's relations 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lighthill1986"
+literal "false"
+
+\end_inset
+
+ (shown in Eq 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:BVF"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+)instead of boundary-layer theory.
+ Additionally, the realisation of the Kutta condition and creation of starting
+ vortex was determined to be through a complex chain of processes which
+ were also explained by considering boundary vorticity flux, 
+\begin_inset Formula $\sigma$
+\end_inset
+
+, also shown in Eq 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:BVF"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Formula 
+\begin{equation}
+\frac{1}{\rho}=\frac{\partial p}{\partial s}=\nu\frac{\partial\omega}{\partial n}\equiv\sigma\label{eq:BVF}
+\end{equation}
+
+\end_inset
+
+Another phenomena of interest identified by Vincent and Blackburn 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vincent2014"
+literal "false"
+
+\end_inset
+
+ and Agromayo, Rúa and Kristoffersen 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Agromayor2017"
+literal "false"
+
+\end_inset
+
+ was the large value of lift during the starting phase.
+ The explanation can be attributed to unsteady flows over airfoils given
+ by Kármán and Sears 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Karman1938"
+literal "false"
+
+\end_inset
+
+ and later extended by Liu et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Liu2015"
+literal "false"
+
+\end_inset
+
+ and Limacher, Morton and Wood 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Limacher2018"
+literal "false"
+
+\end_inset
+
+.
+ After the starting phase when the airfoil has attained a uniform velocity,
+ it was also observed the lift force would asymptote to a steady-state value.
+ An explanation given by Kármán and Sears 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Karman1938"
+literal "false"
+
+\end_inset
+
+ was due to a 
+\begin_inset Quotes eld
+\end_inset
+
+lift deficiency
+\begin_inset Quotes erd
+\end_inset
+
+ term due to a vorticity sheet in the wake.
+ This behaviour was also detailed in Saffman explaining the 
+\begin_inset Quotes eld
+\end_inset
+
+Wagner effect
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Saffman1993,Wagner1925"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Both of these effects will be investigated when the vorticity is not contained
+ to a thin region as is the case here due to the low Reynolds number and
+ from a vorticity production perspective.
 \end_layout
 
 \begin_layout Section
@@ -341,11 +542,67 @@ Numerical Method
 
 \begin_layout Subsection
 Governing Equations and Numerical Approach 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-2016 626
+Example: AFMC 2016 626
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Coordinate-Systems.png
+	lyxscale 30
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Coordinate system used
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Coordinate-system-used"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This image needs to be fixed to be counter clockwise
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -389,34 +646,24 @@ literal "false"
 
 \end_inset
 
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-ref
-\end_layout
-
-\end_inset
-
  which is a spectral element-Fourier DNS code.
  The governing equations solved were the non-dimensionalised Navier-Stokes
  equations in the moving reference frame fixed to the airfoil,
 \begin_inset Formula 
 \begin{align}
-\nabla\cdot\boldsymbol{u} & =0\\
-\frac{\partial\boldsymbol{u}}{\partial t}+\boldsymbol{u}\cdot\nabla\boldsymbol{u} & =-\boldsymbol{\nabla}P+\frac{1}{\text{Re}}\nabla^{2}\boldsymbol{u}-\boldsymbol{a}
+\nabla\cdot\vec{u} & =0\label{eq:continuity}\\
+\frac{\partial\vec{u}}{\partial t}+\vec{u}\cdot\nabla\vec{u} & =-\nabla\vec{P}+\frac{1}{\text{Re}}\nabla^{2}\vec{u}-a\label{eq:non-dim NS}
 \end{align}
 
 \end_inset
 
 where 
-\begin_inset Formula $P=\frac{p}{\rho}$
+\begin_inset Formula $\vec{P}=\frac{\vec{p}}{\rho}$
 \end_inset
 
-, 
+ and
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Formula $\boldsymbol{u}$
@@ -432,13 +679,12 @@ status open
 \end_inset
 
  
-\begin_inset Formula $\boldsymbol{a}$
+\begin_inset Formula $a$
 \end_inset
 
  is the acceleration of the reference frame.
- 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Some reference by Fox et al in the Agro paper
@@ -454,10 +700,14 @@ Some reference by Fox et al in the Agro paper
 \begin_inset Formula $V\left(t\right)$
 \end_inset
 
- is the velocity of the reference frame.
+ is the velocity of the reference frame such that 
+\begin_inset Formula $a=V'\left(t\right)$
+\end_inset
+
+.
  
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 How is the pressure boundary condition found? Hugh's 1999 paper
@@ -477,7 +727,7 @@ For motion of a two-dimensional plane boundary moving in its own plane with
 , the diffusive flux density (flow per unit lenth per unit time) of positive
  vorticity outwards from the wall is given as
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 https://en.wikipedia.org/wiki/Vorticity_equation
@@ -488,25 +738,25 @@ https://en.wikipedia.org/wiki/Vorticity_equation
 
 \begin_inset Formula 
 \begin{equation}
--\nu\frac{\partial\boldsymbol{\omega}}{\partial z}\Big|_{z=0}=-\boldsymbol{n}\times\left(\nabla\boldsymbol{P}+\boldsymbol{a}\right)
+\sigma\equiv-\nu\frac{\partial\vec{\omega}}{\partial z}\Big|_{z=0}=-\vec{n}\times\left(\nabla\vec{P}+\vec{a}\right)\label{eq:Morton VortGen}
 \end{equation}
 
 \end_inset
 
 where 
-\begin_inset Formula $\boldsymbol{\omega}$
+\begin_inset Formula $\vec{\omega}$
 \end_inset
 
  is the vorticity, 
-\begin_inset Formula $\boldsymbol{n}$
+\begin_inset Formula $\vec{n}$
 \end_inset
 
- is the unit wall-normal vector 
+ is the unit wall-normal vector, 
 \begin_inset Formula $z$
 \end_inset
 
  is the distance normal to the surface and 
-\begin_inset Formula $\boldsymbol{a}=V'\left(t\right)$
+\begin_inset Formula $\vec{a}$
 \end_inset
 
  is the local wall acceleration 
@@ -518,28 +768,31 @@ literal "false"
 \end_inset
 
 .
- 
-\begin_inset Note Note
-status open
+ The term boundary vorticity flux (BVF), 
+\begin_inset Formula $\sigma$
+\end_inset
 
-\begin_layout Plain Layout
-Ref Morton
-\end_layout
+, has been introduced based on Zhu et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhu2015"
+literal "false"
 
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Standard
 It is assumed that a local section of airfoil can be modelled as an infinite
  plane with negligible curvature and the acceleration of the plane is given
  by 
-\begin_inset Formula $\boldsymbol{t}\cdot\boldsymbol{a}$
+\begin_inset Formula $\vec{t}\cdot\vec{a}$
 \end_inset
 
  where 
-\begin_inset Formula $\boldsymbol{t}$
+\begin_inset Formula $\vec{t}$
 \end_inset
 
  is a unit tangent vector as shown in figure 
@@ -556,14 +809,14 @@ noprefix "false"
  Thus, the vorticity production around the airfoil is given as 
 \begin_inset Formula 
 \begin{align}
--\nu\boldsymbol{n}\cdot\nabla\boldsymbol{\omega} & =-\boldsymbol{n}\times\nabla\boldsymbol{P}-\boldsymbol{t}\cdot\boldsymbol{a}
+\sigma\equiv-\nu\vec{n}\cdot\nabla\vec{\omega} & =-\vec{n}\times\nabla\vec{P}-\vec{t}\cdot\vec{a}\label{eq:VortGen}
 \end{align}
 
 \end_inset
 
 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Check the -ve signs AND the definition of dV(t)/dt etc for acceleration
@@ -579,68 +832,106 @@ Check the -ve signs AND the definition of dV(t)/dt etc for acceleration
 
 \end_inset
 
-
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename Coordinate-Systems.png
-	lyxscale 30
-	width 100col%
+It is clear from Eq 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:VortGen"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
+ that convergence of second derivatives for 
+\begin_inset Formula $u$
+\end_inset
 
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+ will be required to accurately determine 
+\begin_inset Formula $\nabla\vec{\omega}$
+\end_inset
+
+.
 \end_layout
 
-\begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
 
 \begin_layout Plain Layout
-Coordinate system used
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Coordinate-system-used"
-
-\end_inset
-
-
+Chose gap between start and stop so vortices separated and Wagner effect
+ nullified O(c/V)
 \end_layout
 
 \end_inset
 
+The acceleration function for the airfoil was chosen to be the same as Vincent
+ and Blackburn 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vincent2014"
+literal "false"
 
+\end_inset
+
+ which represents non-impulsively started flow to unity free-stream velocity.
+ In Saffman's detail of the 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Saffman1993"
+literal "false"
+
+\end_inset
+
+ explaining the 
+\begin_inset Quotes eld
+\end_inset
+
+Wagner effect
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Wagner1925"
+literal "false"
+
+\end_inset
+
+, it is noted that the initial lift is one-half of the final steady-state
+ lift after a time 
+\begin_inset Formula $O\left(c/v\right)$
+\end_inset
+
+.
+ As such, a period of 
+\begin_inset Formula $0.8\,\text{s}$
+\end_inset
+
+ of uniform flow between the starting and stopping phases allows the convergence
+ of lift to be investigated without the need for an excessively long grid
+ domain to prevent the starting vortex 
+\begin_inset Quotes eld
+\end_inset
+
+exiting
+\begin_inset Quotes erd
+\end_inset
+
+ the reference frame of the airfoil.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-<image of section of airfoil, maybe with a 
-\begin_inset Quotes eld
-\end_inset
-
-zoom
-\begin_inset Quotes erd
-\end_inset
-
-/
-\begin_inset Quotes eld
-\end_inset
-
-breakout
-\begin_inset Quotes erd
-\end_inset
-
- that shows a flat surface with negligible curvature>
-\end_layout
-
-\end_inset
-
-
+plot of a and u
 \end_layout
 
 \end_inset
@@ -657,11 +948,74 @@ Grid and Time Step Refinement
 status open
 
 \begin_layout Plain Layout
-2016 629
+Example: 2016 629
 \end_layout
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Additional refinement of the mesh used by 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Additional refinement on the mesh used by Vincent and Blackburn 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vincent2014"
+literal "false"
+
+\end_inset
+
+ was performed to obtain convergence of second derivatives.
+ The local mesh density at the leading edge and trailing edge were increased
+ and the order of the tensor product nodal basis functions increased from
+ 
+\begin_inset Formula $5$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Plot of 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Plot of N-S
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 The spectral element mesh used had X spectral elements as shown in Y.
  Local mesh refinement was concentrated near the surface of the airfoil
  to resolve the boundary layer.
@@ -688,13 +1042,208 @@ As no analytical solution for this flow exists, the convergence of the flow
 status open
 
 \begin_layout Plain Layout
-Ref
+Ref Hugh B 2004
 \end_layout
 
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Subsection
+Unsteady Thin-Airfoil Theory
+\end_layout
+
+\begin_layout Standard
+According to classic thin airfoil theory provided in Anderson 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Anderson2010"
+literal "false"
+
+\end_inset
+
+ the vortex sheet strength of an airfoil, 
+\begin_inset Formula $\gamma\left(\xi\right)$
+\end_inset
+
+, can be determined as
+\begin_inset Formula 
+\begin{equation}
+\frac{1}{2\pi}\intop_{-1}^{1}\frac{\gamma\left(\xi\right)}{x-\xi}=V_{\infty}\left(\alpha-\frac{\text{d}z}{\text{d}x}\right)\label{eq:TAT integral}
+\end{equation}
+
+\end_inset
+
+where the terminals have been adjusted to match the definition provided
+ in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Karman1938"
+literal "false"
+
+\end_inset
+
+ and 
+\begin_inset Formula $\frac{\text{d}z}{\text{d}x}=0$
+\end_inset
+
+ in this analysis as the NACA0012 is a symmetric airfoil.
+ The transformations 
+\begin_inset Formula $\xi=-\cos\left(\theta\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $x=-\cos\left(\theta_{0}\right)$
+\end_inset
+
+ are now used to obtain the standard result
+\begin_inset Formula 
+\begin{equation}
+\gamma\left(\theta\right)=2\alpha V_{\infty}\frac{1+\cos\left(\theta\right)}{\sin\left(\theta\right)}\label{eq:gamma theta}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\alpha=4\text{°}$
+\end_inset
+
+ and 
+\begin_inset Formula $V_{\infty}$
+\end_inset
+
+ is the prescribed boundary condition, 
+\begin_inset Formula $V_{\infty}=-V\left(t\right)$
+\end_inset
+
+, for this analysis.
  
+\end_layout
+
+\begin_layout Standard
+Kármán and Sears 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Karman1938"
+literal "false"
+
+\end_inset
+
+ derived the lift for an airfoil in non-uniform motion using the principles
+ of thin airfoil theory to arrive at Eq 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:unsteady lift"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+L=\underset{\text{Steady}}{\underset{\text{Quasi-}}{\underbrace{\rho V_{\infty}\Gamma_{0}}}}-\underset{\text{Apparent Mass}}{\underbrace{\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{dx}}}-\underset{\text{Wake Effect}}{\underbrace{\rho V_{\infty}\intop_{1}^{\infty}\gamma\left(\varepsilon\right)\frac{\text{d}\varepsilon}{\sqrt{\varepsilon^{2}-1}}}}\label{eq:unsteady lift}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\gamma_{0}\left(x\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\Gamma_{0}$
+\end_inset
+
+ are is the vortex sheet strength and circulation respectively calculated
+ from thin airfoil theory (Eq 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gamma theta"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), and 
+\begin_inset Formula $\gamma\left(\varepsilon\right)$
+\end_inset
+
+ is the vorticity of the wake assumed to be on the airfoil plane a distance
+ 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ from the mid chord.
+ While Kármán and Sears 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Karman1938"
+literal "false"
+
+\end_inset
+
+ present a solution for the wake effect term, from PIV by Willert and Kompenhans
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Willert2010"
+literal "false"
+
+\end_inset
+
+ it is clear the assumption of the wake remaining in the same plane as the
+ airfoil does not hold as wake vortex sheet rolls up to form the starting
+ vortex.
+ Thus, only the first two terms (quasi-steady state, 
+\begin_inset Formula $L_{0}$
+\end_inset
+
+, and apparent mass, 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+) will be investigated.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I should be able to get 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+ in terms of 
+\begin_inset Formula $\theta$
+\end_inset
+
+ only using integration by parts?
+\begin_inset Formula 
+\begin{gather}
+L_{0}=\rho V_{\infty}\Gamma_{0}=2\pi\alpha\rho V_{\infty}\\
+L_{1}=-\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{dx}
+\end{gather}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Change this or the wording to something more appropriate
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -702,7 +1251,21 @@ Results and Discussion
 \end_layout
 
 \begin_layout Subsection
-Development of Vortices
+Starting Vortex and Establishing the Kutta Condition
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Wu outlined key stages in establishing the Kutta condition.
+ Vorticity generation for each has been plotted
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -720,7 +1283,25 @@ Show a plot of the kutta condition being enforced through vorticity generation
 \end_layout
 
 \begin_layout Subsection
-Impulsively and Non-Impulsively Started Flow
+Vorticity Generation Mechanism
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+shear layer and acceleration are analogous to an accelerating cylinder Ref
+ Blackburn
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Unsteady Thin-Airfoil Theory
 \end_layout
 
 \begin_layout Standard
@@ -736,10 +1317,6 @@ Discretised steps vs smoothed top had vs const acceleration trapezium shape
 
 \end_layout
 
-\begin_layout Subsection
-Effect of Reynolds Number
-\end_layout
-
 \begin_layout Section
 Conclusions
 \end_layout
@@ -747,72 +1324,6 @@ Conclusions
 \begin_layout Standard
 You should include a brief conclusion section which summarises the results
  of your paper.
-\end_layout
-
-\begin_layout Section
-Acknowledgements
-\end_layout
-
-\begin_layout Standard
-Any acknowledgements should appear immediately before the references.
- This template was modified from the one for 20
-\begin_inset Formula $^{\textrm{th}}$
-\end_inset
-
- AFMC in Perth.
-\end_layout
-
-\begin_layout Standard
-The references are listed in alphabetical order (by first author) and formatted
- as shown by the examples at the end of this paper.
- They may be referred to by the reference number alone or by the author(s)
- together with the reference number as in 
-\begin_inset Quotes eld
-\end_inset
-
-is a book, 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "McCormick_1994"
-literal "true"
-
-\end_inset
-
- is an article in a proceedings, 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Rosenhead_1963"
-literal "true"
-
-\end_inset
-
- is an edited book, and reference Cooley and Tukey 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Cooley_Tukey_1965"
-literal "true"
-
-\end_inset
-
- is an article in a journal.
-\begin_inset Quotes erd
-\end_inset
-
- Multiple citations should be written as 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Goosens_etal_1994,Rosenhead_1963"
-literal "true"
-
-\end_inset
-
-.
- This LyX template uses the bibliography style file 
-\family typewriter
-afmc.bst
-\family default
- (generously contributed by Andrew Kiss of RSES, ANU).
- 
 \end_layout
 
 \begin_layout Standard
