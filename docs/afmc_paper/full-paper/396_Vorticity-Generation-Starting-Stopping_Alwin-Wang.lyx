@@ -197,7 +197,7 @@ Introduction
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 - Starting and stopping vortices shown by PTM (1957) and analysed by Willert
@@ -319,7 +319,7 @@ noprefix "false"
 
 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Include the Kutta condition
@@ -334,7 +334,7 @@ Studies have been performed on the vortex shedding that occurs at the trailing
 
 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Acceleration of a body (dense particles) through a fluid will accelerate
@@ -597,23 +597,7 @@ name "fig:Coordinate-system-used"
 status open
 
 \begin_layout Plain Layout
-<image of section of airfoil, maybe with a 
-\begin_inset Quotes eld
-\end_inset
-
-zoom
-\begin_inset Quotes erd
-\end_inset
-
-/
-\begin_inset Quotes eld
-\end_inset
-
-breakout
-\begin_inset Quotes erd
-\end_inset
-
- that shows a flat surface with negligible curvature>
+This image needs to be fixed to be counter clockwise
 \end_layout
 
 \end_inset
@@ -662,16 +646,6 @@ literal "false"
 
 \end_inset
 
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-ref
-\end_layout
-
-\end_inset
-
  which is a spectral element-Fourier DNS code.
  The governing equations solved were the non-dimensionalised Navier-Stokes
  equations in the moving reference frame fixed to the airfoil,
@@ -687,9 +661,9 @@ where
 \begin_inset Formula $\vec{P}=\frac{\vec{p}}{\rho}$
 \end_inset
 
- and 
+ and
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Formula $\boldsymbol{u}$
@@ -709,9 +683,8 @@ status open
 \end_inset
 
  is the acceleration of the reference frame.
- 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Some reference by Fox et al in the Agro paper
@@ -734,7 +707,7 @@ Some reference by Fox et al in the Agro paper
 .
  
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 How is the pressure boundary condition found? Hugh's 1999 paper
@@ -754,7 +727,7 @@ For motion of a two-dimensional plane boundary moving in its own plane with
 , the diffusive flux density (flow per unit lenth per unit time) of positive
  vorticity outwards from the wall is given as
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 https://en.wikipedia.org/wiki/Vorticity_equation
@@ -843,7 +816,7 @@ noprefix "false"
 
 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Check the -ve signs AND the definition of dV(t)/dt etc for acceleration
@@ -886,7 +859,7 @@ noprefix "false"
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Chose gap between start and stop so vortices separated and Wagner effect
@@ -975,11 +948,74 @@ Grid and Time Step Refinement
 status open
 
 \begin_layout Plain Layout
-2016 629
+Example: 2016 629
 \end_layout
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Additional refinement of the mesh used by 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Additional refinement on the mesh used by Vincent and Blackburn 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vincent2014"
+literal "false"
+
+\end_inset
+
+ was performed to obtain convergence of second derivatives.
+ The local mesh density at the leading edge and trailing edge were increased
+ and the order of the tensor product nodal basis functions increased from
+ 
+\begin_inset Formula $5$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Plot of Error
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Plot of N-S
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 The spectral element mesh used had X spectral elements as shown in Y.
  Local mesh refinement was concentrated near the surface of the airfoil
  to resolve the boundary layer.
@@ -1006,13 +1042,12 @@ As no analytical solution for this flow exists, the convergence of the flow
 status open
 
 \begin_layout Plain Layout
-Ref
+Ref Hugh B 2004
 \end_layout
 
 \end_inset
 
 .
- 
 \end_layout
 
 \begin_layout Subsection
@@ -1071,7 +1106,7 @@ literal "false"
 \end_inset
 
 where 
-\begin_inset Formula $\alpha=4\text{\textdegree}$
+\begin_inset Formula $\alpha=4\text{°}$
 \end_inset
 
  and 
@@ -1109,7 +1144,7 @@ noprefix "false"
 
 \begin_inset Formula 
 \begin{equation}
-L=\underset{\text{Apparent Mass}}{\underbrace{-\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{dx}}}+\underset{\text{Steady}}{\underset{\text{Quasi-}}{\underbrace{\rho U\Gamma_{0}}}}-\underset{\text{Wake Effect}}{\underbrace{\rho V_{\infty}\intop_{1}^{\infty}\gamma\left(\varepsilon\right)\frac{\text{d}\varepsilon}{\sqrt{\varepsilon^{2}-1}}}}\label{eq:unsteady lift}
+L=\underset{\text{Steady}}{\underset{\text{Quasi-}}{\underbrace{\rho V_{\infty}\Gamma_{0}}}}-\underset{\text{Apparent Mass}}{\underbrace{\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{dx}}}-\underset{\text{Wake Effect}}{\underbrace{\rho V_{\infty}\intop_{1}^{\infty}\gamma\left(\varepsilon\right)\frac{\text{d}\varepsilon}{\sqrt{\varepsilon^{2}-1}}}}\label{eq:unsteady lift}
 \end{equation}
 
 \end_inset
@@ -1163,7 +1198,41 @@ literal "false"
  it is clear the assumption of the wake remaining in the same plane as the
  airfoil does not hold as wake vortex sheet rolls up to form the starting
  vortex.
- Thus, only the first two terms will be investigated.
+ Thus, only the first two terms (quasi-steady state, 
+\begin_inset Formula $L_{0}$
+\end_inset
+
+, and apparent mass, 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+) will be investigated.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I should be able to get 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+ in terms of 
+\begin_inset Formula $\theta$
+\end_inset
+
+ only using integration by parts?
+\begin_inset Formula 
+\begin{gather}
+L_{0}=\rho V_{\infty}\Gamma_{0}=2\pi\alpha\rho V_{\infty}\\
+L_{1}=-\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{dx}
+\end{gather}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
  
 \begin_inset Note Note
 status open
@@ -1182,7 +1251,7 @@ Results and Discussion
 \end_layout
 
 \begin_layout Subsection
-Development of Starting Vortex and Establishing the Kutta Condition
+Starting Vortex and Establishing the Kutta Condition
 \end_layout
 
 \begin_layout Standard
@@ -1214,7 +1283,25 @@ Show a plot of the kutta condition being enforced through vorticity generation
 \end_layout
 
 \begin_layout Subsection
-Impulsively and Non-Impulsively Started Flow
+Vorticity Generation Mechanism
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+shear layer and acceleration are analogous to an accelerating cylinder Ref
+ Blackburn
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Unsteady Thin-Airfoil Theory
 \end_layout
 
 \begin_layout Standard
@@ -1228,10 +1315,6 @@ Discretised steps vs smoothed top had vs const acceleration trapezium shape
 \end_inset
 
 
-\end_layout
-
-\begin_layout Subsection
-Effect of Reynolds Number
 \end_layout
 
 \begin_layout Section
