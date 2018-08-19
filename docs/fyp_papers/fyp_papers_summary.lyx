@@ -726,253 +726,6 @@ FINISHED
 \end_layout
 
 \begin_layout Section
-Anderson 2010: Chapter 4: Incompressible Flow over Airfoil
-\end_layout
-
-\begin_layout Standard
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-Determining the vortex sheet on the camber line
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-For the camber line to be a streamline, the component of the velocity normal
- to the camber line must be zero at all points along the camber...
-\begin_inset Formula 
-\[
-V_{\infty,n}+w'\left(s\right)=0\tag{Eq 4.12}
-\]
-
-\end_inset
-
- At any point 
-\begin_inset Formula $P$
-\end_inset
-
- on the camber line, where the slope of the camber line is 
-\begin_inset Formula $\frac{\text{d}z}{\text{d}x}$
-\end_inset
-
-, the geometry of Figure 4.23 yields
-\begin_inset Formula 
-\[
-V_{\infty,n}=V_{\infty}\sin\left(\alpha+\tan^{-1}\left(-\frac{\text{d}z}{\text{d}x}\right)\right)\tag{Eq 4.13}
-\]
-
-\end_inset
-
-Using trigonometric approximations...
-\begin_inset Formula 
-\[
-V_{\infty,n}=V_{\infty}\left(\alpha-\frac{\text{d}z}{\text{d}x}\right)\tag{Eq 4.14}
-\]
-
-\end_inset
-
-...
-\begin_inset Formula $w'\left(s\right)$
-\end_inset
-
- is the component of the velocity normal to the camber line induced by the
- vortex sheet...If the airfoil is thin, the camber line is close to the chord
- line, and it is consistent with thin airfoil theory to make the approximation
- that
-\begin_inset Formula 
-\[
-w'\left(s\right)\approx w\left(x\right)\tag{Eq 4.15}
-\]
-
-\end_inset
-
-...The velocity 
-\begin_inset Formula $\text{d}w$
-\end_inset
-
- at point 
-\begin_inset Formula $x$
-\end_inset
-
- induced by the elemntal vortex at point 
-\begin_inset Formula $\xi$
-\end_inset
-
- is given by Equation 4.1 as
-\begin_inset Formula 
-\[
-\text{d}w=-\frac{\gamma\left(\xi\right)\,\text{d}\xi}{2\pi\left(x-\xi\right)}\tag{Eq 4.16}
-\]
-
-\end_inset
-
-...
- Recall Equation 4.12 is the boundary condition...
- substituting
-\begin_inset Formula 
-\[
-\frac{1}{2\pi}\intop_{0}^{c}\frac{\gamma\left(\xi\right)\,\text{d}\xi}{x-\xi}=V_{\infty}\left(\alpha-\frac{\text{d}z}{\text{d}x}\right)\tag{Eq 4.18}
-\]
-
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Box Shaded
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100line%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-This is the increment in 
-\begin_inset Formula $w$
-\end_inset
-
- (there could be many 
-\begin_inset Formula $\text{d}w$
-\end_inset
-
- that sum to 
-\begin_inset Formula $w$
-\end_inset
-
-) due to an elemental vortex of strength 
-\begin_inset Formula $\gamma\,\text{d}\xi$
-\end_inset
-
- at distance 
-\begin_inset Formula $\xi.$
-\end_inset
-
- I.e.
- 
-\begin_inset Formula $\gamma\left(\xi\right)$
-\end_inset
-
- is a vortex sheet 
-\begin_inset Quotes eld
-\end_inset
-
-density
-\begin_inset Quotes erd
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-...integrating...
-\begin_inset Formula 
-\[
-w\left(x\right)=-\intop_{0}^{c}\frac{\gamma\left(\xi\right)\,\text{d}\xi}{2\pi\left(x-\xi\right)}\tag{Eq 4.17}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Box Shaded
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100line%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-I will need to reformulate this with different terminals due to the problem
- presented in von Karman
-\end_layout
-
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Box Shaded
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100line%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-I could always make a VLM without these approximations.
- It would just be a lot slower! I wonder what the difference would be.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
 Agromayer 2017: Simulation of Starting and Stopping Vortices of an Airfoil
 \end_layout
 
@@ -2154,6 +1907,253 @@ status open
 Ok so is the added mass effect an inviscid effect?? Mainly due to the pressure
  field because the mass of fluid is displaced by pressure fields not viscous
  effects?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Anderson 2010: Chapter 4: Incompressible Flow over Airfoil
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Determining the vortex sheet on the camber line
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+For the camber line to be a streamline, the component of the velocity normal
+ to the camber line must be zero at all points along the camber...
+\begin_inset Formula 
+\[
+V_{\infty,n}+w'\left(s\right)=0\tag{Eq 4.12}
+\]
+
+\end_inset
+
+ At any point 
+\begin_inset Formula $P$
+\end_inset
+
+ on the camber line, where the slope of the camber line is 
+\begin_inset Formula $\frac{\text{d}z}{\text{d}x}$
+\end_inset
+
+, the geometry of Figure 4.23 yields
+\begin_inset Formula 
+\[
+V_{\infty,n}=V_{\infty}\sin\left(\alpha+\tan^{-1}\left(-\frac{\text{d}z}{\text{d}x}\right)\right)\tag{Eq 4.13}
+\]
+
+\end_inset
+
+Using trigonometric approximations...
+\begin_inset Formula 
+\[
+V_{\infty,n}=V_{\infty}\left(\alpha-\frac{\text{d}z}{\text{d}x}\right)\tag{Eq 4.14}
+\]
+
+\end_inset
+
+...
+\begin_inset Formula $w'\left(s\right)$
+\end_inset
+
+ is the component of the velocity normal to the camber line induced by the
+ vortex sheet...If the airfoil is thin, the camber line is close to the chord
+ line, and it is consistent with thin airfoil theory to make the approximation
+ that
+\begin_inset Formula 
+\[
+w'\left(s\right)\approx w\left(x\right)\tag{Eq 4.15}
+\]
+
+\end_inset
+
+...The velocity 
+\begin_inset Formula $\text{d}w$
+\end_inset
+
+ at point 
+\begin_inset Formula $x$
+\end_inset
+
+ induced by the elemntal vortex at point 
+\begin_inset Formula $\xi$
+\end_inset
+
+ is given by Equation 4.1 as
+\begin_inset Formula 
+\[
+\text{d}w=-\frac{\gamma\left(\xi\right)\,\text{d}\xi}{2\pi\left(x-\xi\right)}\tag{Eq 4.16}
+\]
+
+\end_inset
+
+...
+ Recall Equation 4.12 is the boundary condition...
+ substituting
+\begin_inset Formula 
+\[
+\frac{1}{2\pi}\intop_{0}^{c}\frac{\gamma\left(\xi\right)\,\text{d}\xi}{x-\xi}=V_{\infty}\left(\alpha-\frac{\text{d}z}{\text{d}x}\right)\tag{Eq 4.18}
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+This is the increment in 
+\begin_inset Formula $w$
+\end_inset
+
+ (there could be many 
+\begin_inset Formula $\text{d}w$
+\end_inset
+
+ that sum to 
+\begin_inset Formula $w$
+\end_inset
+
+) due to an elemental vortex of strength 
+\begin_inset Formula $\gamma\,\text{d}\xi$
+\end_inset
+
+ at distance 
+\begin_inset Formula $\xi.$
+\end_inset
+
+ I.e.
+ 
+\begin_inset Formula $\gamma\left(\xi\right)$
+\end_inset
+
+ is a vortex sheet 
+\begin_inset Quotes eld
+\end_inset
+
+density
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+...integrating...
+\begin_inset Formula 
+\[
+w\left(x\right)=-\intop_{0}^{c}\frac{\gamma\left(\xi\right)\,\text{d}\xi}{2\pi\left(x-\xi\right)}\tag{Eq 4.17}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I will need to reformulate this with different terminals due to the problem
+ presented in von Karman
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Shaded
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100line%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+I could always make a VLM without these approximations.
+ It would just be a lot slower! I wonder what the difference would be.
 \end_layout
 
 \end_inset

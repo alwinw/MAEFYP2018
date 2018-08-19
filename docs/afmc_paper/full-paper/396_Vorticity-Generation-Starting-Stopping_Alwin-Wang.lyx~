@@ -1531,6 +1531,10 @@ literal "false"
 \end_inset
 
  in this analysis as the NACA0012 is a symmetric airfoil.
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
  The transformations 
 \begin_inset Formula $\xi=-\cos\left(\theta\right)$
 \end_inset
@@ -1563,8 +1567,9 @@ where
  
 \end_layout
 
-\begin_layout Standard
-Kármán and Sears 
+\end_inset
+
+ This can be applied to Kármán and Sears 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Karman1938"
@@ -1572,18 +1577,7 @@ literal "false"
 
 \end_inset
 
- derived the lift for an airfoil in non-uniform motion using the principles
- of thin airfoil theory to arrive at equation 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:unsteady lift"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-
+ derivation for the lift of a thin airfoil in non-uniform motion:
 \begin_inset Formula 
 \begin{equation}
 L=\underset{\text{Steady}}{\underset{\text{Quasi-}}{\underbrace{\rho V_{\infty}\Gamma_{0}}}}-\underset{\text{Apparent Mass}}{\underbrace{\rho\frac{\text{d}}{\text{d}t}\intop_{-1}^{1}\gamma_{0}\left(x\right)x\,\text{dx}}}-\underset{\text{Wake Effect}}{\underbrace{\rho V_{\infty}\intop_{1}^{\infty}\gamma\left(\varepsilon\right)\frac{\text{d}\varepsilon}{\sqrt{\varepsilon^{2}-1}}}}\label{eq:unsteady lift}
@@ -1625,7 +1619,11 @@ noprefix "false"
 \end_inset
 
 ).
- While Kármán and Sears 
+ 
+\end_layout
+
+\begin_layout Standard
+While Kármán and Sears 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Karman1938"
@@ -1696,6 +1694,68 @@ status open
 
 \begin_layout Plain Layout
 Change this or the wording to something more appropriate
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Unsteady.png
+	lyxscale 10
+	width 95col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset VSpace -1em
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Unsteady lift estimation using equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:unsteady lift"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Unsteady"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1864,6 +1924,13 @@ status open
 
 \begin_layout Plain Layout
 Vorticity on the airfoil surface
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Vplots"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2011,7 +2078,14 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Vorticity Production on the airfoil surface
+Vorticity production on the airfoil surface
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:VGplots"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
