@@ -175,10 +175,16 @@ I need to detail the viscosity and Re used somewhere...
 \begin_layout Abstract
 This paper presents a numerical study of vorticity generation around a 2D
  airfoil during the starting and stopping phases of motion.
- The study focuses on a single NACA0012 airfoil of unit chord where the
- two-dimensional Navier-Stokes equations are solved using a spectral element
- DNS code.
- 
+ The study focuses on a single NACA0012 airfoil of unit chord at 
+\begin_inset Formula $4\text{\textdegree}$
+\end_inset
+
+ angle of attack where the two-dimensional Navier-Stokes equations are solved
+ using a spectral element DNS code.
+\begin_inset Newline newline
+\end_inset
+
+TO COMPLETE 
 \begin_inset Note Note
 status open
 
@@ -223,11 +229,9 @@ status collapsed
 \end_layout
 
 \begin_layout Standard
-Around 1930 L.
- Prandtl, O.
- Tietjens and Müller recorded the motion of fine particles around an airfoil
- in the starting and stopping phases of motion to observe transient, unsteady
- flows
+Around 1930 Prandtl, Tietjens and Müller recorded the motion of fine particles
+ around an airfoil in the starting and stopping phases of motion to observe
+ transient, unsteady flows
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Prandtl1934"
@@ -246,7 +250,10 @@ literal "false"
 \end_inset
 
  and the phenomena of starting and stopping vortices still remains of interest.
- 
+\end_layout
+
+\begin_layout Standard
+<IMAGE from Willert> 
 \begin_inset Note Note
 status open
 
@@ -295,7 +302,7 @@ literal "false"
 
  using OpenFOAM.
  Both studies determined coefficients of lift and drag during the starting
- and stopping phases and verified Kelvin's and Stoke's theorems (shown in
+ and stopping phases and verified Kelvin's and Stoke's theorems, shown in
  equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -306,7 +313,7 @@ noprefix "false"
 
 \end_inset
 
-)for vorticity around various contours.
+, for vorticity around various contours.
  This paper extends on these studies by considering the vorticity generation
  mechanisms and exploring the physical phenomina behind leading edge vortices
  observed during the stopping phase.
@@ -356,7 +363,8 @@ https://journals.aps.org/prfluids/abstract/10.1103/PhysRevFluids.3.014701
 
 It is recognised that the sources of vorticity must occur at the boundary
  of the fluid regions and for the starting and starting and stopping phases
- of motion, Morton 
+ of motion.
+ Morton 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Morton1984"
@@ -366,7 +374,7 @@ literal "false"
 
  outlines two production mechanisms for vorticity: tangential pressure gradients
  from the fluid side, and the acceleration of the surface from the wall
- side (shown in equation 
+ side, shown in equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:Morton Full VortGen"
@@ -376,7 +384,7 @@ noprefix "false"
 
 \end_inset
 
-).
+.
  These contributions were investigated by Blackburn and Henderson 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -413,7 +421,7 @@ literal "false"
 
 \end_inset
 
- (shown in equation 
+, shown in equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:BVF"
@@ -423,7 +431,7 @@ noprefix "false"
 
 \end_inset
 
-)instead of boundary-layer theory.
+, instead of boundary-layer theory.
  Additionally, the realisation of the Kutta condition and creation of starting
  vortex was determined to be through a complex chain of processes which
  were also explained by considering boundary vorticity flux, 
@@ -464,7 +472,7 @@ literal "false"
 
 \end_inset
 
- was the large value of lift during the starting phase.
+ was the large value of lift during the starting (accelerating) phase.
  The explanation can be attributed to unsteady flows over airfoils given
  by Kármán and Sears 
 \begin_inset CommandInset citation
@@ -492,7 +500,7 @@ literal "false"
 \end_inset
 
 .
- After the starting phase when the airfoil has attained a uniform velocity,
+ After the starting phase when the airfoil had attained a uniform velocity,
  it was also observed the lift force would asymptote to a steady-state value.
  An explanation given by Kármán and Sears 
 \begin_inset CommandInset citation
@@ -510,8 +518,9 @@ lift deficiency
 \begin_inset Quotes erd
 \end_inset
 
- term due to a vorticity sheet in the wake.
- This behaviour was also detailed in Saffman explaining the 
+ term due to the wake vorticity sheet generated during acceleration.
+ This behaviour was also detailed in Saffman explaining latency in lift
+ production known as the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -531,9 +540,9 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-Both of these effects will be investigated when the vorticity is not contained
- to a thin region as is the case here due to the low Reynolds number and
- from a vorticity production perspective.
+Both of these effects will also be investigated when the vorticity is not
+ contained to a thin region as is the case here due to the low Reynolds
+ number and from a vorticity production perspective.
 \end_layout
 
 \begin_layout Section
@@ -921,7 +930,7 @@ Chose gap between start and stop so vortices separated and Wagner effect
 
 \end_inset
 
-The acceleration function for the airfoil was chosen to be the same as Vincent
+The acceleration profile for the airfoil was chosen to be the same as Vincent
  and Blackburn 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -982,11 +991,11 @@ literal "false"
 \begin_inset Quotes eld
 \end_inset
 
-exiting
+leaving
 \begin_inset Quotes erd
 \end_inset
 
- the reference frame of the airfoil.
+ the solution domain in the reference frame of the airfoil.
  
 \end_layout
 
@@ -1135,13 +1144,65 @@ literal "false"
 
  was performed to obtain convergence of second derivatives.
  The local mesh density at the leading edge and trailing edge were increased
- and the order of the tensor product nodal basis functions increased from
+ and the order of the tensor product nodal basis functions.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:NS_Error"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the benefit on the second derivatives for increasing the mesh density
+ and order.
+\end_layout
+
+\begin_layout Standard
+To determine an appropriate choice for the order of the tensor-product GLL
+ shape functions used in each spectral element, tests were conducted at
  
-\begin_inset Formula $5$
+\begin_inset Formula $t=0.15\,\text{s}$
+\end_inset
+
+ which corresponded to the maximum forwards (negative) acceleration of the
+ airfoil.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Check the variation in values
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+As no analytical solution for this flow exists, the convergence of the flow
+ was compared to the convergence of a Kovasznay Flow
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Ref Hugh B 2004
+\end_layout
+
 \end_inset
 
 .
- 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1215,7 +1276,47 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-TO DO
+Comparison in ability to resolve equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:VortGenLegend"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ for vorticity generation.
+ The dashed purple line represents the RHS of the equation and the purple
+ dots represent the LHS.
+\begin_inset Newline newline
+\end_inset
+
+Top: Vincent and Blackburn 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vincent2014"
+literal "false"
+
+\end_inset
+
+ mesh, 
+\begin_inset Formula $p=5$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Bottom: Refined mesh, 
+\begin_inset Formula $p=8$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:NS_Error"
@@ -1246,18 +1347,103 @@ This image needs to be fixed to be counter clockwise
 \end_layout
 
 \begin_layout Standard
-The spectral element mesh used had X spectral elements as shown in Y.
- Local mesh refinement was concentrated near the surface of the airfoil
- to resolve the boundary layer.
- X-order tensor-product nodal basis functions were used in each element,
- giving a total of X independent mesh nodes.
- 
-\begin_inset Note Note
+\begin_inset Float figure
+wide false
+sideways false
 status open
 
 \begin_layout Plain Layout
-Check mesh resolution.
- 
+\noindent
+\align center
+\begin_inset Graphics
+	filename NS_Vincent_NP5.png
+	lyxscale 20
+	width 95col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename NS_Remesh_NP8.png
+	lyxscale 20
+	width 95col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset VSpace -1em
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison in ability to resolve equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:VortGenLegend"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ for vorticity generation.
+ The dashed purple line represents the RHS of the equation and the purple
+ dots represent the LHS.
+\begin_inset Newline newline
+\end_inset
+
+Top: Vincent and Blackburn 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vincent2014"
+literal "false"
+
+\end_inset
+
+ mesh, 
+\begin_inset Formula $p=5$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Bottom: Refined mesh, 
+\begin_inset Formula $p=8$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Convergence"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1266,18 +1452,12 @@ Check mesh resolution.
 \end_layout
 
 \begin_layout Standard
-As no analytical solution for this flow exists, the convergence of the flow
- was compared to the convergence of a Kovasznay Flow
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Ref Hugh B 2004
-\end_layout
-
-\end_inset
-
-.
+The final spectral element mesh used had X conforming quadrilateral spectral
+ elements as shown in Y.
+ Local mesh refinement was concentrated near the surface of the airfoil
+ to resolve the boundary layer.
+ X-order tensor-product nodal basis functions were used in each element,
+ giving a total of X independent mesh nodes.
 \end_layout
 
 \begin_layout Subsection
@@ -1387,8 +1567,8 @@ where
 \begin_inset Formula $\Gamma_{0}$
 \end_inset
 
- are is the vortex sheet strength and circulation respectively calculated
- from thin airfoil theory (equation 
+ are the vortex sheet strength and circulation respectively calculated from
+ thin airfoil theory, equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:gamma theta"
@@ -1398,7 +1578,7 @@ noprefix "false"
 
 \end_inset
 
-), and 
+, and 
 \begin_inset Formula $\gamma\left(\varepsilon\right)$
 \end_inset
 
@@ -1407,7 +1587,11 @@ noprefix "false"
 \begin_inset Formula $\varepsilon$
 \end_inset
 
- from the mid chord.
+ from the mid chord (
+\begin_inset Formula $x=0$
+\end_inset
+
+).
  While Kármán and Sears 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1425,10 +1609,20 @@ literal "false"
 
 \end_inset
 
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+if I add an image, reference it here
+\end_layout
+
+\end_inset
+
  it is clear the assumption of the wake remaining in the same plane as the
  airfoil does not hold as wake vortex sheet rolls up to form the starting
  vortex.
- Thus, only the first two terms (quasi-steady state, 
+ Thus, only the first two terms, quasi-steady state, 
 \begin_inset Formula $L_{0}$
 \end_inset
 
@@ -1436,7 +1630,7 @@ literal "false"
 \begin_inset Formula $L_{1}$
 \end_inset
 
-) will be investigated.
+, will be investigated.
 \begin_inset Note Note
 status open
 

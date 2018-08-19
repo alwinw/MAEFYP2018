@@ -3,6 +3,10 @@
 # Run 2: Incr NP, decr D_T, incr NTIME for convergence
 # Run 3: Add 0.05 of zero accel
 # Run 4: Increase mesh at LE and TE
+#
+# IO_CFL: CFL Est and Divergence
+# IO_FLD: Field u v p dump
+# IO_HIS: His and flx  
 
 <USER>
 	u = 0.0
@@ -21,13 +25,14 @@
 	N_STEP    = 210
 	N_TIME    = 2
 
-	N_P       = 6
+	N_P       = 8
 	N_Z       = 1
   LZ        = 1.0
 	BETA      = TWOPI/LZ
 
-	IO_CFL    = 25
-	IO_FLD    = 20
+	IO_CFL    = 10
+	IO_FLD    = 20 
+	IO_HIS    = 5
 
 	AVERAGE   = 0
 	CHKPOINT  = 0

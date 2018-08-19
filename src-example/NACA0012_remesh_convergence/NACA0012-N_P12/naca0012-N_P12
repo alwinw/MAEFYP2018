@@ -1,20 +1,22 @@
 ##########################################
 # Run 1: Test connected bndry_prf
-# Run 2: Incr NP, decr D_T, incr NTIME for convergence
+# Run 2: Incr n_p, decr d_t, incr n_time for convergence
 # Run 3: Add 0.05 of zero accel
 # Run 4: Increase mesh at LE and TE
 #
-# KINVIS: Kinematic Viscosity
+# Note : Must use lower case, grep searches comments
 #
-# D_T   : Time Step
-# N_STEP: Number of time steps
-# N_TIME: Order of time stepping scheme, <3
+# kinvis: Kinematic Viscosity
 #
-# N_P   : Poly Order
+# d_t   : Time Step
+# n_step: Number of time steps
+# n_time: Order of time stepping scheme, <3
 #
-# IO_CFL: CFL Est and Divergence
-# IO_FLD: Field u v p dump (0 for none)
-# IO_HIS: His and flx
+# n_p   : Poly Order
+#
+# io_cfl: CFL Est and Divergence
+# io_fld: Field u v p dump (0 for none)
+# io_his: His and flx
 #
 # 
 
@@ -36,13 +38,13 @@
 	N_STEP    = 210
 	N_TIME    = 2
 
-	N_P       = 8
+	N_P       = 12
 	N_Z       = 1
   LZ        = 1.0
 	BETA      = TWOPI/LZ
 
 	IO_CFL    = 10
-	IO_FLD    = 20 
+#	IO_FLD    = 20 
 	IO_HIS    = 5
 
 	AVERAGE   = 0
