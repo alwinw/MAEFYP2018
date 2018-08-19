@@ -41,8 +41,6 @@ ctrl+shift+m gives %>%
 
 Look for .flx for forces
 
-Look for .flx for forces
-
 # Convergence
  - Increased N_P to 9 for convergence of derivatives
  - Needed to decrease D_T to 0.0005
@@ -54,3 +52,6 @@ Look for .flx for forces
  - Examine the added mass force for a lift generating airfoil to explain CD (but CL?)
 
  - To do: read N_P and inflow velocity equation
+ 
+ # Tecplot
+ - lic-tecplot.eng.monash.edu; port: 27100
