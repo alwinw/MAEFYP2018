@@ -6,7 +6,7 @@
 .Rapp.history
 
 # Session Data files
-# .RData
+*.RData
 
 # Example code in package build process
 *-Ex.R
@@ -59,6 +59,8 @@ rsconnect/
 *.gif
 *.mpeg
 *.png
+*.lyx#
+R/\.RData
 
 #======================================
 # C++
@@ -101,6 +103,3 @@ rsconnect/
 #--------------------------------------
 !/docs/afmc_paper/*
 
-R/\.RData
-
-*.lyx#
