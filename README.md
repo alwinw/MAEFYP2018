@@ -49,9 +49,10 @@
 * `git`                 : Scripts and other git resources
 * `R`                   : Generic R scripts for multiple applications (RProj)
 * `semtex`              : Semtex development work
-* `test`                : Session file, bash and results folder
-  + `kovas`               : Kovasznay flow examples
-  + `sp5`                 : Original sp5 files
-  + `naca0012`            : Joined bndry_prf 
-  + `remesh`              : LE and TE clustered mesh
+* `tests`               : Session file, bash and results folder
+  + `kovas`               : Kovasznay flow examples inc. convergence
+  + `sp5`                 : 0 Original sp5 files
+  + `naca0012`            : 1 Joined bndry_prf 
+  + `remesh`              : 2 LE and TE clustered mesh
+  
    
