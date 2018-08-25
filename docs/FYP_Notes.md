@@ -53,5 +53,18 @@ Look for .flx for forces
 
  - To do: read N_P and inflow velocity equation
  
- # Tecplot
+# Tecplot
  - lic-tecplot.eng.monash.edu; port: 27100
+
+# Git Cleanup
+ - Removed data that was accidentally committed
+ - Removed RData history
+ - Removed pdfs
+
+# Post AFMC Paper Submission
+ - Singularity at the trailing edge
+ - Integral of vorticity boundary flux
+ - Viscous lift sign
+ - During acceleration in viscous, acceleration fights pressure
+   In invscid, wake vortex effect means greater bound vorticity
+
