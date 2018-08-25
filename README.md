@@ -36,7 +36,7 @@
   + `vortgen`             : Vorticity generation analysis (RPoj, sesh, bash)
     - `results`             : Semtex output of session file
     - `output`              : Output of R scripts (RData, images)
-* `doc`                 : Documents including papers  (max pages/words indicated)
+* `docs`                : Documents including papers  (max pages/words indicated)
   + `afmc_abstract`       : Abstract for 21st AFMC    ( 1 page )
   + `afmc_full`           : Full paper for 21st AFMC  ( 4 pages)
   + `fyp1_proposal`       : Proposal for FYP          ( 5 pages)

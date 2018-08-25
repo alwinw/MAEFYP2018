@@ -58,7 +58,7 @@ rsconnect/
 *.rst
 *.gif
 *.mpeg
-*.png
+# *.png # Place custom .gitignore in "analysis" and "test"
 *.lyx#
 R/\.RData
 
@@ -101,5 +101,3 @@ R/\.RData
 #======================================
 # Exception for reports
 #--------------------------------------
-!/docs/afmc_paper/*
-
