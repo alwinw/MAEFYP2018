@@ -1,0 +1,41 @@
+#% Do not delete the line below; configure depends on this
+#  \DeclareLaTeXClass{jfm}
+#  \DeclareCategory{Articles}
+# Article textclass definition file. Taken from initial LyX source code
+# Author : Matthias Ettrich <ettrich@informatik.uni-tuebingen.de>
+# Transposed by Pascal André <andre@via.ecp.fr>
+# Heavily modifed and enhanced by serveral developers.
+# Copied and (very slightly) modified from "standard" article layout for use 
+# for the 21st Australasian Fluid Mechanics Conference (21AFMC) by Timothy Lau  
+
+Format 60
+Input stdclass.inc
+
+SecNumDepth             2
+TocDepth                2
+
+NoStyle Chapter
+NoCounter chapter
+NoStyle Chapter*
+
+
+Style Part
+	Align                 Left
+	AlignPossible         Left
+	TopSep                2
+	BottomSep             1.5
+	Font
+	  Size                Larger
+	EndFont
+End
+
+
+Style Part*
+	Align                 Left
+	AlignPossible         Left
+	TopSep                2
+	BottomSep             1.5
+	Font
+	  Size                Larger
+	EndFont
+End
