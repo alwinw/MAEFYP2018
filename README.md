@@ -21,7 +21,7 @@
   + `unit-test`           : Various test cases to test code
 * `wip`                 : Work in progress for objectives
   + `convergence`         : Convergence analysis
-  + `doc`                 : AFMC, FYP and lit review
+  + `docs`                : AFMC, FYP and lit review
   + `kutta`               : Establishment of Kutta condition
   + `vortgen`             : Detailed analysis of the vorticity generation
 
