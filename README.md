@@ -23,6 +23,7 @@
   + `convergence`         : Convergence analysis
   + `docs`                : AFMC, FYP and lit review
   + `kutta`               : Establishment of Kutta condition
+  + `panel`               : Panel method analysis
   + `vortgen`             : Detailed analysis of the vorticity generation
 
 **Folder Structure**
