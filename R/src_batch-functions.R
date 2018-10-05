@@ -84,24 +84,40 @@ BatchLoadDump <- function(data_dump, outp_mesh, plot = 0, srcpath = "") {
       geom_point() +
       scale_colour_gradientn(colours=rev(spectralpalette(10))) +
       coord_fixed(xlim=c(-0.4, 0.6), ylim=c(-0.2, 0.2))
-    ggplot(dump$dump, aes(x, y, colour = p)) +
-      geom_point() +
-      scale_colour_gradientn(colours=rev(spectralpalette(10))) +
-      coord_fixed(xlim=c(-0.4, 0.6), ylim=c(-0.2, 0.2))
+    
     ggplot(dump$dump, aes(x, y, colour = o)) +
       geom_point() +
       scale_colour_gradientn(colours=rev(spectralpalette(10))) +
       coord_fixed(xlim=c(-0.4, 0.6), ylim=c(-0.2, 0.2))
-    ggplot(dump$wall, aes(x, y, colour = dpdx)) +
-      geom_point() +
-      scale_colour_gradientn(colours=rev(spectralpalette(10))) +
-      coord_fixed(xlim=c(-0.4, 0.6), ylim=c(-0.2, 0.2))
-    ggplot(dump$wall, aes(x, y, colour = as)) +
-      geom_point() +
-      scale_colour_gradientn(colours=rev(spectralpalette(10))) +
-      coord_fixed(xlim=c(-0.4, 0.6), ylim=c(-0.2, 0.2))
-    ggplot(dump$wall, aes(x, y, colour = dpdsG)) +
-      geom_point() +
+    
+    redu <- filter(dump$dump, x >= -0.5, x <= 0.8, y >= -0.2, y <= 0.2) %>% 
+      select(x, y, u, v, p, o) %>% 
+      unique(.)
+    grid <- interp(x = round(redu$x, 10),
+                   y = round(redu$y, 10),
+                   z = round(redu$o, 10),
+                   nx = 800,
+                   ny = 600,
+                   duplicate = "strip",
+                   linear = TRUE,
+                   extrap = FALSE)
+    grid <- interp2xyz(grid, data.frame = TRUE)
+    
+    ggplot()  +
+      geom_raster(aes(x, y, fill = z), grid, interpolate = TRUE) +
+      geom_polygon(aes(x, y), dump$wall, fill = "white", colour = NA) +
+      geom_path(aes(x, y, colour = o), dump$wall, size = 0.2) +
+      scale_fill_gradientn(colours=rev(spectralpalette(10)),
+                           limits = c(min(redu$o), max(redu$o)),
+                           na.value = "white") +
+      scale_colour_gradientn(colours=rev(spectralpalette(10)),
+                           limits = c(min(redu$o), max(redu$o)),
+                           na.value = "white",
+                           guide = "none") +
+      coord_fixed(xlim=c(-0.5, 0.8), ylim=c(-0.2, 0.2), expand = FALSE)
+    
+    ggplot(dump$dump, aes(x = x, y = y)) +
+      geom_raster(aes(fill = u)) +
       scale_colour_gradientn(colours=rev(spectralpalette(10))) +
       coord_fixed(xlim=c(-0.4, 0.6), ylim=c(-0.2, 0.2))
   }
