@@ -1,6 +1,7 @@
 # Create required setup files
 # Run dns on session file
 mkdir results
+mkdir images
 for sessionfile in *.sesh; do
   f="${sessionfile%.*}"                   &&
   cp $sessionfile  results/$sessionfile   &&
