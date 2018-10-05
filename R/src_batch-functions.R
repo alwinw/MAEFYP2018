@@ -116,10 +116,30 @@ BatchLoadDump <- function(data_dump, outp_mesh, plot = 0, srcpath = "") {
                            guide = "none") +
       coord_fixed(xlim=c(-0.5, 0.8), ylim=c(-0.2, 0.2), expand = FALSE)
     
-    ggplot(dump$dump, aes(x = x, y = y)) +
-      geom_raster(aes(fill = u)) +
-      scale_colour_gradientn(colours=rev(spectralpalette(10))) +
-      coord_fixed(xlim=c(-0.4, 0.6), ylim=c(-0.2, 0.2))
+    x = c(-0.4, 0)
+    
+    velvec <- function(t, x) {
+      u <- interp(
+        x = round(redu$x, 12),
+        y = round(redu$y, 12),
+        z = round(redu$u, 12),
+        xo = x[1],
+        yo = x[2],
+        duplicate = "strip",
+        linear = TRUE)$z
+      v <- interp(
+        x = round(redu$x, 12),
+        y = round(redu$y, 12),
+        z = round(redu$v, 12),
+        xo = x[1],
+        yo = x[2],
+        duplicate = "strip",
+        linear = TRUE)$z
+      return(c(u, v))
+    }
+    
+    
+    
   }
   
   rm(data_dump, data_plot, dump)
