@@ -18,7 +18,7 @@
   + `example`             : For examples (tbc)
   + `mesh`                : Generating new meshes, refining mesh and reading mesh
   + `semtex`              : Semtex development work
-  + `unit-test`           : Various test cases to test code
+  + `unit-tests`          : Various test cases to test code
 * `wip`                 : Work in progress for objectives
   + `convergence`         : Convergence analysis
   + `docs`                : AFMC, FYP and lit review

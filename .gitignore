@@ -60,6 +60,7 @@ rsconnect/
 *.mpeg
 # *.png # Place custom .gitignore in "analysis" and "test"
 *.lyx#
+*.docx#
 R/\.RData
 
 #======================================

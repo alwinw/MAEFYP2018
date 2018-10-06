@@ -612,7 +612,7 @@ LongJoin <- function(left_data, right_data, unicols = NULL, wall = FALSE) {
 # Spline Length
 CubicSplineArcLength <- function(tvec, dcsx, dcsy) {
   # s = int sqrt(dx/dt^2 + dy/dt^2) dt
-  integral(function(t) sqrt(ppval(dcsx, t)^2 + ppval(dcsy, t)^2), tvec[1], tvec[2])
+  integrate(function(t) sqrt(ppval(dcsx, t)^2 + ppval(dcsy, t)^2), tvec[1], tvec[2])$value
 }
 
 # Determine derivatives and antiderivatives of cubic splines
