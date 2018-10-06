@@ -116,6 +116,8 @@ BatchLoadDump <- function(data_dump, outp_mesh, plot = 0, srcpath = "") {
                            guide = "none") +
       coord_fixed(xlim=c(-0.5, 0.8), ylim=c(-0.2, 0.2), expand = FALSE)
     
+    
+    
     x = c(-0.4, 0)
     
     velvec <- function(t, x) {
