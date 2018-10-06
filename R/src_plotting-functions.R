@@ -12,8 +12,7 @@ InterpGridVar <- function(redu, var, nx, ny, dp, linear, extrap) {
   grid <- interp(x = round(redu$x, dp),
                  y = round(redu$y, dp),
                  z = round(redu$z, dp),
-                 nx = nx,
-                 ny = ny,
+                 nx = nx, ny = ny,
                  duplicate = "strip",
                  linear = linear,
                  extrap = extrap)
@@ -29,50 +28,77 @@ InterpGridVar <- function(redu, var, nx, ny, dp, linear, extrap) {
 }
 
 #--- * Interpolate All Variables onto Grid                        ----
-dump_dump <- dump$dump; xvec = c(-0.5, 0.8); yvec = c(-0.2, 0.2); nx = 1500
-dp = 12; linear = TRUE; extrap = FALSE
-vars = c("u", "v", "p", "o")
-
+# dump_dump <- dump$dump; xvec = c(-0.5, 0.8); yvec = c(-0.2, 0.2); nx = 1500
+# dp = 12; linear = TRUE; extrap = FALSE
+# vars = c("u", "v", "p", "o")
 InterpGrid <- function(dump_dump, vars, xvec, yvec, nx,
                        dp = 10, linear = TRUE, extrap = FALSE) {
-  
+  # Reduce to range in xvec and yvec
   redu <- filter(dump_dump, x >= xvec[1], x <= xvec[2], y >= yvec[1], y <= yvec[2]) %>% 
     select(x, y, u, v, p, o) %>% 
     unique(.)
+  # Number of points in y direction for aspect ratio = 1
   ny = round(nx * (yvec[2] - yvec[1])/(xvec[2] - xvec[1]))
-  
+  # Interpolate and clean up
   grid_list <- lapply(vars, function(var) InterpGridVar(redu, var, nx, ny, dp, linear, extrap))
   grid   <- lapply(grid_list, function(df) df[3])
   grid   <- bind_cols(grid)
   grid$x <- grid_list[[1]]$x
   grid$y <- grid_list[[1]]$y
+  grid <- grid[c("x", "y", colnames(grid)[1:(ncol(grid)-2)])]
+  # Return result
+  return(grid)
+}
+
+#--- Airfoil Plots                                                ----
+dump_dump <- dump$dump; xvec = c(-0.5, 0.8); yvec = c(-0.2, 0.2); nx = 200
+dp = 12; linear = TRUE; extrap = FALSE
+vars = c("u", "v", "p", "o")
+PlotVectorField <- function(dump_dump, vars, xvec, yvec, nx, dp) {
+  # Interpolate
+  grid <- InterpGrid(dump_dump, vars, xvec, yvec, nx, dp)
+  grid <- filter(grid, !is.na(u), !is.na(v))
+  # Create end points
+  grid <- grid %>% 
+    mutate(vlen = EucDist(u, v))
   
-  ggplot()  +
-    geom_raster (aes(x, y, fill = v),   grid,      interpolate = TRUE) +
-    geom_polygon(aes(x, y),             dump$wall, fill = "white", colour = NA) +
-    geom_path   (aes(x, y, colour = v), dump$wall, size = 0.2) +
-    scale_fill_gradientn  (colours=rev(spectralpalette(10)), na.value = "white") +
-    scale_colour_gradientn(colours=rev(spectralpalette(10)), na.value = "white",
-                           limits = c(min(redu$v), max(redu$v)), guide = "none") +
-    coord_fixed(xlim=c(-0.5, 0.8), ylim=c(-0.2, 0.2), expand = FALSE)
   
-  ggplot()  +
-    # geom_raster(aes(x, y, fill = u), grid, interpolate = TRUE) +
-    # stat_contour(aes(x, y, z = u, fill = ..level..), filter(grid, !is.na(u)), 
-                 # bins = 20, geom="polygon") +
-    # geom_contour(aes(x, y, z = u), grid, bins = 20, colour = "white") +
-    # geom_polygon(aes(x, y), dump$wall, fill = "white", colour = NA) +
-    # geom_path(aes(x, y, colour = u), dump$wall, size = 0.2) +
-    scale_fill_gradientn(
-      colours=rev(spectralpalette(10)), na.value = "white") +
-    scale_colour_gradientn(
-      colours=rev(spectralpalette(10)), na.value = "white",
-      limits = c(min(redu$u), max(redu$u)), guide = "none") +
+  
+  scale = (grid$x[2] - grid$x[1])/max(grid$vlen)
+  
+  ggplot() +
+    geom_raster(
+      aes(x, y, fill = o), grid, 
+      interpolate = TRUE) +
+    scale_fill_gradientn(colours=rev(spectralpalette(10)), na.value = "white") +
+    geom_segment(
+      aes(x, y, xend = x + u*scale, yend = y + v*scale), grid,
+      size = 0.2) +
+    geom_polygon(aes(x, y), dump$wall, fill = "white", colour = NA) +
+    geom_path   (aes(x, y), dump$wall, colour = "grey", size = 0.2) +
     coord_fixed(xlim=c(-0.5, 0.8), ylim=c(-0.2, 0.2), expand = FALSE)
- 
-   
 }
 
 
+ggplot()  +
+  geom_raster (aes(x, y, fill = v),   grid,      interpolate = TRUE) +
+  geom_polygon(aes(x, y),             dump$wall, fill = "white", colour = NA) +
+  geom_path   (aes(x, y, colour = v), dump$wall, size = 0.2) +
+  scale_fill_gradientn  (colours=rev(spectralpalette(10)), na.value = "white") +
+  scale_colour_gradientn(colours=rev(spectralpalette(10)), na.value = "white",
+                         limits = c(min(redu$v), max(redu$v)), guide = "none") +
+  coord_fixed(xlim=c(-0.5, 0.8), ylim=c(-0.2, 0.2), expand = FALSE)
 
-#--- Airfoil Plots                                                ----
+ggplot()  +
+  # geom_raster(aes(x, y, fill = u), grid, interpolate = TRUE) +
+  # stat_contour(aes(x, y, z = u, fill = ..level..), filter(grid, !is.na(u)), 
+  # bins = 20, geom="polygon") +
+  # geom_contour(aes(x, y, z = u), grid, bins = 20, colour = "white") +
+  # geom_polygon(aes(x, y), dump$wall, fill = "white", colour = NA) +
+  # geom_path(aes(x, y, colour = u), dump$wall, size = 0.2) +
+  scale_fill_gradientn(
+    colours=rev(spectralpalette(10)), na.value = "white") +
+  scale_colour_gradientn(
+    colours=rev(spectralpalette(10)), na.value = "white",
+    limits = c(min(redu$u), max(redu$u)), guide = "none") +
+  coord_fixed(xlim=c(-0.5, 0.8), ylim=c(-0.2, 0.2), expand = FALSE)
