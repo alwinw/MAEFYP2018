@@ -94,41 +94,40 @@ VLInf <- function(panel, panels) {
     mutate(
       xc = panel$x,
       yc = panel$y) %>% 
-    mutate(
-      x1d = CoRot(x1, y1, x1, y1, -theta, "x"),
-      y1d = CoRot(x1, y1, x1, y1, -theta, "y"),
-      x2d = CoRot(x2, y2, x1, y1, -theta, "x"),
-      y2d = CoRot(x2, y2, x1, y1, -theta, "y"),
-      xcd = CoRot(xc, yc, x1, y1, -theta, "x"),
-      ycd = CoRot(xc, yc, x1, y1, -theta, "y"))
+    mutate( # Due to coordinate transform x1l = y1l = y2l = 0
+      x1l = 0,
+      y1l = 0,
+      x2l = CoRot(x2, y2, x1, y1, -theta, "x"),
+      y2l = 0, 
+      xcl = CoRot(xc, yc, x1, y1, -theta, "x"),
+      ycl = CoRot(xc, yc, x1, y1, -theta, "y"))
   # ggplot(indvel) +
-  #   geom_segment(aes(x1d, y1d, xend = x2d, yend = y2d)) +
-  #   geom_point(aes(xcd, ycd, colour = i))
+  #   geom_segment(aes(x1l, y1l, xend = x2l, yend = y2l)) +
+  #   geom_point(aes(xcl, ycl, colour = i))
   # 
   # Determined induced velocities in panel coordinates
   indvel <- indvel %>% 
     mutate(
-      r1 = sqrt((xcd-x1d)^2 + ycd^2),
-      r2 = sqrt((xcd-x2d)^2 + ycd^2),
-      t1 = atan2(ycd, xcd-x1d),
-      t2 = atan2(ycd, xcd-x2d)) %>% 
+      r1 = sqrt(xcl^2 + ycl^2),
+      r2 = sqrt((xcl-x2l)^2 + ycl^2),
+      t1 = atan2(ycl, xcl),
+      t2 = atan2(ycl, xcl-x2l)) %>% 
     mutate(
       t1 = ifelse(t1<0, t1+2*pi, t1),
       t2 = ifelse(t2<0, t2+2*pi, t2) ) %>% 
-    mutate(
-      ua = ycd/(2*pi)*(-1/(x2d-x1d))*log(r2/r1) + ((x2d-x1d)-1*(xcd-x1d))/(2*pi*(x2d-x1d))*(t2-t1),
-      wa = ((x2d-x1d)-1*(xcd-x1d))/(2*pi*(x2d-x1d))*log(r2/r1) + 1/(2*pi)*(-1/(x2d-x1d))*((x2d-x1d)+(t1-t2)*ycd) ) %>% 
-    mutate(
-      ub = ycd/(2*pi)*(+1/(x2d-x1d))*log(r2/r1) + (1*(xcd-x1d))/(2*pi*(x2d-x1d))*(t2-t1),
-      wb = (1*(xcd-x1d))/(2*pi*(x2d-x1d))*log(r2/r1) + 1/(2*pi)*(1/(x2d-x1d))*((x2d-x1d)+(t1-t2)*ycd) )
+    mutate( # Simplified since x1l = 0
+      ual = (-ycl*log(r2/r1) + (x2l-xcl)*(t2-t1))      /(2*pi*x2l),
+      ubl = ( ycl*log(r2/r1) +       xcl*(t2-t1))      /(2*pi*x2l),
+      wal = ((x2l-xcl)*log(r2/r1) - x2l + ycl*(t2-t1)) /(2*pi*x2l),
+      wbl = (      xcl*log(r2/r1) + x2l - ycl*(t2-t1)) /(2*pi*x2l) )
   
   # Transform back into global coordinates
   indvel <- indvel %>% 
     mutate(
-      ua = CoRot(ua, wa, 0, 0, theta, "x"),
-      wa = CoRot(ua, wa, 0, 0, theta, "y"),
-      ub = CoRot(ub, wb, 0, 0, theta, "x"),
-      wb = CoRot(ub, wb, 0, 0, theta, "y") ) %>% 
+      ua = CoRot(ual, wal, 0, 0, theta, "x"),
+      wa = CoRot(ual, wal, 0, 0, theta, "y"),
+      ub = CoRot(ubl, wbl, 0, 0, theta, "x"),
+      wb = CoRot(ubl, wbl, 0, 0, theta, "y") ) %>% 
     select(ua, wa, ub, wb)
   indvel[nrow(indvel)+1,] = 0 # Added for convinience in lead/lag
   
@@ -158,8 +157,6 @@ VLSol <- function(panels) {
   # Solve
   gamma = solve(K, b)
   
-  # gamma = c(-0.8862, -0.9905, 0.4848, 1.233, 0.8862)
-  
   # Output properties
   # CHORD = left most and right most EucDist
   panels$ga = gamma[1:Ni]
@@ -184,7 +181,7 @@ ggplot(coord, aes(x, y)) + geom_path() + geom_point() +
 
 
 # Chord Vector
-cvec = seq(-1, 1, length.out = 10)
+cvec = seq(-1, 1, length.out = 100)
 cvec = AirfoilSamp(cvec, 1.5)
 coord = AirfoilCoord(cvec, 4412)
 ggplot(coord$coord, aes(x, y)) + geom_path() + geom_point() + 
@@ -193,5 +190,5 @@ ggplot(coord$coord, aes(x, y)) + geom_path() + geom_point() +
 max(coord$coord$y) - min(coord$coord$y)
 panels <- VLPan(coord$coord)
 vlsoln <- VLSol(panels)
-ggplot(vlsoln, aes(x, -Cp)) + geom_path() + ylim(-2, 1)
+ggplot(vlsoln, aes(x, Cp)) + geom_path() + ylim(-2, 1) + scale_y_reverse()
 
