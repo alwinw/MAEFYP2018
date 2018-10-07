@@ -3,6 +3,8 @@
 # Alwin Wang
 #----------------------------#
 library(ggplot2)
+library(dplyr)
+library(tidyr)
 theme_set(theme_bw())                                           # Set black and white theme
 spectralpalette <-                                              # Custom spectral pallette
   colorRampPalette(rev(brewer.pal(11, "Spectral")))             #  usage: spectralpallette(10) 
@@ -102,7 +104,7 @@ VLInf <- function(panel, panels) {
   # ggplot(indvel) +
   #   geom_segment(aes(x1d, y1d, xend = x2d, yend = y2d)) +
   #   geom_point(aes(xcd, ycd, colour = i))
-  
+  # 
   # Determined induced velocities in panel coordinates
   indvel <- indvel %>% 
     mutate(
@@ -111,11 +113,14 @@ VLInf <- function(panel, panels) {
       t1 = atan2(ycd, xcd-x1d),
       t2 = atan2(ycd, xcd-x2d)) %>% 
     mutate(
+      t1 = ifelse(t1<0, t1+2*pi, t1),
+      t2 = ifelse(t2<0, t2+2*pi, t2) ) %>% 
+    mutate(
       ua = ycd/(2*pi)*(-1/(x2d-x1d))*log(r2/r1) + ((x2d-x1d)-1*(xcd-x1d))/(2*pi*(x2d-x1d))*(t2-t1),
-      wa = ((x2d-x1d)-1*(xcd-x1d))/(2*pi*(x2d-x1d))*log(r2/r1) + ycd/(2*pi)*(-1/(x2d-x1d))*((x2d-x1d)/ycd+(t1-t2)) ) %>% 
+      wa = ((x2d-x1d)-1*(xcd-x1d))/(2*pi*(x2d-x1d))*log(r2/r1) + 1/(2*pi)*(-1/(x2d-x1d))*((x2d-x1d)+(t1-t2)*ycd) ) %>% 
     mutate(
       ub = ycd/(2*pi)*(+1/(x2d-x1d))*log(r2/r1) + (1*(xcd-x1d))/(2*pi*(x2d-x1d))*(t2-t1),
-      wb = (1*(xcd-x1d))/(2*pi*(x2d-x1d))*log(r2/r1) + ycd/(2*pi)*(1/(x2d-x1d))*((x2d-x1d)/ycd+(t1-t2)) )
+      wb = (1*(xcd-x1d))/(2*pi*(x2d-x1d))*log(r2/r1) + 1/(2*pi)*(1/(x2d-x1d))*((x2d-x1d)+(t1-t2)*ycd) )
   
   # Transform back into global coordinates
   indvel <- indvel %>% 
@@ -188,3 +193,5 @@ ggplot(coord$coord, aes(x, y)) + geom_path() + geom_point() +
 max(coord$coord$y) - min(coord$coord$y)
 panels <- VLPan(coord$coord)
 vlsoln <- VLSol(panels)
+ggplot(vlsoln, aes(x, -Cp)) + geom_path() + ylim(-2, 1)
+
