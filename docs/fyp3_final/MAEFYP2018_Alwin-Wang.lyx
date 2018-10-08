@@ -1199,7 +1199,17 @@ Shortly after, a thin sublayer on the trailing upper surface with vorticity
 \end_layout
 
 \begin_layout Subsubsection
-Added Mass Effect
+Added Mass Effect 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Rename
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -1997,17 +2007,6 @@ Conclusion
 
 
 \begin_inset Newpage newpage
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Agromayor2017"
-literal "false"
-
 \end_inset
 
 

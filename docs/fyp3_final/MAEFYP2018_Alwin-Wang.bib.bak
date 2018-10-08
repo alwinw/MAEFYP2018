@@ -239,12 +239,4 @@
   publisher = {Wiley},
 }
 
-@Book{Batchelor2000,
-  title     = {An {I}ntroduction to {F}luid {D}ynamics},
-  publisher = {Cambridge University Press},
-  year      = {2000},
-  author    = {G. K. Batchelor},
-  doi       = {10.1017/cbo9780511800955},
-}
-
 @Comment{jabref-meta: databaseType:bibtex;}

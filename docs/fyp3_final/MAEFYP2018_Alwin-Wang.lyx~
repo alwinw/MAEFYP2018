@@ -1167,6 +1167,17 @@ When the airfoil first gains a nonzero relative velocity,the fluid pattern
  The streamline curvature is finite and moves upstream over the upper surface
  leading to a rear semi-saddle point (cannot be identified as a separation
  point in unsteady flow).
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+References?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1188,7 +1199,21 @@ Shortly after, a thin sublayer on the trailing upper surface with vorticity
 \end_layout
 
 \begin_layout Subsubsection
-Added Mass Effect
+Added Mass Effect 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Rename
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \begin_layout Subsubsection
