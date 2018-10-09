@@ -6,8 +6,6 @@ library(ggplot2)
 library(dplyr)
 library(tidyr)
 theme_set(theme_bw())                                           # Set black and white theme
-spectralpalette <-                                              # Custom spectral pallette
-  colorRampPalette(rev(brewer.pal(11, "Spectral")))             #  usage: spectralpallette(10) 
 
 AirfoilSamp <- function(cvec, p) {
   a = min(cvec)
