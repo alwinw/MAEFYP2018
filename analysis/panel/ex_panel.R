@@ -86,7 +86,7 @@ CoRot <- function(x, y, x0, y0, theta, var) {
     return(sin(theta)*(x-x0) + cos(theta)*(y-y0))
 }
 
-VLInf <- function(panel, panels) {
+VLInf <- function(panel, panels, vel = FALSE) {
   # Need to rotate the collocation point into the panel coordinate
   indvel <- panels %>% 
     mutate(
@@ -99,10 +99,7 @@ VLInf <- function(panel, panels) {
       y2l = 0, 
       xcl = CoRot(xc, yc, x1, y1, -theta, "x"),
       ycl = CoRot(xc, yc, x1, y1, -theta, "y"))
-  # ggplot(indvel) +
-  #   geom_segment(aes(x1l, y1l, xend = x2l, yend = y2l)) +
-  #   geom_point(aes(xcl, ycl, colour = i))
-  # 
+
   # Determined induced velocities in panel coordinates
   indvel <- indvel %>% 
     mutate(
@@ -112,7 +109,7 @@ VLInf <- function(panel, panels) {
       t2 = atan2(ycl, xcl-x2l)) %>% 
     mutate(
       t1 = ifelse(t1<0, t1+2*pi, t1),
-      t2 = ifelse(t2<0, t2+2*pi, t2) ) %>% 
+      t2 = ifelse(t2<0, t2+2*pi, t2) ) %>%
     mutate( # Simplified since x1l = 0
       ual = (-ycl*log(r2/r1) + (x2l-xcl)*(t2-t1))      /(2*pi*x2l),
       ubl = ( ycl*log(r2/r1) +       xcl*(t2-t1))      /(2*pi*x2l),
@@ -121,22 +118,26 @@ VLInf <- function(panel, panels) {
   
   # Transform back into global coordinates
   indvel <- indvel %>% 
-    mutate(
-      ua = CoRot(ual, wal, 0, 0, theta, "x"),
-      wa = CoRot(ual, wal, 0, 0, theta, "y"),
-      ub = CoRot(ubl, wbl, 0, 0, theta, "x"),
-      wb = CoRot(ubl, wbl, 0, 0, theta, "y") ) %>% 
-    select(ua, wa, ub, wb)
-  indvel[nrow(indvel)+1,] = 0 # Added for convinience in lead/lag
+    # mutate(
+    #   ua = CoRot(ual, wal, 0, 0, theta, "x"),
+    #   wa = CoRot(ual, wal, 0, 0, theta, "y"),
+    #   ub = CoRot(ubl, wbl, 0, 0, theta, "x"),
+    #   wb = CoRot(ubl, wbl, 0, 0, theta, "y") ) %>% 
+    # select(ua, wa, ub, wb)
+    select(ual, wal, ubl, wbl, t1, t2, ycl)
   
-  indvel <- data.frame(
-    u = indvel$ua + lag(indvel$ub, default = 0),
-    w = indvel$wa + lag(indvel$wb, default = 0) )
+  # IC <- indvel
+  # IC[nrow(IC)+1,] = 0 # Added for convinience in lead/lag
+  # 
+  # IC <- data.frame(
+  #   u = IC$ua + lag(IC$ub, default = 0),
+  #   w = IC$wa + lag(IC$wb, default = 0) )
+  # 
+  # # Influence row
+  # Kj = IC$u*panel$nx + IC$w*panel$ny
   
-  # Influence row
-  Kj = indvel$u*panel$nx + indvel$w*panel$ny
-  
-  return(Kj)
+  if (vel) return(indvel)
+  else return(Kj)
 }
 
 VLSol <- function(panels) {
@@ -167,6 +168,7 @@ VLSol <- function(panels) {
   return(panels)
 }
 
+# Diamond
 coord <- data.frame(
   x = c(1,  0.3,  0,  0.3, 1),
   y = c(0, -0.05, 0, 0.05, 0))
@@ -176,6 +178,23 @@ ggplot(coord, aes(x, y)) + geom_path() + geom_point() +
   coord_fixed() +
   geom_segment(aes(x, y, xend = x+nx, yend = y+ny), panels)
 
+# NACA0012.10
+# Note: manually added the last point to close the loop
+coord <- data.frame(
+  x = c(1.000000, 0.904508, 0.654508, 0.345491, 0.095491,
+        0.000000, 0.095491, 0.345491, 0.654508, 0.904508,
+        1.000000),
+  y = c(0.000000,-0.013914,-0.040917,-0.059575,-0.046049,
+        0.000000, 0.046049, 0.059575, 0.040917, 0.013914,
+        0.000000)
+)
+panels <- VLPan(coord)
+ggplot(coord, aes(x, y)) + geom_path() + geom_point() + 
+  coord_fixed() +
+  geom_segment(aes(x, y, xend = x+nx, yend = y+ny), panels)
+panel_li <- split(panels, panels$i)
+options(digits = 5, scipen = -4)
+lapply(panel_li, function(panel) VLInf(panel, panels, TRUE))
 
 
 # Chord Vector
