@@ -1,16 +1,19 @@
-# Create required setup files
-# Create session files
-# N_P=( 3 4 5 6 7 8 9 10 11 12 )
-N_P=( 13 14 15 16 17 18 19 20 )
+# Create required folders (if necessary)
+mkdir -p results
+mkdir -p images
+# Create array of N_P to loop over
+N_P=( 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 )
+# N_P=( 3 4 )
 for i in $N_P[*]; do
+  # Set up dns case
   name=$(printf "%02d" i)
   echo N_P = $name
-  mkdir -p NACA0012-N_P$name
-  sed "s/N_P =/N_P       = $i/g" \
-    NACA0012_remesh >     NACA0012-N_P$name/naca0012-N_P$name.sesh
-  cp bndry_prf.dat NACA0012-N_P$name/bndry_prf.dat
+  mkdir -p results/NACA0012r-N_P$name
+  sed "s/N_P = X/N_P       = $i/g" \
+    naca0012r >    results/NACA0012r-N_P$name/naca0012r-N_P$name.sesh
+  cp bndry_prf.dat results/NACA0012r-N_P$name/bndry_prf.dat
   # Run dns on session file
-  cd NACA0012-N_P$name
+  cd results/NACA0012r-N_P$name
   for sessionfile in *.sesh; do
     f="${sessionfile%.*}"                   &&
     cp $sessionfile  $f                     &&
@@ -27,8 +30,8 @@ for i in $N_P[*]; do
     for i in [xx]*; do 
       mv $i "$f-${i#*xx}.dump"; done                  &&
     echo $sessionfile complete
-    rm $f.msh $f.num $f.fld $f.Gfld $f.mdl $f.flddump $f.his $f.flx
+    rm $f.msh $f.num $f.fld $f.Gfld $f.mdl $f.flddump $f.his
   done
-cd ..
+  cd ../..
 done
 

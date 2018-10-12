@@ -34,21 +34,21 @@
 <TOKENS>
 	KINVIS    = 1./10000.
 	
-	D_T       = 0.0005
-	N_STEP    = 210
+	D_T       = 0.00025
+	N_STEP    = 600
 	N_TIME    = 2
 
-	N_P       = 13
+	N_P = X
 	N_Z       = 1
   LZ        = 1.0
 	BETA      = TWOPI/LZ
 
-	IO_CFL    = 10
-#	IO_FLD    = 20 
-	IO_HIS    = 5
+#	IO_CFL    = 25
+#	IO_FLD    = 20
+#	IO_HIS    = 1
 
 	AVERAGE   = 0
-	CHKPOINT  = 0
+#	CHKPOINT  = 0
 	ITERATIVE = 1
 	TBCS	    = 1
 </TOKENS>
