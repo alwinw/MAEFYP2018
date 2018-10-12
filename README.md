@@ -20,7 +20,7 @@
   + `semtex`              : Semtex development work
   + `unit-tests`          : Various test cases to test code
 * `wip`                 : Work in progress for objectives
-  + `convergence`         : Convergence analysis
+  + `convg`               : Convergence analysis
   + `docs`                : AFMC, FYP and lit review
   + `kutta`               : Establishment of Kutta condition
   + `panel`               : Panel method analysis
@@ -28,7 +28,7 @@
 
 **Folder Structure**
 * `analysis`            : Analyses conducted
-  + `converg`             : Convergence analysis (RPoj, sesh, bash)
+  + `convg`               : Convergence analysis (RPoj, sesh, bash)
     - `results`             : Semtex output of session file
     - `output`              : Output of R scripts (RData, images)
   + `kutta`               : Kutta condition analysis (RPoj, sesh, bash)
