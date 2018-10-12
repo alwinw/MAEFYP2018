@@ -54,7 +54,8 @@ BatchLoadMesh <- function(data_mesh, outp_airfoil, srcpath = "") {
 }
 
 #--- Dump File Calculation                                        ----
-BatchLoadDump <- function(data_dump, outp_mesh, plot = 0, srcpath = "") {
+BatchLoadDump <- function(data_dump, outp_mesh, plot = 0, outp = "wall",
+                          srcpath = "", addscr = NULL) {
   source(paste0(srcpath, "src_library-manager.R"))                # Call libraries and install missing ones
   source(paste0(srcpath, "src_helper-functions.R"))               # Smaller functions used
   list_mesh <- outp_mesh[[data_dump$ID]]
@@ -71,18 +72,32 @@ BatchLoadDump <- function(data_dump, outp_mesh, plot = 0, srcpath = "") {
   dump$wall <- DumpPres(dump$wall, interp = FALSE)
   #--- * Vorticity Data                                             ----
   dump$wall <- DumpVortOnly(dump$wall, dump$kinvis)
-  #--- > Dump Calc Output                                           ----
+  #--- * Dump Calc Output                                           ----
   data_plot <- bind_rows(dump[c("time", "kinvis", "a")])
   data_plot <- cbind(data_dump, data_plot)
-  list_dump <- c(
-    data_plot = list(data_plot), 
-    dump = dump[c("wall")])
-  names(list_dump) <- c("data_plot", "wall")
+  #--- * Create Output                                              ----
+  if (outp == "wall") {
+    list_dump <- c(
+      data_plot = list(data_plot), 
+      dump = dump[c("wall")])
+    names(list_dump) <- c("data_plot", "wall")
+  } else if (outp == "node") {
+    dump$node <- filter(dump$dump, node)
+    list_dump <- c(
+      data_plot = list(data_plot), 
+      dump = dump[c("wall")],
+      node = dump[c("node")])
+    names(list_dump) <- c("data_plot", "wall", "node")
+  }
+  
   #--- > Produce Plots if Required                                  ----
   if (FALSE) {
     
   }
-  
+  #--- > Run additional scripts if called                           ----
+  if (!is.null(addscr))
+    for (i in 1:length(addscr)) source(addscr[i])
+
   rm(data_dump, data_plot, dump)
   # output
   return(list_dump)
