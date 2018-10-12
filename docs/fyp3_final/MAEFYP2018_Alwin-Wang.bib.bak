@@ -239,4 +239,22 @@
   publisher = {Wiley},
 }
 
+@Book{Batchelor2000,
+  title     = {An {I}ntroduction to {F}luid {D}ynamics},
+  publisher = {Cambridge University Press},
+  year      = {2000},
+  author    = {G. K. Batchelor},
+  doi       = {10.1017/cbo9780511800955},
+}
+
+@Book{Zhou2007,
+  title     = {Vorticity and {V}ortex {D}ynamics},
+  publisher = {Springer Berlin Heidelberg},
+  year      = {2007},
+  author    = {Zhou, M.-D. and Ma, Hui-Yang and Wu, Jie-Zhi},
+  date      = {2007-04-20},
+  ean       = {9783540290285},
+  url       = {https://www.ebook.de/de/product/11433137/m_d_zhou_hui_yang_ma_jie_zhi_wu_vorticity_and_vortex_dynamics.html},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}

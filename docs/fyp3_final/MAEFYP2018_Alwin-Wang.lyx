@@ -407,6 +407,17 @@ BVF on surface
 Dimensionless Groups
 \end_layout
 
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Previous Work
 \end_layout
@@ -607,7 +618,7 @@ status open
 \begin_inset Graphics
 	filename Images/Intro_Kelvin-Theorem.png
 	lyxscale 30
-	width 12cm
+	width 14cm
 
 \end_inset
 
@@ -711,9 +722,6 @@ noprefix "false"
  mechanisms and exploring the physical phenomena behind vortices generated
  during the starting and stopping phases.
  
-\end_layout
-
-\begin_layout Standard
 \begin_inset Flex Subequations
 status open
 
@@ -1086,7 +1094,15 @@ This expresses the idea that vorticity must diffuse away from a solid boundary
  During the starting and stopping phases of motion, there is no angular
  acceleration present.
  Thus, the integral around the body perimeter of the flux of vorticity is
- zero at every incidence provided the pressure field is continuous.
+ zero at every incidence provided the pressure field is continuous 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Blackburn1999,Zhu2015"
+literal "false"
+
+\end_inset
+
+.
  This is shown in equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -1182,6 +1198,7 @@ noprefix "false"
 \end_inset
 
 .
+ 
 \begin_inset Formula 
 \begin{equation}
 \nu\frac{\partial\omega}{\partial n}\equiv\sigma\label{eq:BVF}
@@ -1190,6 +1207,159 @@ noprefix "false"
 \end_inset
 
 
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{gather}
+\vec{\sigma}=\vec{n}\times\left(\vec{a}_{B}-\vec{f}+\frac{1}{\rho}\nabla\vec{p}\right)+\nu\left(\vec{n}\times\nabla\right)\times\vec{\omega}\equiv\vec{\sigma}_{a}+\vec{\sigma}_{f}+\vec{\sigma}_{p}+\vec{\sigma}_{vis}\label{eq:BVF1}
+\end{gather}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{alignat}{3}
+\vec{\sigma}_{a} & =\vec{n}\times\vec{a}_{B} & \qquad &  & \vec{\sigma}_{f} & =-\vec{n}\times\vec{f}\label{eq:BFV2}\\
+\vec{\sigma}_{p} & =\frac{1}{\rho}\vec{n}\times\nabla\vec{p} &  &  & \vec{\sigma}_{vis} & =\nu\left(\vec{n}\times\nabla\right)\times\vec{\omega}\label{eq:BVF3}
+\end{alignat}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Zhou et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhou2007"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+pg140
+\end_layout
+
+\end_inset
+
+ describes additional BVF terms to arrive at a general expression for 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+ shown in Equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:BVF1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Note that this expression collapses into equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Morton Full VortGen"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ since 
+\begin_inset Formula $\vec{f}$
+\end_inset
+
+ is assumed to be 
+\begin_inset Formula $0$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{\sigma}_{vis}=0$
+\end_inset
+
+ in two dimensions.
+ Thus, 
+\begin_inset Formula 
+\begin{equation}
+\vec{\sigma}=\vec{\sigma}_{p}+\vec{\sigma}_{a}=\frac{1}{\rho}\left(\vec{n}\times\nabla\right)\vec{p}+\vec{n}\times\vec{a}_{B}=\nu\frac{\partial\omega}{\partial n}
+\end{equation}
+
+\end_inset
+
+For an incompressible flow problem, the forces on the airfoil can be determined
+ using equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Airfoil General Force"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ In steady incompressible flow, the forces acting on a 2D airfoil can be
+ determined solely by the boundary vorticity flux 
+\begin_inset Formula $\sigma_{p}$
+\end_inset
+
+ assuming the contribution of skin friction is negligible for 
+\begin_inset Formula $\text{Re}\gg1$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhou2007"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+pg611
+\end_layout
+
+\end_inset
+
+ (equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Airfoil LiftDrag Steady"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ 
+\begin_inset Formula 
+\begin{gather}
+\vec{F}=-\intop_{\partial B}\rho\,\vec{x}\times\left(\frac{1}{2}\vec{\sigma}_{p}+\vec{\sigma}_{vis}\right)\,\text{d}S\label{eq:Airfoil General Force}\\
+L=\rho\intop_{C}x\,\sigma_{p}\,\text{d}s,\quad D=-\rho\ointop_{C}y\,\sigma_{p}\,\text{d}s\label{eq:Airfoil LiftDrag Steady}
+\end{gather}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -1241,23 +1411,20 @@ Need to explain saddles and nodes for 2D
 \end_layout
 
 \begin_layout Standard
-When the airfoil first gains a nonzero relative velocity,the fluid pattern
+When the airfoil first gains a non-zero relative velocity,the fluid pattern
  is very similar to the inviscid potential flow solution where particles
- very close to the lower surface turn rapidly around the trailing edge.
- The streamline curvature is finite and moves upstream over the upper surface
- leading to a rear semi-saddle point (cannot be identified as a separation
- point in unsteady flow).
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-References?
-\end_layout
+ very close to the lower surface turn rapidly around the trailing edge 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Anderson2010"
+literal "false"
 
 \end_inset
 
-
+.
+ The streamline curvature is finite and moves upstream over the upper surface
+ leading (opposing the freestream flow).
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1278,13 +1445,154 @@ Shortly after, a thin sublayer on the trailing upper surface with vorticity
  separation (generic unsteady separation).
 \end_layout
 
+\begin_layout Standard
+to a rear semi-saddle point (cannot be identified as a separation point
+ in unsteady flow).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+To finish
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
-Added Mass Effect 
+Added Mass Effect for Unsteady Flows 
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
 Rename
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In his review, Limacher's outlines the concept of added mass is due to the
+ momentum a body imparts to the surrounding fluid.
+ Assuming an irrotational flow for a body of mass 
+\begin_inset Formula $M$
+\end_inset
+
+ experiencing a linear acceleration 
+\begin_inset Formula $a\left(t\right)$
+\end_inset
+
+ without rotation, the additional force is proportional to the instantaneous
+ acceleration of the body 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Limacher2018"
+literal "false"
+
+\end_inset
+
+.
+ Letting the constant of proportionality be 
+\begin_inset Formula $m'$
+\end_inset
+
+, the total force on the body can be found as
+\begin_inset Formula 
+\begin{equation}
+\vec{F}_{\text{tot}}=-\left(M+m\right)a\left(t\right),\quad\vec{F}_{\text{am}}=-m\cdot\vec{a}\left(t\right)
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $m'$
+\end_inset
+
+ can also be interpreted as 
+\begin_inset Quotes eld
+\end_inset
+
+added mass
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+apparent mass
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+virtual mass
+\begin_inset Quotes erd
+\end_inset
+
+ that must be accelerated with the body.
+ However, there is no identifiable finite volume of fluid that is accelerated
+ with the body to cause the force 
+\begin_inset Formula $F_{am}$
+\end_inset
+
+ as all the fluid around the body (to infinity) is accelerated.
+ 
+\end_layout
+
+\begin_layout Standard
+For incompressible flows using potential flow analysis, 
+\begin_inset Formula $\vec{u}=\nabla\phi$
+\end_inset
+
+ in the frame of reference where velocity decays to zero at infinity, Saffman
+ outlines that the conservation of energy can be used to determine 
+\begin_inset Formula $m'$
+\end_inset
+
+.
+ The added mass force associated with the scalar potential can also be determine
+d for a body with impermeable boundary condition on its surface 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Saffman1993"
+literal "false"
+
+\end_inset
+
+.
+\begin_inset Formula 
+\begin{equation}
+m'=\rho\intop_{V}\frac{u^{2}}{V\left(t\right)^{2}}\,\text{d}V,\quad F_{\text{am}}=-\rho\frac{\text{d}}{\text{d}t}\ointop_{S_{b}}\phi\hat{\vec{n}}\,\text{d}S
+\end{equation}
+
+\end_inset
+
+Limacher's generalised derivation for the total impulse, 
+\begin_inset Formula $\vec{P}$
+\end_inset
+
+, where 
+\begin_inset Formula $\vec{F}=-\rho$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+To finish
 \end_layout
 
 \end_inset
@@ -1354,7 +1662,11 @@ literal "false"
 \end_inset
 
 .
- After the starting phase, when the airfoil had attained a uniform velocity,
+ 
+\end_layout
+
+\begin_layout Standard
+After the starting phase, when the airfoil had attained a uniform velocity,
  it was also observed the lift force would asymptote to a steady-state value.
  An explanation for this was also provided by Kármán and Sears 
 \begin_inset CommandInset citation
@@ -1391,8 +1703,18 @@ literal "false"
 \end_inset
 
 .
- Both of these effects will also be investigated in this study of vorticity
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Both of these effects will also be investigated in this study of vorticity
  production as the vorticity is not contained to a thin region.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1421,7 +1743,7 @@ literal "false"
 
 \begin_layout Standard
 where the terminals have been adjusted to match the definition provided
- in 
+ in Kármán and Sears 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Karman1938"
@@ -1429,12 +1751,12 @@ literal "false"
 
 \end_inset
 
- and 
+.
+ In this analysis, 
 \begin_inset Formula $\frac{\text{d}z}{\text{d}x}=0$
 \end_inset
 
- in this analysis as the NACA0012 is a symmetric airfoil.
- The transformations 
+ as the NACA0012 is a symmetric airfoil and the transformations 
 \begin_inset Formula $\xi=-\cos\left(\theta\right)$
 \end_inset
 
@@ -1442,7 +1764,7 @@ literal "false"
 \begin_inset Formula $x=-\cos\left(\theta_{0}\right)$
 \end_inset
 
- are now used to obtain the standard result
+ are used to obtain the standard result
 \begin_inset Formula 
 \begin{equation}
 \gamma\left(\theta\right)=2\alpha V_{\infty}\frac{1+\cos\left(\theta\right)}{\sin\left(\theta\right)}\label{eq:gamma theta}
@@ -1463,7 +1785,11 @@ where
 \end_inset
 
 , for this analysis.
-  This can be applied to Kármán and Sears 
+  
+\end_layout
+
+\begin_layout Standard
+This can be applied to Kármán and Sears 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Karman1938"
@@ -1547,7 +1873,12 @@ if I add an image, reference it here
  it is clear the assumption of the wake remaining in the same plane as the
  airfoil does not hold as wake vortex sheet rolls up to form the starting
  vortex.
- Thus, only the first two terms, quasi-steady state, 
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Thus, only the first two terms, quasi-steady state, 
 \begin_inset Formula $L_{0}$
 \end_inset
 
@@ -1556,6 +1887,11 @@ if I add an image, reference it here
 \end_inset
 
 , are investigated.
+\end_layout
+
+\end_inset
+
+
 \begin_inset Note Note
 status open
 
@@ -1595,12 +1931,33 @@ Change this or the wording to something more appropriate
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Methodology
 \end_layout
 
 \begin_layout Subsection
-Objective and Approach/Problem Description/Governing Equations
+Objective and Approach/Problem Description/Governing Equations 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Rename
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1738,12 +2095,21 @@ literal "false"
 
  which represents non-impulsively started flow to unity free-stream velocity
  (figure 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:BC_airfoil"
 plural "false"
 caps "false"
 noprefix "false"
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -2043,7 +2409,7 @@ Results and Discussions
 \end_layout
 
 \begin_layout Section
-Qualative Description of the Vorticity Field
+Qualitative Description of the Vorticity Field
 \end_layout
 
 \begin_layout Section
