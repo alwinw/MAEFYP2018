@@ -323,6 +323,86 @@ Introduction
 Research Objectives
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Enumerate
+Accurate method of determine vorticity generation around an airfoil [X]
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Varied the method used (conformal mapping, finite difference, basis function)
+\end_layout
+
+\begin_layout Enumerate
+Polynomial order of spectral element
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Relation between vorticity generation and vorticity [~]
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Establishment of the Kutta condition (comparison of DNS to VS in terms of
+ BCs)
+\end_layout
+
+\begin_layout Enumerate
+Circulation of airfoil, TE/LE vortices
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Vorticity generation to predict lift and drag [..]
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Lift and drag for steady case using BVF
+\end_layout
+
+\begin_layout Enumerate
+Vortex impulse and added mass
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Comparison to unsteady panel method [~]
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Decomposition of lift force
+\end_layout
+
+\begin_layout Enumerate
+BC condition of BVF integral
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Effect of Reynolds number
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Circulation and lift force
+\end_layout
+
+\begin_layout Enumerate
+
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Dimensionless Groups
 \end_layout
@@ -1212,10 +1292,6 @@ Rename
 
 \end_layout
 
-\begin_layout Standard
-
-\end_layout
-
 \begin_layout Subsubsection
 Thin-Airfoil Theory Applied to Unsteady Flows
 \end_layout
@@ -2011,17 +2087,6 @@ Conclusion
 
 
 \begin_inset Newpage newpage
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Agromayor2017"
-literal "false"
-
 \end_inset
 
 
