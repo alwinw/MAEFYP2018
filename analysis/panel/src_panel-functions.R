@@ -69,7 +69,7 @@ CoRot <- function(x, y, x0, y0, theta, var) {
 }
 
 # Induced velocity and potentials
-VLIndVel <- function(panel, panels) {
+VLIndVel <- function(panel, panels, output = "Inf") {
   # Transform the panels into local coordinates of panel
   indvel <- panels %>% 
     mutate(
@@ -84,13 +84,88 @@ VLIndVel <- function(panel, panels) {
       ycl = CoRot(xc, yc, x1, y1, -theta, "y")) %>% 
     mutate( # Remove floating point error of atan(0)
       ycl = ifelse(i == panel$i, 0, ycl))
-  # Determine induced velocities
-  # Determined induced velocities in panel coordinates
+  # Determine induced velocities in panel coordinates
   indvel <- indvel %>% 
     mutate(
       r1 = sqrt(xcl^2 + ycl^2),
       r2 = sqrt((xcl-x2l)^2 + ycl^2),
       t1 = atan2(ycl, xcl),
       t2 = atan2(ycl, xcl-x2l)) %>% 
+    mutate( # Simplified since x1l = 0
+      pha = (-ycl/(4*pi*x2l))*((x2l-xcl)*log(r1^2/r2^2)+x2l) - 
+        (1/(4*pi*x2l))*((-xcl^2+2*x*x2l+ycl^2)*(t1-t2)+x2l^2*t2),
+      phb = (-ycl/(4*pi*x2l))*((    xcl)*log(r1^2/r2^2)-x2l) - 
+        (1/(4*pi*x2l))*(( xcl^2        -ycl^2)*(t1-t2)+x2l^2*t2),
+      ual = (-ycl*log(r2/r1) + (x2l-xcl)*(t2-t1))      /(2*pi*x2l),
+      ubl = ( ycl*log(r2/r1) +       xcl*(t2-t1))      /(2*pi*x2l),
+      wal = ((x2l-xcl)*log(r2/r1) - x2l + ycl*(t2-t1)) /(2*pi*x2l),
+      wbl = (      xcl*log(r2/r1) + x2l - ycl*(t2-t1)) /(2*pi*x2l) )
+  # Transform back into global coordinates
+  indvel <- indvel %>% 
+    mutate(
+      ua = CoRot(ual, wal, 0, 0, theta, "x"),
+      wa = CoRot(ual, wal, 0, 0, theta, "y"),
+      ub = CoRot(ubl, wbl, 0, 0, theta, "x"),
+      wb = CoRot(ubl, wbl, 0, 0, theta, "y") )
+  # Influence matrices
+  IC <- indvel
+  IC[nrow(IC)+1,] = 0 # Added for convinience in lead/lag
+  IC <- data.frame(
+    u   = IC$ua  + lag(IC$ub,  default = 0),
+    w   = IC$wa  + lag(IC$wb,  default = 0),
+    phi = IC$pha + lag(IC$phb, default = 0) )
+  # Influence row vector
+  Kj = IC$u*panel$nx + IC$w*panel$ny
+  Lj = IC$u*panel$tx + IC$w*panel$ty
+  Pj = IC$phi
   
+  # Return output
+  if (output == "Inf") 
+    return(data.frame(Kj = Kj, Lj = Lj, Pj = Pj))
+  else if (output == "ab")
+    return(select(indvel, pha, phb, ua, wa, ub, wb))
+  else
+    return(indvel)
 }
+
+# Influence matrices
+VLInfMat <- function(panels) {
+  Ni = nrow(panels)
+  # Apply for each collication point
+  panel_li <- split(panels, panels$i)
+  # Determine influence matrices
+  inf  <- lapply(panel_li, function(panel) VLIndVel(panel, panels))
+  Kmat <- t(bind_rows(lapply(inf, function(inf) inf$Kj)))
+  Lmat <- t(bind_rows(lapply(inf, function(inf) inf$Lj)))
+  Pmat <- t(bind_rows(lapply(inf, function(inf) inf$Pj)))
+  # Add kutta condition to Kmat
+  Kmat =  rbind(Kmat, c(1, rep(0, Ni-1), 1))
+  # Return output
+  return(list(Kmat = Kmat, Lmat = Lmat, Pmat = Pmat))
+}
+
+#--- Panel Method Solution                                        ----
+# aoa = 4
+# U = 1
+VLSol <- function(coord, aoa, U) {
+  # Determine influence matrices
+  panels <- VLPanel(coord)
+  infmat <- VLInfMat(panels)
+  Kmat   <- infmat$Kmat
+  Lmat   <- infmat$Lmat
+  Pmat   <- infmat$Pmat
+  # Determine RHS
+  alpha = aoa*pi/180 
+  Uinf = U*cos(alpha)
+  Vinf = U*sin(alpha)
+  bvec = -(Uinf*panels$nx + Vinf*panels$ny)
+  bvec = c(bvec, 0)
+  # Solve for gamma
+  gvec = as.matrix(solve(Kmat, bvec))
+  # Induced velocities
+  vvec = Lmat %*% gvec + Uinf*panels$tx + Vinf*panels$ty
+  cp   = 1 - vvec^2
+  
+  return(list(g = gvec, v = vvec, cp = cp))
+}
+

@@ -2868,7 +2868,7 @@ status open
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Derivation for velocity potential
@@ -2966,7 +2966,7 @@ Simplified result
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Derivation for u velocity
@@ -3132,7 +3132,7 @@ w_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[-x\ln\left(\frac{r_{1}
 
 \begin_inset Formula 
 \begin{align*}
-w_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi x_{2}}\left[\left(x_{2}-x\right)\ln\left(\frac{r_{2}}{r_{1}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]\\
+w_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi x_{2}}\left[\left(x_{2}-x\right)\ln\left(\frac{r_{2}}{r_{1}}\right)-x_{2}+z\left(\theta_{2}-\theta_{1}\right)\right]\\
 w_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[x\ln\left(\frac{r_{2}}{r_{1}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]
 \end{align*}
 
@@ -3516,8 +3516,8 @@ begin{subequations}
 
 \begin_inset Formula 
 \begin{align}
-w_{p}\left(\gamma_{a}\right) & =-\frac{1}{2\pi}\left[\left(1-\frac{x}{x_{2}}\right)\ln\left(\frac{r_{2}}{r_{1}}\right)+1-\frac{z}{x_{2}-x_{1}}\left(\theta_{2}-\theta_{1}\right)\right]\\
-w_{p}\left(\gamma_{b}\right) & =-\frac{1}{2\pi}\left[\frac{x}{x_{2}}\ln\left(\frac{r_{1}}{r_{2}}\right)-1+\frac{z}{x_{2}}\left(\theta_{2}-\theta_{1}\right)\right]
+w_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi x_{2}}\left[\left(x_{2}-x\right)\ln\left(\frac{r_{2}}{r_{1}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]\\
+w_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[x\ln\left(\frac{r_{2}}{r_{1}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]
 \end{align}
 
 \end_inset
