@@ -2868,7 +2868,7 @@ status open
 
 \begin_layout Standard
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 Derivation for velocity potential
@@ -2882,11 +2882,15 @@ Sum two potentials together
 \begin_inset Formula 
 \begin{align*}
 \Phi_{p}=\Phi_{0}+\Phi_{1} & =-\frac{\gamma_{0}}{2\pi}\left[\left(x-x_{1}\right)\theta_{1}-\left(x-x_{2}\right)\theta_{2}+\frac{z}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\right]\\
- & \qquad-\frac{\gamma_{1}}{2\pi}\left[\frac{xz}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+\frac{z}{2}\left(x_{1}-x_{2}\right)+\frac{x^{2}-x_{1}^{2}-z^{2}}{2}\theta_{1}-\frac{x^{2}-x_{2}^{2}-z^{2}}{2}\theta_{2}\right]
+ & \qquad-\frac{\gamma_{1}}{2\pi}\left[\frac{xz}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)-\frac{z}{2}\left(x_{1}-x_{2}\right)+\frac{x^{2}-x_{1}^{2}-z^{2}}{2}\theta_{1}-\frac{x^{2}-x_{2}^{2}-z^{2}}{2}\theta_{2}\right]
 \end{align*}
 
 \end_inset
 
+NOTE: changed from +z/2(x1-x2) to -z/2(x1-x2) in Hugh's notes
+\end_layout
+
+\begin_layout Plain Layout
 Convert to a and b
 \begin_inset Formula 
 \begin{align*}
@@ -2966,7 +2970,7 @@ Simplified result
 
 \begin_layout Standard
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 Derivation for u velocity
@@ -3076,6 +3080,10 @@ w_{p}=w_{0}+w_{1}=-\frac{\gamma_{0}}{2\pi}\ln\left(\frac{r_{1}}{r_{2}}\right)-\f
 
 \end_inset
 
+NOTE: had errors using +g0/2pi
+\end_layout
+
+\begin_layout Plain Layout
 Convert to a and b
 \begin_inset Formula 
 \[
@@ -3544,6 +3552,10 @@ Spectral Element Mesh
 
 \begin_layout Section
 Separation in Unsteady Flows
+\end_layout
+
+\begin_layout Section
+Semtex Input Files
 \end_layout
 
 \end_body

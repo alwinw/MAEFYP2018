@@ -147,7 +147,7 @@ VLInfMat <- function(panels) {
 #--- Panel Method Solution                                        ----
 # aoa = 4
 # U = 1
-VLSol <- function(coord, aoa, U) {
+VLSteady <- function(coord, aoa, U) {
   # Determine influence matrices
   panels <- VLPanel(coord)
   infmat <- VLInfMat(panels)
@@ -162,10 +162,26 @@ VLSol <- function(coord, aoa, U) {
   bvec = c(bvec, 0)
   # Solve for gamma
   gvec = as.matrix(solve(Kmat, bvec))
-  # Induced velocities
+  # Induced Velocity
   vvec = Lmat %*% gvec + Uinf*panels$tx + Vinf*panels$ty
-  cp   = 1 - vvec^2
+  # Coefficient of Pressure
+  cp   = 1 - (vvec/U)^2
+  # Velocity Potential
+  phi  = Pmat %*% gvec + Uinf*panels$x + Vinf*panels$y
   
-  return(list(g = gvec, v = vvec, cp = cp))
+  # Output
+  outpj <- data.frame(
+    j = 1:nrow(coord),
+    coord,
+    gamma = gvec )
+  outpi <- data.frame(
+    select(panels, i, x, y, c, theta),
+    vel = vvec,
+    cp  = cp,
+    phi = phi)
+  
+  return(list(
+    i = outpi,
+    j = outpj))
 }
 

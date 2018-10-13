@@ -25,10 +25,15 @@ coord <- data.frame(
   x = c(1,  0.3,  0,  0.3, 1),
   y = c(0, -0.05, 0, 0.05, 0))
 panels <- VLPanel(coord)
-ggplot(coord, aes(x, y)) + geom_path() + geom_point() + 
-  coord_fixed() +
-  geom_segment(aes(x, y, xend = x+nx, yend = y+ny), panels)
-VLSol(coord, aoa = 5, U = 1)
+ggplot(panels) +
+  geom_segment(aes(x1, y1, xend = x, yend = y),
+               arrow = arrow(length = unit(0.01, "npc"), type = "closed")) +
+  geom_segment(aes(x, y, xend = x2, yend = y2)) +
+  geom_segment(aes(x, y, xend = x+nx, yend = y+ny)) +
+  geom_point(aes(x, y), coord) +
+  geom_point(aes(x, y), coord[1,], colour = "red") +
+  coord_fixed()
+VLSteady(coord, aoa = 5, U = 1)
 actual <- data.frame(gamma = c(-0.8862, -0.9905, 0.4848, 1.233, 0.8862))
 
 #--- * NACA2412 Airfoil                                           ----
@@ -40,7 +45,7 @@ panels <- VLPanel(coord)
 ggplot(coord, aes(x, y)) + geom_path() + geom_point() + 
   coord_fixed() +
   geom_segment(aes(x, y, xend = x+nx, yend = y+ny), panels)
-VLSol(coord, aoa = 8, U = 1)
+VLSteady(coord, aoa = 8, U = 1)
 
 #--- * NACA0012 Airfoil                                           ----
 # Source: Hugh Blackburn
@@ -55,4 +60,74 @@ panels <- VLPanel(coord)
 ggplot(coord, aes(x, y)) + geom_path() + geom_point() + 
   coord_fixed() +
   geom_segment(aes(x, y, xend = x+nx, yend = y+ny), panels)
-VLSol(coord, aoa = 4, U = 1)
+VLSteady(coord, aoa = 4, U = 1)
+
+#--- * Cylinder                                                   ----
+# Source: Katz & Plotkin pg 65
+R = 2; Uinf = 5
+t = seq(0, -2*pi, length.out = 101)
+coord <- data.frame(
+  t = t, x = R*cos(t), y = R*sin(t) )
+panels <- VLPanel(coord)
+ggplot(panels) +
+  geom_segment(aes(x1, y1, xend = x, yend = y),
+               arrow = arrow(length = unit(0.01, "npc"), type = "closed")) +
+  geom_segment(aes(x, y, xend = x2, yend = y2)) +
+  geom_segment(aes(x, y, xend = x+nx, yend = y+ny)) +
+  geom_point(aes(x, y), coord) +
+  geom_point(aes(x, y), coord[1,], colour = "red") +
+  coord_fixed()
+steady <- VLSteady(coord, aoa = 0, U = Uinf)
+actual <- data.frame(t = seq(-pi, pi, length.out = 101)) %>% 
+  mutate(
+    cp  = 1 - 4*sin(t)^2,
+    phi = Uinf*cos(t)*2*R )
+# Coefficient of Pressure
+ggplot() +
+  geom_point(aes(atan2(y,x), cp), 
+            steady$i, colour = "red") +
+  geom_line(aes(ifelse(t < -pi, t+2*pi, t), cp), 
+            actual, colour = "blue") +
+  scale_y_reverse() +
+  ggtitle("Coefficient of Pressure on a Cylinder")
+# Velocity potential
+ggplot() +
+  geom_point(aes(atan2(y,x), phi), 
+             steady$i, colour = "red") +
+  geom_line(aes(ifelse(t < -pi, t+2*pi, t), phi), 
+            actual, colour = "blue") +
+  ggtitle("Velocity Potential")
+# Determine velocity potential manually by integration
+ggplot() +
+  geom_point(aes(atan2(y,x), gamma), 
+             steady$j, colour = "red") +
+  ggtitle("Vorticity Distribution")
+
+li_panel <- split(panels, panels$i)
+
+phiint <- bind_rows(lapply(li_panel, function(panel) 
+  data.frame(phi = integrate(function(x) 
+    spline(atan2(steady$j$y, steady$j$x), steady$j$gamma, xout = x)$y/(2*pi) *
+      atan2(panel$y - R*sin(x), panel$x - R*cos(x))
+    , lower = -pi, upper = pi)$value,
+    x = panel$x,
+    y = panel$y,
+    t = atan2(panel$x, panel$y)
+  )
+))
+
+phiint$phisum = -phiint$phi + Uinf*panels$x
+
+ggplot() +
+  geom_point(aes(atan2(y,x), phiint$phi* ifelse(atan2(y,x)<pi/2 & atan2(y,x)>-pi/2,-1,1) + Uinf*x +5), 
+             phiint) +
+  geom_line(aes(ifelse(t < -pi, t+2*pi, t), phi), 
+            actual, colour = "blue") +
+  ggtitle("Velocity Potential")
+
+integrate(function(x) 
+  spline(atan2(steady$j$y, steady$j$x), steady$j$gamma, xout = x)$y/(2*pi) *
+    atan2(panel$y - R*sin(x), panel$x - R*cos(x))
+    , lower = -pi, upper = pi)
+
+
