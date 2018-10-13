@@ -27,7 +27,10 @@
 
 **Folder Structure**
 * `analysis`            : Analyses conducted
-  + `convg`               : Convergence analysis (RPoj, sesh, bash)
+  + `convg`               : Convergence analysis (RProj, sesh, bash)
+    - `results`             : Semtex output of session file
+    - `output`              : Output of R scripts (RData, images)
+  + `panel`               : Panel method analysis (RProj, sesh, bash)
     - `results`             : Semtex output of session file
     - `output`              : Output of R scripts (RData, images)
   + `kutta`               : Kutta condition analysis (RPoj, sesh, bash)
@@ -54,5 +57,6 @@
   + `sp5`                 : 0 Original sp5 files
   + `naca0012`            : 1 Joined bndry_prf 
   + `remesh`              : 2 LE and TE clustered mesh
+  + `panel`               : Testing of panel method
   
    
