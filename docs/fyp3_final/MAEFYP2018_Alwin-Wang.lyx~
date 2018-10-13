@@ -2520,6 +2520,17 @@ Exerpts with description from Karman and Sears
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Unsteady Panel Method
 \end_layout
@@ -2657,7 +2668,7 @@ begin{subequations}
 \begin{gather}
 \Phi_{0}=-\frac{\gamma_{0}}{2\pi}\intop_{x_{1}}^{x_{2}}\tan^{-1}\left(\frac{z}{x-x_{0}}\right)\,\text{d}x_{0}=-\frac{\gamma_{0}}{2\pi}\left[\left(x-x_{1}\right)\theta_{1}-\left(x-x_{2}\right)\theta_{2}+\frac{z}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\right]\\
 u_{0}=\frac{\gamma_{0}}{2\pi}\intop_{x_{1}}^{x_{2}}\frac{z}{\left(x-x_{0}\right)^{2}+z^{2}}\,\text{d}x_{0}=\frac{\gamma_{0}}{2\pi}\left(\theta_{2}-\theta_{1}\right)\\
-w_{0}=-\frac{\gamma_{0}}{2\pi}\intop_{x_{1}}^{x_{2}}\frac{x-x_{0}}{\left(x-x_{0}\right)+z^{2}}\,\text{d}x_{0}=-\frac{\gamma_{0}}{2\pi}\ln\left(\frac{r_{2}}{r_{1}}\right)
+w_{0}=-\frac{\gamma_{0}}{2\pi}\intop_{x_{1}}^{x_{2}}\frac{x-x_{0}}{\left(x-x_{0}\right)+z^{2}}\,\text{d}x_{0}=-\frac{\gamma_{0}}{2\pi}\ln\left(\frac{r_{1}}{r_{2}}\right)
 \end{gather}
 
 \end_inset
@@ -2757,7 +2768,7 @@ begin{subequations}
 
 \begin_inset Formula 
 \begin{gather}
-\Phi_{1}=-\frac{\gamma_{1}}{2\pi}\intop_{x_{1}}^{x_{2}}x_{0}\tan^{-1}\left(\frac{z}{x-x_{0}}\right)\,\text{d}x_{0}=-\frac{\gamma_{1}}{2\pi}\left[\frac{xz}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+\frac{z}{2}\left(x_{1}-x_{2}\right)+\frac{x^{2}-x_{1}^{2}-z^{2}}{2}\theta_{1}-\frac{x^{2}-x_{2}^{2}-x^{2}}{2}\theta_{2}\right]
+\Phi_{1}=-\frac{\gamma_{1}}{2\pi}\intop_{x_{1}}^{x_{2}}x_{0}\tan^{-1}\left(\frac{z}{x-x_{0}}\right)\,\text{d}x_{0}=-\frac{\gamma_{1}}{2\pi}\left[\frac{xz}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+\frac{z}{2}\left(x_{1}-x_{2}\right)+\frac{x^{2}-x_{1}^{2}-z^{2}}{2}\theta_{1}-\frac{x^{2}-x_{2}^{2}-z^{2}}{2}\theta_{2}\right]
 \end{gather}
 
 \end_inset
@@ -2765,7 +2776,7 @@ begin{subequations}
 
 \begin_inset Formula 
 \begin{align}
-u_{1} & =\frac{\gamma_{1}}{2\pi}\intop_{x_{1}}^{x_{2}}\frac{x_{0}z}{\left(x-x_{0}\right)^{2}+z^{2}}\,\text{d}x_{0}=\frac{\gamma_{1}}{2\pi}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]\\
+u_{1} & =\frac{\gamma_{1}}{2\pi}\intop_{x_{1}}^{x_{2}}\frac{x_{0}z}{\left(x-x_{0}\right)^{2}+z^{2}}\,\text{d}x_{0}=-\frac{\gamma_{1}}{2\pi}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]\\
 w_{1} & =-\frac{\gamma_{1}}{2\pi}\intop_{x_{1}}^{x_{2}}\frac{x_{0}\left(x-x_{0}\right)}{\left(x-x_{0}\right)+z^{2}}\,\text{d}x_{0}=-\frac{\gamma_{1}}{2\pi}\left[x\ln\left(\frac{r_{1}}{r_{2}}\right)+\left(x_{1}-x_{2}\right)+z\left(\theta_{2}-\theta_{1}\right)\right]
 \end{align}
 
@@ -2855,6 +2866,286 @@ status open
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Derivation for velocity potential
+\end_layout
+
+\begin_layout Plain Layout
+Sum two potentials together
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{align*}
+\Phi_{p}=\Phi_{0}+\Phi_{1} & =-\frac{\gamma_{0}}{2\pi}\left[\left(x-x_{1}\right)\theta_{1}-\left(x-x_{2}\right)\theta_{2}+\frac{z}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\right]\\
+ & \qquad-\frac{\gamma_{1}}{2\pi}\left[\frac{xz}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+\frac{z}{2}\left(x_{1}-x_{2}\right)+\frac{x^{2}-x_{1}^{2}-z^{2}}{2}\theta_{1}-\frac{x^{2}-x_{2}^{2}-z^{2}}{2}\theta_{2}\right]
+\end{align*}
+
+\end_inset
+
+Convert to a and b
+\begin_inset Formula 
+\begin{align*}
+\Phi_{p}= & -\frac{\gamma_{a}}{2\pi}\left[\left(x-x_{1}\right)\theta_{1}-\left(x-x_{2}\right)\theta_{2}+\frac{z}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\right]\\
+ & \qquad-\frac{\gamma_{b}-\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[\frac{xz}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+\frac{z}{2}\left(x_{1}-x_{2}\right)+\frac{x^{2}-x_{1}^{2}-z^{2}}{2}\theta_{1}-\frac{x^{2}-x_{2}^{2}-z^{2}}{2}\theta_{2}\right]
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\Phi_{p}= & -\frac{\gamma_{a}}{2\pi}\left[\left(x-x_{1}\right)\theta_{1}-\left(x-x_{2}\right)\theta_{2}+\frac{z}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\right]\\
+ & \qquad-\frac{\gamma_{a}}{2\pi}\left[-\frac{xz}{2\left(x_{2}-x_{1}\right)}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)-\frac{z}{2}\frac{\left(x_{1}-x_{2}\right)}{\left(x_{2}-x_{1}\right)}-\frac{x^{2}-x_{1}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\theta_{1}+\frac{x^{2}-x_{2}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\theta_{2}\right]\\
+ & \qquad-\frac{\gamma_{b}}{2\pi}\left[\frac{xz}{2\left(x_{2}-x_{1}\right)}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+\frac{z}{2}\frac{\left(x_{1}-x_{2}\right)}{\left(x_{2}-x_{1}\right)}+\frac{x^{2}-x_{1}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\theta_{1}-\frac{x^{2}-x_{2}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\theta_{2}\right]
+\end{align*}
+
+\end_inset
+
+Separate a and b
+\begin_inset Formula 
+\begin{align*}
+\Phi_{p}\left(\gamma_{a}\right) & =-\frac{1}{2\pi}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\left(\frac{z}{2}-\frac{xz}{2\left(x_{2}-x_{1}\right)}\right)+\frac{z}{2}\right]\\
+ & \qquad-\frac{1}{2\pi}\left[\theta_{1}\left(\left(x-x_{1}\right)-\frac{x^{2}-x_{1}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)-\theta_{2}\left(\left(x-x_{2}\right)-\frac{x^{2}-x_{2}^{2}-z}{2\left(x_{2}-x_{1}\right)}\right)\right]\\
+\Phi_{p}\left(\gamma_{b}\right) & =-\frac{1}{2\pi}\left[\frac{xz}{2\left(x_{2}-x_{1}\right)}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)-\frac{z}{2}\right]\\
+ & \qquad-\frac{1}{2\pi}\left[\frac{x^{2}-x_{1}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\theta_{1}-\frac{x^{2}-x_{2}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\theta_{2}\right]
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\Phi_{p}\left(\gamma_{a}\right) & =-\frac{z}{4\pi}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\left(1-\frac{x}{x_{2}-x_{1}}\right)+1\right]\\
+ & \qquad-\frac{1}{2\pi}\left[\theta_{1}\left(\left(x-x_{1}\right)-\frac{x^{2}-x_{1}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)-\theta_{2}\left(\left(x-x_{2}\right)-\frac{x^{2}-x_{2}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)\right]\\
+\Phi_{p}\left(\gamma_{b}\right) & =-\frac{z}{4\pi}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\frac{x}{x_{2}-x_{1}}-1\right]-\frac{1}{2\pi}\left[\theta_{1}\left(\frac{x^{2}-x_{1}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)-\theta_{2}\left(\frac{x^{2}-x_{2}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)\right]
+\end{align*}
+
+\end_inset
+
+Sub x1 = 0
+\begin_inset Formula 
+\begin{align*}
+\Phi_{p}\left(\gamma_{a}\right) & =-\frac{z}{4\pi}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\left(1-\frac{x}{x_{2}}\right)+1\right]\\
+ & \qquad-\frac{1}{2\pi}\left[\theta_{1}\left(x-\frac{x^{2}-z^{2}}{2x_{2}}\right)-\theta_{2}\left(\left(x-x_{2}\right)-\frac{x^{2}-x_{2}^{2}-z^{2}}{2x_{2}}\right)\right]\\
+\Phi_{p}\left(\gamma_{b}\right) & =-\frac{z}{4\pi}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\frac{x}{x_{2}}-1\right]-\frac{1}{2\pi}\left[\theta_{1}\left(\frac{x^{2}-z^{2}}{2x_{2}}\right)-\theta_{2}\left(\frac{x^{2}-x_{2}^{2}-z^{2}}{2x_{2}}\right)\right]
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\Phi_{p}\left(\gamma_{a}\right) & =-\frac{z}{4\pi x_{2}}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\left(x_{2}-x\right)+x_{2}\right]\\
+ & \qquad-\frac{1}{4\pi x_{2}}\left[\theta_{1}\left(-x^{2}+2xx_{2}+z^{2}\right)-\theta_{2}\left(-x^{2}+2xx_{2}+z^{2}-x_{2}^{2}\right)\right]\\
+\Phi_{p}\left(\gamma_{b}\right) & =-\frac{z}{4\pi x_{2}}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)x-x_{2}\right]-\frac{1}{4\pi x_{2}}\left[\theta_{1}\left(x^{2}-z^{2}\right)-\theta_{2}\left(x^{2}-x_{2}^{2}-z^{2}\right)\right]
+\end{align*}
+
+\end_inset
+
+Simplified result
+\begin_inset Formula 
+\begin{align*}
+\Phi_{p}\left(\gamma_{a}\right) & =-\frac{z}{4\pi x_{2}}\left[\left(x_{2}-x\right)\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+x_{2}\right]-\frac{1}{4\pi x_{2}}\left[\left(-x^{2}+2xx_{2}+z^{2}\right)\left(\theta_{1}-\theta_{2}\right)+x_{2}^{2}\theta_{2}\right]\\
+\Phi_{p}\left(\gamma_{b}\right) & =-\frac{z}{4\pi x_{2}}\left[x\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)-x_{2}\right]-\frac{1}{4\pi x_{2}}\left[\left(x^{2}-z^{2}\right)\left(\theta_{1}-\theta_{2}\right)+x_{2}^{2}\theta_{2}\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Derivation for u velocity
+\end_layout
+
+\begin_layout Plain Layout
+Sum two potentials together
+\begin_inset Formula 
+\[
+u_{p}=u_{0}+u_{1}=\frac{\gamma_{0}}{2\pi}\left(\theta_{2}-\theta_{1}\right)-\frac{\gamma_{1}}{2\pi}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]
+\]
+
+\end_inset
+
+Convert to a and b
+\begin_inset Formula 
+\[
+u_{p}=\frac{\gamma_{a}}{2\pi}\left(\theta_{2}-\theta_{1}\right)-\frac{\gamma_{b}-\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+u_{p}=\frac{\gamma_{a}}{2\pi}\left(\theta_{2}-\theta_{1}\right)+\frac{\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]-\frac{\gamma_{b}}{2\pi\left(x_{2}-x_{1}\right)}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+u_{p} & =\frac{\gamma_{a}}{2\pi}\left(\theta_{2}-\theta_{1}\right)+\frac{\gamma_{a}}{2\pi}\left[\frac{z}{x_{2}-x_{1}}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{x}{x_{2}-x_{1}}\left(\theta_{2}-\theta_{1}\right)\right]\\
+ & \qquad-\frac{\gamma_{b}}{2\pi}\left[\frac{z}{x_{2}-x_{1}}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{x}{x_{2}-x_{1}}\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+Separate a and b
+\begin_inset Formula 
+\begin{align*}
+u_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi}\left[\left(\theta_{2}-\theta_{1}\right)+\frac{z}{x_{2}-x_{1}}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{x}{x_{2}-x_{1}}\left(\theta_{2}-\theta_{1}\right)\right]\\
+u_{p}\left(\gamma_{b}\right) & =-\frac{1}{2\pi}\left[\frac{z}{x_{2}-x_{1}}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{x}{x_{2}-x_{1}}\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+Sub x1 = 0
+\begin_inset Formula 
+\begin{align*}
+u_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi}\left[\left(\theta_{2}-\theta_{1}\right)+\frac{z}{x_{2}}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{x}{x_{2}}\left(\theta_{2}-\theta_{1}\right)\right]\\
+u_{p}\left(\gamma_{b}\right) & =-\frac{1}{2\pi}\left[\frac{z}{x_{2}}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{x}{x_{2}}\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+Simplified result
+\begin_inset Formula 
+\begin{align*}
+u_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi x_{2}}\left[x_{2}\left(\theta_{2}-\theta_{1}\right)+z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]\\
+u_{p}\left(\gamma_{b}\right) & =-\frac{1}{2\pi x_{2}}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+u_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi x_{2}}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)+\left(\theta_{2}-\theta_{1}\right)\left(x_{2}-x\right)\right]\\
+u_{p}\left(\gamma_{b}\right) & =-\frac{1}{2\pi x_{2}}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+u_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi x_{2}}\left[-z\ln\left(\frac{r_{2}}{r_{1}}\right)+\left(x_{2}-x\right)\left(\theta_{2}-\theta_{1}\right)\right]\\
+u_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[z\ln\left(\frac{r_{2}}{r_{1}}\right)+x\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Derivation for v velocity
+\end_layout
+
+\begin_layout Plain Layout
+Sum two potentials together
+\begin_inset Formula 
+\[
+w_{p}=w_{0}+w_{1}=-\frac{\gamma_{0}}{2\pi}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{\gamma_{1}}{2\pi}\left[x\ln\left(\frac{r_{1}}{r_{2}}\right)+\left(x_{1}-x_{2}\right)+z\left(\theta_{2}-\theta_{1}\right)\right]
+\]
+
+\end_inset
+
+Convert to a and b
+\begin_inset Formula 
+\[
+w_{p}=-\frac{\gamma_{a}}{2\pi}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{\gamma_{b}-\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[x\ln\left(\frac{r_{1}}{r_{2}}\right)+\left(x_{1}-x_{2}\right)+z\left(\theta_{2}-\theta_{1}\right)\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+w_{p} & =-\frac{\gamma_{a}}{2\pi}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[-x\ln\left(\frac{r_{1}}{r_{2}}\right)-\left(x_{1}-x_{2}\right)-z\left(\theta_{2}-\theta_{1}\right)\right]\\
+ & \qquad-\frac{\gamma_{b}}{2\pi\left(x_{2}-x_{1}\right)}\left[x\ln\left(\frac{r_{1}}{r_{2}}\right)+\left(x_{1}-x_{2}\right)+z\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+Separate a and b
+\begin_inset Formula 
+\begin{align*}
+w_{p}\left(\gamma_{a}\right) & =-\frac{1}{2\pi}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{1}{2\pi\left(x_{2}-x_{1}\right)}\left[-x\ln\left(\frac{r_{1}}{r_{2}}\right)-\left(x_{1}-x_{2}\right)-z\left(\theta_{2}-\theta_{1}\right)\right]\\
+w_{p}\left(\gamma_{b}\right) & =-\frac{1}{2\pi\left(x_{2}-x_{1}\right)}\left[x\ln\left(\frac{r_{1}}{r_{2}}\right)+\left(x_{1}-x_{2}\right)+z\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+Sub x1 = 0
+\begin_inset Formula 
+\begin{align*}
+w_{p}\left(\gamma_{a}\right) & =-\frac{1}{2\pi}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{1}{2\pi x_{2}}\left[-x\ln\left(\frac{r_{1}}{r_{2}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]\\
+w_{p}\left(\gamma_{b}\right) & =-\frac{1}{2\pi x_{2}}\left[x\ln\left(\frac{r_{1}}{r_{2}}\right)-x_{2}+z\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+Simplified result
+\begin_inset Formula 
+\begin{align*}
+w_{p}\left(\gamma_{a}\right) & =-\frac{1}{2\pi x_{2}}\left[x_{2}\ln\left(\frac{r_{1}}{r_{2}}\right)-x\ln\left(\frac{r_{1}}{r_{2}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]\\
+w_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[-x\ln\left(\frac{r_{1}}{r_{2}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+w_{p}\left(\gamma_{a}\right) & =-\frac{1}{2\pi x_{2}}\left[\left(x_{2}-x\right)\ln\left(\frac{r_{1}}{r_{2}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]\\
+w_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[-x\ln\left(\frac{r_{1}}{r_{2}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+w_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi x_{2}}\left[\left(x_{2}-x\right)\ln\left(\frac{r_{2}}{r_{1}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]\\
+w_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[x\ln\left(\frac{r_{2}}{r_{1}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Itemize
 Panel coordinate system in terms of 
 \begin_inset Formula $\gamma_{0}$
@@ -2881,9 +3172,9 @@ begin{subequations}
 \begin_inset Formula 
 \begin{align}
 \Phi_{p}=\Phi_{0}+\Phi_{1} & =-\frac{\gamma_{0}}{2\pi}\left[\left(x-x_{1}\right)\theta_{1}-\left(x-x_{2}\right)\theta_{2}+\frac{z}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\right]\nonumber \\
- & \qquad-\frac{\gamma_{1}}{2\pi}\left[\frac{xz}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+\frac{z}{2}\left(x_{1}-x_{2}\right)+\frac{x^{2}-x_{1}^{2}-z^{2}}{2}\theta_{1}-\frac{x^{2}-x_{2}^{2}-x^{2}}{2}\theta_{2}\right]\\
-u_{p}=u_{0}+u_{1} & =\frac{\gamma_{0}}{2\pi}\left(\theta_{2}-\theta_{1}\right)+\frac{\gamma_{1}}{2\pi}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]\\
-w_{p}=w_{0}+w_{1} & =-\frac{\gamma_{0}}{2\pi}\ln\left(\frac{r_{2}}{r_{1}}\right)-\frac{\gamma_{1}}{2\pi}\left[x\ln\left(\frac{r_{1}}{r_{2}}\right)+\left(x_{1}-x_{2}\right)+z\left(\theta_{2}-\theta_{1}\right)\right]
+ & \qquad-\frac{\gamma_{1}}{2\pi}\left[\frac{xz}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+\frac{z}{2}\left(x_{1}-x_{2}\right)+\frac{x^{2}-x_{1}^{2}-z^{2}}{2}\theta_{1}-\frac{x^{2}-x_{2}^{2}-z^{2}}{2}\theta_{2}\right]\\
+u_{p}=u_{0}+u_{1} & =\frac{\gamma_{0}}{2\pi}\left(\theta_{2}-\theta_{1}\right)-\frac{\gamma_{1}}{2\pi}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]\\
+w_{p}=w_{0}+w_{1} & =-\frac{\gamma_{0}}{2\pi}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{\gamma_{1}}{2\pi}\left[x\ln\left(\frac{r_{1}}{r_{2}}\right)+\left(x_{1}-x_{2}\right)+z\left(\theta_{2}-\theta_{1}\right)\right]
 \end{align}
 
 \end_inset
@@ -2973,9 +3264,9 @@ begin{subequations}
 \begin_inset Formula 
 \begin{align}
 \Phi_{p}= & -\frac{\gamma_{a}}{2\pi}\left[\left(x-x_{1}\right)\theta_{1}-\left(x-x_{2}\right)\theta_{2}+\frac{z}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\right]\nonumber \\
- & \qquad-\frac{\gamma_{b}-\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[\frac{xz}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+\frac{z}{2}\left(x_{1}-x_{2}\right)+\frac{x^{2}-x_{1}^{2}-z^{2}}{2}\theta_{1}-\frac{x^{2}-x_{2}^{2}-x^{2}}{2}\theta_{2}\right]\\
-u_{p} & =\frac{\gamma_{a}}{2\pi}\left(\theta_{2}-\theta_{1}\right)+\frac{\gamma_{b}-\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]\\
-w_{p} & =-\frac{\gamma_{a}}{2\pi}\ln\left(\frac{r_{2}}{r_{1}}\right)-\frac{\gamma_{b}-\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[x\ln\left(\frac{r_{1}}{r_{2}}\right)+\left(x_{1}-x_{2}\right)+z\left(\theta_{2}-\theta_{1}\right)\right]
+ & \qquad-\frac{\gamma_{b}-\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[\frac{xz}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+\frac{z}{2}\left(x_{1}-x_{2}\right)+\frac{x^{2}-x_{1}^{2}-z^{2}}{2}\theta_{1}-\frac{x^{2}-x_{2}^{2}-z^{2}}{2}\theta_{2}\right]\\
+u_{p} & =\frac{\gamma_{a}}{2\pi}\left(\theta_{2}-\theta_{1}\right)-\frac{\gamma_{b}-\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]\\
+w_{p} & =-\frac{\gamma_{a}}{2\pi}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{\gamma_{b}-\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[x\ln\left(\frac{r_{1}}{r_{2}}\right)+\left(x_{1}-x_{2}\right)+z\left(\theta_{2}-\theta_{1}\right)\right]
 \end{align}
 
 \end_inset
@@ -3021,9 +3312,8 @@ begin{subequations}
 
 \begin_inset Formula 
 \begin{align}
-\Phi_{p}\left(\gamma_{a}\right) & =-\frac{z}{4\pi}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\left(1-\frac{x}{x_{2}-x_{1}}\right)+1\right]\nonumber \\
- & \qquad-\frac{1}{2\pi}\left[\theta_{1}\left(\left(x-x_{1}\right)-\frac{x^{2}-x_{1}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)-\theta_{2}\left(\left(x-x_{2}\right)-\frac{x^{2}-x_{2}^{2}-x^{2}}{2\left(x_{2}-x_{1}\right)}\right)\right]\\
-\Phi_{p}\left(\gamma_{b}\right) & =-\frac{z}{4\pi}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\frac{x}{x_{2}-x_{1}}-1\right]-\frac{1}{2\pi}\left[\theta_{1}\left(\frac{x^{2}-x_{1}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)-\theta_{2}\left(\frac{x^{2}-x_{2}^{2}-x^{2}}{2\left(x_{2}-x_{1}\right)}\right)\right]
+\Phi_{p}\left(\gamma_{a}\right) & =-\frac{z}{4\pi}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\left(1-\frac{x}{x_{2}-x_{1}}\right)+1\right]-\frac{1}{2\pi}\left[\theta_{1}\left(\left(x-x_{1}\right)-\frac{x^{2}-x_{1}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)-\theta_{2}\left(\left(x-x_{2}\right)-\frac{x^{2}-x_{2}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)\right]\\
+\Phi_{p}\left(\gamma_{b}\right) & =-\frac{z}{4\pi}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\frac{x}{x_{2}-x_{1}}-1\right]-\frac{1}{2\pi}\left[\theta_{1}\left(\frac{x^{2}-x_{1}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)-\theta_{2}\left(\frac{x^{2}-x_{2}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)\right]
 \end{align}
 
 \end_inset
@@ -3057,8 +3347,8 @@ begin{subequations}
 
 \begin_inset Formula 
 \begin{align}
-u_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi}\left[\left(\theta_{2}-\theta_{1}\right)-\frac{z}{x_{2}-x_{1}}\ln\left(\frac{r_{1}}{r_{2}}\right)+\frac{x}{x_{2}-x_{1}}\left(\theta_{2}-\theta_{1}\right)\right]\\
-u_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi}\left[\frac{z}{x_{2}-x_{1}}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{x}{x_{2}-x_{1}}\left(\theta_{2}-\theta_{1}\right)\right]
+u_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi}\left[\left(\theta_{2}-\theta_{1}\right)+\frac{z}{x_{2}-x_{1}}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{x}{x_{2}-x_{1}}\left(\theta_{2}-\theta_{1}\right)\right]\\
+u_{p}\left(\gamma_{b}\right) & =-\frac{1}{2\pi}\left[\frac{z}{x_{2}-x_{1}}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{x}{x_{2}-x_{1}}\left(\theta_{2}-\theta_{1}\right)\right]
 \end{align}
 
 \end_inset
@@ -3156,9 +3446,8 @@ begin{subequations}
 
 \begin_inset Formula 
 \begin{align}
-\Phi_{p}\left(\gamma_{a}\right) & =-\frac{z}{4\pi}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\left(1-\frac{x}{x_{2}}\right)+1\right]\nonumber \\
- & \qquad-\frac{1}{2\pi}\left[\theta_{1}\left(x-\frac{x^{2}-z^{2}}{2x_{2}}\right)-\theta_{2}\left(\left(x-x_{2}\right)-\frac{x^{2}-x_{2}^{2}-x^{2}}{2x_{2}}\right)\right]\\
-\Phi_{p}\left(\gamma_{b}\right) & =-\frac{z}{4\pi}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\frac{x}{x_{2}}-1\right]-\frac{1}{2\pi}\left[\theta_{1}\left(\frac{x^{2}-z^{2}}{2x_{2}}\right)-\theta_{2}\left(\frac{x^{2}-x_{2}^{2}-x^{2}}{2x_{2}}\right)\right]
+\Phi_{p}\left(\gamma_{a}\right) & =-\frac{z}{4\pi x_{2}}\left[\left(x_{2}-x\right)\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+x_{2}\right]-\frac{1}{4\pi x_{2}}\left[\left(-x^{2}+2xx_{2}+z^{2}\right)\left(\theta_{1}-\theta_{2}\right)+x_{2}^{2}\theta_{2}\right]\\
+\Phi_{p}\left(\gamma_{b}\right) & =-\frac{z}{4\pi x_{2}}\left[x\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)-x_{2}\right]-\frac{1}{4\pi x_{2}}\left[\left(x^{2}-z^{2}\right)\left(\theta_{1}-\theta_{2}\right)+x_{2}^{2}\theta_{2}\right]
 \end{align}
 
 \end_inset
@@ -3192,9 +3481,8 @@ begin{subequations}
 
 \begin_inset Formula 
 \begin{align}
-u_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi}\left[\left(\theta_{2}-\theta_{1}\right)-\frac{z}{x_{2}-x_{1}}\ln\left(\frac{r_{1}}{r_{2}}\right)+\frac{x}{x_{2}-x_{1}}\left(\theta_{2}-\theta_{1}\right)\right]\\
- & -\frac{1}{2\pi x_{2}}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x_{2}\left(\theta_{2}-\theta_{1}\right)+-x\left(\theta_{2}-\theta_{1}\right)\right]\\
-u_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi}\left[\frac{z}{x_{2}}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{x}{x_{2}}\left(\theta_{2}-\theta_{1}\right)\right]
+u_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi x_{2}}\left[-z\ln\left(\frac{r_{2}}{r_{1}}\right)+\left(x_{2}-x\right)\left(\theta_{2}-\theta_{1}\right)\right]\\
+u_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[z\ln\left(\frac{r_{2}}{r_{1}}\right)+x\left(\theta_{2}-\theta_{1}\right)\right]
 \end{align}
 
 \end_inset
