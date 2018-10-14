@@ -23,9 +23,15 @@
 \renewcommand{\headrulewidth}{0pt}
 
 \renewcommand{\subsubsection}[1]{%
-  %\vspace{0.5ex}%
+  \vspace{0.5ex}%
   {\centering \underline{#1}\par}%
   \par \vspace{0.5ex}}
+
+\usepackage{xpatch}
+\xpatchcmd{\thenomenclature}{%
+  \section*{\nomname}% Look for `\section*... etc.
+}{% Replace it by 'nothing'
+}{\typeout{Success}}{\typeout{Failure}}
 \end_preamble
 \use_default_options true
 \begin_modules
@@ -121,6 +127,22 @@ subequations
 \end_header
 
 \begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+pagenumbering{gobble}
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \begin_layout Title
 Examination of the Details of 2D Vorticity Generation Around the Airfoil
@@ -262,30 +284,23 @@ References: 1 Page or so
 \end_layout
 
 \begin_layout Standard
-\begin_inset Flex Multiple Columns
-status open
-
-\begin_layout Plain Layout
-\begin_inset CommandInset nomencl_print
-LatexCommand printnomenclature
-set_width "auto"
-
-\end_inset
-
-
-\end_layout
-
+\begin_inset Newpage newpage
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-\begin_inset VSpace smallskip
-\end_inset
+\begin_inset ERT
+status collapsed
 
+\begin_layout Plain Layout
 
-\begin_inset Newpage newpage
+%
+\backslash
+pagenumbering{roman}
+\end_layout
+
 \end_inset
 
 
@@ -311,6 +326,314 @@ LatexCommand tableofcontents
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset FloatList figure
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+pagenumbering{arabic} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Nomenclature
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Multiple Columns
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset nomencl_print
+LatexCommand printnomenclature
+set_width "custom"
+width "0.75cm"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "airfoil1"
+symbol "$V(t)$"
+description "Velocity of the body (airfoil)"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "airfoil2"
+symbol "$a(t)$"
+description "Acceleration of the body (airfoil)"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "circ"
+symbol "$\\Gamma$"
+description "Circulation (m$^2$/s)"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "curv1"
+symbol "$C$"
+description "Counterclockwise closed curve"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "curv5"
+symbol "$\\text{d}\\vec{s}$"
+description "Tangent vector along boundary $C$"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "del"
+symbol "$\\vec{\\nabla}$"
+description "Del operator"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "dens"
+symbol "$\\rho_\\infty$"
+description "Freestream density (kg/m$^3$)"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "lift"
+symbol "$L'$"
+description "Lift per unit span (N per m)"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "press1"
+symbol "$p$"
+description "Pressure"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "press5"
+symbol "$P$"
+description "Pressure normalised by density $\\frac{p}{\\rho}$"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "surf1"
+symbol "$S$"
+description "Surface bounded by $C$"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "surf5"
+symbol "$\\text{d}S$"
+description "Infinitesimally small surface"
+literal "true"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "surfvec1"
+symbol "$\\vec{n}$"
+description "Normal vector to a surface"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "surfvec2"
+symbol "$\\vec{t}$"
+description "Tangent vector to a surface"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "vel1"
+symbol "$\\vec{u}$"
+description "Velocity vector $(u, v)$"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "vel3"
+symbol "$V_\\infty$"
+description "Freestream velocity (m/s)"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "vort1"
+symbol "$\\vec{\\omega}$"
+description "Vorticity vector"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "vort2"
+symbol "$\\omega$"
+description "Vorticity into/out of a 2D plane"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "time"
+symbol "$t$"
+description "Time (s)"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "z"
+symbol "$z$"
+description "Distance normal to the surface"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace smallskip
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Part
 Project Outline
 \end_layout
@@ -320,7 +643,17 @@ Introduction
 \end_layout
 
 \begin_layout Subsection
+Objectives 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Research Objectives
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -371,7 +704,7 @@ Vortex impulse and added mass
 
 \end_deeper
 \begin_layout Enumerate
-Comparison to unsteady panel method [~]
+Comparison to unsteady potential theory [~]
 \end_layout
 
 \begin_deeper
@@ -403,8 +736,18 @@ BVF on surface
 
 \end_layout
 
-\begin_layout Subsection
-Dimensionless Groups
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Dimensionless Groups <– What did I mean by this? Can I put this somewhere
+ else?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -629,7 +972,16 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Creation of the starting vortex.
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Creation of the starting vortex demonstrating Kelvin's theorem
+\end_layout
+
+\end_inset
+
+Creation of the starting vortex demonstrating Kelvin's theorem for circulation.
  
 \emph on
 Source: Anderson 2010, pg 336 
@@ -735,116 +1087,6 @@ L'=\rho_{\infty}V_{\infty}\Gamma\\
 \end_inset
 
 
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "lift"
-symbol "$L'$"
-description "Lift per unit span (N per m)"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "dens"
-symbol "$\\rho_\\infty$"
-description "Freestream density (kg/m$^3$)"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "vel"
-symbol "$V_\\infty$"
-description "Freestream velocity (m/s)"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "circ"
-symbol "$\\Gamma$"
-description "Circulation (m$^2$/s)"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "curv"
-symbol "$C$"
-description "Counterclockwise closed curve"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "vel"
-symbol "$\\vec{u}$"
-description "Velocity vector $(u, v)$"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "curv"
-symbol "$\\text{d}\\vec{s}$"
-description "Tangent vector along boundary $C$"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "surf"
-symbol "$S$"
-description "Surface bounded by $C$"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "surf"
-symbol "$\\text{d}S$"
-description "Infinitesimally small surface"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "del"
-symbol "$\\vec{\\nabla}$"
-description "Del operator"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "vort"
-symbol "$\\vec{\\omega}$"
-description "Vorticity vector"
-literal "true"
-
-\end_inset
-
-
 \end_layout
 
 \end_inset
@@ -927,7 +1169,16 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Coordinate system on the surface boundary.
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Coordinate system on the surface of a wall
+\end_layout
+
+\end_inset
+
+Coordinate system on the surface of a wall.
  
 \emph on
 Source: Morton 1984, pg 283 
@@ -983,96 +1234,6 @@ where
 
  is the normal vector to the surface.
  
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "vel"
-symbol "$V(t)$"
-description "Velocity of the body (airfoil)"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "accel"
-symbol "$a(t)$"
-description "Acceleration of the body (airfoil)"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "z"
-symbol "$z$"
-description "Distance normal to the surface"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "vort"
-symbol "$\\omega$"
-description "Vorticity into/out of a 2D plane"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "norm"
-symbol "$\\vec{n}$"
-description "Normal vector to a surface"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "tanj"
-symbol "$\\vec{t}$"
-description "Tangent vector to a surface"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "press"
-symbol "$p$"
-description "Pressure"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "press"
-symbol "$P$"
-description "Pressure normalised by density $\\frac{p}{\\rho}$"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "time"
-symbol "$t$"
-description "Time"
-literal "true"
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -1947,17 +2108,61 @@ Methodology
 \end_layout
 
 \begin_layout Subsection
-Objective and Approach/Problem Description/Governing Equations 
+Research Approach
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-Rename
+Objective and Approach/Problem Description/Governing Equations
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+What are the objectives?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+While this project could be analysed experimentally, there would be significant
+ barriers.
+ Primarily, particle image velocimetry (PIV) would not be practical for
+ such small time and length scales for vorticity generation.
+ For instance, during the establishment of the Kutta condition would require
+ impractically precise recording equipment and algorithms.
+ Inducing the required acceleration and deceleration of the fluid and introducin
+g particles to track in PIV without introducing turbulence would be another
+ greatly difficult task.
+ 
+\end_layout
+
+\begin_layout Standard
+A theoretical examination of the flow could be attempted.
+ However as this is a viscous transient problem around a lift-producing
+ airfoil there are few (if any) complete theoretical results to guide the
+ project.
+ There is no guaranteed closed-form theoretical solution as the vorticity
+ generation is derived from the Navier Stokes equations and using alternative
+ approaches such as potential flows would defeat the purpose of the 
+\begin_inset Quotes eld
+\end_inset
+
+detailed
+\begin_inset Quotes erd
+\end_inset
+
+ examination.
 \end_layout
 
 \begin_layout Standard
@@ -1978,8 +2183,42 @@ Vorticity generation equations
 \end_layout
 
 \begin_layout Standard
-The governing equations solved were the non-dimensionalised Navier-Stokes
- equations in the moving reference frame fixed to the airfoil, 
+As such, a direct numerical simulation (DNS) was performed.
+ The code used was a spectral element-Fourier DNS code, semtex 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Blackburn2004"
+literal "false"
+
+\end_inset
+
+.
+ The governing equations solved were the non-dimensionalised Navier-Stokes
+ equations in the moving reference frame fixed to the airfoil stated in
+ equations 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:continuity"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:non-dim NS"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ In order to determine the vorticity generation and other quantities of
+ interest such as the vortex impulse, significant post-processing of results
+ was required.
 \begin_inset Flex Subequations
 status open
 
@@ -2059,7 +2298,7 @@ How is the pressure boundary condition found? Hugh's 1999 paper
 \end_layout
 
 \begin_layout Subsection
-Computational Methods
+Computational Method
 \end_layout
 
 \begin_layout Subsubsection
@@ -2095,21 +2334,12 @@ literal "false"
 
  which represents non-impulsively started flow to unity free-stream velocity
  (figure 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:BC_airfoil"
+reference "fig:BC Airfoil"
 plural "false"
 caps "false"
 noprefix "false"
-
-\end_inset
-
-
-\end_layout
 
 \end_inset
 
@@ -2150,7 +2380,96 @@ literal "false"
 
  of uniform flow between the starting and stopping phases allows the convergence
  of lift to be investigated.
- 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename BC_airfoil_accel.png
+	lyxscale 30
+	width 11cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename BC_inflow_vel.png
+	lyxscale 30
+	width 11cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename BC_airfoil_disp.png
+	lyxscale 30
+	width 11cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Boundary conditions imposed on the simulation during the starting and stopping
+ phases
+\end_layout
+
+\end_inset
+
+Boundary conditions imposed on the simulation during the starting and stopping
+ phases.
+ Note that the definition of 
+\begin_inset Formula $x$
+\end_inset
+
+ is consistent with the solution domain of the acceleration reference frame
+ and the vertical axis has been inverted for airfoil properties.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:BC Airfoil"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -2364,6 +2683,64 @@ It is clear that the convergence of second derivatives for
 .
 \end_layout
 
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Coordinate-Systems.png
+	lyxscale 30
+	width 11cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Coordinate system used for the surface of the airfoil
+\end_layout
+
+\end_inset
+
+Coordinate system 
+\begin_inset Formula $\left(s,z\right)$
+\end_inset
+
+ used to traverse the surface of the airfoil.
+ Directions of the tangent and normal vectors, 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{n}$
+\end_inset
+
+, are shown.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
 Grid and Time Step Refinement
 \end_layout
@@ -2398,6 +2775,10 @@ Complete remesh (if done)
 \end_inset
 
 
+\begin_inset Newpage clearpage
+\end_inset
+
+
 \begin_inset Newpage newpage
 \end_inset
 
@@ -2405,31 +2786,274 @@ Complete remesh (if done)
 \end_layout
 
 \begin_layout Part
-Results and Discussions
+Results and Discussion
 \end_layout
 
-\begin_layout Section
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Qualitative Description of the Vorticity Field
 \end_layout
 
-\begin_layout Section
-Vorticity Generation Around the Airfoil
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
+Vorticity and Vorticity Generation
+\end_layout
+
+\begin_layout Subsection
+Airfoil Boundary Properties
+\end_layout
+
+\begin_layout Subsubsection
+Vorticity Generation Mechanisms
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Show images of LHS vs RHS of N-S Eq for different time steps
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Integral of Boundary Vorticity Flux
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Show how this changes with polynomial order and mesh
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Velocity of the Trailing Edge
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Show how this changes with polynomial order and mesh
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 Establishment of the Kutta Condition
 \end_layout
 
-\begin_layout Section
-Comparison to Unsteady Thin Airfoil Theory
+\begin_layout Subsubsection
+Starting Phase
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Directly compare to Zhu et al
+\end_layout
+
+\begin_layout Plain Layout
+Try to get the same kink in the streakline
+\end_layout
+
+\begin_layout Plain Layout
+Computationally more expensive, but different assumptions/BC
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Stopping Phase
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Look at the separation points around the airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Comparison with Steady State BVF
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Run a few simulations at different u and see how BVF is different when no
+ Kutta condition.
+ Hopefully no kink at TE for BVF
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Circulation of Airfoil and Shed Vortices
+\end_layout
+
+\begin_layout Subsubsection
+Starting Phase
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Check that circulation is conserved
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Stopping Phase
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Look at the LE vortices, see how strong their circulation is
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
+Comparison to Unsteady Potential Theory
+\end_layout
+
+\begin_layout Subsection
+Lift, Drag and Added Mass Forces
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Plot out lift and drag forces
+\end_layout
+
+\begin_layout Plain Layout
+Vortex impulse as well, integral of BVF crossprod disp would be good
+\end_layout
+
+\begin_layout Plain Layout
+Lift as a function of circulation of the airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Unsteady Vortex Sheet Methods
+\end_layout
+
+\begin_layout Subsubsection
+Thin Airfoil Theory
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Compare results to Karman paper
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Vortex Panel Method
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Write and validate own code
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 Effect of Reynolds Number
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Do a lower Reynolds number to compare how the lift and drag forces change
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage clearpage
 \end_inset
 
 
@@ -2482,11 +3106,15 @@ options "afmc"
 \end_layout
 
 \begin_layout Part
-Appendices
+\start_of_appendix
+Appendix
 \end_layout
 
 \begin_layout Section
-\start_of_appendix
+Derivations
+\end_layout
+
+\begin_layout Subsection
 Vorticity Generation Proof
 \end_layout
 
@@ -2503,7 +3131,7 @@ Excerpts with description from Morton
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Unsteady Thin-Airfoil Theory Proof
 \end_layout
 
@@ -2531,11 +3159,11 @@ Exerpts with description from Karman and Sears
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Unsteady Panel Method
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 Steady Panel Method Derivation
 \end_layout
 
@@ -3546,15 +4174,19 @@ end{subequations}
 
 \end_layout
 
-\begin_layout Section
-Spectral Element Mesh
-\end_layout
-
-\begin_layout Section
+\begin_layout Subsection
 Separation in Unsteady Flows
 \end_layout
 
 \begin_layout Section
+Semtex Files
+\end_layout
+
+\begin_layout Subsection
+Spectral Element Mesh
+\end_layout
+
+\begin_layout Subsection
 Semtex Input Files
 \end_layout
 
