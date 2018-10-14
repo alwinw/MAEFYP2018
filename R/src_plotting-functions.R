@@ -37,8 +37,8 @@ InterpGrid <- function(dump_dump, vars, xvec, yvec, nx,
   redu <- filter(dump_dump, x >= xvec[1], x <= xvec[2], y >= yvec[1], y <= yvec[2]) %>% 
     select(x, y, u, v, p, o) %>% 
     unique(.)
-  # Number of points in y direction for aspect ratio = 1
-  ny = round(nx * (yvec[2] - yvec[1])/(xvec[2] - xvec[1]))
+  # Number of points in y direction for aspect ratio = 1.5
+  ny = round(nx * (yvec[2] - yvec[1])/(xvec[2] - xvec[1]) * 1.5)
   # Interpolate and clean up
   grid_list <- lapply(vars, function(var) InterpGridVar(redu, var, nx, ny, dp, linear, extrap))
   grid   <- lapply(grid_list, function(df) df[3])
@@ -51,32 +51,52 @@ InterpGrid <- function(dump_dump, vars, xvec, yvec, nx,
 }
 
 #--- Airfoil Plots                                                ----
-dump_dump <- dump$dump; xvec = c(-0.5, 0.8); yvec = c(-0.2, 0.2); nx = 200
-dp = 12; linear = TRUE; extrap = FALSE
+dump_dump <- dump$dump; xvec = c(-0.5, 0.8); yvec = c(-0.2, 0.2); nx = 500
+dp = 12; linear = TRUE; extrap = FALSE; scalearr = c(5, 2);
 vars = c("u", "v", "p", "o")
-PlotVectorField <- function(dump_dump, vars, xvec, yvec, nx, dp) {
+PlotVectorField <- function(dump_dump, vars, xvec, yvec, nx, scalearr, dp) {
+  # Increase domain to allow for NA at edges/corners
+  xveci = xvec + c(-0.1*(xvec[2]-xvec[1]), 0.1*(xvec[2]-xvec[1]))
+  yveci = yvec + c(-0.1*(yvec[2]-yvec[1]), 0.1*(yvec[2]-yvec[1]))
   # Interpolate
-  grid <- InterpGrid(dump_dump, vars, xvec, yvec, nx, dp)
+  grid <- InterpGrid(dump_dump, vars, xveci, yveci, nx, dp)
   grid <- filter(grid, !is.na(u), !is.na(v))
   # Create end points
   grid <- grid %>% 
     mutate(vlen = EucDist(u, v))
   
+  scale  = (grid$x[2] - grid$x[1])/max(grid$vlen)*scalearr[1]
+  scalex = sort(unique(grid$x))
+  scaley = sort(unique(grid$y))
+  scalex = scalex[seq(1, length(scalex), scalearr[1])]
+  scaley = scaley[seq(1, length(scaley), scalearr[2])]
   
   
-  scale = (grid$x[2] - grid$x[1])/max(grid$vlen)
+  ggplot() +
+    geom_raster(
+      aes(x, y, fill = sqrt(u^2+v^2)), grid, 
+      interpolate = TRUE) +
+    scale_fill_gradientn(colours=rev(spectralpalette(10)), na.value = "white",
+                         limits = c(0, 1.5),
+                         name = "Velocity\n") +
+    coord_fixed(xlim=xvec, ylim=yvec, expand = FALSE) +
+    geom_polygon(aes(x, y), dump$wall, fill = "white", colour = NA) +
+    geom_path   (aes(x, y), dump$wall, colour = "grey", size = 0.2)
   
   ggplot() +
     geom_raster(
       aes(x, y, fill = o), grid, 
       interpolate = TRUE) +
-    scale_fill_gradientn(colours=rev(spectralpalette(10)), na.value = "white") +
+    scale_fill_gradientn(colours=rev(spectralpalette(10)), na.value = "white", 
+                         limits = c(-650, 600),
+                         name = "Vorticity\n") +
     geom_segment(
-      aes(x, y, xend = x + u*scale, yend = y + v*scale), grid,
+      aes(x, y, xend = x + u*scale, yend = y + v*scale), 
+      filter(grid, x%in%scalex,  y%in%scaley),
       size = 0.2) +
     geom_polygon(aes(x, y), dump$wall, fill = "white", colour = NA) +
     geom_path   (aes(x, y), dump$wall, colour = "grey", size = 0.2) +
-    coord_fixed(xlim=c(-0.5, 0.8), ylim=c(-0.2, 0.2), expand = FALSE)
+    coord_fixed(xlim=xvec, ylim=yvec, expand = FALSE)
 }
 
 
