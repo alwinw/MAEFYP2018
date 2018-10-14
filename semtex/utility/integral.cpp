@@ -104,11 +104,12 @@ int main (int    argc,
     Esys[i] = new Element (i, NP, M);
     Area   += Esys[i] -> area();
   }
-  cout << Area << endl;
+  // cout << Area << endl;
   
   // -- Load field file, Gauss--Lobatto integrate all variables within it.
 
   while (getDump (*fldfile, u, Esys, NP, NZ, NEL)) {
+    cout << "timestep" << endl;
     for (i = 0; i < u.size(); i++) {
       u[i] -> transform (FORWARD); // -- Go back to Fourier space.
       centroid = u[i] -> centroid (0);

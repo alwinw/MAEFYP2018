@@ -2887,7 +2887,7 @@ Sum two potentials together
 
 \end_inset
 
-NOTE: changed from +z/2(x1-x2) to -z/2(x1-x2)
+NOTE: changed from +z/2(x1-x2) to -z/2(x1-x2) in Hugh's notes
 \end_layout
 
 \begin_layout Plain Layout
@@ -3556,6 +3556,18 @@ Separation in Unsteady Flows
 
 \begin_layout Section
 Semtex Input Files
+\end_layout
+
+\begin_layout Subsection
+NACA0012
+\end_layout
+
+\begin_layout Subsection
+NACA0012 Remesh
+\end_layout
+
+\begin_layout Subsection
+Bash Scripts
 \end_layout
 
 \end_body
