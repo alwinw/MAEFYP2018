@@ -4194,5 +4194,17 @@ Spectral Element Mesh
 Semtex Input Files
 \end_layout
 
+\begin_layout Subsection
+NACA0012
+\end_layout
+
+\begin_layout Subsection
+NACA0012 Remesh
+\end_layout
+
+\begin_layout Subsection
+Bash Scripts
+\end_layout
+
 \end_body
 \end_document
