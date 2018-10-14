@@ -2765,6 +2765,10 @@ Increase N_P
 Complete remesh (if done)
 \end_layout
 
+\begin_layout Plain Layout
+Compare to kovas
+\end_layout
+
 \end_inset
 
 
@@ -2878,7 +2882,7 @@ Directly compare to Zhu et al
 \end_layout
 
 \begin_layout Plain Layout
-Try to get the same kink in the streakline
+Try to get the same kink in the streakline, use particle tracking of semtex
 \end_layout
 
 \begin_layout Plain Layout

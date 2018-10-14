@@ -2765,6 +2765,10 @@ Increase N_P
 Complete remesh (if done)
 \end_layout
 
+\begin_layout Plain Layout
+Compare to kovas
+\end_layout
+
 \end_inset
 
 
@@ -2982,6 +2986,10 @@ Plot out lift and drag forces
 
 \begin_layout Plain Layout
 Vortex impulse as well, integral of BVF crossprod disp would be good
+\end_layout
+
+\begin_layout Plain Layout
+Lift as a function of circulation of the airfoil
 \end_layout
 
 \end_inset
