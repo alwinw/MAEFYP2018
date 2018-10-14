@@ -94,59 +94,27 @@ int main (int    argc,
   space = (Femlib::ivalue ("CYLINDRICAL") && cylind) ? 
     Geometry::Cylindrical : Geometry::Cartesian;
   
-  if (verbose != 1) {
-    // -- Integrate once per time step across all elements
-    
-    Geometry::set (NP, NZ, NEL, space);
-    Esys.resize   (NEL);
 
-    for (i = 0; i < NEL; i++) {
-      Esys[i] = new Element (i, NP, M);
-      Area   += Esys[i] -> area();
-    }
-    cout << Area << endl;
-    
-    // -- Load field file, Gauss--Lobatto integrate all variables within it.
+  // -- Integrate once per time step across all elements
+  
+  Geometry::set (NP, NZ, NEL, space);
+  Esys.resize   (NEL);
 
-    while (getDump (*fldfile, u, Esys, NP, NZ, NEL)) {
-      for (i = 0; i < u.size(); i++) {
-        u[i] -> transform (FORWARD); // -- Go back to Fourier space.
-        centroid = u[i] -> centroid (0);
-        integral = u[i] -> integral (0);
-        cout << i << " " << u[i] -> name() << ": " << setw(16) << Lz * integral 
-	     << " , centroid: " << setw(16) << centroid.x << " , " << setw(16) << centroid.y << endl;
-      }
-    }
+  for (i = 0; i < NEL; i++) {
+    Esys[i] = new Element (i, NP, M);
+    Area   += Esys[i] -> area();
   }
-  else {
-    // -- Integrate NEL times per time step, once per element
-    
-    cout << "verbose" << endl;
-    
-    Geometry::set (NP, NZ, NEL, space);
-    
-    for (elem = 0; elem < NEL; elem++) {
-      
-      
-      Esys.resize   (1);
-      
-      Esys[0] = new Element (elem, NP, M);
-      Area    = Esys[0] -> area();
-      cout << setw(5) << " EL " << "  " << " Area" << endl;
-      cout << setw(5) << elem+1 << "  " << Area << endl;
-      
-      // -- Load field file, Gauss--Lobatto integrate all variables within it.
-      
-      while (getDump (*fldfile, u, Esys, NP, NZ, 1)) {
-        for (i = 0; i < u.size(); i++) {
-          u[i] -> transform (FORWARD); // -- Go back to Fourier space.
-          centroid = u[i] -> centroid (0);
-          integral = u[i] -> integral (0);
-          cout << i << " " << u[i] -> name() << ": " << setw(16) << Lz * integral 
-	       << " , centroid: " << setw(16) << centroid.x << " , " << setw(16) << centroid.y << endl;
-        }
-      }
-      
+  cout << Area << endl;
+  
+  // -- Load field file, Gauss--Lobatto integrate all variables within it.
+
+  while (getDump (*fldfile, u, Esys, NP, NZ, NEL)) {
+    for (i = 0; i < u.size(); i++) {
+      u[i] -> transform (FORWARD); // -- Go back to Fourier space.
+      centroid = u[i] -> centroid (0);
+      integral = u[i] -> integral (0);
+      cout << i << " " << u[i] -> name() << ": " << setw(16) << Lz * integral 
+     << " , centroid: " << setw(16) << centroid.x << " , " << setw(16) << centroid.y << endl;
     }
   }
 

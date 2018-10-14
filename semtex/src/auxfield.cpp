@@ -986,8 +986,10 @@ real_t AuxField::integral (const int_t k) const
   real_t         total = 0.0, *p;
   vector<real_t> work (npnp);
 
-  for (p = _plane[k], i = 0; i < nel; i++, p += npnp)
+  for (p = _plane[k], i = 0; i < nel; i++, p += npnp) {
+    cout << setw(4) << i+1 << "  " << _elmt[i] -> integral (p, &work[0]) << endl;
     total += _elmt[i] -> integral (p, &work[0]);
+  }
 
   return total;
 }
