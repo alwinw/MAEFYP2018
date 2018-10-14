@@ -23,4 +23,6 @@
  - Example
  
     addvortfield -G -s kovas1 kovas1.fld > kovas.vfld
-    
+
+# integral.cpp | 2018.10.14
+ - Integrate once per element
