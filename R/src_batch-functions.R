@@ -54,7 +54,7 @@ BatchLoadMesh <- function(data_mesh, outp_airfoil, srcpath = "") {
 }
 
 #--- Dump File Calculation                                        ----
-BatchLoadDump <- function(data_dump, outp_mesh, plot = 0, outp = "wall",
+BatchLoadDump <- function(data_dump, outp_mesh, plot = "none", outp = "wall",
                           srcpath = "", addscr = NULL) {
   source(paste0(srcpath, "src_library-manager.R"))                # Call libraries and install missing ones
   source(paste0(srcpath, "src_helper-functions.R"))               # Smaller functions used
@@ -91,9 +91,15 @@ BatchLoadDump <- function(data_dump, outp_mesh, plot = 0, outp = "wall",
   }
   
   #--- > Produce Plots if Required                                  ----
-  if (FALSE) {
+  if (plot == "none") {
+  } else if ("NS" %in% plot) {
+    
+  } else if ("TEstream" %in% plot) {
+    
+  } else if ("LEstream" %in% plot) {
     
   }
+  
   #--- > Run additional scripts if called                           ----
   if (!is.null(addscr))
     for (i in 1:length(addscr)) source(addscr[i])
