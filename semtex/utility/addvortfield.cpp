@@ -196,7 +196,18 @@ int main (int    argc,
 
   elmt.resize (nel);
   for (i = 0; i < nel; i++) elmt[i] = new Element (i, np, M);
-
+  
+  // Get (x,y) coordinates (method from meshpr)
+  //const int_t    ntot = np * np;
+  //vector<real_t> x (np*np), y (np*np);
+  //const real_t   *zero_r, *zero_s;
+  //for (i = 0; i < nel; i++) {
+	  //M -> meshElmt (i, np, zero_r, zero_r, &x[0], &y[0]); ... updates per element
+	//  for (j = 0; j < ntot; j++)
+  //    cout << setw(24) << x[j] << setw(24) << y[j] << setw(10) << i+1 << setw(10) << j+1 << endl;
+  }
+  //
+  
   B = new BCmgr  (F, elmt);
   D = new Domain (F, elmt, B);
 

@@ -76,7 +76,7 @@ BatchLoadDump <- function(data_dump, outp_mesh, plot = "none", outp = "wall",
   data_plot <- bind_rows(dump[c("time", "kinvis", "a")])
   data_plot <- cbind(data_dump, data_plot)
   #--- * Integral Output                                            ----
-  data_inte <- LoadIntegral(data_dump$folder, data_dump$dumpfile,
+  dump$inte <- LoadIntegral(data_dump$folder, data_dump$dumpfile,
                             vars = c("u", "v", "p", letters[11:15]))
   
   #--- * Create Output                                              ----
