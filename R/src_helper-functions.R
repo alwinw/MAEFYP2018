@@ -540,6 +540,15 @@ DumpVortOnly <- function(dump_wall, dump_kinvis) {
            nserrG =  LHSG - RHSG)
 }
 
+DumpFlow <- function(dump_dump) {
+  dump_infl <- dump_dump %>% 
+    filter(x == min(dump_dump$x)) %>% 
+    select(u, v)
+  dump_outf <- dump_dump %>% 
+    filter(x == max(dump_dump$x)) %>% 
+    select(u, v)
+  
+}
 
 #--- * Integral                                                   ----
 LoadIntegral <- function(folder, dumpfile, vars = c("u", "v","o")) {

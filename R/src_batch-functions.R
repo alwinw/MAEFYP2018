@@ -58,6 +58,7 @@ BatchLoadDump <- function(data_dump, outp_mesh, plot = "none", outp = "wall",
                           srcpath = "", addscr = NULL) {
   source(paste0(srcpath, "src_library-manager.R"))                # Call libraries and install missing ones
   source(paste0(srcpath, "src_helper-functions.R"))               # Smaller functions used
+  source(paste0(srcpath, "src_plotting-functions.R"))             # Functions for plotting
   list_mesh <- outp_mesh[[data_dump$ID]]
   #--- * Dump Data                                                  ----
   dump      <- LoadGradFieldDump(data_dump$folder, data_dump$dumpfile)
@@ -74,10 +75,13 @@ BatchLoadDump <- function(data_dump, outp_mesh, plot = "none", outp = "wall",
   dump$wall <- DumpVortOnly(dump$wall, dump$kinvis)
   #--- * Dump Calc Output                                           ----
   data_plot <- bind_rows(dump[c("time", "kinvis", "a")])
-  data_plot <- cbind(data_dump, data_plot)
+  data_plot <- cbind(data_dump, data_plot) %>% 
+    mutate(plotname = paste0(
+      airfoil, "-v", sprintf("%0.4f", kinvis), "-t", sprintf("%06.4f", time)))
+  
   #--- * Integral Output                                            ----
-  dump$inte <- LoadIntegral(data_dump$folder, data_dump$dumpfile,
-                            vars = c("u", "v", "p", letters[11:15]))
+  # dump$inte <- LoadIntegral(data_dump$folder, data_dump$dumpfile,
+                            # vars = c("u", "v", "p", letters[11:15]))
   
   #--- * Create Output                                              ----
   if (outp == "wall") {
@@ -95,9 +99,13 @@ BatchLoadDump <- function(data_dump, outp_mesh, plot = "none", outp = "wall",
   }
   
   #--- > Produce Plots if Required                                  ----
+  # Last entry of plot needs to be saveplot
   if (plot == "none") {
   } else if ("NS" %in% plot) {
     
+  } else if ("airfoil"  %in% plot) {
+    plot_airfoil = PlotVectorField(
+      dump$dump, data_plot, scalearr = c(10, 4), saveplot)
   } else if ("TEstream" %in% plot) {
     
   } else if ("LEstream" %in% plot) {
