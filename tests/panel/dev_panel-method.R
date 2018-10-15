@@ -64,8 +64,8 @@ VLSteady(coord, aoa = 4, U = 1)
 
 #--- * Cylinder                                                   ----
 # Source: Katz & Plotkin pg 65
-R = 2; Uinf = 5
-t = seq(0, -2*pi, length.out = 101)
+R = 3; Uinf = 20
+t = seq(0, -2*pi, length.out = 201)
 coord <- data.frame(
   t = t, x = R*cos(t), y = R*sin(t) )
 panels <- VLPanel(coord)
@@ -103,31 +103,6 @@ ggplot() +
              steady$j, colour = "red") +
   ggtitle("Vorticity Distribution")
 
-li_panel <- split(panels, panels$i)
-
-phiint <- bind_rows(lapply(li_panel, function(panel) 
-  data.frame(phi = integrate(function(x) 
-    spline(atan2(steady$j$y, steady$j$x), steady$j$gamma, xout = x)$y/(2*pi) *
-      atan2(panel$y - R*sin(x), panel$x - R*cos(x))
-    , lower = -pi, upper = pi)$value,
-    x = panel$x,
-    y = panel$y,
-    t = atan2(panel$x, panel$y)
-  )
-))
-
-phiint$phisum = -phiint$phi + Uinf*panels$x
-
-ggplot() +
-  geom_point(aes(atan2(y,x), phiint$phi* ifelse(atan2(y,x)<pi/2 & atan2(y,x)>-pi/2,-1,1) + Uinf*x +5), 
-             phiint) +
-  geom_line(aes(ifelse(t < -pi, t+2*pi, t), phi), 
-            actual, colour = "blue") +
-  ggtitle("Velocity Potential")
-
-integrate(function(x) 
-  spline(atan2(steady$j$y, steady$j$x), steady$j$gamma, xout = x)$y/(2*pi) *
-    atan2(panel$y - R*sin(x), panel$x - R*cos(x))
-    , lower = -pi, upper = pi)
-
-
+#--- * Joukowski Airfoil                                          ----
+# Theory of Wing Sections
+# Theoretical and applied aerodynamics Ch2 

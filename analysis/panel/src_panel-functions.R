@@ -68,6 +68,18 @@ CoRot <- function(x, y, x0, y0, theta, var) {
     return(sin(theta)*(x-x0) + cos(theta)*(y-y0))
 }
 
+# Numerically integrate to find phia and phib
+# test <- indvel[1,]; x = test$xcl; z = test$ycl; x2 = test$x2l;
+VLPhi <- function(x, z, x2, outpcols = c("phai", "phbi")) {
+  phi1 = integrate(function(x0)    atan2(z, x-x0), 0, x2)$value
+  phi2 = integrate(function(x0) x0*atan2(z, x-x0), 0, x2)$value
+  phia = (phi1 - phi2/x2)/(-2*pi)
+  phib = (       phi2/x2)/(-2*pi)
+  phi  = data.frame(phia, phib)
+  colnames(phi) <- outpcols
+  return(phi)
+}
+
 # Induced velocity and potentials
 VLIndVel <- function(panel, panels, output = "Inf") {
   # Transform the panels into local coordinates of panel
@@ -92,14 +104,21 @@ VLIndVel <- function(panel, panels, output = "Inf") {
       t1 = atan2(ycl, xcl),
       t2 = atan2(ycl, xcl-x2l)) %>% 
     mutate( # Simplified since x1l = 0
-      pha = (-ycl/(4*pi*x2l))*((x2l-xcl)*log(r1^2/r2^2)+x2l) - 
-        (1/(4*pi*x2l))*((-xcl^2+2*x*x2l+ycl^2)*(t1-t2)+x2l^2*t2),
-      phb = (-ycl/(4*pi*x2l))*((    xcl)*log(r1^2/r2^2)-x2l) - 
-        (1/(4*pi*x2l))*(( xcl^2        -ycl^2)*(t1-t2)+x2l^2*t2),
       ual = (-ycl*log(r2/r1) + (x2l-xcl)*(t2-t1))      /(2*pi*x2l),
       ubl = ( ycl*log(r2/r1) +       xcl*(t2-t1))      /(2*pi*x2l),
       wal = ((x2l-xcl)*log(r2/r1) - x2l + ycl*(t2-t1)) /(2*pi*x2l),
-      wbl = (      xcl*log(r2/r1) + x2l - ycl*(t2-t1)) /(2*pi*x2l) )
+      wbl = (      xcl*log(r2/r1) + x2l - ycl*(t2-t1)) /(2*pi*x2l),
+      pha = (-ycl/(4*pi*x2l))*((x2l-xcl)*log(r1^2/r2^2)+x2l) - 
+        (1/(4*pi*x2l))*((-xcl^2+2*x*x2l+ycl^2)*(t1-t2)+x2l^2*t2),
+      phb = (-ycl/(4*pi*x2l))*((    xcl)*log(r1^2/r2^2)-x2l) - 
+        (1/(4*pi*x2l))*(( xcl^2        -ycl^2)*(t1-t2)+x2l^2*t2) ) 
+  # No time to bug fix, use numerical integration
+  indvel <- indvel %>% 
+    rowwise() %>%
+    do(data.frame(
+      ., VLPhi(.$xcl, .$ycl, .$x2l))) %>% 
+    ungroup() %>% 
+    mutate(pha = phai, phb = phbi)
   # Transform back into global coordinates
   indvel <- indvel %>% 
     mutate(
@@ -167,7 +186,7 @@ VLSteady <- function(coord, aoa, U) {
   # Coefficient of Pressure
   cp   = 1 - (vvec/U)^2
   # Velocity Potential
-  phi  = Pmat %*% gvec + Uinf*panels$x + Vinf*panels$y
+  phi  = - Pmat %*% gvec + Uinf*panels$x + Vinf*panels$y
   
   # Output
   outpj <- data.frame(
