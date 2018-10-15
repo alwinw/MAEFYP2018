@@ -26,3 +26,7 @@
 
 # integral.cpp | 2018.10.14
  - Integrate once per element
+ 
+# mesharea.cpp | 2018.10.15
+ - Need area associated with each point
+
