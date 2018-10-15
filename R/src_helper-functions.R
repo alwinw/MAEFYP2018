@@ -540,6 +540,47 @@ DumpVortOnly <- function(dump_wall, dump_kinvis) {
            nserrG =  LHSG - RHSG)
 }
 
+
+#--- * Integral                                                   ----
+LoadIntegral <- function(folder, dumpfile, vars = c("u", "v","o")) {
+  # Ready the file into filelines
+  dumppath  <-  paste0(folder, strsplit(dumpfile, ".dump")[[1]], ".integral")
+  filelines <- readLines(dumppath)
+  # Manipulate to get a useful data.frame
+  varlines <- c(1, grep("centroid", filelines))
+  vartable <- data.frame(
+    start = varlines[-length(varlines)],
+    end   = varlines[-1] )
+  varlines <- data.frame(char = filelines[varlines[-1]]) 
+  vardf <- varlines%>% 
+    separate(char, c("var", "b", "c"), ":") %>% 
+    separate(b, c("intvar", "junk"), ",")   %>% 
+    separate(c, c("centx", "centy"), ",")
+  vardf$intvar <- as.numeric(vardf$intvar)
+  vardf$centx  <- as.numeric(vardf$centx)
+  vardf$centy  <- as.numeric(vardf$centy)
+  vardf <- cbind(vardf, vartable)
+  rm(varlines, vartable)
+  
+  # Read each variable of interest (vars vector)
+  vardf <- filter(vardf, var %in% vars)
+  varli <- split(vardf, vardf$var)
+  varoutp <- lapply(varli, function(varline) {
+    values = read.table(file = dumppath, 
+               skip = varline$start, nrows = varline$end - varline$start - 1)
+    values = unique(values)
+    # colnames(values) <- c("enum", paste0("int.", varline$var))
+    values = values[,2]
+    return(values)
+  })
+  varoutp <- bind_cols(varoutp) %>% 
+    mutate(enum = row_number())
+  vardf <- select(vardf, -start, -end, -junk)
+  
+  # Return output
+  return(list(total = vardf, elem = varoutp))
+}
+
 #--- Numerical Methods ----
 # Heavyside function (step function)
 heav <- function(t) ifelse(t>0,1,0)

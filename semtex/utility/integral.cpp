@@ -114,7 +114,7 @@ int main (int    argc,
       u[i] -> transform (FORWARD); // -- Go back to Fourier space.
       centroid = u[i] -> centroid (0);
       integral = u[i] -> integral (0);
-      cout << i << " " << u[i] -> name() << ": " << setw(16) << Lz * integral 
+      cout << u[i] -> name() << ": " << setw(16) << Lz * integral 
      << " , centroid: " << setw(16) << centroid.x << " , " << setw(16) << centroid.y << endl;
     }
   }
