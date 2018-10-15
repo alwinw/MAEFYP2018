@@ -107,19 +107,99 @@ outp$node <- bind_rows(outp$node) %>%
 #--- > Plot Output                                                ----
 ggplot(outp$wall, aes(s, sign(LHSG)*log10(abs(LHSG)), group = airfoil)) +
   geom_line(aes(colour = tokenvalue)) +
-  scale_colour_gradientn(colours=rev(spectralpalette(17))) +
+  scale_colour_gradientn(colours=rev(spectralpalette(17)), name = "N_P") +
   facet_wrap(~airfoilname)
 
 ggplot(outp$wall, aes(s, LHSG-RHSG, group = airfoil)) +
   geom_line(aes(colour = tokenvalue)) +
-  coord_cartesian(ylim = c(-10, 10)) +
-  scale_colour_gradientn(colours=rev(spectralpalette(17))) +
-  facet_wrap(~airfoilname)
+  coord_cartesian(ylim = c(-8, 8)) +
+  scale_colour_gradientn(colours=rev(spectralpalette(18)), 
+                         breaks = seq(2, 20, 2),
+                         limits = c(2, 20),
+                         name = "N_P") +
+  facet_wrap(~airfoilname) +
+  ggtitle("Numerical Error on Airfoil Surface")
+
+ggplot(outp$wall %>% filter(tokenvalue <= 10), aes(s, LHSG-RHSG, group = airfoil)) +
+  geom_line(aes(colour = tokenvalue)) +
+  coord_cartesian(ylim = c(-8, 8)) +
+  scale_colour_gradientn(colours=rev(spectralpalette(18)), 
+                         breaks = seq(2, 20, 2),
+                         limits = c(2, 20),
+                         name = "N_P") +
+  facet_wrap(~airfoilname) +
+  ggtitle(expression("Numerical Error on Airfoil Surface, N_P" <= "10"))
+ggplot(outp$wall %>% filter(tokenvalue > 10), aes(s, LHSG-RHSG, group = airfoil)) +
+  geom_line(aes(colour = tokenvalue)) +
+  coord_cartesian(ylim = c(-8, 8)) +
+  scale_colour_gradientn(colours=rev(spectralpalette(18)), 
+                         breaks = seq(2, 20, 2),
+                         limits = c(2, 20),
+                         name = "N_P") +
+  facet_wrap(~airfoilname) +
+  ggtitle(expression("Numerical Error on Airfoil Surface, N_P" > "10"))
+ggplot(outp$wall %>% filter(tokenvalue == 8), aes(s, LHSG-RHSG, group = airfoil)) +
+  geom_line(aes(colour = tokenvalue)) +
+  coord_cartesian(ylim = c(-8, 8)) +
+  scale_colour_gradientn(colours=rev(spectralpalette(18)), 
+                         breaks = seq(2, 20, 2),
+                         limits = c(2, 20),
+                         name = "N_P") +
+  facet_wrap(~airfoilname) +
+  ggtitle(expression("Numerical Error on Airfoil Surface, N_P" = "8"))
+  
 
 ggplot(outp$wall, aes(s, sign(nserrG)*log10(abs(nserrG)), group = airfoil)) +
   geom_line(aes(colour = tokenvalue))
 
+
 conv <- list()
-conv$node <- outp$node %>% 
-  filter(local != 1)
+conv$noder <- outp$node %>% 
+  filter(airfoilname == "naca0012r", local != 1) %>% 
+  select(u, v, p, dodx, dody, dpdx, dpdy, o, tokenvalue)
+conv$nodeo <- outp$node %>% 
+  filter(airfoilname == "naca0012", local != 1) %>% 
+  select(u, v, p, dodx, dody, dpdx, dpdy, o, tokenvalue)
+conv$baser <- filter(conv$noder, tokenvalue == 19) %>% mutate(tokenvalue = 0)
+conv$baseo <- filter(conv$nodeo, tokenvalue == 19) %>% mutate(tokenvalue = 0)
+conv$noder <- filter(conv$noder, tokenvalue != 19)
+conv$nodeo <- filter(conv$nodeo, tokenvalue != 19)
+
+conv$diffr <- (conv$noder - conv$baser[rep(1:nrow(conv$baser), 16),])/
+  mutate(conv$baser[rep(1:nrow(conv$baser), 16),], tokenvalue = 1)
+conv$diffo <- (conv$nodeo - conv$baseo[rep(1:nrow(conv$baseo), 16),])/
+  mutate(conv$baseo[rep(1:nrow(conv$baseo), 16),], tokenvalue = 1)
+
+conv$diffr <- conv$diffr %>% group_by(tokenvalue)
+conv$diffo <- conv$diffo %>% group_by(tokenvalue)
+
+conv$diffr[is.na(conv$diffr)] = 0
+conv$diffo[is.na(conv$diffo)] = 0
+
+conv$summr <- summarise_all(conv$diffr, funs(max)) %>% mutate(airfoil = "naca0012")
+conv$summo <- summarise_all(conv$diffo, funs(max)) %>% mutate(airfoil = "naca0012r")
+
+conv$summary <- rbind(conv$summo, conv$summr) %>% 
+  gather(var, norm_inf, -tokenvalue, -airfoil) %>%
+  mutate(order = ifelse(var %in% c("u", "v", "p"), "Primary (u, v, p)", "Derivative (o, dpdx, dpdy)")) %>%
+  mutate(order = ifelse(var %in% c("dodx", "dody"), "Second Derivative (dodx, dody)", order))
+
+conv$summary$airfoil <- factor(conv$summary$airfoil, 
+                               levels = c("naca0012r", "naca0012"))
+conv$summary$var <- factor(conv$summary$var, 
+                           levels = c("u", "v", "p", "o", "dpdx", "dpdy", "dodx", "dody"))
+conv$summary$order <- factor(conv$summary$order, 
+                             levels = c("Primary (u, v, p)", "Derivative (o, dpdx, dpdy)", "Second Derivative (dodx, dody)"))
+
+ggplot(conv$summary, aes(tokenvalue, norm_inf, group = interaction(var, airfoil), colour = var)) +
+  geom_line(aes(linetype = airfoil)) + 
+  geom_point(aes(shape = airfoil)) +
+  scale_y_continuous(trans='log10') +
+  facet_wrap(~order, scales = "free_y") +
+  xlab("N_P") +
+  scale_linetype_discrete(name = "Airfoil") +
+  scale_colour_discrete(name = "Variable") +
+  scale_shape_discrete(guide = "none") +
+  scale_x_continuous(breaks = seq(4, 20, 4))
+  
 
