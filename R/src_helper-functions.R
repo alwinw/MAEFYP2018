@@ -803,14 +803,24 @@ ListSesh <- function(batchfolder, pathsplit = c("airfoil", "seshname")) {
   # Convert character to dataframe
   batchlist <- data.frame(path = unlist(strsplit(batchlist, "*.sesh"))) %>%
     separate(path, pathsplit, sep = "/")
-  folder <- batchlist[colnames(batchlist)[colnames(batchlist) != "seshname"]] %>% 
-    unite(folder, sep = "/")
-  batchlist$folder <- folder$folder
-  # Create output
-  batchlist <- batchlist %>% 
-    mutate(folder = paste0(batchfolder, "/", folder, "/")) %>%
-    mutate(seshpath = paste0(folder, seshname)) %>% 
-    select(airfoil, seshname, folder, seshpath)
+  if (length(pathsplit) != 1) {
+    # Split the folder
+    folder <- batchlist[colnames(batchlist)[colnames(batchlist) != "seshname"]] %>% 
+      unite(folder, sep = "/")
+    batchlist$folder <- folder$folder
+    # Create output
+    batchlist <- batchlist %>% 
+      mutate(folder = paste0(batchfolder, "/", folder, "/")) %>%
+      mutate(seshpath = paste0(folder, seshname)) %>% 
+      select(airfoil, seshname, folder, seshpath)
+  } else {
+    # Create output
+    batchlist <- batchlist %>% 
+      mutate(folder = paste0(batchfolder, "/")) %>%
+      mutate(seshname = airfoil) %>% 
+      mutate(seshpath = paste0(folder, seshname)) %>% 
+      select(airfoil, seshname, folder, seshpath)
+  }
   # Return list of session files
   return(batchlist)
 }

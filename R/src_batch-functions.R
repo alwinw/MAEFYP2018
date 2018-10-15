@@ -96,21 +96,40 @@ BatchLoadDump <- function(data_dump, outp_mesh, plot = "none", outp = "wall",
       dump = dump[c("wall")],
       node = dump[c("node")])
     names(list_dump) <- c("data_plot", "wall", "node")
+  } else if (outp == "te") {
+    xvec = c( 0.595,  0.615)
+    yvec = c(-0.046, -0.030)
+    xveci = xvec + c(-0.1*(xvec[2]-xvec[1]), 0.1*(xvec[2]-xvec[1]))
+    yveci = yvec + c(-0.1*(yvec[2]-yvec[1]), 0.1*(yvec[2]-yvec[1]))
+    dump$te <- filter(dump$dump, x >= xveci[1], x <= xveci[2], y >= yveci[1], y <= yveci[2]) %>% 
+      select(x, y, u, v, p, o) %>% 
+      unique(.)
+    list_dump <- c(
+      data_plot = list(data_plot), 
+      dump = dump[c("wall")],
+      node = dump[c("te")])
+    names(list_dump) <- c("data_plot", "wall", "te")
   }
   
   #--- > Produce Plots if Required                                  ----
   # Last entry of plot needs to be saveplot
-  if (plot == "none") {
+  if        ("none" %in% plot) {
   } else if ("NS" %in% plot) {
     
-  } else if ("airfoil"  %in% plot) {
-    plot_airfoil = PlotVectorField(
-      dump$dump, data_plot, scalearr = c(10, 4), saveplot)
-  } else if ("TEstream" %in% plot) {
-    
-  } else if ("LEstream" %in% plot) {
-    
-  }
+  } else {
+    saveplot = plot[1]
+    if        ("airfoil"  %in% plot) {
+      # Plot the airfoil
+      plot_af = PlotAirfoil(
+        dump$dump, dump$wall, data_plot, scalearr = c(10, 4), saveplot) } 
+    if ("TEstream" %in% plot) {
+      # Plot the trailing edge
+      plot_te = PlotTE(
+        dump$dump, dump$wall, data_plot, scalearr = c(10, 4), saveplot) } 
+    if ("LEstream" %in% plot) {
+      
+    }
+  } 
   
   #--- > Run additional scripts if called                           ----
   if (!is.null(addscr))
