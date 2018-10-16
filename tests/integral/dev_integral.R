@@ -11,7 +11,7 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))     # Requres devtoo
 srcpath = "../../R/"
 source(paste0(srcpath, "src_library-manager.R"))                # Call libraries and install missing ones
 source(paste0(srcpath, "src_batch-functions.R"))                # Batch functions used
-# source(paste0(srcpath, "src_helper-functions.R"))               # Smaller functions used
+source(paste0(srcpath, "src_helper-functions.R"))               # Smaller functions used
 # Additional scripts here
 # ggplot2 setup (consider moving to a separate script)
 theme_set(theme_bw())                                           # Set black and white theme

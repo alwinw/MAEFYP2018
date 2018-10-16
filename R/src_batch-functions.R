@@ -39,6 +39,9 @@ BatchLoadMesh <- function(data_mesh, outp_airfoil, srcpath = "") {
   #--- * Mesh Data                                                  ----
   long$mesh <- LoadMesh(data_mesh$seshpath)
   long$mesh <- LongMesh(long$mesh, long$sesh)
+  #--- * Mass Data
+  long$mass <- LoadMass(data_mesh$seshpath)
+  long$mesh <- LongMass(long$mesh, long$mass)
   #--- * Wall Data                                                  ----
   long$wall <- list_airfoil$long_wall
   long$wall <- LongWall(long$wall, long$mesh)
@@ -80,8 +83,8 @@ BatchLoadDump <- function(data_dump, outp_mesh, plot = "none", outp = "wall",
       airfoil, "-v", sprintf("%0.4f", kinvis), "-t", sprintf("%06.4f", time)))
   
   #--- * Integral Output                                            ----
-  # dump$inte <- LoadIntegral(data_dump$folder, data_dump$dumpfile,
-                            # vars = c("u", "v", "p", letters[11:15]))
+  
+  
   
   #--- * Create Output                                              ----
   if (outp == "wall") {

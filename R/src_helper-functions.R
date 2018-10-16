@@ -223,6 +223,25 @@ LongMesh <- function(long_mesh, long_sesh) {
   # out: long_mesh = data.frame(x, y, enum, jnum, ncorner, nnum, z, elabx, elaby, area, node) 
   return(long_mesh)
 }
+#--- * Mass Data                                                  ----
+# Load mass matrix
+LoadMass <- function(seshpath,
+                     extension = ".mass") {
+  file           <- paste0(seshpath, extension)
+  mass           <- read.table(file, skip = 0)
+  colnames(mass) <- c("mass", "enum", "jnum")
+  # out: mass = data.frame(x, y, enum, jnum)
+  return(mass)
+}
+# Add mass to mesh
+LongMass <- function(long_mesh, long_mass) {
+  if (!all_equal(select(long_mesh,enum,jnum), 
+                select(long_mass,enum,jnum)))
+    warning("Unequal enum and jnum")
+  long_mesh$mass <- long_mass$mass
+  # out: mesh = data.frame(long_mesh, mass)
+  return(long_mesh)
+}
 #--- * Wall Data                                                  ----
 # Add enum and other important variables
 LongWall <- function(long_wall, long_mesh) {
