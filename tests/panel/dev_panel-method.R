@@ -62,10 +62,10 @@ ggplot(coord, aes(x, y)) + geom_path() + geom_point() +
   geom_segment(aes(x, y, xend = x+nx, yend = y+ny), panels)
 VLSteady(coord, aoa = 4, U = 1)
 
-#--- * Cylinder                                                   ----
+#--- * Cylinder Zero AoA                                          ----
 # Source: Katz & Plotkin pg 65
 R = 3; Uinf = 20
-t = seq(0, -2*pi, length.out = 201)
+t = seq(0, -2*pi, length.out = 51)
 coord <- data.frame(
   t = t, x = R*cos(t), y = R*sin(t) )
 panels <- VLPanel(coord)
@@ -97,12 +97,75 @@ ggplot() +
   geom_line(aes(ifelse(t < -pi, t+2*pi, t), phi), 
             actual, colour = "blue") +
   ggtitle("Velocity Potential")
-# Determine velocity potential manually by integration
+
+#--- * Cylinder Non-zero AoA                                      ----
+# Source: Charttot Hafez 2.4 pg22 | Angles wrong, discontinued
+R = 3; Uinf = 20; aoa = 4;
+# Soln
+actual <- data.frame(t = seq(-pi, pi, length.out = 101)) %>% 
+  mutate(
+    alpha = aoa*pi/180,
+    Gamma = 4*pi*Uinf*R*sin(alpha),
+    phi = Uinf*cos(t)*2*R - Gamma/(2*pi)*t)
+# Adjusted panels (first panel = stagnation)
+t = seq(0, -2*pi, length.out = 31)  #+ atan(-actual$Gamma[1]/(4*pi*Uinf*R))
+coord <- data.frame(
+  t = t, x = R*cos(t), y = R*sin(t) )
+panels <- VLPanel(coord)
+ggplot(panels) +
+  geom_segment(aes(x1, y1, xend = x, yend = y),
+               arrow = arrow(length = unit(0.01, "npc"), type = "closed")) +
+  geom_segment(aes(x, y, xend = x2, yend = y2)) +
+  geom_segment(aes(x, y, xend = x+nx, yend = y+ny)) +
+  geom_point(aes(x, y), coord) +
+  geom_point(aes(x, y), coord[1,], colour = "red") +
+  coord_fixed()
+steady <- VLSteady(coord, aoa = aoa, U = Uinf)
+# Velocity potential
 ggplot() +
-  geom_point(aes(atan2(y,x), gamma), 
-             steady$j, colour = "red") +
-  ggtitle("Vorticity Distribution")
+  geom_point(aes(atan2(y,x), phi), 
+             steady$i, colour = "red") +
+  geom_line(aes(ifelse(t < -pi, t+2*pi, t), phi), 
+            actual, colour = "blue") +
+  ggtitle("Velocity Potential")
+
+
+
+#--- * Ellipse                                                    ----
+# Source: Chattot Hafez 2.8.1
+R = 3; Uinf = 20
+t = seq(0, -2*pi, length.out = 201)
+coord <- data.frame(
+  t = t, x = R*cos(t), y = R*sin(t) )
+panels <- VLPanel(coord)
+ggplot(panels) +
+  geom_segment(aes(x1, y1, xend = x, yend = y),
+               arrow = arrow(length = unit(0.01, "npc"), type = "closed")) +
+  geom_segment(aes(x, y, xend = x2, yend = y2)) +
+  geom_segment(aes(x, y, xend = x+nx, yend = y+ny)) +
+  geom_point(aes(x, y), coord) +
+  geom_point(aes(x, y), coord[1,], colour = "red") +
+  coord_fixed()
+
 
 #--- * Joukowski Airfoil                                          ----
 # Theory of Wing Sections
 # Theoretical and applied aerodynamics Ch2 
+R = 3; Uinf = 20
+t = seq(0, -2*pi, length.out = 51)
+coord <- data.frame(
+  t = t, x = R*cos(t), y = R*sin(t) )
+panels <- VLPanel(coord)
+ggplot(panels) +
+  geom_segment(aes(x1, y1, xend = x, yend = y),
+               arrow = arrow(length = unit(0.01, "npc"), type = "closed")) +
+  geom_segment(aes(x, y, xend = x2, yend = y2)) +
+  geom_segment(aes(x, y, xend = x+nx, yend = y+ny)) +
+  geom_point(aes(x, y), coord) +
+  geom_point(aes(x, y), coord[1,], colour = "red") +
+  coord_fixed()
+steady <- VLSteady(coord, aoa = 0, U = Uinf)
+actual <- data.frame(t = seq(-pi, pi, length.out = 101)) %>% 
+  mutate(
+    cp  = 1 - 4*sin(t)^2,
+    phi = Uinf*cos(t)*2*R )
