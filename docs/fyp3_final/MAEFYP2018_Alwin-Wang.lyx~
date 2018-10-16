@@ -4266,35 +4266,36 @@ Show the K matrix and revised Kutta condition
 
 \begin_inset Formula 
 \[
-\begin{bmatrix}\\
-\\
-\\
-\\
-\\
-\\
-\\
-\\
-\\
+\begin{bmatrix}K_{1,1} & K_{1,2} & \cdots & K_{1,N} & K_{1,N+1} & L_{1,1} & \cdots & L_{1,W} & M_{1}\\
+K_{2,1} & K_{2,2} & \cdots & K_{2,N} & K_{2,N+1} & L_{2,1} & \cdots & L_{2,W} & M_{2}\\
+\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
+K_{N,1} & K_{N,2} & \cdots & K_{N,N} & K_{N,N+1} & L_{N,N+1} & \cdots & L_{N,W} & M_{N}\\
+1 & 0 & \cdots & 0 & 1 & 0 & \cdots & 0 & -1
 \end{bmatrix}\begin{bmatrix}\gamma_{1}\\
 \gamma_{2}\\
 \vdots\\
-\gamma_{N_{j}}\\
-\gamma_{w}\\
+\gamma_{N}\\
+\gamma_{N+1}\\
 \Gamma_{1}\\
-\Gamma_{2}\\
 \vdots\\
-\Gamma_{N_{k}}
-\end{bmatrix}=\begin{bmatrix}\\
-\\
+\Gamma_{W}\\
+\gamma_{w}
+\end{bmatrix}=\begin{bmatrix}-\vec{u}\cdot\vec{n}_{1}\\
+-\vec{u}\cdot\vec{n}_{2}\\
 \vdots\\
-\\
-\\
-\\
-\\
-\vdots\\
-\\
+-\vec{u}\cdot\vec{n}_{N}\\
+0
 \end{bmatrix}
 \]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{gather*}
+K_{i,j}=\left(u,w\right)_{i,j}\cdot\vec{n}_{i}=\left[\left(u_{b},w_{b}\right)_{i,j-1}+\left(u_{a},w_{a}\right)_{i,j}\right]\cdot\vec{n}_{i},\quad j\ne1,N+1\\
+L_{i,k}=\left(u,w\right)_{i,k}\cdot\vec{n}_{i}\quad\text{and}\quad M_{i}=\left(u,w\right)_{i}\cdot\vec{n}_{i}
+\end{gather*}
 
 \end_inset
 
