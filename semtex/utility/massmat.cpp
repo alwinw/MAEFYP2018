@@ -88,7 +88,8 @@ int main (int    argc,
     E -> weight (&mass[0]);
     if (Geometry::cylindrical()) E -> mulY (&mass[0]);
 
-    for (j = 0; j < NPNP; j++) cout << mass[j] << endl;
+    for (j = 0; j < NPNP; j++) cout << setw(20) << mass[j] \
+      << setw(5) << i+1 << setw(5) << j+1 << endl;
   }
 
   Femlib::finalize();

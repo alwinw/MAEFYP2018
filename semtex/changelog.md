@@ -30,3 +30,6 @@
 # mesharea.cpp | 2018.10.15
  - Need area associated with each point
 
+# massmap.cpp  | 2018.10.17
+ - Added print out of enum and local node num
+
