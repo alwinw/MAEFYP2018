@@ -32,6 +32,15 @@
   \section*{\nomname}% Look for `\section*... etc.
 }{% Replace it by 'nothing'
 }{\typeout{Success}}{\typeout{Failure}}
+
+\usepackage{xcolor}
+\definecolor{commentgreen}{RGB}{2,112,10}
+\definecolor{eminence}{RGB}{108,48,130}
+\definecolor{weborange}{RGB}{255,165,0}
+\definecolor{frenchplum}{RGB}{129,20,83}
+
+\usepackage{enumitem}
+\setlist{nolistsep}
 \end_preamble
 \use_default_options true
 \begin_modules
@@ -48,7 +57,7 @@ subequations
 \fontencoding global
 \font_roman "times" "default"
 \font_sans "helvet" "default"
-\font_typewriter "default" "default"
+\font_typewriter "NotoMono-TLF" "default"
 \font_math "newtxmath" "auto"
 \font_default_family default
 \use_non_tex_fonts false
@@ -119,6 +128,7 @@ subequations
 \papercolumns 1
 \papersides 1
 \paperpagestyle fancy
+\listings_params "numbers=left,numberstyle={\footnotesize\color{gray}},tabsize=2,frame=single,basicstyle={\small\ttfamily}"
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -2946,6 +2956,11 @@ status open
 Check that circulation is conserved
 \end_layout
 
+\begin_layout Plain Layout
+State that since massmat is being used, a more refined method that per element
+ could be used
+\end_layout
+
 \end_inset
 
 
@@ -4300,6 +4315,13 @@ L_{i,k}=\left(u,w\right)_{i,k}\cdot\vec{n}_{i}\quad\text{and}\quad M_{i}=\left(u
 \end_inset
 
 
+\begin_inset Formula 
+\[
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4331,8 +4353,589 @@ NACA0012
 NACA0012 Remesh
 \end_layout
 
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Bash Scripts
+\end_layout
+
+\begin_layout Subsubsection
+Convergence Study
+\end_layout
+
+\begin_layout Standard
+This scripts takes all *.sesh files and copies them into a /results folder.
+ Semtex is called to perform DNS and Semtex utilities used to generate useful
+ output.
+ Important outputs include: 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+addvortfield
+\end_layout
+
+\end_inset
+
+ to create 
+\begin_inset Formula $\omega,\frac{\partial\omega}{\partial x},\frac{\partial\omega}{\partial y},\frac{\partial p}{\partial x},\frac{\partial p}{\partial y}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+wallgrad
+\end_layout
+
+\end_inset
+
+ to generate the wall surface and normals
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+convert
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+csplit
+\end_layout
+
+\end_inset
+
+ to output separate ASCII text files of the field dump for each time step
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=bash,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}},morekeywords={mkdir, cp, grep, \&amp;}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# Create required folders (if necessary)
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir -p results
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir -p images
+\end_layout
+
+\begin_layout Plain Layout
+
+# Create array of N_P to loop over
+\end_layout
+
+\begin_layout Plain Layout
+
+N_P=( 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 )
+\end_layout
+
+\begin_layout Plain Layout
+
+# Run dns on each N_P case
+\end_layout
+
+\begin_layout Plain Layout
+
+for i in $N_P[*]; do
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Set N_P in session file and move to new unique folder
+\end_layout
+
+\begin_layout Plain Layout
+
+  name=$(printf "%02d" i)
+\end_layout
+
+\begin_layout Plain Layout
+
+  echo N_P = $name
+\end_layout
+
+\begin_layout Plain Layout
+
+  mkdir -p results/NACA0012-N_P$name
+\end_layout
+
+\begin_layout Plain Layout
+
+  sed "s/N_P = X/N_P       = $i/g" 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    naca0012 >     results/NACA0012-N_P$name/naca0012-N_P$name.sesh
+\end_layout
+
+\begin_layout Plain Layout
+
+  cp bndry_prf.dat results/NACA0012-N_P$name/bndry_prf.dat
+\end_layout
+
+\begin_layout Plain Layout
+
+  cd results/NACA0012-N_P$name
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Run dns on session file
+\end_layout
+
+\begin_layout Plain Layout
+
+  for sessionfile in *.sesh; do
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Move setup files into unique folder
+\end_layout
+
+\begin_layout Plain Layout
+
+    f="${sessionfile%.*}"                   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    cp $sessionfile  $f                     &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Run semtex
+\end_layout
+
+\begin_layout Plain Layout
+
+    meshpr    $f > $f.msh                   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    meshpr -i $f > $f.mshi                  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    enumerate $f > $f.num                   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    dns $f | grep "Divergence Energy:"      &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Run semtex utilities
+\end_layout
+
+\begin_layout Plain Layout
+
+    addvortfield -G -s $f $f.fld > $f.Gfld  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    convert  $f.Gfld   > $f.flddump         &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    wallgrad $f $f.msh > $f.wallgrad        &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Create ASCII dump for post processing
+\end_layout
+
+\begin_layout Plain Layout
+
+    csplit -z "$f.flddump" /Session/ '{*}' >/dev/null &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    for i in [xx]*; do 
+\end_layout
+
+\begin_layout Plain Layout
+
+      mv $i "$f-${i#*xx}.dump"; done                  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    echo $sessionfile complete
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Finish
+\end_layout
+
+\begin_layout Plain Layout
+
+    rm $f.msh $f.num $f.fld $f.Gfld $f.mdl $f.flddump $f.his
+\end_layout
+
+\begin_layout Plain Layout
+
+  done
+\end_layout
+
+\begin_layout Plain Layout
+
+  cd ../..
+\end_layout
+
+\begin_layout Plain Layout
+
+done
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+Bash script to perform DNS for convergence study
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Element-by-element Integration
+\end_layout
+
+\begin_layout Standard
+This scripts takes all *.sesh files and copies them into a /results folder.
+ Semtex is called to perform DNS and Semtex utilities used to generate useful
+ output.
+ Important outputs include:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+massmat
+\end_layout
+
+\end_inset
+
+ is used to create the system mass matrix for all points (element-by-element)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+integral
+\end_layout
+
+\end_inset
+
+ has been 
+\emph on
+modified
+\emph default
+ to output the integration per element
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=bash,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}},morekeywords={mkdir, cp, grep, \&amp;}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# Create required folders (if necessary)
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir -p results
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir -p images
+\end_layout
+
+\begin_layout Plain Layout
+
+# Run dns on each session file
+\end_layout
+
+\begin_layout Plain Layout
+
+for sessionfile in *.sesh; do
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Move setup files into results
+\end_layout
+
+\begin_layout Plain Layout
+
+  f="${sessionfile%.*}"                   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  cp $sessionfile  results/$sessionfile   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  cp bndry_prf.dat results/bndry_prf.dat  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  cd results                              &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  cp $sessionfile  $f                     &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Run semtex
+\end_layout
+
+\begin_layout Plain Layout
+
+  meshpr    $f > $f.msh                   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  meshpr -i $f > $f.mshi                  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  massmat   $f > $f.mass                  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  enumerate $f > $f.num                   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  dns $f | grep "Divergence Energy:"      &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Run semtex utilities
+\end_layout
+
+\begin_layout Plain Layout
+
+  addvortfield -G -s $f $f.fld > $f.Gfld  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  convert  $f.Gfld    > $f.flddump        &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  compare  $f $f.fld  > /dev/null         &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  wallmesh $f $f.msh  > $f.wallmsh        &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  wallgrad $f $f.msh  > $f.wallgrad       &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Create ASCII dump for post processing
+\end_layout
+
+\begin_layout Plain Layout
+
+  csplit -z "$f.flddump" /Session/ '{*}' >/dev/null   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  for i in [xx]*; do 
+\end_layout
+
+\begin_layout Plain Layout
+
+    mv $i "$f-${i#*xx}.dump";     done                &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Create integral ASCII dump to compare to massmat
+\end_layout
+
+\begin_layout Plain Layout
+
+  integral $f $f.Gfld > $f.integral       &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  csplit -z "$f.integral" /timestep/ '{*}' >/dev/null &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  for i in [xx]*; do 
+\end_layout
+
+\begin_layout Plain Layout
+
+    mv $i "$f-${i#*xx}.integral"; done                &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Finish
+\end_layout
+
+\begin_layout Plain Layout
+
+  echo 
+\begin_inset Quotes eld
+\end_inset
+
+$sessionfile complete
+\begin_inset Quotes eld
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  cd ..
+\end_layout
+
+\begin_layout Plain Layout
+
+done
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+Bash script to integrate element-by-element across the domain
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection

@@ -24,7 +24,7 @@ for sessionfile in *.sesh; do
     mv $i "$f-${i#*xx}.dump"; done                    &&
   integral $f $f.Gfld > $f.integral       &&
   csplit -z "$f.integral" /timestep/ '{*}' >/dev/null &&
-    for i in [xx]*; do 
+  for i in [xx]*; do 
     mv $i "$f-${i#*xx}.integral"; done                &&
   echo $sessionfile complete
   cd ..
