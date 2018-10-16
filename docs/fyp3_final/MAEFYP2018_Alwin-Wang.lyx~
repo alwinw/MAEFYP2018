@@ -2882,7 +2882,7 @@ Directly compare to Zhu et al
 \end_layout
 
 \begin_layout Plain Layout
-Try to get the same kink in the streakline
+Try to get the same kink in the streakline, use particle tracking of semtex
 \end_layout
 
 \begin_layout Plain Layout
@@ -3115,7 +3115,7 @@ Appendix
 \end_layout
 
 \begin_layout Section
-Derivations
+Proofs and Derivations
 \end_layout
 
 \begin_layout Subsection
@@ -3210,56 +3210,6 @@ should define
 \end_inset
 
  somewhere
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Two-Dimensional Point Vortex 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-10.1.3, add figure
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{subequations}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align}
-\Phi_{\bullet} & =-\frac{\Gamma_{\bullet}}{2\pi}\tan^{-1}\left(\frac{z-z_{0}}{x-x_{0}}\right)\\
-u_{\bullet} & =\frac{\Gamma_{\bullet}}{2\pi}\frac{z-z_{0}}{\left(x-x_{0}\right)^{2}+\left(z-z_{0}\right)^{2}}\\
-w_{\bullet} & =-\frac{\Gamma_{\bullet}}{2\pi}\frac{x-x_{0}}{\left(x-x_{0}\right)^{2}+\left(z-z_{0}\right)^{2}}
-\end{align}
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{subequations}
 \end_layout
 
 \end_inset
@@ -3500,7 +3450,7 @@ status open
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Derivation for velocity potential
@@ -3602,7 +3552,7 @@ Simplified result
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Derivation for u velocity
@@ -3697,7 +3647,7 @@ u_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[z\ln\left(\frac{r_{2}}
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Derivation for v velocity
@@ -4178,32 +4128,214 @@ end{subequations}
 
 \end_layout
 
-\begin_layout Subsection
-Separation in Unsteady Flows
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Combine to form K matrix
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Steady Panel Method Validation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Screenshot of cylinder and screenshot of NACA0012 output vs K&C
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Shed Vortices
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+In the sample MATLAB file, Lamb-Oseen vortices are used 
+\end_layout
+
+\begin_layout Plain Layout
+https://en.wikipedia.org/wiki/Lamb%E2%80%93Oseen_vortex
+\end_layout
+
+\begin_layout Plain Layout
+MAJOR PROBLEM: 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ is defined into the page due to 
+\begin_inset Formula $\left(x,z\right)$
+\end_inset
+
+ but for me 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ is defined out of the page 
+\begin_inset Formula $\left(x,y\right)$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Two-Dimensional Point Vortex 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+10.1.3, add figure
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\Phi_{\bullet} & =-\frac{\Gamma_{\bullet}}{2\pi}\tan^{-1}\left(\frac{z-z_{0}}{x-x_{0}}\right)\\
+u_{\bullet} & =\frac{\Gamma_{\bullet}}{2\pi}\frac{z-z_{0}}{\left(x-x_{0}\right)^{2}+\left(z-z_{0}\right)^{2}}\\
+w_{\bullet} & =-\frac{\Gamma_{\bullet}}{2\pi}\frac{x-x_{0}}{\left(x-x_{0}\right)^{2}+\left(z-z_{0}\right)^{2}}
+\end{align}
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Unsteady Panel Method Formulation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Show the K matrix and revised Kutta condition
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{bmatrix}\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\end{bmatrix}\begin{bmatrix}\gamma_{1}\\
+\gamma_{2}\\
+\vdots\\
+\gamma_{N_{j}}\\
+\gamma_{w}\\
+\Gamma_{1}\\
+\Gamma_{2}\\
+\vdots\\
+\Gamma_{N_{k}}
+\end{bmatrix}=\begin{bmatrix}\\
+\\
+\vdots\\
+\\
+\\
+\\
+\\
+\vdots\\
+\\
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Not sure why I added this: Separation in Unsteady Flows
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
-Semtex Files
+Post-Processing Files
 \end_layout
 
 \begin_layout Subsection
-Spectral Element Mesh
+Semtex Mesh and Input Files
 \end_layout
 
-\begin_layout Subsection
-Semtex Input Files
-\end_layout
-
-\begin_layout Subsection
+\begin_layout Subsubsection
 NACA0012
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 NACA0012 Remesh
 \end_layout
 
 \begin_layout Subsection
 Bash Scripts
+\end_layout
+
+\begin_layout Subsection
+R Scripts
 \end_layout
 
 \end_body
