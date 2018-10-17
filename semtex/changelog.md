@@ -33,3 +33,6 @@
 # massmap.cpp  | 2018.10.17
  - Added print out of enum and local node num
 
+# preplot      | 2018.10.18
+ - Replaced semtex preplot with Tecplot preplot (from Tecplot bin)
+

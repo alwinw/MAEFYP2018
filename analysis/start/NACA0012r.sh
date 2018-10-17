@@ -18,13 +18,18 @@ for sessionfile in *.sesh; do
   compare  $f $f.fld > /dev/null          &&
   wallmesh $f $f.msh > $f.wallmsh         &&
   wallgrad $f $f.msh > $f.wallgrad        &&
-  csplit -z "$f.flddump" /Session/ '{*}' >/dev/null &&
+  csplit -z "$f.flddump" /Session/ '{*}' >/dev/null            &&
   for i in [xx]*; do 
-    dump="$f-${i#*xx}"
+    dump="$f-${i#*xx}"                    &&
     mv $i $dump.dump                      &&
-    sem2tec -n 0 -m $f.msh $dump.dump
-    mv $dump.dump.plt ../tecplot/$dump.plt
-    done                  &&
+    time=$(sed -n '5p' $dump.dump | grep -Eo "[0-9]+\.[0-9]+") &&
+    echo $time                            &&
+    sem2tec -n 0 -o $dump.dat -m $f.msh $dump.dump             &&
+    sed -i "/POINT/s/$/, SOLUTIONTIME=$time/" $dump.dat        &&
+    preplot $dump.dat > /dev/null         &&
+    rm $dump.dat                          &&
+    mv $dump.plt ../tecplot/$dump.plt     &&
+  done                                    &&
   echo $sessionfile complete
   cd ..
 done

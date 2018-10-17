@@ -5207,7 +5207,7 @@ csplit
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language=bash,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\ttfamily\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}},morekeywords={mkdir, cp, grep, \&amp;}"
+lstparams "language=bash,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\ttfamily\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}},morekeywords={mkdir, cp, grep, mv, rm}"
 inline false
 status open
 
@@ -5480,7 +5480,7 @@ integral
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language=bash,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}},morekeywords={mkdir, cp, grep, \&amp;}"
+lstparams "language=bash,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}},morekeywords={mkdir, cp, grep, mv, rm}"
 inline false
 status open
 
@@ -5660,6 +5660,337 @@ $sessionfile complete
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+
+  cd ..
+\end_layout
+
+\begin_layout Plain Layout
+
+done
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Bash script to integrate element-by-element across the domain
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Generating Tecplot Output
+\end_layout
+
+\begin_layout Standard
+This scripts takes all *.sesh files and copies them into a /results folder.
+ Semtex is called to perform DNS and Semtex utilities used to generate useful
+ output.
+ Tecplot *plt outputs are placed in a /tecplot folder.
+ Important outputs include:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+time=$(...)
+\end_layout
+
+\end_inset
+
+ reads in the time from the ASCII time file
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+sem2tec
+\end_layout
+
+\end_inset
+
+ converts the ASCII dump to a (non-interpolated) Tecplot *dat format
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+preplot
+\end_layout
+
+\end_inset
+
+ converts the *dat file to a binary *plt file
+\end_layout
+
+\begin_layout Standard
+Note that 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+preplot
+\end_layout
+
+\end_inset
+
+ packaged with semtex came from 1993 and does not have the 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+SOLUTIONTIME
+\end_layout
+
+\end_inset
+
+ token.
+ Thus, the 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+preplot
+\end_layout
+
+\end_inset
+
+ program packaged with Tecplot (in /bin) was used instead.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=bash,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}},morekeywords={mkdir, cp, grep, mv, rm}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# Create required folders (if necessary)
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir -p results
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir -p images
+\end_layout
+
+\begin_layout Plain Layout
+
+# Run dns on each session file
+\end_layout
+
+\begin_layout Plain Layout
+
+for sessionfile in *.sesh; do
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Move setup files into results
+\end_layout
+
+\begin_layout Plain Layout
+
+  f="${sessionfile%.*}"                   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  cp $sessionfile  results/$sessionfile   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  cp bndry_prf.dat results/bndry_prf.dat  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  cd results                              &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  cp $sessionfile  $f                     &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Run semtex
+\end_layout
+
+\begin_layout Plain Layout
+
+  meshpr    $f > $f.msh                   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  meshpr -i $f > $f.mshi                  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  massmat   $f > $f.mass                  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  enumerate $f > $f.num                   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  dns $f | grep "Divergence Energy:"      &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Run semtex utilities
+\end_layout
+
+\begin_layout Plain Layout
+
+  addvortfield -G -s $f $f.fld > $f.Gfld  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  convert  $f.Gfld    > $f.flddump        &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  compare  $f $f.fld  > /dev/null         &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  wallmesh $f $f.msh  > $f.wallmsh        &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  wallgrad $f $f.msh  > $f.wallgrad       &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Create ASCII dump for post processing
+\end_layout
+
+\begin_layout Plain Layout
+
+  csplit -z "$f.flddump" /Session/ '{*}' >/dev/null   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  for i in [xx]*; do 
+\end_layout
+
+\begin_layout Plain Layout
+
+    dump="$f-${i#*xx}"                    &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    mv $i $dump.dump                      &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Add SOLUTIONTIME and call preplot (tecplot360 2018 R1)
+\end_layout
+
+\begin_layout Plain Layout
+
+    time=$(sed -n '5p' $dump.dump | grep -Eo "[0-9]+
+\backslash
+.[0-9]+") &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    echo $time                            &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    sem2tec -n 0 -o $dump.dat -m $f.msh $dump.dump             &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    sed -i "/POINT/s/$/, SOLUTIONTIME=$time/" $dump.dat        &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    preplot $dump.dat > /dev/null         &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    rm $dump.dat                          &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    mv $dump.plt ../tecplot/$dump.plt     &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  done                                    &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  echo $sessionfile complete
 \end_layout
 
 \begin_layout Plain Layout
