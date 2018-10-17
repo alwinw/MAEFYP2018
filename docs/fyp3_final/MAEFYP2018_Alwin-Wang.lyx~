@@ -459,6 +459,29 @@ literal "true"
 \begin_layout Standard
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
+prefix "bvf1"
+symbol "$\\sigma$"
+description "Boundary vorticity flux (BVF)"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "bvf2"
+symbol "$\\vec{\\sigma}$"
+description "Boundary Vorticity Flux in 3D"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
 prefix "circ"
 symbol "$\\Gamma$"
 description "Circulation (m$^2$/s)"
@@ -508,7 +531,17 @@ literal "true"
 \begin_layout Standard
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
-prefix "dens"
+prefix "dens1"
+symbol "$\\rho$"
+description "Local density (kg/m$^3$)"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "dens2"
 symbol "$\\rho_\\infty$"
 description "Freestream density (kg/m$^3$)"
 literal "true"
@@ -655,6 +688,19 @@ LatexCommand nomenclature
 prefix "time"
 symbol "$t$"
 description "Time (s)"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "vis2"
+symbol "$nu$"
+description "Kinematic viscosity"
 literal "true"
 
 \end_inset
@@ -1062,6 +1108,9 @@ name "fig:Kelvin"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -1075,6 +1124,10 @@ Kelvin's Theorem
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
 Vincent and Blackburn 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1307,7 +1360,7 @@ This expresses the idea that vorticity must diffuse away from a solid boundary
  During the starting and stopping phases of motion, there is no angular
  acceleration present.
  Thus, the integral around the body perimeter of the flux of vorticity is
- zero at every incidence provided the pressure field is continuous 
+ zero at every instant provided the pressure field is continuous 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Blackburn1999,Zhu2015"
@@ -1419,32 +1472,6 @@ noprefix "false"
 
 \end_inset
 
-
-\begin_inset Flex Subequations
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\begin{gather}
-\vec{\sigma}=\vec{n}\times\left(\vec{a}_{B}-\vec{f}+\frac{1}{\rho}\nabla\vec{p}\right)+\nu\left(\vec{n}\times\nabla\right)\times\vec{\omega}\equiv\vec{\sigma}_{a}+\vec{\sigma}_{f}+\vec{\sigma}_{p}+\vec{\sigma}_{vis}\label{eq:BVF1}
-\end{gather}
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{alignat}{3}
-\vec{\sigma}_{a} & =\vec{n}\times\vec{a}_{B} & \qquad &  & \vec{\sigma}_{f} & =-\vec{n}\times\vec{f}\label{eq:BFV2}\\
-\vec{\sigma}_{p} & =\frac{1}{\rho}\vec{n}\times\nabla\vec{p} &  &  & \vec{\sigma}_{vis} & =\nu\left(\vec{n}\times\nabla\right)\times\vec{\omega}\label{eq:BVF3}
-\end{alignat}
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
 Zhou et al.
  
 \begin_inset CommandInset citation
@@ -1479,7 +1506,32 @@ noprefix "false"
 \end_inset
 
 .
- Note that this expression collapses into equation 
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{gather}
+\vec{\sigma}=\vec{n}\times\left(\vec{a}_{B}-\vec{f}+\frac{1}{\rho}\nabla\vec{p}\right)+\nu\left(\vec{n}\times\nabla\right)\times\vec{\omega}\equiv\vec{\sigma}_{a}+\vec{\sigma}_{f}+\vec{\sigma}_{p}+\vec{\sigma}_{vis}\label{eq:BVF1}
+\end{gather}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{alignat}{3}
+\vec{\sigma}_{a} & =\vec{n}\times\vec{a}_{B} & \qquad &  & \vec{\sigma}_{f} & =-\vec{n}\times\vec{f}\label{eq:BFV2}\\
+\vec{\sigma}_{p} & =\frac{1}{\rho}\vec{n}\times\nabla\vec{p} &  &  & \vec{\sigma}_{vis} & =\nu\left(\vec{n}\times\nabla\right)\times\vec{\omega}\label{eq:BVF3}
+\end{alignat}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Note that this expression collapses into equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:Morton Full VortGen"
@@ -1501,7 +1553,7 @@ noprefix "false"
 \begin_inset Formula $\vec{\sigma}_{vis}=0$
 \end_inset
 
- in two dimensions.
+ for two dimensional problems.
  Thus, 
 \begin_inset Formula 
 \begin{equation}
@@ -1624,7 +1676,7 @@ Need to explain saddles and nodes for 2D
 \end_layout
 
 \begin_layout Standard
-When the airfoil first gains a non-zero relative velocity,the fluid pattern
+When the airfoil first gains a non-zero relative velocity, the fluid pattern
  is very similar to the inviscid potential flow solution where particles
  very close to the lower surface turn rapidly around the trailing edge 
 \begin_inset CommandInset citation
@@ -1691,8 +1743,8 @@ Rename
 \end_layout
 
 \begin_layout Standard
-In their review, Limacher, Morton and Wood outline the concept of added-mass
- is due to the momentum a body imparts to the surrounding fluid.
+In their review, Limacher, Morton and Wood outline the concept of that added-mas
+s is due to the momentum a body imparts to the surrounding fluid.
  Assuming an irrotational flow for a body of mass 
 \begin_inset Formula $M$
 \end_inset
@@ -1769,13 +1821,7 @@ For incompressible flows using potential flow analysis,
 \end_inset
 
  in the frame of reference where velocity decays to zero at infinity, Saffman
- outlines that the conservation of energy can be used to determine 
-\begin_inset Formula $m'$
-\end_inset
-
-.
- The added-mass force associated with the scalar potential can also be determine
-d for a body with impermeable boundary condition on its surface 
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Saffman1993"
@@ -1783,10 +1829,16 @@ literal "false"
 
 \end_inset
 
+ outlines that the conservation of energy can be used to determine 
+\begin_inset Formula $m'$
+\end_inset
+
 .
+ The added-mass force associated with the scalar potential can also be determine
+d for a body with impermeable boundary condition on its surface.
 \begin_inset Formula 
 \begin{equation}
-m'=\rho\intop_{V}\frac{u^{2}}{V\left(t\right)^{2}}\,\text{d}V,\quad\vec{F}_{\text{am}}=-\rho\frac{\text{d}}{\text{d}t}\ointop_{S_{b}}\phi\vec{n}\,\text{d}S
+m'=\rho\intop_{V}\frac{u^{2}}{V\left(t\right)^{2}}\,\text{d}V,\quad\vec{F}_{\text{am}}=-\rho\frac{\text{d}}{\text{d}t}\ointop_{S_{b}}\Phi\vec{n}\,\text{d}S
 \end{equation}
 
 \end_inset
@@ -1970,7 +2022,7 @@ literal "false"
 \begin_inset Formula $\vec{P}_{i}+\vec{P}_{\Phi}=0$
 \end_inset
 
- which leads to his second, no slip formulation.
+ which leads to their second, no slip formulation.
  
 \begin_inset Note Note
 status open
@@ -2190,11 +2242,21 @@ literal "false"
 
 \end_inset
 
-where 
+where
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+ 
 \begin_inset Formula $\alpha=4\text{°}$
 \end_inset
 
- and 
+ and
+\end_layout
+
+\end_inset
+
+ 
 \begin_inset Formula $V_{\infty}$
 \end_inset
 
@@ -2202,8 +2264,7 @@ where
 \begin_inset Formula $V_{\infty}=-V\left(t\right)$
 \end_inset
 
-, for this analysis.
-  
+.
 \end_layout
 
 \begin_layout Standard
@@ -2261,7 +2322,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-While Kármán and Sears 
+Kármán and Sears 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Karman1938"
@@ -2269,8 +2330,8 @@ literal "false"
 
 \end_inset
 
- present a solution for the wake effect term, from PIV by Willert and Kompenhans
- 
+ present a solution for the wake effect term, however from PIV by Willert
+ and Kompenhans 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Willert2010"
@@ -2291,7 +2352,17 @@ if I add an image, reference it here
  it is clear the assumption of the wake remaining in the same plane as the
  airfoil does not hold as wake vortex sheet rolls up to form the starting
  vortex.
- 
+ As such, the solution provided in equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:unsteady lift"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ may not be appropriate for the analysis of the starting phase of the airfoil.
 \begin_inset Note Note
 status open
 
@@ -2916,19 +2987,7 @@ Check the -ve signs AND the definition of dV(t)/dt etc for acceleration
 
 \end_inset
 
-It is clear that the convergence of second derivatives for 
-\begin_inset Formula $u$
-\end_inset
 
- and 
-\begin_inset Formula $v$
-\end_inset
-
- are required to accurately determine 
-\begin_inset Formula $\nabla\vec{\omega}$
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Standard
@@ -3028,6 +3087,22 @@ Compare to kovas
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+It is clear that the convergence of second derivatives for 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+ are required to accurately determine 
+\begin_inset Formula $\nabla\vec{\omega}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -3384,6 +3459,69 @@ Vorticity Generation
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Images/Intro_Morton-Coord.png
+	lyxscale 30
+	width 5cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Coordinate system on the surface of a wall
+\end_layout
+
+\end_inset
+
+Coordinate system on the surface of a wall.
+ 
+\emph on
+Source: Morton 1984, pg 283 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Morton1984"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Morton Coord Appendix"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -3391,6 +3529,124 @@ status open
 Excerpts with description from Morton
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Navier-Stokes equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Navier Stokes"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ can be reduced to the case of a wall moving in its own plane for an infinitesim
+ally small region on the airfoil as described by Morton 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Morton1984"
+literal "false"
+
+\end_inset
+
+.
+ The boundary conditions for the Navier-Stokes equation were found by using
+ 
+\begin_inset Formula $\vec{V}=\left\{ V\left(t\right),0\right\} $
+\end_inset
+
+ where 
+\begin_inset Formula $V\left(t\right)$
+\end_inset
+
+ is the motion of the body and 
+\begin_inset Formula $z=0$
+\end_inset
+
+ to indicate the rigid boundary at the wall.
+ Thus, no slip condition gives 
+\begin_inset Formula $\vec{v}=\left(V\left(t\right),0\right)\,\forall\,x,t$
+\end_inset
+
+ for the fluid at the wall and there is no spatial variation of the boundary
+ motion as shown in equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Spatial Variation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Substitution into the Navier-Stokes equation at the boundary yields Equation
+ 5a which can be simplified to equations 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Morton 1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Morton 2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ (Morton, 1984).
+\begin_inset Formula 
+\begin{gather}
+\frac{\partial\vec{u}}{\partial t}+\vec{u}\cdot\nabla\vec{u}=-\frac{1}{\rho}\nabla\vec{p}+\frac{1}{\text{Re}}\nabla^{2}\vec{u}-\vec{a},\qquad\nabla\cdot\vec{u}=0\label{eq:Navier Stokes}\\
+\left[\left(\frac{\partial}{\partial x},\frac{\partial^{2}}{\partial x^{2}}\right)\cdot\left(u,w\right)\right]_{0}=0\label{eq:Spatial Variation}
+\end{gather}
+
+\end_inset
+
+
+\begin_inset VSpace -1.5em*
+\end_inset
+
+
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{align}
+\left[\frac{\partial^{2}}{\partial z^{2}}\left(u,w\right)\right]_{0} & =\left\{ 0,\frac{1}{\mu}\frac{\partial\vec{p}}{\partial x}+\frac{1}{\nu}\frac{dV\left(t\right)}{\text{d}t},\frac{1}{\mu}\right\} _{0}\\
+\nu\left(\frac{\partial\boldsymbol{\omega}}{\partial z}\right)_{0} & =\left\{ 0,-\left[-\frac{1}{\rho}\frac{\partial\vec{p}}{\partial x}+\frac{dV\left(t\right)}{dt}\right],0\right\} _{0}\label{eq:Morton 1}\\
+-v\vec{n}\cdot\nabla\vec{\omega} & =-\vec{n}\times\left(\nabla\vec{P}+a\left(t\right)\right)\label{eq:Morton 2}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
 \end_inset
 
 
@@ -3526,7 +3782,16 @@ The vorticity bound to the airfoil is denoted by
 \end_layout
 
 \begin_layout Itemize
-(a) the vorticity, 
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(a)
+\end_layout
+
+\end_inset
+
+the vorticity, 
 \begin_inset Formula $\gamma_{0}\left(x\right)$
 \end_inset
 
@@ -3549,11 +3814,33 @@ quasi-steady
 \end_layout
 
 \begin_layout Itemize
-(b) the vorticity, 
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(b)
+\end_layout
+
+\end_inset
+
+the vorticity, 
 \begin_inset Formula $\gamma_{1}\left(x\right)$
 \end_inset
 
 , which is induced by the wake, as calculated in the preceding section
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+To finish, doesn't really make sense
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4653,6 +4940,19 @@ end{subequations}
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Movement of shed vortices defined as
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
 Unsteady Panel Method Formulation
 \end_layout
@@ -4674,7 +4974,8 @@ Show the K matrix and revised Kutta condition
 K_{2,1} & K_{2,2} & \cdots & K_{2,N} & K_{2,N+1} & L_{2,1} & \cdots & L_{2,W} & M_{2}\\
 \vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
 K_{N,1} & K_{N,2} & \cdots & K_{N,N} & K_{N,N+1} & L_{N,N+1} & \cdots & L_{N,W} & M_{N}\\
-1 & 0 & \cdots & 0 & 1 & 0 & \cdots & 0 & -1
+1 & 0 & \cdots & 0 & 1 & 0 & \cdots & 0 & -1\\
+C_{1} & C_{2} & \cdots & C_{N} & C_{N+1} & 0 & \cdots & 0 & C_{W}
 \end{bmatrix}\begin{bmatrix}\gamma_{1}\\
 \gamma_{2}\\
 \vdots\\
@@ -4688,6 +4989,7 @@ K_{N,1} & K_{N,2} & \cdots & K_{N,N} & K_{N,N+1} & L_{N,N+1} & \cdots & L_{N,W} 
 -\vec{u}\cdot\vec{n}_{2}\\
 \vdots\\
 -\vec{u}\cdot\vec{n}_{N}\\
+0\\
 0
 \end{bmatrix}
 \]
@@ -4706,6 +5008,7 @@ L_{i,k}=\left(u,w\right)_{i,k}\cdot\vec{n}_{i}\quad\text{and}\quad M_{i}=\left(u
 
 \begin_inset Formula 
 \[
+C_{j}=\frac{1}{2}\left(c_{j-1}+c_{j}\right),\quad j\ne1,N+1
 \]
 
 \end_inset
@@ -4831,7 +5134,7 @@ csplit
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language=bash,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}},morekeywords={mkdir, cp, grep, \&amp;}"
+lstparams "language=bash,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\ttfamily\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}},morekeywords={mkdir, cp, grep, \&amp;}"
 inline false
 status open
 
@@ -5099,11 +5402,7 @@ integral
 
 \end_inset
 
- has been 
-\emph on
-modified
-\emph default
- to output the integration per element
+ has been modified to output the integration per element
 \end_layout
 
 \begin_layout Standard
