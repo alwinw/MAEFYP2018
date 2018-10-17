@@ -1691,8 +1691,8 @@ Rename
 \end_layout
 
 \begin_layout Standard
-In his review, Limacher's outlines the concept of added-mass is due to the
- momentum a body imparts to the surrounding fluid.
+In their review, Limacher, Morton and Wood outline the concept of added-mass
+ is due to the momentum a body imparts to the surrounding fluid.
  Assuming an irrotational flow for a body of mass 
 \begin_inset Formula $M$
 \end_inset
@@ -1786,12 +1786,12 @@ literal "false"
 .
 \begin_inset Formula 
 \begin{equation}
-m'=\rho\intop_{V}\frac{u^{2}}{V\left(t\right)^{2}}\,\text{d}V,\quad F_{\text{am}}=-\rho\frac{\text{d}}{\text{d}t}\ointop_{S_{b}}\phi\vec{n}\,\text{d}S
+m'=\rho\intop_{V}\frac{u^{2}}{V\left(t\right)^{2}}\,\text{d}V,\quad\vec{F}_{\text{am}}=-\rho\frac{\text{d}}{\text{d}t}\ointop_{S_{b}}\phi\vec{n}\,\text{d}S
 \end{equation}
 
 \end_inset
 
-Limacher 
+Limacher, Morton and Wood 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Limacher2018"
@@ -1822,7 +1822,7 @@ noprefix "false"
  and 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:LimacherAll"
+reference "eq:Limacher 4 terms"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1902,7 +1902,7 @@ where
 \begin_inset Formula $\vec{P}_{v}$
 \end_inset
 
- is the shed-vorticity impulse of of all the vorticity in the fluid domain
+ is the shed-vorticity impulse of all the vorticity in the fluid domain
  
 \begin_inset Formula $V$
 \end_inset
@@ -1916,7 +1916,80 @@ where
 \begin_inset Formula $\vec{P}_{i}$
 \end_inset
 
- is the image-vorticity impulse 
+ is the image-vorticity impulse for a non-unique vorticity distribution
+ within the body 
+\begin_inset Formula $V_{b}$
+\end_inset
+
+ that maintains the impermeable boundary condition on 
+\begin_inset Formula $S_{b}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\vec{P}_{\Phi}$
+\end_inset
+
+ is the potential impulse introduced from using the body-fixed reference
+ frame, 
+\begin_inset Formula $\vec{u}'=\vec{u}-\vec{u}_{c}-\vec{\Omega}\times\vec{x}\equiv\nabla\Phi'+\nabla\times\psi'$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\vec{P}_{b}$
+\end_inset
+
+ is the body-volume impulse.
+ The sum of first two terms, 
+\begin_inset Formula $\vec{P}_{v}+\vec{P}_{i}$
+\end_inset
+
+ leads to the total vortical impulse and the sum of the other two terms,
+ 
+\begin_inset Formula $\vec{P}_{\Phi}+\vec{P}_{b}$
+\end_inset
+
+ leads to the added mass force.
+\begin_inset Formula 
+\begin{equation}
+\vec{F}_{c}=-\rho\frac{\text{d}}{\text{d}t}\left(\vec{P}_{v}+\vec{P}_{i}\right)\quad\text{and}\quad\vec{F}_{am}=-\rho\frac{\text{d}}{\text{d}t}\left(\vec{P}_{\Phi}+\vec{P}_{b}\right)
+\end{equation}
+
+\end_inset
+
+When the no slip condition holds, Limacher, Morton and Wood 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Limacher2018"
+literal "false"
+
+\end_inset
+
+ state that 
+\begin_inset Formula $\vec{P}_{i}+\vec{P}_{\Phi}=0$
+\end_inset
+
+ which leads to his second, no slip formulation.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This formulation is equal to and cite []
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{equation}
+\vec{P}=\vec{P}_{v}+\vec{P}_{b}=\frac{1}{N-1}\intop_{V}\left(\vec{x}\times\vec{\omega}\right)\,\text{d}V-\vec{u}_{c}V_{b}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3307,7 +3380,7 @@ Proofs and Derivations
 \end_layout
 
 \begin_layout Subsection
-Vorticity Generation Proof
+Vorticity Generation
 \end_layout
 
 \begin_layout Standard
@@ -3324,7 +3397,7 @@ Excerpts with description from Morton
 \end_layout
 
 \begin_layout Subsection
-Unsteady Thin-Airfoil Theory Proof
+Unsteady Thin-Airfoil Theory
 \end_layout
 
 \begin_layout Standard
@@ -3338,6 +3411,149 @@ Exerpts with description from Karman and Sears
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Karman and Sears 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Karman1938"
+literal "false"
+
+\end_inset
+
+ begin their formulation by considering a vortex pair 
+\begin_inset Formula $\pm\Gamma$
+\end_inset
+
+ on the 
+\begin_inset Formula $x$
+\end_inset
+
+-axis at with coordinates 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+.
+ The magnitude of momentum is 
+\begin_inset Formula $\rho\Gamma\left(x_{2}-x_{1}\right)$
+\end_inset
+
+ with a line of action at 
+\begin_inset Formula $x=\frac{1}{2}\left(x_{2}+x_{1}\right)$
+\end_inset
+
+.
+ The total lift per unit span can be determined as
+\begin_inset Formula 
+\begin{equation}
+L=-\rho\frac{\text{d}}{\text{d}t}\sum\Gamma_{i}x_{i}
+\end{equation}
+
+\end_inset
+
+In order to determine the effect of vorticity being shed into the wake,
+ the conformal mapping is used between a flat plate, 
+\begin_inset Formula $-1\le x\le1$
+\end_inset
+
+ in the 
+\begin_inset Formula $z$
+\end_inset
+
+ plane and a unit circle in the 
+\begin_inset Formula $z'$
+\end_inset
+
+ plane.
+ The effect of a point vortex of strength 
+\begin_inset Formula $-\Gamma'$
+\end_inset
+
+ at 
+\begin_inset Formula $x=\xi$
+\end_inset
+
+ is determined by solving the problem in the 
+\begin_inset Formula $z'$
+\end_inset
+
+ plane and transforming the solution back into 
+\begin_inset Formula $z$
+\end_inset
+
+ to give the tangential velocity, 
+\begin_inset Formula $v_{\theta}$
+\end_inset
+
+, vorticity distribution over the airfoil, 
+\begin_inset Formula $\gamma\left(x\right)$
+\end_inset
+
+ and total circulation of the airfoil, 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+.
+ 
+\begin_inset Formula 
+\begin{gather}
+v_{\theta}=\frac{\Gamma'}{2\pi}\left[\frac{\sqrt{\xi^{2}-1}}{\xi-\cos\left(\theta\right)}-\sqrt{\frac{\xi+1}{\xi-1}}\right]=-\frac{\Gamma'}{2\pi}\frac{1-\cos\left(\theta\right)}{\xi-\cos\left(\theta\right)}\sqrt{\frac{\xi+1}{\xi-1}}\\
+\gamma\left(x\right)=\frac{1}{\pi}\frac{\Gamma'}{\xi-x}\sqrt{\frac{1-x}{1+x}}\sqrt{\frac{\xi+1}{\xi-1}}\\
+\Gamma=\intop_{-1}^{1}\gamma\left(x\right)\,\text{d}x=\Gamma'\left(\sqrt{\frac{\xi+1}{\xi-1}}-1\right)
+\end{gather}
+
+\end_inset
+
+The vorticity bound to the airfoil is denoted by 
+\begin_inset Formula $\gamma\left(x\right)$
+\end_inset
+
+ and that in the wake by 
+\begin_inset Formula $\gamma\left(\xi\right)$
+\end_inset
+
+.
+ The vorticity 
+\begin_inset Formula $\gamma\left(x\right)$
+\end_inset
+
+ is composed of two parts:
+\end_layout
+
+\begin_layout Itemize
+(a) the vorticity, 
+\begin_inset Formula $\gamma_{0}\left(x\right)$
+\end_inset
+
+, which would be produced, according to thin airfoil theory, by the motion
+ of the airfoil or the given velocity distribution (gust) in the air, if
+ the wake had no effect.
+ 
+\begin_inset Formula $\gamma_{0}\left(x\right)$
+\end_inset
+
+ is called the 
+\begin_inset Quotes eld
+\end_inset
+
+quasi-steady
+\begin_inset Quotes erd
+\end_inset
+
+ vorticity distribution;
+\end_layout
+
+\begin_layout Itemize
+(b) the vorticity, 
+\begin_inset Formula $\gamma_{1}\left(x\right)$
+\end_inset
+
+, which is induced by the wake, as calculated in the preceding section
 \end_layout
 
 \begin_layout Standard

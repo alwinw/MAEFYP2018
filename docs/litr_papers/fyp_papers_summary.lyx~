@@ -559,13 +559,21 @@ I_{y}=\rho\sum\Gamma_{i}x_{i}=\rho\intop_{-1}^{1}\gamma\left(x\right)x\,\text{d}
 \end_inset
 
 
+\begin_inset Quotes eld
+\end_inset
+
+factor of 2
+\begin_inset Quotes erd
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
 Limacher 2018: 
 \begin_inset Formula 
 \[
-\vec{P}=\underset{}{\underbrace{\frac{1}{N-1}\intop_{V}\left(\vec{x}\times\vec{\omega}\right)\,\text{d}V}}+\frac{1}{N-1}\intop_{V_{b}}\left(\vec{x}\times\vec{\omega}\right)\,\text{d}V-\ointop_{S_{b}}\hat{\vec{n}}\phi'\,\text{d}s-\vec{u}_{c}V_{b}
+\vec{P}=\underset{\vec{P}_{v}}{\underbrace{\frac{1}{N-1}\intop_{V}\left(\vec{x}\times\vec{\omega}\right)\,\text{d}V}}+\underset{\vec{P}_{i}}{\underbrace{\frac{1}{N-1}\intop_{V_{b}}\left(\vec{x}\times\vec{\omega}\right)\,\text{d}V}}-\underset{\vec{P}_{\phi}}{\underbrace{\ointop_{S_{b}}\hat{\vec{n}}\phi'\,\text{d}s}}-\underset{P_{b}}{\underbrace{\vec{u}_{c}V_{b}}}
 \]
 
 \end_inset
