@@ -352,6 +352,37 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Standard
+\begin_inset FloatList table
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand lstlistoflistings
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status collapsed
 
@@ -4648,7 +4679,6 @@ done
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
 Bash script to perform DNS for convergence study
 \end_layout
 
@@ -4913,7 +4943,6 @@ done
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
 Bash script to integrate element-by-element across the domain
 \end_layout
 
@@ -4940,6 +4969,34 @@ Bash script to integrate element-by-element across the domain
 
 \begin_layout Subsection
 R Scripts
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Bash script to integrate element-by-element across the domain
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body

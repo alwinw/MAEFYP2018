@@ -25,7 +25,7 @@ if (TRUE) {
   airfoil    = "NACA0012r"
   folderpath = "results/"
   seshpath   = "naca0012r"
-  dumppath   = "naca0012r-06.dump"
+  dumppath   = "naca0012r-14.dump"
   #--- > Required input dataframes                                  ----
   data_airfoil <- data.frame(
     airfoil  = airfoil,

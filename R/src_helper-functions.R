@@ -589,7 +589,6 @@ LoadIntegral <- function(folder, dumpfile, vars = c("u", "v","o")) {
   vardf$centy  <- as.numeric(vardf$centy)
   vardf <- cbind(vardf, vartable)
   rm(varlines, vartable)
-  
   # Read each variable of interest (vars vector)
   vardf <- filter(vardf, var %in% vars)
   varli <- split(vardf, vardf$var)
@@ -607,6 +606,26 @@ LoadIntegral <- function(folder, dumpfile, vars = c("u", "v","o")) {
   
   # Return output
   return(list(total = vardf, elem = varoutp))
+}
+
+DumpIntegral <- function(dump_dump, long_enum) {
+  # Variables of interest
+  inte_dump <- dump$dump %>% 
+    select(x, y, o) %>% 
+    mutate(ox = o*(x-3), oy = -o*y) %>% 
+    select(-x, -y)
+  # Multiply by mass
+  inte_dump <- inte_dump*dump_dump$mass
+  inte_dump$enum = dump_dump$enum
+  # Integrate per element (cannot do per point since not really "dA")
+  inte_dump <- inte_dump %>% 
+    group_by(enum) %>% 
+    summarise_all(.funs = "sum")
+  # Total integration
+  inte_totl <- inte_dump %>% 
+    select(-enum) %>% 
+    summarise_all(.funs = "sum")
+  
 }
 
 #--- Numerical Methods ----

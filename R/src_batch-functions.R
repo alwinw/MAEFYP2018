@@ -47,6 +47,7 @@ BatchLoadMesh <- function(data_mesh, outp_airfoil, srcpath = "") {
   long$wall <- LongWall(long$wall, long$mesh)
   #--- * Local Data                                                 ----
   long$mesh <- LocalMesh(long$mesh, long$wall)
+  # Determine enum regions as long$enum
   #--- > Sesh & Mesh Calc Output                                    ----
   list_mesh <- list(
     wall = long$wall,
