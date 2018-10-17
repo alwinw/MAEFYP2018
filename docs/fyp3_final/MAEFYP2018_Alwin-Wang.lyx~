@@ -398,6 +398,17 @@ pagenumbering{arabic}
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section*
 Nomenclature
 \end_layout
@@ -740,7 +751,7 @@ Lift and drag for steady case using BVF
 \end_layout
 
 \begin_layout Enumerate
-Vortex impulse and added mass
+Vortex impulse and added-mass
 \end_layout
 
 \end_deeper
@@ -1666,7 +1677,7 @@ To finish
 \end_layout
 
 \begin_layout Subsubsection
-Added Mass Effect for Unsteady Flows 
+Added-Mass Effect for Unsteady Flows 
 \begin_inset Note Note
 status open
 
@@ -1680,7 +1691,7 @@ Rename
 \end_layout
 
 \begin_layout Standard
-In his review, Limacher's outlines the concept of added mass is due to the
+In his review, Limacher's outlines the concept of added-mass is due to the
  momentum a body imparts to the surrounding fluid.
  Assuming an irrotational flow for a body of mass 
 \begin_inset Formula $M$
@@ -1720,7 +1731,7 @@ where
 \begin_inset Quotes eld
 \end_inset
 
-added mass
+added-mass
 \begin_inset Quotes erd
 \end_inset
 
@@ -1741,13 +1752,15 @@ virtual mass
 \end_inset
 
  that must be accelerated with the body.
- However, there is no identifiable finite volume of fluid that is accelerated
- with the body to cause the force 
+ While the apparent mass can be intuitively understood as the volume of
+ fluid ahead of the body that needs to be accelerated around the body, there
+ is no actual identifiable finite volume of fluid.
+ All the fluid around the body (to infinity) is accelerated to varying degrees
+ causing the force 
 \begin_inset Formula $F_{am}$
 \end_inset
 
- as all the fluid around the body (to infinity) is accelerated.
- 
+.
 \end_layout
 
 \begin_layout Standard
@@ -1761,7 +1774,7 @@ For incompressible flows using potential flow analysis,
 \end_inset
 
 .
- The added mass force associated with the scalar potential can also be determine
+ The added-mass force associated with the scalar potential can also be determine
 d for a body with impermeable boundary condition on its surface 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1773,17 +1786,147 @@ literal "false"
 .
 \begin_inset Formula 
 \begin{equation}
-m'=\rho\intop_{V}\frac{u^{2}}{V\left(t\right)^{2}}\,\text{d}V,\quad F_{\text{am}}=-\rho\frac{\text{d}}{\text{d}t}\ointop_{S_{b}}\phi\hat{\vec{n}}\,\text{d}S
+m'=\rho\intop_{V}\frac{u^{2}}{V\left(t\right)^{2}}\,\text{d}V,\quad F_{\text{am}}=-\rho\frac{\text{d}}{\text{d}t}\ointop_{S_{b}}\phi\vec{n}\,\text{d}S
 \end{equation}
 
 \end_inset
 
-Limacher's generalised derivation for the total impulse, 
+Limacher 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Limacher2018"
+literal "false"
+
+\end_inset
+
+ performed a generalised derivation for a body of arbitrary shape to determine
+ the added-mass force for separated viscous flows.
+ The total impulse, 
 \begin_inset Formula $\vec{P}$
 \end_inset
 
 , where 
-\begin_inset Formula $\vec{F}=-\rho$
+\begin_inset Formula $\vec{F}=-\rho\frac{\text{d}\vec{P}}{\text{d}t}$
+\end_inset
+
+ is given in Equations 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LimacherAll"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LimacherAll"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The arbitrary motion of the airfoil is characterised by instantaneous linear
+ velocity of the body centroid, 
+\begin_inset Formula $\vec{u}_{c}$
+\end_inset
+
+, and the angular velocity, 
+\begin_inset Formula $\vec{\Omega}$
+\end_inset
+
+.
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{gather}
+\vec{P}=\frac{1}{N-1}\intop_{V}\left(\vec{x}\times\vec{\omega}\right)\,\text{d}V+\frac{1}{N-1}\intop_{V_{b}}\left(\vec{x}\times\vec{\omega}\right)\,\text{d}V-\ointop_{S_{b}}\vec{n}\Phi'\,\text{d}S-\vec{u}_{c}V_{b}\label{eq:LimacherAll}\\
+\vec{P}\equiv\vec{P}_{v}+\vec{P_{i}}+\vec{P}_{\Phi}+\vec{P}_{b}\label{eq:Limacher 4 terms}
+\end{gather}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+where 
+\begin_inset Formula $N=\left\{ 2,3\right\} $
+\end_inset
+
+ is the dimension of space, 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ is defined such that 
+\begin_inset Formula $\vec{x}=0$
+\end_inset
+
+ at body centroid for 
+\begin_inset Formula $\int_{V_{b}}\vec{\Omega}\times\vec{x}\,\text{d}V=0$
+\end_inset
+
+, 
+\begin_inset Formula $\Phi'$
+\end_inset
+
+ is the velocity potential in the body-fixed frame of reference defined
+ as 
+\begin_inset Formula $\nabla\Phi'=\nabla\Phi-\vec{u}_{c}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{b}$
+\end_inset
+
+ is a piecewise smooth surface with outward unit normal 
+\begin_inset Formula $\vec{n}$
+\end_inset
+
+ of the body and encloses the volume 
+\begin_inset Formula $V_{b}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{P}_{v}$
+\end_inset
+
+ is the shed-vorticity impulse of of all the vorticity in the fluid domain
+ 
+\begin_inset Formula $V$
+\end_inset
+
+ up to the surface 
+\begin_inset Formula $S_{b}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\vec{P}_{i}$
+\end_inset
+
+ is the image-vorticity impulse 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+how does this simplify for 2D?
+\end_layout
+
 \end_inset
 
 
@@ -2616,21 +2759,12 @@ It is assumed that a local section of airfoil can be modelled as an infinite
 \end_inset
 
  is a unit tangent vector as shown in figure 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:Coordinate-system-used"
+reference "fig:Coordinate System on Airfoil"
 plural "false"
 caps "false"
 noprefix "false"
-
-\end_inset
-
-
-\end_layout
 
 \end_inset
 
@@ -2770,6 +2904,14 @@ Coordinate system
 \end_inset
 
 , are shown.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Coordinate System on Airfoil"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3019,7 +3161,7 @@ Comparison to Unsteady Potential Theory
 \end_layout
 
 \begin_layout Subsection
-Lift, Drag and Added Mass Forces
+Lift, Drag and Added-Mass Forces
 \end_layout
 
 \begin_layout Standard
