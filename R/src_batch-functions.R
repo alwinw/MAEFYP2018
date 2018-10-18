@@ -47,11 +47,12 @@ BatchLoadMesh <- function(data_mesh, outp_airfoil, srcpath = "") {
   long$wall <- LongWall(long$wall, long$mesh)
   #--- * Local Data                                                 ----
   long$mesh <- LocalMesh(long$mesh, long$wall)
-  # Determine enum regions as long$enum
+  long$enum <- LocalEnum(long$mesh, long$wall)
   #--- > Sesh & Mesh Calc Output                                    ----
   list_mesh <- list(
     wall = long$wall,
-    mesh = long$mesh)
+    mesh = long$mesh,
+    enum = long$enum)
   rm(data_mesh, long, session)
   # output
   return(list_mesh)
@@ -84,22 +85,29 @@ BatchLoadDump <- function(data_dump, outp_mesh, plot = "none", outp = "wall",
       airfoil, "-v", sprintf("%0.4f", kinvis), "-t", sprintf("%06.4f", time)))
   
   #--- * Integral Output                                            ----
-  
-  
+  dump$bvfa <- DumpBVFa(dump$wall)
+  dump$flow <- DumpFlow(dump$dump)
+  dump$inte <- DumpInte(dump$dump, list_mesh$enum)
   
   #--- * Create Output                                              ----
   if (outp == "wall") {
     list_dump <- c(
       data_plot = list(data_plot), 
-      dump = dump[c("wall")])
-    names(list_dump) <- c("data_plot", "wall")
+      dump = dump[c("wall")],
+      bvfa = dump[c("bvfa")],
+      flow = dump[c("flow")],
+      inte = dump[c("inte")])
+    names(list_dump) <- c("data_plot", "wall", "bvfa", "flow", "inte")
   } else if (outp == "node") {
     dump$node <- filter(dump$dump, node)
     list_dump <- c(
       data_plot = list(data_plot), 
       dump = dump[c("wall")],
-      node = dump[c("node")])
-    names(list_dump) <- c("data_plot", "wall", "node")
+      node = dump[c("node")],
+      bvfa = dump[c("bvfa")],
+      flow = dump[c("flow")],
+      inte = dump[c("inte")])
+    names(list_dump) <- c("data_plot", "wall", "node", "bvfa", "flow", "inte")
   } else if (outp == "te") {
     xvec = c( 0.595,  0.615)
     yvec = c(-0.046, -0.030)
@@ -111,8 +119,11 @@ BatchLoadDump <- function(data_dump, outp_mesh, plot = "none", outp = "wall",
     list_dump <- c(
       data_plot = list(data_plot), 
       dump = dump[c("wall")],
-      node = dump[c("te")])
-    names(list_dump) <- c("data_plot", "wall", "te")
+      node = dump[c("te"  )],
+      bvfa = dump[c("bvfa")],
+      flow = dump[c("flow")],
+      inte = dump[c("inte")])
+    names(list_dump) <- c("data_plot", "wall", "te", "bvfa", "flow", "inte")
   }
   
   #--- > Produce Plots if Required                                  ----

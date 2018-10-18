@@ -317,6 +317,61 @@ LocalMesh <- function(long_mesh, long_wall) {
   return(long_mesh)
 }
 
+LocalEnum <- function(long_mesh, long_wall) {
+  # Airfoil
+  enum_af <- unique(long_wall$enum)
+  # le and te
+  te <- long_wall %>% 
+    filter(theta == 0) %>% 
+    select(x, y) %>% 
+    unique(.)
+  le <- long_wall %>% 
+    filter(theta == pi) %>% 
+    select(x, y) %>% 
+    unique(.)
+  m <- (te$y - le$y)/(te$x - le$x)
+  # Make areas
+  enum_out <- long_mesh %>% 
+    filter(node) %>% 
+    select(x, y, enum, local, ncorner) %>% 
+    mutate(NW = (y >  m*(x - le$x) + le$y) & (x < te$x),
+           SW = (y <= m*(x - le$x) + le$y) & (x < te$x),
+           E  = (x >= te$x)) %>% 
+    group_by(enum) %>% 
+    mutate(NW = sum(NW), SW = sum(SW), E = sum(E)) %>% 
+    mutate(
+      regn = ifelse((NW >= SW) & (NW >= E), "NW", NA),
+      regn = ifelse((SW > NW) & (SW > E), "SW", regn),
+      regn = ifelse(is.na(regn), "E", regn), 
+      regn = ifelse(local == 1, "AF", regn))
+  # Plots
+  if (FALSE) {
+    plot_region <- ggplot(enum_out %>% arrange(ncorner), aes(x, y)) +
+      geom_polygon(aes(x, y), long_wall, fill = "white") +
+      geom_polygon(aes(group = enum, fill = regn, size = local), colour = "white") +
+      coord_fixed(expand = FALSE) +
+      scale_size(guide="none", range=c(0.01*0.1, 2*0.1)) +
+      scale_fill_manual(
+        name = "Region",
+        values = c("purple", "pink", "lightblue", "lightgreen"))
+    
+    ggsave(paste0("mesh-regions.png"), plot_region,
+           scale = 2, width = 10, height = 4, units = "cm", dpi = 300)
+    
+    plot_region + coord_fixed(xlim = c(-0.5, 0.7), ylim = c(-0.2, 0.2), expand = FALSE)
+    
+    ggsave(paste0("mesh-regions-closeup.png"),
+           scale = 2, width = 10, height = 4, units = "cm", dpi = 300)
+    
+  }
+  # Output
+  enum_out <- enum_out %>% 
+    select(enum, regn) %>% 
+    ungroup() %>% 
+    unique(.)
+  return(enum_out)
+}
+
 #--- Dump File Calculation                                        ----
 #--- * Dump Data                                                  ----
 # Load GradFieldDump
@@ -560,13 +615,21 @@ DumpVortOnly <- function(dump_wall, dump_kinvis) {
 }
 
 DumpFlow <- function(dump_dump) {
+  # Determine inflow and outflow
   dump_infl <- dump_dump %>% 
     filter(x == min(dump_dump$x)) %>% 
     select(u, v)
   dump_outf <- dump_dump %>% 
     filter(x == max(dump_dump$x)) %>% 
     select(u, v)
-  
+  # Create output
+  dump_flow <- data.frame(
+    influ = mean(dump_infl$u),
+    inflv = mean(dump_infl$v),
+    outfu = mean(dump_outf$u),
+    outfv = mean(dump_outf$v)
+  )
+  return(dump_flow)
 }
 
 #--- * Integral                                                   ----
@@ -608,9 +671,9 @@ LoadIntegral <- function(folder, dumpfile, vars = c("u", "v","o")) {
   return(list(total = vardf, elem = varoutp))
 }
 
-DumpIntegral <- function(dump_dump, long_enum) {
+DumpInte <- function(dump_dump, long_enum) {
   # Variables of interest
-  inte_dump <- dump$dump %>% 
+  inte_dump <- dump_dump %>% 
     select(x, y, o) %>% 
     mutate(ox = o*(x-3), oy = -o*y) %>% 
     select(-x, -y)
@@ -624,8 +687,40 @@ DumpIntegral <- function(dump_dump, long_enum) {
   # Total integration
   inte_totl <- inte_dump %>% 
     select(-enum) %>% 
+    summarise_all(.funs = "sum") %>% 
+    mutate(regn = "Total")
+  # Circulation per region
+  if (!all_equal(inte_dump$enum, long_enum$enum))
+    warning("Error in dump and enum")
+  inte_dump$regn = long_enum$regn
+  inte_regn <- inte_dump %>% 
+    select(-enum) %>% 
+    group_by(regn) %>% 
     summarise_all(.funs = "sum")
-  
+  inte_regn <- rbind(
+    inte_regn,
+    inte_totl )
+  # Return
+  return(inte_regn)
+}
+
+DumpBVFa <- function(dump_wall) {
+  # ggplot(dump_wall, aes(s)) +
+  #   geom_path(aes(y = RHSG)) +
+  #   geom_point(aes(y = LHSG))
+  # Trapeziium method for integration
+  inte_bvfa <- dump_wall %>% 
+    select(s, RHSG, LHSG) %>% 
+    mutate(
+      areaR = 1/2*(lead(RHSG) + RHSG)*(lead(s)-s),
+      areaL = 1/2*(lead(LHSG) + LHSG)*(lead(s)-s))
+  bvf <- data.frame(
+    RHS = sum(inte_bvfa$areaR, na.rm = TRUE),
+    LHS = sum(inte_bvfa$areaL, na.rm = TRUE) )
+  # integral(function(x) spline(dump_wall$s, dump_wall$RHSG, xout = x)$y, 0, max(dump_wall$s))
+  # integral(function(x) spline(dump_wall$s, dump_wall$LHSG, xout = x)$y, 0, max(dump_wall$s))
+  # Return output
+  return(bvf)
 }
 
 #--- Numerical Methods ----
