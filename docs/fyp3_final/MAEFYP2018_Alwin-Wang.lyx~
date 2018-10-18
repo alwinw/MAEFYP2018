@@ -5590,13 +5590,17 @@ Show the K matrix and revised Kutta condition
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset VSpace medskip
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula 
 \begin{gather*}
 K_{i,j}=\left(u,w\right)_{i,j}\cdot\vec{n}_{i}=\left[\left(u_{b},w_{b}\right)_{i,j-1}+\left(u_{a},w_{a}\right)_{i,j}\right]\cdot\vec{n}_{i},\quad j\ne1,N+1\\
@@ -5610,6 +5614,11 @@ L_{i,l}=\left(u,w\right)_{i,l}\cdot\vec{n}_{i}\quad\text{and}\quad M_{i}=\left(u
 \[
 C_{j}=\frac{1}{2}\left(c_{j-1}+c_{j}\right),\quad j\ne1,N+1
 \]
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
