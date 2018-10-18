@@ -11,6 +11,7 @@ for sessionfile in *.sesh; do
   cp $sessionfile  $f                     &&
   meshpr    $f > $f.msh                   &&
   meshpr -i $f > $f.mshi                  &&
+  massmat   $f > $f.mass                  &&
   enumerate $f > $f.num                   &&
   dns $f | grep "Divergence Energy:"      &&
   addvortfield -G -s $f $f.fld > $f.Gfld  &&

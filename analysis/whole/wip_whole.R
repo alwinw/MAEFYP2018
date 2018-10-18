@@ -1,5 +1,5 @@
 #============================#
-# Analysis of Kutta Condition
+# Analysis of Whole Time Domain
 # Alwin Wang
 #----------------------------#
 
@@ -24,8 +24,8 @@ if (FALSE) {
   saveplot   = "images/"
   airfoil    = "NACA0012r"
   folderpath = "results/"
-  seshpath   = "NACA0012r_kutta"
-  dumppath   = "NACA0012r_kutta-249.dump"
+  seshpath   = "NACA0012r"
+  dumppath   = "NACA0012r-249.dump"
   #--- > Required input dataframes                                  ----
   data_airfoil <- data.frame(
     airfoil  = airfoil,
@@ -91,8 +91,8 @@ if (FALSE) {
   cl <- makeCluster(detectCores() - 1)
   # clusterExport(cl, c("outp_mesh", "srcpath"))
   outp_dump <- pblapply(li_dump, BatchLoadDump, outp_mesh, 
-                        plot = c("images/", "airfoil", "TEstream"), 
-                        outp = "te", srcpath,
+                        plot = c("none"), 
+                        outp = "wall", srcpath,
                         cl = cl)
   stopCluster(cl)
 }
