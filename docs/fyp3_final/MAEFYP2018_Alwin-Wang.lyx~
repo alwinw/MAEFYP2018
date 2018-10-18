@@ -119,8 +119,8 @@ subequations
 \bottommargin 1in
 \secnumdepth 3
 \tocdepth 3
-\paragraph_separation skip
-\defskip smallskip
+\paragraph_separation indent
+\paragraph_indentation default
 \is_math_indent 0
 \math_numbering_side default
 \quotes_style english
@@ -595,7 +595,7 @@ literal "true"
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
 prefix "force1"
-symbol "$F_\\text{tot}$"
+symbol "$\\vec{F}_\\text{tot}$"
 description "Total force (N)"
 literal "true"
 
@@ -605,7 +605,7 @@ literal "true"
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
 prefix "force2"
-symbol "$F_c$"
+symbol "$\\vec{F}_c$"
 description "Circulatory force"
 literal "true"
 
@@ -615,8 +615,61 @@ literal "true"
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
 prefix "force3"
-symbol "$F_\\text{am}$"
+symbol "$\\vec{F}_\\text{am}$"
 description "Added mass force (N)"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "imp1"
+symbol "$\\vec{P}$"
+description "Vortical impulse"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "imp1"
+symbol "$\\vec{P}_v$"
+description "Shed-vorticity impulse"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "imp1"
+symbol "$\\vec{P}_i$"
+description "Image-vorticity impulse"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "imp1"
+symbol "$\\vec{P}_\\Phi$"
+description "Potential impulse"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "imp1"
+symbol "$\\vec{P}_b$"
+description "Body-volume impulse"
 literal "true"
 
 \end_inset
@@ -827,6 +880,18 @@ Research Objectives
 
 \end_layout
 
+\begin_layout Subsubsection
+Background and Motivation
+\end_layout
+
+\begin_layout Subsubsection
+Need for Research: 1/2 page
+\end_layout
+
+\begin_layout Subsubsection
+Aims
+\end_layout
+
 \begin_layout Standard
 \begin_inset Note Note
 status open
@@ -952,6 +1017,18 @@ General idea that starting and stopping vortices are shed
 Example figures
 \end_layout
 
+\begin_layout Plain Layout
+Vorticity During the Starting and Stopping Phases
+\end_layout
+
+\begin_layout Plain Layout
+Circulation and Stoke's Theorem
+\end_layout
+
+\begin_layout Plain Layout
+Kelvin's Theorem
+\end_layout
+
 \end_inset
 
 
@@ -972,7 +1049,7 @@ literal "false"
 
 .
  The original recordings have been analysed using modern particle image
- velocimetry (PIV) by Willert and Kompenhans 
+ velocimetry (PIV) by Wilbert and Kompenhans 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Willert2010"
@@ -984,11 +1061,211 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
+\begin_inset Float figure
+wide false
+sideways false
 status open
 
 \begin_layout Plain Layout
-Vorticity During the Starting and Stopping Phases
+\noindent
+\align center
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename images/Intro_Prandtl-Starting.png
+	lyxscale 30
+	height 5cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Snapshot of the starting and stopping vortices.
+ 
+\emph on
+Source: Prandtl, Tietjens and Müller 1934 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Prandtl1934"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Prandtl"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename images/Intro_Wilbert-PIV.png
+	lyxscale 30
+	height 5cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+PIV on by Wilbert and Kompenhans.
+ 
+\emph on
+Source: 
+\emph default
+by 
+\emph on
+Willert and Kompenhans 2010 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Willert2010"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Wilbert"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Observation of starting and stopping vortex pair
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename images/Intro_Kelvin-Theorem.png
+	lyxscale 30
+	width 14cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Creation of the starting vortex demonstrating Kelvin's theorem
+\end_layout
+
+\end_inset
+
+Creation of the starting vortex demonstrating Kelvin's theorem for circulation.
+ 
+\emph on
+Source: Anderson 2010, pg 336 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Anderson2010"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Kelvin"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1053,7 +1330,6 @@ noprefix "false"
 \end_inset
 
 b.
- 
 \end_layout
 
 \begin_layout Standard
@@ -1121,83 +1397,6 @@ From Kelvin's theorem, the circulation
 \end_inset
 
 
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename Images/Intro_Kelvin-Theorem.png
-	lyxscale 30
-	width 14cm
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-Creation of the starting vortex demonstrating Kelvin's theorem
-\end_layout
-
-\end_inset
-
-Creation of the starting vortex demonstrating Kelvin's theorem for circulation.
- 
-\emph on
-Source: Anderson 2010, pg 336 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Anderson2010"
-literal "false"
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Kelvin"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Circulation and Stoke's Theorem
-\end_layout
-
-\begin_layout Plain Layout
-Kelvin's Theorem
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -1252,6 +1451,9 @@ noprefix "false"
  mechanisms and exploring the physical phenomena behind vortices generated
  during the starting and stopping phases.
  
+\end_layout
+
+\begin_layout Standard
 \begin_inset Flex Subequations
 status open
 
@@ -1325,6 +1527,36 @@ literal "false"
  for vortex shedding of oscillating cylinders and it was noted that the
  pressure-gradient generation mechanism could override the surface-acceleration
  generation mechanism and vice versa.
+\begin_inset Formula 
+\begin{align}
+-\underset{\text{Vorticity Flux}}{\underbrace{\nu\left(\frac{\partial\vec{\omega}}{\partial z}\right)_{z=0}}} & =-\underset{\text{"Pressure Gradient"}}{\underbrace{\frac{1}{\rho}\left[\left(\vec{n}\times\nabla\right)\vec{p}\right]_{z=0}}}-\underset{\text{"Acceleration"}}{\underbrace{\vec{n}\times\frac{\text{d}V\left(t\right)}{\text{d}t}}}\label{eq:Morton Full VortGen}
+\end{align}
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Maybe include a diagram from Morton
+\end_layout
+
+\end_inset
+
+where 
+\begin_inset Formula $V\left(t\right)$
+\end_inset
+
+ is the velocity of the wall moving in its own plane and 
+\begin_inset Formula $\vec{n}$
+\end_inset
+
+ is the normal vector to the surface.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -1334,7 +1566,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename Images/Intro_Morton-Coord.png
+	filename images/Intro_Morton-Coord.png
 	lyxscale 30
 	width 4cm
 
@@ -1385,33 +1617,6 @@ name "fig:Morton Coord"
 \end_inset
 
 
-\begin_inset Formula 
-\begin{align}
--\underset{\text{Vorticity Flux}}{\underbrace{\nu\left(\frac{\partial\vec{\omega}}{\partial z}\right)_{z=0}}} & =-\underset{\text{"Pressure Gradient"}}{\underbrace{\frac{1}{\rho}\left[\left(\vec{n}\times\nabla\right)\vec{p}\right]_{z=0}}}-\underset{\text{"Acceleration"}}{\underbrace{\vec{n}\times\frac{\text{d}V\left(t\right)}{\text{d}t}}}\label{eq:Morton Full VortGen}
-\end{align}
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Maybe include a diagram from Morton
-\end_layout
-
-\end_inset
-
-where 
-\begin_inset Formula $V\left(t\right)$
-\end_inset
-
- is the velocity of the wall moving in its own plane, and 
-\begin_inset Formula $\vec{n}$
-\end_inset
-
- is the normal vector to the surface.
- 
 \end_layout
 
 \begin_layout Standard
@@ -1750,8 +1955,8 @@ Need to explain saddles and nodes for 2D
 
 \begin_layout Standard
 When the airfoil first gains a non-zero relative velocity, the fluid pattern
- is very similar to the inviscid potential flow solution where particles
- very close to the lower surface turn rapidly around the trailing edge 
+ is very similar to the inviscid potential flow solution.
+ Anderson 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Anderson2010"
@@ -1759,33 +1964,188 @@ literal "false"
 
 \end_inset
 
-.
+ explains that particles very close to the lower surface turn rapidly around
+ the trailing edge.
  The streamline curvature is finite and moves upstream over the upper surface
- leading (opposing the freestream flow).
- 
+ leading (opposing the freestream flow) to a separation point on the upper
+ surface of the trailing edge.
 \end_layout
 
 \begin_layout Standard
-Shortly after, a thin sublayer on the trailing upper surface with vorticity
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename images/Intro_Zhu-Kutta.png
+	lyxscale 40
+	width 12.5cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Establishment of the Kutta condition
+\end_layout
+
+\end_inset
+
+Establishment of the Kutta condition highlighting key stages.
+ Pathlines (black), streaklines (white) and streamlines (gray) shown.
+ 
+\emph on
+Source: Zhu et al.
+ 2015, pg 10 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhu2015"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Zhu Kutta"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Using a vorticity-stream function 
+\begin_inset Formula $\left(\omega-\psi\right)$
+\end_inset
+
+ solver, Zhu et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhu2015"
+literal "false"
+
+\end_inset
+
+ investigated the causal mechanisms for the Kutta condition.
+ They observed a thin sublayer on the trailing upper surface with vorticity
  
 \begin_inset Formula $\omega<0$
 \end_inset
 
- appears underneath the upper-surface boundary layer which as vorticity
+ appears underneath the upper-surface boundary layer which has vorticity
  
 \begin_inset Formula $\omega>0$
 \end_inset
 
-.
- This forms an attached bubble with two new semi-saddles and a node.
+ (figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Zhu Kutta"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+b).
+ This forms an attached bubble with two new semi-saddles (separation points)
+ and a node.
  Fluid particles from the lower surface continue to turn around the trailing
- edge, but have a tendency to lift up form the surface indicating fluid-particle
+ edge, but have a tendency to lift up from the surface indicating fluid-particle
  separation (generic unsteady separation).
 \end_layout
 
 \begin_layout Standard
-to a rear semi-saddle point (cannot be identified as a separation point
- in unsteady flow).
+A critical event was identified, (figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Zhu Kutta"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+d) where the two saddle point meet to form a single separation point which
+ rises up into a very narrow irrotational zone.
+ Below the saddle point, the two shear layers of 
+\begin_inset Formula $\omega<0$
+\end_inset
+
+ merge into a single layer and the lower boundary layer with strong 
+\begin_inset Formula $\omega>0$
+\end_inset
+
+ is now being shed from the trailing edge into the wake as a free shear
+ layer.
+ Particles that were moving upstream (black) are forced away by the large
+ BVF causing the 
+\begin_inset Quotes eld
+\end_inset
+
+kink
+\begin_inset Quotes erd
+\end_inset
+
+ in the pathlines seen in figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Zhu Kutta"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+e and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Zhu Kutta"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+f.
+\end_layout
+
+\begin_layout Standard
+Bubbles of opposite vorticity were also observed by Xu 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Xu2016"
+literal "false"
+
+\end_inset
+
+ in a numerical study of impulsively started viscous flow past wedges.
+ Kinks in the pathlines were also observed due to the regions of vorticity
+ with alternating sign.
 \end_layout
 
 \begin_layout Standard
@@ -1916,6 +2276,10 @@ m'=\rho\intop_{V}\frac{u^{2}}{V\left(t\right)^{2}}\,\text{d}V,\quad\vec{F}_{\tex
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
 Limacher, Morton and Wood 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -2083,6 +2447,10 @@ where
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
 When the no slip condition holds, Limacher, Morton and Wood 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -2281,10 +2649,6 @@ literal "false"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
 where the terminals have been adjusted to match the definition provided
  in Kármán and Sears 
 \begin_inset CommandInset citation
@@ -2412,9 +2776,19 @@ literal "false"
 
 \end_inset
 
+ shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Wilbert"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 if I add an image, reference it here
@@ -2673,7 +3047,7 @@ Some reference by Fox et al in the Agro paper
 \end_inset
 
  The boundary conditions at prescribed velocity boundaries are set as 
-\begin_inset Formula $\boldsymbol{u}=-V\left(t\right)$
+\begin_inset Formula $u=-V\left(t\right)$
 \end_inset
 
  where 
@@ -2784,6 +3158,30 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+a\left(t\right)=- & \begin{cases}
+0, & 0\le t\le0.05\\
+\frac{5\pi}{2}\sin\left(5\pi\left(t-0.05\right)\right), & 0.05<t\le0.25\\
+0, & 0.25<t\le0.85\\
+-\frac{5\pi}{2}\sin\left(5\pi\left(t-0.05\right)\right), & 0.85<t\le1.05\\
+0, & t>1.05
+\end{cases}\\
+u= & \begin{cases}
+0, & 0\le t\le0.05\\
+\frac{1}{2}-\frac{1}{2}\cos\left(5\pi\left(t-0.05\right)\right), & 0.05<t\le0.25\\
+1, & 0.25<t\le0.85\\
+\frac{1}{2}+\frac{1}{2}\cos\left(5\pi\left(t-0.05\right)\right), & 0.85<t\le1.05\\
+0, & t>1.05
+\end{cases}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -2793,9 +3191,9 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename BC_airfoil_accel.png
+	filename images/Methd_BC-airfoil-accel.png
 	lyxscale 30
-	width 11cm
+	width 14cm
 
 \end_inset
 
@@ -2806,9 +3204,9 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename BC_inflow_vel.png
+	filename images/Methd_BC-inflow-vel.png
 	lyxscale 30
-	width 11cm
+	width 14cm
 
 \end_inset
 
@@ -2819,9 +3217,9 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename BC_airfoil_disp.png
+	filename images/Methd_BC-airfoil-disp.png
 	lyxscale 30
-	width 11cm
+	width 14cm
 
 \end_inset
 
@@ -2872,6 +3270,13 @@ name "fig:BC Airfoil"
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
 Post Processing for Vortex Generation
 \end_layout
@@ -2904,9 +3309,9 @@ For motion of a two-dimensional plane boundary moving in its own plane with
 \end_inset
 
 , the diffusive flux density (flow per unit length per unit time) of positive
- vorticity outwards from the wall is given as:
+ vorticity outwards from the wall is given as
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 https://en.wikipedia.org/wiki/Vorticity_equation
@@ -2915,13 +3320,10 @@ https://en.wikipedia.org/wiki/Vorticity_equation
 \end_inset
 
 
-\begin_inset Formula 
-\begin{equation}
--\sigma\equiv-\nu\frac{\partial\vec{\omega}}{\partial z}\Big|_{z=0}=-\vec{n}\times\left(\nabla\vec{P}+\vec{a}\left(t\right)\right)\label{eq:Morton VortGen}
-\end{equation}
+\begin_inset Note Note
+status collapsed
 
-\end_inset
-
+\begin_layout Plain Layout
 where 
 \begin_inset Formula $\vec{\omega}$
 \end_inset
@@ -2963,10 +3365,23 @@ literal "false"
 .
 \end_layout
 
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+-\sigma\equiv-\nu\frac{\partial\vec{\omega}}{\partial z}\Big|_{z=0}=-\vec{n}\times\left(\nabla\vec{P}+\vec{a}\left(t\right)\right)\label{eq:Morton VortGen}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
-It is assumed that a local section of airfoil can be modelled as an infinite
- plane with negligible curvature and the acceleration of the plane is given
- by 
+It is assumed that an infinitesimally small local section of airfoil can
+ be modelled as an infinite plane with negligible curvature.
+ The acceleration of the plane is given by 
 \begin_inset Formula $\vec{t}\cdot\vec{a}$
 \end_inset
 
@@ -3007,9 +3422,6 @@ noprefix "false"
 \end_inset
 
  for a particular point on the airfoil.
-\end_layout
-
-\begin_layout Standard
 \begin_inset Flex Subequations
 status open
 
@@ -3017,7 +3429,7 @@ status open
 \begin_inset Formula 
 \begin{align}
 -\nu\vec{n}\cdot\nabla\vec{\omega} & =-\vec{n}\times\nabla\vec{P}-\vec{t}\cdot\vec{a}\left(t\right)\label{eq:VortGen}\\
--v\frac{\partial\omega}{\partial z} & =-\frac{1}{\rho}\frac{\partial p}{\partial s}-\frac{\text{d}V\left(t\right)}{\text{d}t}\label{eq:VortGenLegend}
+-v\frac{\partial\omega}{\partial z} & =-\frac{1}{\rho}\frac{\partial p}{\partial s}-\frac{\text{d}V\left(t\right)}{\text{d}t}\cos\left(\theta\right)\label{eq:VortGenLegend}
 \end{align}
 
 \end_inset
@@ -3072,9 +3484,9 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename Coordinate-Systems.png
+	filename images/Methd_Coordinate-Systems.png
 	lyxscale 30
-	width 11cm
+	width 10cm
 
 \end_inset
 
@@ -3121,6 +3533,93 @@ name "fig:Coordinate System on Airfoil"
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename images/Methd_Interpolation-Comp.png
+	lyxscale 30
+	width 12cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Comparison of methods to determine partial derivatives
+\end_layout
+
+\end_inset
+
+Comparison of methods to determine partial derivatives.
+ RHS of equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:VortGenLegend"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shown in pink, element-wise finite difference shown by green dots and finite
+ difference on a mapped plane shown by blue triangles.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:PD Methods"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Initially, two different methods were attempted.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+shown in figure, to finish, etc.
+ Used semtex in the end
 \end_layout
 
 \end_inset
@@ -3587,7 +4086,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename Images/Intro_Morton-Coord.png
+	filename images/Intro_Morton-Coord.png
 	lyxscale 30
 	width 5cm
 
@@ -5437,7 +5936,8 @@ It is immediately clear that
 \end_layout
 
 \begin_layout Enumerate
-The movement of the vortices can be found as <> 
+The movement of the vortices can be found as by considering the induced
+ velocity at the location of the  
 \begin_inset Note Note
 status open
 
