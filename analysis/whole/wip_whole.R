@@ -96,3 +96,119 @@ if (FALSE) {
                         cl = cl)
   stopCluster(cl)
 }
+
+save(outp_dump, file="outp_dump.RData")
+
+#--- > Batch Calc Output                                        ----
+outp <- list()
+# Wall
+outp$wall <- lapply(outp_dump, function(dump) cbind(
+  dump$wall, 
+  select(dump$data_plot, airfoil, seshname, tokenvalue, ID, time, kinvis, a) ))
+outp$wall <- bind_rows(outp$wall)
+# BVFa
+outp$BVFa <- lapply(outp_dump, function(dump) cbind(
+  dump$bvfa,
+  select(dump$data_plot, airfoil, seshname, time, kinvis, a) ))
+outp$BVFa <- bind_rows(outp$BVFa)
+# Circulation
+outp$circ <- lapply(outp_dump, function(dump) cbind(
+  rbind(select(dump$inte, regn, o),
+        data.frame(regn = "W", o = sum(dump$inte[c(1,3,4),2]))),
+  select(dump$data_plot, airfoil, seshname, time, kinvis, a) ))
+outp$circ <- bind_rows(outp$circ)
+# Vortex Impulse
+outp$impl <- lapply(outp_dump, function(dump) cbind(
+  select(dump$inte, regn, ox, oy),
+  select(dump$data_plot, airfoil, seshname, time, kinvis, a) ))
+outp$impl <- bind_rows(outp$impl)
+outp$impl <- outp$impl %>% 
+  arrange(time)
+# Vortex Force
+outp$forc <- outp$impl %>% 
+  filter(regn == "Total") %>% 
+  mutate(doxdt = (lead(ox)-ox)/(lead(time)-time),
+         doydt = (lead(oy)-oy)/(lead(time)-time) )
+# Lift and Drag Force
+outp$LD <- read.table(
+  paste0(df_batch$seshpath, ".flx"), skip = 3 )
+colnames(outp$LD) <- c(
+  "step", "time", 
+  "Fpre.x", "Fvis.x", "Ftot.x",
+  "Fpre.y", "Fvis.y", "Ftot.y",
+  "Fpre.z", "Fvis.z", "Ftot.z" )
+
+#--- > Batch Plot Output                                        ----
+# BFVa
+plot_BVFa <- ggplot(outp$BVFa, aes(time)) +
+  annotate("rect", xmin=0.05, xmax=0.25, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  annotate("rect", xmin=0.85, xmax=1.05, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  geom_line(aes(y = RHS, colour = "RHS")) +
+  geom_line(aes(y = LHS, colour = "LHS")) +
+  xlab("Time (s)") + ylab("Integral of BVF on Airfoil") +
+  scale_x_continuous(breaks = c(0, seq(0.05, 2.5, 0.2), 2.5),
+                     minor_breaks = c(0, seq(0.05, 2.5, 0.1), 2.5),
+                     labels = function(x) ifelse(x==0 | x==2.5, "", sprintf("%.2f", x)),
+                     limits = c(0, 2.5))
+ggsave(paste0("BVFa.png"), plot_BVFa,
+       scale = 2, width = 10, height = 4, units = "cm", dpi = 300)
+# Circulation
+plot_circ <- ggplot(outp$circ %>% filter(regn != "W"), 
+       aes(time, o, group = regn, colour = regn, linetype = regn)) +
+  annotate("rect", xmin=0.05, xmax=0.25, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  annotate("rect", xmin=0.85, xmax=1.05, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  geom_line() +
+  xlab("Time (s)") + ylab("Circulation") +
+  scale_x_continuous(breaks = c(0, seq(0.05, 2.5, 0.2), 2.5),
+                     minor_breaks = c(0, seq(0.05, 2.5, 0.1), 2.5),
+                     labels = function(x) ifelse(x==0 | x==2.5, "", sprintf("%.2f", x)),
+                     limits = c(0, 2.5))
+ggsave(paste0("circ.png"), plot_circ,
+       scale = 2, width = 10, height = 6, units = "cm", dpi = 300)
+# Vortex Impulse
+plot_impl <- ggplot(outp$impl %>% filter(regn == "Total"), 
+       aes(time, group = regn)) +
+  annotate("rect", xmin=0.05, xmax=0.25, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  annotate("rect", xmin=0.85, xmax=1.05, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  geom_line(aes(y = ox, colour = "ox")) +
+  geom_line(aes(y = oy, colour = "oy")) +
+  xlab("Time (s)") + ylab("Vortex Impulse") +
+  scale_x_continuous(breaks = c(0, seq(0.05, 2.5, 0.2), 2.5),
+                     minor_breaks = c(0, seq(0.05, 2.5, 0.1), 2.5),
+                     labels = function(x) ifelse(x==0 | x==2.5, "", sprintf("%.2f", x)),
+                     limits = c(0, 2.5))
+ggsave(paste0("impl.png"), plot_impl,
+       scale = 2, width = 10, height = 6, units = "cm", dpi = 300)
+# Vortex Force
+plot_forc <- ggplot(outp$forc, 
+       aes(time, group = regn)) +
+  annotate("rect", xmin=0.05, xmax=0.25, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  annotate("rect", xmin=0.85, xmax=1.05, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  geom_line(aes(y = doxdt, colour = "doxdt")) +
+  geom_line(aes(y = doydt, colour = "doydt")) +
+  xlab("Time (s)") + ylab("Vortex Impulse") +
+  scale_x_continuous(breaks = c(0, seq(0.05, 2.5, 0.2), 2.5),
+                     minor_breaks = c(0, seq(0.05, 2.5, 0.1), 2.5),
+                     labels = function(x) ifelse(x==0 | x==2.5, "", sprintf("%.2f", x)),
+                     limits = c(0, 2.5))
+ggsave(paste0("forc.png"), plot_forc,
+       scale = 2, width = 10, height = 6, units = "cm", dpi = 300)
+# Lift and Drag
+plot_LD <- ggplot(outp$LD, aes(time)) +
+  annotate("rect", xmin=0.05, xmax=0.25, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  annotate("rect", xmin=0.85, xmax=1.05, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  geom_line(aes(y = Ftot.x, colour = "Ftot.x")) +
+  geom_line(aes(y = Ftot.y, colour = "Ftot.y"))
+ggsave(paste0("LD.png"), plot_LD,
+       scale = 2, width = 10, height = 6, units = "cm", dpi = 300)
+  
