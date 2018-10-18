@@ -23,4 +23,16 @@
  - Example
  
     addvortfield -G -s kovas1 kovas1.fld > kovas.vfld
-    
+
+# integral.cpp | 2018.10.14
+ - Integrate once per element
+ 
+# mesharea.cpp | 2018.10.15
+ - Need area associated with each point
+
+# massmap.cpp  | 2018.10.17
+ - Added print out of enum and local node num
+
+# preplot      | 2018.10.18
+ - Replaced semtex preplot with Tecplot preplot (from Tecplot bin)
+

@@ -88,13 +88,14 @@ AirfoilSpline <- function(long_wall,
     csy <- cubicspline(data$s, data$y)
     dcsx = CubicSplineCalc(csx, -1)                               # Derivative of cubic splines
     dcsy = CubicSplineCalc(csy, -1)
-    cat("Determining spline distance\n")
+    # cat("Determining spline distance\n")
     s <- cbind(data$s, lead(data$s))[-nrow(data),]                # Interval (s1, s2)
-    s <- pbapply(s, 1, CubicSplineArcLength, dcsx, dcsy)          # Arc length of interval
+    s <- apply(s, 1, CubicSplineArcLength, dcsx, dcsy)
+    # s <- pbapply(s, 1, CubicSplineArcLength, dcsx, dcsy)          # Arc length of interval
     s <- c(0, cumsum(s))                                          # Cumulative arc lenth
     error  = sum(data$s - s)                                      # Error
     data$s = s                                                    # Update loop
-    print(error)
+    # print(error)
   }
   csx <- cubicspline(data$s, data$x)                              # Cublic spline
   csy <- cubicspline(data$s, data$y)
@@ -148,7 +149,8 @@ LoadKeyword <- function(keyword,
     file = file,
     skip = num[1],
     nrow = num[2]-num[1]-1,
-    stringsAsFactors = FALSE)
+    stringsAsFactors = FALSE,
+    comment.char = "#")
   colnames(table) <- keyword[2:length(keyword)]                   # Set talble colname names
   table$junk <- NULL                                              # Remove any junk defined in "keyword"
   return(table)
@@ -219,6 +221,25 @@ LongMesh <- function(long_mesh, long_sesh) {
   long_mesh$z   <- NULL                                            # Not useful column
   long_mesh$node = !is.na(long_mesh$nnum)                          # Handy variable
   # out: long_mesh = data.frame(x, y, enum, jnum, ncorner, nnum, z, elabx, elaby, area, node) 
+  return(long_mesh)
+}
+#--- * Mass Data                                                  ----
+# Load mass matrix
+LoadMass <- function(seshpath,
+                     extension = ".mass") {
+  file           <- paste0(seshpath, extension)
+  mass           <- read.table(file, skip = 0)
+  colnames(mass) <- c("mass", "enum", "jnum")
+  # out: mass = data.frame(x, y, enum, jnum)
+  return(mass)
+}
+# Add mass to mesh
+LongMass <- function(long_mesh, long_mass) {
+  if (!all_equal(select(long_mesh,enum,jnum), 
+                select(long_mass,enum,jnum)))
+    warning("Unequal enum and jnum")
+  long_mesh$mass <- long_mass$mass
+  # out: mesh = data.frame(long_mesh, mass)
   return(long_mesh)
 }
 #--- * Wall Data                                                  ----
@@ -538,6 +559,75 @@ DumpVortOnly <- function(dump_wall, dump_kinvis) {
            nserrG =  LHSG - RHSG)
 }
 
+DumpFlow <- function(dump_dump) {
+  dump_infl <- dump_dump %>% 
+    filter(x == min(dump_dump$x)) %>% 
+    select(u, v)
+  dump_outf <- dump_dump %>% 
+    filter(x == max(dump_dump$x)) %>% 
+    select(u, v)
+  
+}
+
+#--- * Integral                                                   ----
+LoadIntegral <- function(folder, dumpfile, vars = c("u", "v","o")) {
+  # Ready the file into filelines
+  dumppath  <-  paste0(folder, strsplit(dumpfile, ".dump")[[1]], ".integral")
+  filelines <- readLines(dumppath)
+  # Manipulate to get a useful data.frame
+  varlines <- c(1, grep("centroid", filelines))
+  vartable <- data.frame(
+    start = varlines[-length(varlines)],
+    end   = varlines[-1] )
+  varlines <- data.frame(char = filelines[varlines[-1]]) 
+  vardf <- varlines%>% 
+    separate(char, c("var", "b", "c"), ":") %>% 
+    separate(b, c("intvar", "junk"), ",")   %>% 
+    separate(c, c("centx", "centy"), ",")
+  vardf$intvar <- as.numeric(vardf$intvar)
+  vardf$centx  <- as.numeric(vardf$centx)
+  vardf$centy  <- as.numeric(vardf$centy)
+  vardf <- cbind(vardf, vartable)
+  rm(varlines, vartable)
+  # Read each variable of interest (vars vector)
+  vardf <- filter(vardf, var %in% vars)
+  varli <- split(vardf, vardf$var)
+  varoutp <- lapply(varli, function(varline) {
+    values = read.table(file = dumppath, 
+               skip = varline$start, nrows = varline$end - varline$start - 1)
+    values = unique(values)
+    # colnames(values) <- c("enum", paste0("int.", varline$var))
+    values = values[,2]
+    return(values)
+  })
+  varoutp <- bind_cols(varoutp) %>% 
+    mutate(enum = row_number())
+  vardf <- select(vardf, -start, -end, -junk)
+  
+  # Return output
+  return(list(total = vardf, elem = varoutp))
+}
+
+DumpIntegral <- function(dump_dump, long_enum) {
+  # Variables of interest
+  inte_dump <- dump$dump %>% 
+    select(x, y, o) %>% 
+    mutate(ox = o*(x-3), oy = -o*y) %>% 
+    select(-x, -y)
+  # Multiply by mass
+  inte_dump <- inte_dump*dump_dump$mass
+  inte_dump$enum = dump_dump$enum
+  # Integrate per element (cannot do per point since not really "dA")
+  inte_dump <- inte_dump %>% 
+    group_by(enum) %>% 
+    summarise_all(.funs = "sum")
+  # Total integration
+  inte_totl <- inte_dump %>% 
+    select(-enum) %>% 
+    summarise_all(.funs = "sum")
+  
+}
+
 #--- Numerical Methods ----
 # Heavyside function (step function)
 heav <- function(t) ifelse(t>0,1,0)
@@ -745,14 +835,30 @@ Interpolate <- function(mesh, input,
 }
 
 #--- Batch                                                        ----
-ListSesh <- function(batchfolder) {
+ListSesh <- function(batchfolder, pathsplit = c("airfoil", "seshname")) {
   # List of files in folder (should be made more robust later)
   batchlist <- list.files(batchfolder, pattern = ".sesh", recursive = TRUE)
   # Convert character to dataframe
   batchlist <- data.frame(path = unlist(strsplit(batchlist, "*.sesh"))) %>%
-    separate(path, c("airfoil", "seshname"), sep = "/") %>%
-    mutate(folder = paste0(batchfolder, "/", airfoil, "/")) %>%
-    mutate(seshpath = paste0(folder, seshname))
+    separate(path, pathsplit, sep = "/")
+  if (length(pathsplit) != 1) {
+    # Split the folder
+    folder <- batchlist[colnames(batchlist)[colnames(batchlist) != "seshname"]] %>% 
+      unite(folder, sep = "/")
+    batchlist$folder <- folder$folder
+    # Create output
+    batchlist <- batchlist %>% 
+      mutate(folder = paste0(batchfolder, "/", folder, "/")) %>%
+      mutate(seshpath = paste0(folder, seshname)) %>% 
+      select(airfoil, seshname, folder, seshpath)
+  } else {
+    # Create output
+    batchlist <- batchlist %>% 
+      mutate(folder = paste0(batchfolder, "/")) %>%
+      mutate(seshname = airfoil) %>% 
+      mutate(seshpath = paste0(folder, seshname)) %>% 
+      select(airfoil, seshname, folder, seshpath)
+  }
   # Return list of session files
   return(batchlist)
 }

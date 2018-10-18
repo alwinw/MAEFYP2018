@@ -60,7 +60,7 @@ int main (int    argc,
   char               *session = 0, *dump = 0;
   istream            *fldfile;
   int_t              NP, NZ,  NEL;
-  int_t              np, nel, ntot, i;
+  int_t              np, nel, ntot, i, elem;
   real_t             Lz, Area = 0.0, integral;
   Vector             centroid;
   const real_t       *z;
@@ -93,7 +93,10 @@ int main (int    argc,
   Lz  = (NZ > 1) ? Femlib::value ("TWOPI / BETA") : 1.;
   space = (Femlib::ivalue ("CYLINDRICAL") && cylind) ? 
     Geometry::Cylindrical : Geometry::Cartesian;
+  
 
+  // -- Integrate once per time step across all elements
+  
   Geometry::set (NP, NZ, NEL, space);
   Esys.resize   (NEL);
 
@@ -101,17 +104,18 @@ int main (int    argc,
     Esys[i] = new Element (i, NP, M);
     Area   += Esys[i] -> area();
   }
-  cout << Area << endl;
+  // cout << Area << endl;
   
   // -- Load field file, Gauss--Lobatto integrate all variables within it.
 
   while (getDump (*fldfile, u, Esys, NP, NZ, NEL)) {
+    cout << "timestep" << endl;
     for (i = 0; i < u.size(); i++) {
       u[i] -> transform (FORWARD); // -- Go back to Fourier space.
       centroid = u[i] -> centroid (0);
       integral = u[i] -> integral (0);
-      cout << u[i] -> name() << ": " << Lz * integral 
-	   << " , centroid: " << centroid.x << " , " << centroid.y << endl;
+      cout << u[i] -> name() << ": " << setw(16) << Lz * integral 
+     << " , centroid: " << setw(16) << centroid.x << " , " << setw(16) << centroid.y << endl;
     }
   }
 
@@ -185,7 +189,7 @@ static bool getDump (istream&           file,
   file >> npnew >> nznew >> nznew >> nelnew;
   file.getline (buf, StrMax);
   
-  if (np != npnew || nz != nznew || nel != nelnew)
+  if (np != npnew || nz != nznew) // taken out due to verbose || nel != nelnew)
     message (prog, "size of dump mismatch with session file", ERROR);
 
   file.getline (buf, StrMax);

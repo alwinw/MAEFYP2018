@@ -20,14 +20,18 @@
   + `semtex`              : Semtex development work
   + `unit-tests`          : Various test cases to test code
 * `wip`                 : Work in progress for objectives
-  + `convergence`         : Convergence analysis
+  + `convg`               : Convergence analysis
   + `docs`                : AFMC, FYP and lit review
   + `kutta`               : Establishment of Kutta condition
+  + `panel`               : Panel method analysis
   + `vortgen`             : Detailed analysis of the vorticity generation
 
 **Folder Structure**
 * `analysis`            : Analyses conducted
-  + `converg`             : Convergence analysis (RPoj, sesh, bash)
+  + `convg`               : Convergence analysis (RProj, sesh, bash)
+    - `results`             : Semtex output of session file
+    - `output`              : Output of R scripts (RData, images)
+  + `panel`               : Panel method analysis (RProj, sesh, bash)
     - `results`             : Semtex output of session file
     - `output`              : Output of R scripts (RData, images)
   + `kutta`               : Kutta condition analysis (RPoj, sesh, bash)
@@ -54,5 +58,6 @@
   + `sp5`                 : 0 Original sp5 files
   + `naca0012`            : 1 Joined bndry_prf 
   + `remesh`              : 2 LE and TE clustered mesh
+  + `panel`               : Testing of panel method
   
    

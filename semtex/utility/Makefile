@@ -13,7 +13,7 @@ all: essential plain preplot nosrc meshpr calc addfield sem2nek \
      convert project interp probe rectmesh transform wallmesh   \
      phase lowpass eneq integral traction stressdiv mapmesh     \
      wavestress nonlin \
-     wallgrad addvortfield
+     wallgrad addvortfield mesharea
 
 distclean:
 	make clean
@@ -21,7 +21,7 @@ distclean:
         integral interp lowpass meshpr moden noiz phase preplot probe   \
         probeline probeplane project rectmesh repeatxy repeatz rstress  \
         sem2nek sem2tec slit stressdiv transform wallmesh xplane modep \
-        wallgrad addvortfield \\
+        wallgrad addvortfield mesharea \\
 	nonlin
 
 # ----------------------------------------------------------------------------
@@ -103,6 +103,18 @@ $(WAGOBJ): $(SEMHDR)
 
 wallgrad: $(WAGOBJ)
 	$(LD) -o $@ $(WAGOBJ) $(LDFLAGS)
+
+# ----------------------------------------------------------------------------
+# Build mesharea, 2D mesh area output utility for sideGeom.
+#
+MSAOBJ = mesharea.o bsys.o bcmgr.o condition.o edge.o	\
+	 family.o feml.o mesh.o element.o svv.o geometry.o integration.o
+
+$(MSAOBJ): $(SEMHDR)
+
+mesharea: $(MSAOBJ)
+	$(LD) -o $@ $(MSAOBJ) $(LDFLAGS)
+
 
 # ----------------------------------------------------------------------------
 # Build traction, utility to compute normal & tangential tractions on walls

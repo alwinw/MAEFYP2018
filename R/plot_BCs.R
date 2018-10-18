@@ -20,6 +20,12 @@ D_T       = 0.0005
 N_STEP    = 4000
 
 MOD_ALPHA_X = paste0(
+  "-((5*PI/2*sin(5*PI*(t-0.00)))*heav(t-0.00)+(-5*PI/2*sin(5*PI*(t-0.00)))*heav(t-0.20)+(-5*PI/2*sin(5*PI*(t-0.00)))*heav(t-0.80)+(5*PI/2*sin(5*PI*(t-0.00)))*heav(t-1.00))")
+
+u = paste0(
+  "(1/2-1/2*cos(5*PI*(t-0.00)))*heav(t-0.00)+(1/2-1/2*cos(5*PI*(t-0.00)+PI))*heav(t-0.20)+(-1/2-1/2*cos(5*PI*(t-0.00)+PI))*heav(t-0.80)+(-1/2-1/2*cos(5*PI*(t-0.00)))*heav(t-1.00)")
+
+MOD_ALPHA_X = paste0(
   "-(( 5*PI/2*sin(5*PI*(t-0.05)))*heav(t-0.05)+",
   "  (-5*PI/2*sin(5*PI*(t-0.05)))*heav(t-0.25)+",
   "  (-5*PI/2*sin(5*PI*(t-0.05)))*heav(t-0.85)+",

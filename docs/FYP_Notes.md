@@ -68,3 +68,5 @@ Look for .flx for forces
  - During acceleration in viscous, acceleration fights pressure
    In invscid, wake vortex effect means greater bound vorticity
 
+# 2D Panel Method
+ - Divide by 0 error if z = 0

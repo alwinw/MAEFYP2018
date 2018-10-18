@@ -23,9 +23,24 @@
 \renewcommand{\headrulewidth}{0pt}
 
 \renewcommand{\subsubsection}[1]{%
-  %\vspace{0.5ex}%
+  \vspace{0.5ex}%
   {\centering \underline{#1}\par}%
   \par \vspace{0.5ex}}
+
+\usepackage{xpatch}
+\xpatchcmd{\thenomenclature}{%
+  \section*{\nomname}% Look for `\section*... etc.
+}{% Replace it by 'nothing'
+}{\typeout{Success}}{\typeout{Failure}}
+
+\usepackage{xcolor}
+\definecolor{commentgreen}{RGB}{2,112,10}
+\definecolor{eminence}{RGB}{108,48,130}
+\definecolor{weborange}{RGB}{255,165,0}
+\definecolor{frenchplum}{RGB}{129,20,83}
+
+\usepackage{enumitem}
+\setlist{nolistsep}
 \end_preamble
 \use_default_options true
 \begin_modules
@@ -42,7 +57,7 @@ subequations
 \fontencoding global
 \font_roman "times" "default"
 \font_sans "helvet" "default"
-\font_typewriter "default" "default"
+\font_typewriter "NotoMono-TLF" "default"
 \font_math "newtxmath" "auto"
 \font_default_family default
 \use_non_tex_fonts false
@@ -113,6 +128,7 @@ subequations
 \papercolumns 1
 \papersides 1
 \paperpagestyle fancy
+\listings_params "numbers=left,numberstyle={\footnotesize\color{gray}},tabsize=2,frame=single,basicstyle={\small\ttfamily}"
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -121,6 +137,22 @@ subequations
 \end_header
 
 \begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+pagenumbering{gobble}
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \begin_layout Title
 Examination of the Details of 2D Vorticity Generation Around the Airfoil
@@ -163,8 +195,12 @@ Abstract?
 ~50 Pages Max
 \end_layout
 
+\begin_layout Plain Layout
+What tense to use?
+\end_layout
+
 \begin_layout Itemize
-Introduction: 12 Pages Max [More likely 7]
+Introduction: 10 Pages Max [More likely 7]
 \end_layout
 
 \begin_deeper
@@ -186,7 +222,7 @@ Theory/Area of Research: 5 pages
 
 \end_deeper
 \begin_layout Itemize
-Methodology: 8 Pages Max [More likely 10]
+Methodology: 7 Pages Max [More likely 10]
 \end_layout
 
 \begin_deeper
@@ -213,12 +249,12 @@ Limitations: 1 page
 
 \end_deeper
 \begin_layout Itemize
-Results and Discussion: 33 Pages Max
+Results and Discussion: 28 Pages Max
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-About 6 pages per topic of interest
+About 5 pages per topic of interest
 \end_layout
 
 \begin_layout Itemize
@@ -258,30 +294,23 @@ References: 1 Page or so
 \end_layout
 
 \begin_layout Standard
-\begin_inset Flex Multiple Columns
-status open
-
-\begin_layout Plain Layout
-\begin_inset CommandInset nomencl_print
-LatexCommand printnomenclature
-set_width "auto"
-
-\end_inset
-
-
-\end_layout
-
+\begin_inset Newpage newpage
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-\begin_inset VSpace smallskip
-\end_inset
+\begin_inset ERT
+status collapsed
 
+\begin_layout Plain Layout
 
-\begin_inset Newpage newpage
+%
+\backslash
+pagenumbering{roman}
+\end_layout
+
 \end_inset
 
 
@@ -307,6 +336,475 @@ LatexCommand tableofcontents
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset FloatList figure
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList table
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand lstlistoflistings
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+pagenumbering{arabic} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Nomenclature
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Multiple Columns
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset nomencl_print
+LatexCommand printnomenclature
+set_width "custom"
+width "0.75cm"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "airfoil1"
+symbol "$V(t)$"
+description "Velocity of the body (airfoil)"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "airfoil2"
+symbol "$a(t)$"
+description "Acceleration of the body (airfoil)"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "bvf1"
+symbol "$\\sigma$"
+description "Boundary vorticity flux (BVF)"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "bvf2"
+symbol "$\\vec{\\sigma}$"
+description "BVF in 3D"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "bvf3"
+symbol "$\\vec{\\sigma}_a$"
+description "BVF from acceleration"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "bvf3"
+symbol "$\\vec{\\sigma}_f$"
+description "BVF from body forces"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "bvf4"
+symbol "$\\vec{\\sigma}_p$"
+description "BVF from pressure"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "bvf5"
+symbol "$\\vec{\\sigma}_{vis}$"
+description "BVF from viscosity"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "circ"
+symbol "$\\Gamma$"
+description "Circulation (m$^2$/s)"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "curv1"
+symbol "$C$"
+description "Counterclockwise closed curve"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "curv5"
+symbol "$\\text{d}\\vec{s}$"
+description "Tangent vector along boundary $C$"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "del"
+symbol "$\\vec{\\nabla}$"
+description "Del operator"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "dens1"
+symbol "$\\rho$"
+description "Local density (kg/m$^3$)"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "dens2"
+symbol "$\\rho_\\infty$"
+description "Freestream density (kg/m$^3$)"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "force1"
+symbol "$F_\\text{tot}$"
+description "Total force (N)"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "force2"
+symbol "$F_c$"
+description "Circulatory force"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "force3"
+symbol "$F_\\text{am}$"
+description "Added mass force (N)"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "lift"
+symbol "$L'$"
+description "Lift per unit span (N per m)"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "press1"
+symbol "$p$"
+description "Pressure (Pa)"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "press5"
+symbol "$P$"
+description "Pressure normalised by density, $\\frac{p}{\\rho}$"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "surf1"
+symbol "$S$"
+description "Surface bounded by $C$"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "surf5"
+symbol "$\\text{d}S$"
+description "Infinitesimally small surface"
+literal "true"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "surfvec1"
+symbol "$\\vec{n}$"
+description "Normal vector to a surface"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "surfvec2"
+symbol "$\\vec{t}$"
+description "Tangent vector to a surface"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "vel1"
+symbol "$\\vec{u}$"
+description "Velocity vector $(u, v)$"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "vel3"
+symbol "$V_\\infty$"
+description "Freestream velocity (m/s)"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "vort1"
+symbol "$\\vec{\\omega}$"
+description "Vorticity vector"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "vort2"
+symbol "$\\omega$"
+description "Vorticity into/out of a 2D plane"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "time"
+symbol "$t$"
+description "Time (s)"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "vis2"
+symbol "$\\nu$"
+description "Kinematic viscosity (m$^2$/s)"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "z"
+symbol "$z$"
+description "Distance normal to the surface"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace smallskip
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Part
 Project Outline
 \end_layout
@@ -316,11 +814,122 @@ Introduction
 \end_layout
 
 \begin_layout Subsection
+Objectives 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Research Objectives
 \end_layout
 
-\begin_layout Subsection
-Dimensionless Groups
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Enumerate
+Accurate method of determine vorticity generation around an airfoil [X]
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Varied the method used (conformal mapping, finite difference, basis function)
+\end_layout
+
+\begin_layout Enumerate
+Polynomial order of spectral element
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Relation between vorticity generation and vorticity [~]
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Establishment of the Kutta condition (comparison of DNS to VS in terms of
+ BCs)
+\end_layout
+
+\begin_layout Enumerate
+Circulation of airfoil, TE/LE vortices
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Vorticity generation to predict lift and drag [..]
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Lift and drag for steady case using BVF
+\end_layout
+
+\begin_layout Enumerate
+Vortex impulse and added-mass
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Comparison to unsteady potential theory [~]
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Decomposition of lift force
+\end_layout
+
+\begin_layout Enumerate
+BC condition of BVF integral
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Effect of Reynolds number
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Circulation and lift force
+\end_layout
+
+\begin_layout Enumerate
+BVF on surface
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Dimensionless Groups <– What did I mean by this? Can I put this somewhere
+ else?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -388,6 +997,193 @@ Vorticity During the Starting and Stopping Phases
 \end_layout
 
 \begin_layout Standard
+The explanation for the formation of the starting vortex is well covered
+ in existing literature by applying Kelvin's theorem, equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Kelvin"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, to a contour around the airfoil, shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Kelvin"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Anderson 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Anderson2010"
+literal "false"
+
+\end_inset
+
+ explains that initially when the fluid is at rest, the circulation around
+ the curve 
+\begin_inset Formula $C_{1}$
+\end_inset
+
+ is zero and when the fluid begins motion the flow will initially curl around
+ the trailing edge creating a thin region of high vorticity (large velocity
+ gradients).
+ This vorticity is fixed to the same fluid elements and so travels downstream
+ from the trailing edge due to the fluid velocity, 
+\begin_inset Formula $V_{\infty}$
+\end_inset
+
+.
+ As this thin sheet of vorticity is unstable, it tends to roll up to form
+ a starting vortex as shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Kelvin"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+b.
+ 
+\end_layout
+
+\begin_layout Standard
+From Kelvin's theorem, the circulation 
+\begin_inset Formula $\Gamma_{2}$
+\end_inset
+
+ around curve 
+\begin_inset Formula $C_{2}$
+\end_inset
+
+ is equal to the circulation 
+\begin_inset Formula $\Gamma_{1}$
+\end_inset
+
+ around curve 
+\begin_inset Formula $C_{1}$
+\end_inset
+
+ implying 
+\begin_inset Formula $\Gamma_{1}=\Gamma_{2}=0$
+\end_inset
+
+.
+ Considering curve 
+\begin_inset Formula $C_{3}$
+\end_inset
+
+, 
+\begin_inset Formula $bcdb$
+\end_inset
+
+, and curve 
+\begin_inset Formula $C_{4}$
+\end_inset
+
+, 
+\begin_inset Formula $abda$
+\end_inset
+
+, it can be seen that 
+\begin_inset Formula $\Gamma_{3}+\Gamma_{4}=\Gamma_{2}$
+\end_inset
+
+ giving 
+\begin_inset Formula $\Gamma_{3}=-\Gamma_{4}$
+\end_inset
+
+.
+ This indicates that the circulation bound to the airfoil, 
+\begin_inset Formula $\Gamma_{4}$
+\end_inset
+
+, is equal and opposite to the circulation around the starting vortex, 
+\begin_inset Formula $\Gamma_{3}$
+\end_inset
+
+.
+ 
+\begin_inset Formula 
+\begin{equation}
+\frac{\text{D}\Gamma}{\text{D}t}=\ointop_{C}\frac{\text{D}\vec{u}}{\text{D}t}\cdot\text{d}s+\ointop_{C}\vec{u}\cdot\frac{\text{D}\text{d}s}{\text{D}t}=0\label{eq:Kelvin}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Images/Intro_Kelvin-Theorem.png
+	lyxscale 30
+	width 14cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Creation of the starting vortex demonstrating Kelvin's theorem
+\end_layout
+
+\end_inset
+
+Creation of the starting vortex demonstrating Kelvin's theorem for circulation.
+ 
+\emph on
+Source: Anderson 2010, pg 336 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Anderson2010"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Kelvin"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -413,7 +1209,7 @@ literal "false"
 
 \end_inset
 
- showed the formation of these vorticies by performing a direct numerical
+ showed the formation of these vortices by performing a direct numerical
  simulation (DNS) of transient flow over a NACA0012 airfoil at 
 \begin_inset Formula $\text{Re}=10,000$
 \end_inset
@@ -452,7 +1248,7 @@ noprefix "false"
 \end_inset
 
 , for vorticity around various contours.
- This paper expands on these studies by considering the vorticity generation
+ This project expands on these studies by considering the vorticity generation
  mechanisms and exploring the physical phenomena behind vortices generated
  during the starting and stopping phases.
  
@@ -465,116 +1261,6 @@ status open
 L'=\rho_{\infty}V_{\infty}\Gamma\\
 \Gamma\equiv-\ointop_{C}\vec{u}\cdot\text{d}\vec{s}=-\iintop_{S}\left(\vec{\nabla}\times\vec{u}\right)\cdot\text{d}S=-\iintop_{S}\vec{\omega}\cdot\text{d}S\label{eq:Stokes}
 \end{gather}
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "lift"
-symbol "$L'$"
-description "Lift per unit span (N per m)"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "dens"
-symbol "$\\rho_\\infty$"
-description "Freestream density (kg/m$^3$)"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "vel"
-symbol "$V_\\infty$"
-description "Freestream velocity (m/s)"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "circ"
-symbol "$\\Gamma$"
-description "Circulation (m$^2$/s)"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "curv"
-symbol "$C$"
-description "Counterclockwise closed curve"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "vel"
-symbol "$\\vec{u}$"
-description "Velocity vector $(u, v)$"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "curv"
-symbol "$\\text{d}\\vec{s}$"
-description "Tangent vector along boundary $C$"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "surf"
-symbol "$S$"
-description "Surface bounded by $C$"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "surf"
-symbol "$\\text{d}S$"
-description "Infinitesimally small surface"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "del"
-symbol "$\\vec{\\nabla}$"
-description "Del operator"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-prefix "vort"
-symbol "$\\vec{\\omega}$"
-description "Vorticity vector"
-literal "true"
 
 \end_inset
 
@@ -639,13 +1325,156 @@ literal "false"
  for vortex shedding of oscillating cylinders and it was noted that the
  pressure-gradient generation mechanism could override the surface-acceleration
  generation mechanism and vice versa.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Images/Intro_Morton-Coord.png
+	lyxscale 30
+	width 4cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Coordinate system on the surface of a wall
+\end_layout
+
+\end_inset
+
+Coordinate system on the surface of a wall.
+ 
+\emph on
+Source: Morton 1984, pg 283 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Morton1984"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Morton Coord"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+-\underset{\text{Vorticity Flux}}{\underbrace{\nu\left(\frac{\partial\vec{\omega}}{\partial z}\right)_{z=0}}} & =-\underset{\text{"Pressure Gradient"}}{\underbrace{\frac{1}{\rho}\left[\left(\vec{n}\times\nabla\right)\vec{p}\right]_{z=0}}}-\underset{\text{"Acceleration"}}{\underbrace{\vec{n}\times\frac{\text{d}V\left(t\right)}{\text{d}t}}}\label{eq:Morton Full VortGen}
+\end{align}
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Maybe include a diagram from Morton
+\end_layout
+
+\end_inset
+
+where 
+\begin_inset Formula $V\left(t\right)$
+\end_inset
+
+ is the velocity of the wall moving in its own plane, and 
+\begin_inset Formula $\vec{n}$
+\end_inset
+
+ is the normal vector to the surface.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Definition/Derivation of BVF??
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This expresses the idea that vorticity must diffuse away from a solid boundary
+ at the same rate that it is produced by local conditions.
+ During the starting and stopping phases of motion, there is no angular
+ acceleration present.
+ Thus, the integral around the body perimeter of the flux of vorticity is
+ zero at every instant provided the pressure field is continuous 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Blackburn1999,Zhu2015"
+literal "false"
+
+\end_inset
+
+.
+ This is shown in equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Integral BVF"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+What if I have a singularity at the trailing edge??
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
 \begin{equation}
--\nu\left(\frac{\partial\vec{\omega}}{\partial z}\right)_{0}=-\frac{1}{\rho}\left[\left(\vec{n}\times\nabla\right)\vec{p}\right]_{0}-\vec{n}\times\frac{\text{d}V}{\text{d}t}\label{eq:Morton Full VortGen}
+\ointop-\nu\vec{n}\cdot\nabla\vec{\omega}\,\text{d}s=\ointop-\nu\frac{\partial\omega}{\partial n}\,\text{d}s=0\label{eq:Integral BVF}
 \end{equation}
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
 Zhu et al.
  
 \begin_inset CommandInset citation
@@ -677,11 +1506,27 @@ noprefix "false"
 , instead of boundary-layer theory.
  Additionally, the realisation of the Kutta condition and creation of starting
  vortex were determined through a complex chain of processes which were
- also explained by considering boundary vorticity flux, 
+ also explained by considering boundary vorticity flux (BVF), 
 \begin_inset Formula $\sigma$
 \end_inset
 
-, equation 
+.
+ It should be noted there is a sign difference in term of interest on the
+ left hand side of equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Morton Full VortGen"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and the definition of 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ in equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:BVF"
@@ -692,14 +1537,167 @@ noprefix "false"
 \end_inset
 
 .
+ 
 \begin_inset Formula 
 \begin{equation}
-\frac{1}{\rho}=\frac{\partial p}{\partial s}=\nu\frac{\partial\omega}{\partial n}\equiv\sigma\label{eq:BVF}
+\nu\frac{\partial\omega}{\partial n}\equiv\sigma\label{eq:BVF}
 \end{equation}
 
 \end_inset
 
+Zhou et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhou2007"
+literal "false"
 
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+pg140
+\end_layout
+
+\end_inset
+
+ describes additional BVF terms to arrive at a general expression for 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+ shown in Equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:BVF1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{gather}
+\vec{\sigma}=\vec{n}\times\left(\vec{a}_{B}-\vec{f}+\frac{1}{\rho}\nabla\vec{p}\right)+\nu\left(\vec{n}\times\nabla\right)\times\vec{\omega}\equiv\vec{\sigma}_{a}+\vec{\sigma}_{f}+\vec{\sigma}_{p}+\vec{\sigma}_{vis}\label{eq:BVF1}
+\end{gather}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{alignat}{3}
+\vec{\sigma}_{a} & =\vec{n}\times\vec{a}_{B} & \qquad &  & \vec{\sigma}_{f} & =-\vec{n}\times\vec{f}\label{eq:BFV2}\\
+\vec{\sigma}_{p} & =\frac{1}{\rho}\vec{n}\times\nabla\vec{p} &  &  & \vec{\sigma}_{vis} & =\nu\left(\vec{n}\times\nabla\right)\times\vec{\omega}\label{eq:BVF3}
+\end{alignat}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Note that this expression collapses into equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Morton Full VortGen"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ since 
+\begin_inset Formula $\vec{f}$
+\end_inset
+
+ is assumed to be 
+\begin_inset Formula $0$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{\sigma}_{vis}=0$
+\end_inset
+
+ for two dimensional problems.
+ Thus, 
+\begin_inset Formula 
+\begin{equation}
+\vec{\sigma}=\vec{\sigma}_{p}+\vec{\sigma}_{a}=\frac{1}{\rho}\left(\vec{n}\times\nabla\right)\vec{p}+\vec{n}\times\vec{a}_{B}=\nu\frac{\partial\omega}{\partial n}
+\end{equation}
+
+\end_inset
+
+For an incompressible flow problem, the forces on the airfoil can be determined
+ using equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Airfoil General Force"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ In steady incompressible flow, the forces acting on a 2D airfoil can be
+ determined solely by the boundary vorticity flux 
+\begin_inset Formula $\sigma_{p}$
+\end_inset
+
+ assuming the contribution of skin friction is negligible for 
+\begin_inset Formula $\text{Re}\gg1$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhou2007"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+pg611
+\end_layout
+
+\end_inset
+
+ (equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Airfoil LiftDrag Steady"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ 
+\begin_inset Formula 
+\begin{gather}
+\vec{F}=-\intop_{\partial B}\rho\,\vec{x}\times\left(\frac{1}{2}\vec{\sigma}_{p}+\vec{\sigma}_{vis}\right)\,\text{d}S\label{eq:Airfoil General Force}\\
+L=\rho\intop_{C}x\,\sigma_{p}\,\text{d}s,\quad D=-\rho\ointop_{C}y\,\sigma_{p}\,\text{d}s\label{eq:Airfoil LiftDrag Steady}
+\end{gather}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -721,7 +1719,7 @@ Blackburn states and used by Zhu as BC
 \end_layout
 
 \begin_layout Subsubsection
-Unsteady Viscous Flows Past Wedges
+Establishment of the Kutta Condition
 \end_layout
 
 \begin_layout Standard
@@ -751,12 +1749,20 @@ Need to explain saddles and nodes for 2D
 \end_layout
 
 \begin_layout Standard
-The the airfoil first gains a nonzero relative velocity,the fluid pattern
+When the airfoil first gains a non-zero relative velocity, the fluid pattern
  is very similar to the inviscid potential flow solution where particles
- very close to the lower surface turn rapidly around the trailing edge.
+ very close to the lower surface turn rapidly around the trailing edge 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Anderson2010"
+literal "false"
+
+\end_inset
+
+.
  The streamline curvature is finite and moves upstream over the upper surface
- leading to a rear semi-saddle point (cannot be identified as a separation
- point in unsteady flow).
+ leading (opposing the freestream flow).
+ 
 \end_layout
 
 \begin_layout Standard
@@ -777,8 +1783,364 @@ Shortly after, a thin sublayer on the trailing upper surface with vorticity
  separation (generic unsteady separation).
 \end_layout
 
+\begin_layout Standard
+to a rear semi-saddle point (cannot be identified as a separation point
+ in unsteady flow).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+To finish
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
-Establishment of the Kutta Condition
+Added-Mass Effect for Unsteady Flows 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Rename
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In their review, Limacher, Morton and Wood outline the concept of that added-mas
+s is due to the momentum a body imparts to the surrounding fluid.
+ Assuming an irrotational flow for a body of mass 
+\begin_inset Formula $M$
+\end_inset
+
+ experiencing a linear acceleration 
+\begin_inset Formula $a\left(t\right)$
+\end_inset
+
+ without rotation, the additional force is proportional to the instantaneous
+ acceleration of the body 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Limacher2018"
+literal "false"
+
+\end_inset
+
+.
+ Letting the constant of proportionality be 
+\begin_inset Formula $m'$
+\end_inset
+
+, the total force on the body can be found as
+\begin_inset Formula 
+\begin{equation}
+\vec{F}_{\text{tot}}=-\left(M+m\right)a\left(t\right),\quad\vec{F}_{\text{am}}=-m\cdot\vec{a}\left(t\right)
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $m'$
+\end_inset
+
+ can also be interpreted as 
+\begin_inset Quotes eld
+\end_inset
+
+added-mass
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+apparent mass
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+virtual mass
+\begin_inset Quotes erd
+\end_inset
+
+ that must be accelerated with the body.
+ While the apparent mass can be intuitively understood as the volume of
+ fluid ahead of the body that needs to be accelerated around the body, there
+ is no actual identifiable finite volume of fluid.
+ All the fluid around the body (to infinity) is accelerated to varying degrees
+ causing the force 
+\begin_inset Formula $F_{am}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For incompressible flows using potential flow analysis, 
+\begin_inset Formula $\vec{u}=\nabla\phi$
+\end_inset
+
+ in the frame of reference where velocity decays to zero at infinity, Saffman
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Saffman1993"
+literal "false"
+
+\end_inset
+
+ outlines that the conservation of energy can be used to determine 
+\begin_inset Formula $m'$
+\end_inset
+
+.
+ The added-mass force associated with the scalar potential can also be determine
+d for a body with impermeable boundary condition on its surface.
+\begin_inset Formula 
+\begin{equation}
+m'=\rho\intop_{V}\frac{u^{2}}{V\left(t\right)^{2}}\,\text{d}V,\quad\vec{F}_{\text{am}}=-\rho\frac{\text{d}}{\text{d}t}\ointop_{S_{b}}\Phi\vec{n}\,\text{d}S
+\end{equation}
+
+\end_inset
+
+Limacher, Morton and Wood 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Limacher2018"
+literal "false"
+
+\end_inset
+
+ performed a generalised derivation for a body of arbitrary shape to determine
+ the added-mass force for separated viscous flows.
+ The total impulse, 
+\begin_inset Formula $\vec{P}$
+\end_inset
+
+, where 
+\begin_inset Formula $\vec{F}=-\rho\frac{\text{d}\vec{P}}{\text{d}t}$
+\end_inset
+
+ is given in Equations 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LimacherAll"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Limacher 4 terms"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The arbitrary motion of the airfoil is characterised by instantaneous linear
+ velocity of the body centroid, 
+\begin_inset Formula $\vec{u}_{c}$
+\end_inset
+
+, and the angular velocity, 
+\begin_inset Formula $\vec{\Omega}$
+\end_inset
+
+.
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{gather}
+\vec{P}=\frac{1}{N-1}\intop_{V}\left(\vec{x}\times\vec{\omega}\right)\,\text{d}V+\frac{1}{N-1}\intop_{V_{b}}\left(\vec{x}\times\vec{\omega}\right)\,\text{d}V-\ointop_{S_{b}}\vec{n}\Phi'\,\text{d}S-\vec{u}_{c}V_{b}\label{eq:LimacherAll}\\
+\vec{P}\equiv\vec{P}_{v}+\vec{P_{i}}+\vec{P}_{\Phi}+\vec{P}_{b}\label{eq:Limacher 4 terms}
+\end{gather}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+where 
+\begin_inset Formula $N=\left\{ 2,3\right\} $
+\end_inset
+
+ is the dimension of space, 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ is defined such that 
+\begin_inset Formula $\vec{x}=0$
+\end_inset
+
+ at body centroid for 
+\begin_inset Formula $\int_{V_{b}}\vec{\Omega}\times\vec{x}\,\text{d}V=0$
+\end_inset
+
+, 
+\begin_inset Formula $\Phi'$
+\end_inset
+
+ is the velocity potential in the body-fixed frame of reference defined
+ as 
+\begin_inset Formula $\nabla\Phi'=\nabla\Phi-\vec{u}_{c}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{b}$
+\end_inset
+
+ is a piecewise smooth surface with outward unit normal 
+\begin_inset Formula $\vec{n}$
+\end_inset
+
+ of the body and encloses the volume 
+\begin_inset Formula $V_{b}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{P}_{v}$
+\end_inset
+
+ is the shed-vorticity impulse of all the vorticity in the fluid domain
+ 
+\begin_inset Formula $V$
+\end_inset
+
+ up to the surface 
+\begin_inset Formula $S_{b}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\vec{P}_{i}$
+\end_inset
+
+ is the image-vorticity impulse for a non-unique vorticity distribution
+ within the body 
+\begin_inset Formula $V_{b}$
+\end_inset
+
+ that maintains the impermeable boundary condition on 
+\begin_inset Formula $S_{b}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\vec{P}_{\Phi}$
+\end_inset
+
+ is the potential impulse introduced from using the body-fixed reference
+ frame, 
+\begin_inset Formula $\vec{u}'=\vec{u}-\vec{u}_{c}-\vec{\Omega}\times\vec{x}\equiv\nabla\Phi'+\nabla\times\psi'$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\vec{P}_{b}$
+\end_inset
+
+ is the body-volume impulse.
+ The sum of first two terms, 
+\begin_inset Formula $\vec{P}_{v}+\vec{P}_{i}$
+\end_inset
+
+ leads to the total vortical impulse and the sum of the other two terms,
+ 
+\begin_inset Formula $\vec{P}_{\Phi}+\vec{P}_{b}$
+\end_inset
+
+ leads to the added mass force.
+\begin_inset Formula 
+\begin{equation}
+\vec{F}_{c}=-\rho\frac{\text{d}}{\text{d}t}\left(\vec{P}_{v}+\vec{P}_{i}\right)\quad\text{and}\quad\vec{F}_{am}=-\rho\frac{\text{d}}{\text{d}t}\left(\vec{P}_{\Phi}+\vec{P}_{b}\right)
+\end{equation}
+
+\end_inset
+
+When the no slip condition holds, Limacher, Morton and Wood 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Limacher2018"
+literal "false"
+
+\end_inset
+
+ state that 
+\begin_inset Formula $\vec{P}_{i}+\vec{P}_{\Phi}=0$
+\end_inset
+
+ which leads to their second, no slip formulation.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This formulation is equal to and cite []
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{equation}
+\vec{P}=\vec{P}_{v}+\vec{P}_{b}=\frac{1}{N-1}\intop_{V}\left(\vec{x}\times\vec{\omega}\right)\,\text{d}V-\vec{u}_{c}V_{b}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+how does this simplify for 2D?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+To finish
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -843,7 +2205,11 @@ literal "false"
 \end_inset
 
 .
- After the starting phase, when the airfoil had attained a uniform velocity,
+ 
+\end_layout
+
+\begin_layout Standard
+After the starting phase, when the airfoil had attained a uniform velocity,
  it was also observed the lift force would asymptote to a steady-state value.
  An explanation for this was also provided by Kármán and Sears 
 \begin_inset CommandInset citation
@@ -880,8 +2246,18 @@ literal "false"
 \end_inset
 
 .
- Both of these effects will also be investigated in this study of vorticity
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Both of these effects will also be investigated in this study of vorticity
  production as the vorticity is not contained to a thin region.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -910,7 +2286,7 @@ literal "false"
 
 \begin_layout Standard
 where the terminals have been adjusted to match the definition provided
- in 
+ in Kármán and Sears 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Karman1938"
@@ -918,12 +2294,12 @@ literal "false"
 
 \end_inset
 
- and 
+.
+ In this analysis, 
 \begin_inset Formula $\frac{\text{d}z}{\text{d}x}=0$
 \end_inset
 
- in this analysis as the NACA0012 is a symmetric airfoil.
- The transformations 
+ as the NACA0012 is a symmetric airfoil and the transformations 
 \begin_inset Formula $\xi=-\cos\left(\theta\right)$
 \end_inset
 
@@ -931,7 +2307,7 @@ literal "false"
 \begin_inset Formula $x=-\cos\left(\theta_{0}\right)$
 \end_inset
 
- are now used to obtain the standard result
+ are used to obtain the standard result
 \begin_inset Formula 
 \begin{equation}
 \gamma\left(\theta\right)=2\alpha V_{\infty}\frac{1+\cos\left(\theta\right)}{\sin\left(\theta\right)}\label{eq:gamma theta}
@@ -939,11 +2315,21 @@ literal "false"
 
 \end_inset
 
-where 
+where
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+ 
 \begin_inset Formula $\alpha=4\text{°}$
 \end_inset
 
- and 
+ and
+\end_layout
+
+\end_inset
+
+ 
 \begin_inset Formula $V_{\infty}$
 \end_inset
 
@@ -951,8 +2337,11 @@ where
 \begin_inset Formula $V_{\infty}=-V\left(t\right)$
 \end_inset
 
-, for this analysis.
-  This can be applied to Kármán and Sears 
+.
+\end_layout
+
+\begin_layout Standard
+This can be applied to Kármán and Sears 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Karman1938"
@@ -1006,7 +2395,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-While Kármán and Sears 
+Kármán and Sears 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Karman1938"
@@ -1014,8 +2403,8 @@ literal "false"
 
 \end_inset
 
- present a solution for the wake effect term, from PIV by Willert and Kompenhans
- 
+ present a solution for the wake effect term, however from PIV by Willert
+ and Kompenhans 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Willert2010"
@@ -1036,7 +2425,22 @@ if I add an image, reference it here
  it is clear the assumption of the wake remaining in the same plane as the
  airfoil does not hold as wake vortex sheet rolls up to form the starting
  vortex.
- Thus, only the first two terms, quasi-steady state, 
+ As such, the solution provided in equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:unsteady lift"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ may not be appropriate for the analysis of the starting phase of the airfoil.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Thus, only the first two terms, quasi-steady state, 
 \begin_inset Formula $L_{0}$
 \end_inset
 
@@ -1045,6 +2449,11 @@ if I add an image, reference it here
 \end_inset
 
 , are investigated.
+\end_layout
+
+\end_inset
+
+
 \begin_inset Note Note
 status open
 
@@ -1084,12 +2493,77 @@ Change this or the wording to something more appropriate
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Methodology
 \end_layout
 
 \begin_layout Subsection
+Research Approach
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Objective and Approach/Problem Description/Governing Equations
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+What are the objectives?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+While this project could be analysed experimentally, there would be significant
+ barriers.
+ Primarily, particle image velocimetry (PIV) would not be practical for
+ such small time and length scales for vorticity generation.
+ For instance, during the establishment of the Kutta condition would require
+ impractically precise recording equipment and algorithms.
+ Inducing the required acceleration and deceleration of the fluid and introducin
+g particles to track in PIV without introducing turbulence would be another
+ greatly difficult task.
+ 
+\end_layout
+
+\begin_layout Standard
+A theoretical examination of the flow could be attempted.
+ However as this is a viscous transient problem around a lift-producing
+ airfoil there are few (if any) complete theoretical results to guide the
+ project.
+ There is no guaranteed closed-form theoretical solution as the vorticity
+ generation is derived from the Navier Stokes equations and using alternative
+ approaches such as potential flows would defeat the purpose of the 
+\begin_inset Quotes eld
+\end_inset
+
+detailed
+\begin_inset Quotes erd
+\end_inset
+
+ examination.
 \end_layout
 
 \begin_layout Standard
@@ -1110,8 +2584,42 @@ Vorticity generation equations
 \end_layout
 
 \begin_layout Standard
-The governing equations solved were the non-dimensionalised Navier-Stokes
- equations in the moving reference frame fixed to the airfoil, 
+As such, a direct numerical simulation (DNS) was performed.
+ The code used was a spectral element-Fourier DNS code, semtex 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Blackburn2004"
+literal "false"
+
+\end_inset
+
+.
+ The governing equations solved were the non-dimensionalised Navier-Stokes
+ equations in the moving reference frame fixed to the airfoil stated in
+ equations 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:continuity"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:non-dim NS"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ In order to determine the vorticity generation and other quantities of
+ interest such as the vortex impulse, significant post-processing of results
+ was required.
 \begin_inset Flex Subequations
 status open
 
@@ -1191,7 +2699,7 @@ How is the pressure boundary condition found? Hugh's 1999 paper
 \end_layout
 
 \begin_layout Subsection
-Computational Methods
+Computational Method
 \end_layout
 
 \begin_layout Subsubsection
@@ -1229,7 +2737,7 @@ literal "false"
  (figure 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:BC_airfoil"
+reference "fig:BC Airfoil"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1273,7 +2781,95 @@ literal "false"
 
  of uniform flow between the starting and stopping phases allows the convergence
  of lift to be investigated.
- 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename BC_airfoil_accel.png
+	lyxscale 30
+	width 11cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename BC_inflow_vel.png
+	lyxscale 30
+	width 11cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename BC_airfoil_disp.png
+	lyxscale 30
+	width 11cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Boundary conditions imposed on the simulation
+\end_layout
+
+\end_inset
+
+Boundary conditions imposed on the simulation during the starting and stopping
+ phases.
+ Note that the definition of 
+\begin_inset Formula $x$
+\end_inset
+
+ is consistent with the solution domain of the acceleration reference frame
+ and the vertical axis has been inverted for airfoil properties.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:BC Airfoil"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -1321,7 +2917,7 @@ https://en.wikipedia.org/wiki/Vorticity_equation
 
 \begin_inset Formula 
 \begin{equation}
--\sigma\equiv-\nu\frac{\partial\vec{\omega}}{\partial z}\Big|_{z=0}=-\vec{n}\times\left(\nabla\vec{P}+\vec{a}\right)\label{eq:Morton VortGen}
+-\sigma\equiv-\nu\frac{\partial\vec{\omega}}{\partial z}\Big|_{z=0}=-\vec{n}\times\left(\nabla\vec{P}+\vec{a}\left(t\right)\right)\label{eq:Morton VortGen}
 \end{equation}
 
 \end_inset
@@ -1379,21 +2975,12 @@ It is assumed that a local section of airfoil can be modelled as an infinite
 \end_inset
 
  is a unit tangent vector as shown in figure 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:Coordinate-system-used"
+reference "fig:Coordinate System on Airfoil"
 plural "false"
 caps "false"
 noprefix "false"
-
-\end_inset
-
-
-\end_layout
 
 \end_inset
 
@@ -1429,8 +3016,8 @@ status open
 \begin_layout Plain Layout
 \begin_inset Formula 
 \begin{align}
--\nu\vec{n}\cdot\nabla\vec{\omega} & =-\vec{n}\times\nabla\vec{P}-\vec{t}\cdot\vec{a}\label{eq:VortGen}\\
--v\frac{\partial\omega}{\partial z} & =-\frac{1}{\rho}\frac{\partial p}{\partial s}-\frac{\text{d}V}{\text{d}t}\label{eq:VortGenLegend}
+-\nu\vec{n}\cdot\nabla\vec{\omega} & =-\vec{n}\times\nabla\vec{P}-\vec{t}\cdot\vec{a}\left(t\right)\label{eq:VortGen}\\
+-v\frac{\partial\omega}{\partial z} & =-\frac{1}{\rho}\frac{\partial p}{\partial s}-\frac{\text{d}V\left(t\right)}{\text{d}t}\label{eq:VortGenLegend}
 \end{align}
 
 \end_inset
@@ -1472,19 +3059,73 @@ Check the -ve signs AND the definition of dV(t)/dt etc for acceleration
 
 \end_inset
 
-It is clear that the convergence of second derivatives for 
-\begin_inset Formula $u$
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Coordinate-Systems.png
+	lyxscale 30
+	width 11cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Coordinate system used for the surface of the airfoil
+\end_layout
+
+\end_inset
+
+Coordinate system 
+\begin_inset Formula $\left(s,z\right)$
+\end_inset
+
+ used to traverse the surface of the airfoil.
+ Directions of the tangent and normal vectors, 
+\begin_inset Formula $\vec{t}$
 \end_inset
 
  and 
-\begin_inset Formula $v$
+\begin_inset Formula $\vec{n}$
 \end_inset
 
- are required to accurately determine 
-\begin_inset Formula $\nabla\vec{\omega}$
+, are shown.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Coordinate System on Airfoil"
+
 \end_inset
 
-.
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -1511,13 +3152,37 @@ Increase N_P
 Complete remesh (if done)
 \end_layout
 
+\begin_layout Plain Layout
+Compare to kovas
+\end_layout
+
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
+It is clear that the convergence of second derivatives for 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+ are required to accurately determine 
+\begin_inset Formula $\nabla\vec{\omega}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 \begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage clearpage
 \end_inset
 
 
@@ -1528,31 +3193,326 @@ Complete remesh (if done)
 \end_layout
 
 \begin_layout Part
-Results and Discussions
+Results and Discussion
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Qualitative Description of the Vorticity Field
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
-Qualative Description of the Vorticity Field
+Vorticity and Vorticity Generation
 \end_layout
 
-\begin_layout Section
-Vorticity Generation Around the Airfoil
+\begin_layout Subsection
+Airfoil Boundary Properties
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsubsection
+Vorticity Generation Mechanisms
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Show images of LHS vs RHS of N-S Eq for different time steps
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Integral of Boundary Vorticity Flux
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Show how this changes with polynomial order and mesh
+\end_layout
+
+\begin_layout Plain Layout
+Show how this changes over time for the 
+\begin_inset Quotes eld
+\end_inset
+
+converged
+\begin_inset Quotes erd
+\end_inset
+
+ mesh
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Velocity of the Trailing Edge
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Show how this changes with polynomial order and mesh
+\end_layout
+
+\begin_layout Plain Layout
+Show how this changes over time for the 
+\begin_inset Quotes eld
+\end_inset
+
+converged
+\begin_inset Quotes erd
+\end_inset
+
+ mesh
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 Establishment of the Kutta Condition
 \end_layout
 
-\begin_layout Section
-Comparison to Unsteady Thin Airfoil Theory
+\begin_layout Subsubsection
+Starting Phase
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Directly compare to Zhu et al
+\end_layout
+
+\begin_layout Plain Layout
+Try to get the same kink in the streakline, use particle tracking of semtex
+\end_layout
+
+\begin_layout Plain Layout
+Computationally more expensive, but different assumptions/BC
+\end_layout
+
+\begin_layout Plain Layout
+Use tecplot to analyse the output
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Stopping Phase
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Look at the separation points around the airfoil
+\end_layout
+
+\begin_layout Plain Layout
+Try apply the sum of nodes and saddles thing
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Comparison with Steady State BVF
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Run a few simulations at different u and see how BVF is different when no
+ Kutta condition.
+ Hopefully no kink at TE for BVF
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Circulation of Airfoil and Shed Vortices
+\end_layout
+
+\begin_layout Subsubsection
+Starting Phase
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Check that circulation is conserved
+\end_layout
+
+\begin_layout Plain Layout
+State that since massmat is being used, define four regions: top, bottom,
+ airfoil and wake.
+ Also plot the total circulation vs timed
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Stopping Phase
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Maybe include a 
+\begin_inset Quotes eld
+\end_inset
+
+steady state
+\begin_inset Quotes erd
+\end_inset
+
+ phase? circulation should not be changing, but the distance between the
+ starting vortex and trailing vortex increases so change in vortical impulse
+\end_layout
+
+\begin_layout Plain Layout
+Look at the LE vortices, see how strong their circulation is
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
+Comparison to Unsteady Potential Theory
+\end_layout
+
+\begin_layout Subsection
+Lift, Drag and Added-Mass Forces
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Plot out lift and drag forces
+\end_layout
+
+\begin_layout Plain Layout
+Vortex impulse as well, integral of BVF crossprod disp would be good
+\end_layout
+
+\begin_layout Plain Layout
+Lift as a function of circulation of the airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Unsteady Vortex Sheet Methods
+\end_layout
+
+\begin_layout Subsubsection
+Thin Airfoil Theory
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Compare results to Karman paper
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Vortex Panel Method
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Write and validate own code - Should I have this in the literature review
+ somewhere?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 Effect of Reynolds Number
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Do a lower Reynolds number to compare how the lift and drag forces change
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage clearpage
 \end_inset
 
 
@@ -1582,17 +3542,6 @@ Conclusion
 \end_layout
 
 \begin_layout Standard
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Agromayor2017"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
 btprint "btPrintCited"
@@ -1615,9 +3564,80 @@ options "afmc"
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Part
 \start_of_appendix
-Vorticity Generation Proof
+Appendix
+\end_layout
+
+\begin_layout Section
+Proofs and Derivations
+\end_layout
+
+\begin_layout Subsection
+Vorticity Generation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Images/Intro_Morton-Coord.png
+	lyxscale 30
+	width 5cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Coordinate system on the surface of a wall
+\end_layout
+
+\end_inset
+
+Coordinate system on the surface of a wall.
+ 
+\emph on
+Source: Morton 1984, pg 283 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Morton1984"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Morton Coord Appendix"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1633,8 +3653,126 @@ Excerpts with description from Morton
 
 \end_layout
 
-\begin_layout Section
-Unsteady Thin-Airfoil Theory Proof
+\begin_layout Standard
+The Navier-Stokes equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Navier Stokes"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ can be reduced to the case of a wall moving in its own plane for an infinitesim
+ally small region on the airfoil as described by Morton 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Morton1984"
+literal "false"
+
+\end_inset
+
+.
+ The boundary conditions for the Navier-Stokes equation were found by using
+ 
+\begin_inset Formula $\vec{V}=\left\{ V\left(t\right),0\right\} $
+\end_inset
+
+ where 
+\begin_inset Formula $V\left(t\right)$
+\end_inset
+
+ is the motion of the body and 
+\begin_inset Formula $z=0$
+\end_inset
+
+ to indicate the rigid boundary at the wall.
+ Thus, no slip condition gives 
+\begin_inset Formula $\vec{v}=\left(V\left(t\right),0\right)\,\forall\,x,t$
+\end_inset
+
+ for the fluid at the wall and there is no spatial variation of the boundary
+ motion as shown in equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Spatial Variation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Substitution into the Navier-Stokes equation at the boundary yields Equation
+ 5a which can be simplified to equations 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Morton 1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Morton 2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ (Morton, 1984).
+\begin_inset Formula 
+\begin{gather}
+\frac{\partial\vec{u}}{\partial t}+\vec{u}\cdot\nabla\vec{u}=-\frac{1}{\rho}\nabla\vec{p}+\frac{1}{\text{Re}}\nabla^{2}\vec{u}-\vec{a},\qquad\nabla\cdot\vec{u}=0\label{eq:Navier Stokes}\\
+\left[\left(\frac{\partial}{\partial x},\frac{\partial^{2}}{\partial x^{2}}\right)\cdot\left(u,w\right)\right]_{0}=0\label{eq:Spatial Variation}
+\end{gather}
+
+\end_inset
+
+
+\begin_inset VSpace -1.5em*
+\end_inset
+
+
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{align}
+\left[\frac{\partial^{2}}{\partial z^{2}}\left(u,w\right)\right]_{0} & =\left\{ 0,\frac{1}{\mu}\frac{\partial\vec{p}}{\partial x}+\frac{1}{\nu}\frac{dV\left(t\right)}{\text{d}t},\frac{1}{\mu}\right\} _{0}\\
+\nu\left(\frac{\partial\boldsymbol{\omega}}{\partial z}\right)_{0} & =\left\{ 0,-\left[-\frac{1}{\rho}\frac{\partial\vec{p}}{\partial x}+\frac{dV\left(t\right)}{dt}\right],0\right\} _{0}\label{eq:Morton 1}\\
+-v\vec{n}\cdot\nabla\vec{\omega} & =-\vec{n}\times\left(\nabla\vec{P}+a\left(t\right)\right)\label{eq:Morton 2}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Unsteady Thin-Airfoil Theory
 \end_layout
 
 \begin_layout Standard
@@ -1650,12 +3788,3166 @@ Exerpts with description from Karman and Sears
 
 \end_layout
 
-\begin_layout Section
-Spectral Element Mesh
+\begin_layout Standard
+Karman and Sears 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Karman1938"
+literal "false"
+
+\end_inset
+
+ begin their formulation by considering a vortex pair 
+\begin_inset Formula $\pm\Gamma$
+\end_inset
+
+ on the 
+\begin_inset Formula $x$
+\end_inset
+
+-axis at with coordinates 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+.
+ The magnitude of momentum is 
+\begin_inset Formula $\rho\Gamma\left(x_{2}-x_{1}\right)$
+\end_inset
+
+ with a line of action at 
+\begin_inset Formula $x=\frac{1}{2}\left(x_{2}+x_{1}\right)$
+\end_inset
+
+.
+ The total lift per unit span can be determined as
+\begin_inset Formula 
+\begin{equation}
+L=-\rho\frac{\text{d}}{\text{d}t}\sum\Gamma_{i}x_{i}
+\end{equation}
+
+\end_inset
+
+In order to determine the effect of vorticity being shed into the wake,
+ the conformal mapping is used between a flat plate, 
+\begin_inset Formula $-1\le x\le1$
+\end_inset
+
+ in the 
+\begin_inset Formula $z$
+\end_inset
+
+ plane and a unit circle in the 
+\begin_inset Formula $z'$
+\end_inset
+
+ plane.
+ The effect of a point vortex of strength 
+\begin_inset Formula $-\Gamma'$
+\end_inset
+
+ at 
+\begin_inset Formula $x=\xi$
+\end_inset
+
+ is determined by solving the problem in the 
+\begin_inset Formula $z'$
+\end_inset
+
+ plane and transforming the solution back into 
+\begin_inset Formula $z$
+\end_inset
+
+ to give the tangential velocity, 
+\begin_inset Formula $v_{\theta}$
+\end_inset
+
+, vorticity distribution over the airfoil, 
+\begin_inset Formula $\gamma\left(x\right)$
+\end_inset
+
+ and total circulation of the airfoil, 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+.
+ 
+\begin_inset Formula 
+\begin{gather}
+v_{\theta}=\frac{\Gamma'}{2\pi}\left[\frac{\sqrt{\xi^{2}-1}}{\xi-\cos\left(\theta\right)}-\sqrt{\frac{\xi+1}{\xi-1}}\right]=-\frac{\Gamma'}{2\pi}\frac{1-\cos\left(\theta\right)}{\xi-\cos\left(\theta\right)}\sqrt{\frac{\xi+1}{\xi-1}}\\
+\gamma\left(x\right)=\frac{1}{\pi}\frac{\Gamma'}{\xi-x}\sqrt{\frac{1-x}{1+x}}\sqrt{\frac{\xi+1}{\xi-1}}\\
+\Gamma=\intop_{-1}^{1}\gamma\left(x\right)\,\text{d}x=\Gamma'\left(\sqrt{\frac{\xi+1}{\xi-1}}-1\right)
+\end{gather}
+
+\end_inset
+
+The vorticity bound to the airfoil is denoted by 
+\begin_inset Formula $\gamma\left(x\right)$
+\end_inset
+
+ and that in the wake by 
+\begin_inset Formula $\gamma\left(\xi\right)$
+\end_inset
+
+.
+ The vorticity 
+\begin_inset Formula $\gamma\left(x\right)$
+\end_inset
+
+ is composed of two parts:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(a)
+\end_layout
+
+\end_inset
+
+the vorticity, 
+\begin_inset Formula $\gamma_{0}\left(x\right)$
+\end_inset
+
+, which would be produced, according to thin airfoil theory, by the motion
+ of the airfoil or the given velocity distribution (gust) in the air, if
+ the wake had no effect.
+ 
+\begin_inset Formula $\gamma_{0}\left(x\right)$
+\end_inset
+
+ is called the 
+\begin_inset Quotes eld
+\end_inset
+
+quasi-steady
+\begin_inset Quotes erd
+\end_inset
+
+ vorticity distribution;
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+(b)
+\end_layout
+
+\end_inset
+
+the vorticity, 
+\begin_inset Formula $\gamma_{1}\left(x\right)$
+\end_inset
+
+, which is induced by the wake, as calculated in the preceding section
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+To finish, doesn't really make sense
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Unsteady Panel Method
+\end_layout
+
+\begin_layout Subsubsection
+Steady Panel Method Derivation
+\end_layout
+
+\begin_layout Standard
+This derivation follows the work of Katz & Plotkin and Kuethe & Chow.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+NEED TO ADD REFERENCES
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The source 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ and induced velocity 
+\begin_inset Formula $\left(u,w\right)$
+\end_inset
+
+ at a point 
+\begin_inset Formula $\left(x,z\right)$
+\end_inset
+
+ for various vortex distributions is shown below.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+should define 
+\begin_inset Formula $r_{1},r_{2},\theta_{1},\theta_{2}$
+\end_inset
+
+ somewhere
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Constant Strength Vortex Distribution 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+10.2.3, add figure
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+In general,
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{gather}
+\Phi_{0}=-\frac{\gamma_{0}}{2\pi}\intop_{x_{1}}^{x_{2}}\tan^{-1}\left(\frac{z}{x-x_{0}}\right)\,\text{d}x_{0}=-\frac{\gamma_{0}}{2\pi}\left[\left(x-x_{1}\right)\theta_{1}-\left(x-x_{2}\right)\theta_{2}+\frac{z}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\right]\\
+u_{0}=\frac{\gamma_{0}}{2\pi}\intop_{x_{1}}^{x_{2}}\frac{z}{\left(x-x_{0}\right)^{2}+z^{2}}\,\text{d}x_{0}=\frac{\gamma_{0}}{2\pi}\left(\theta_{2}-\theta_{1}\right)\\
+w_{0}=-\frac{\gamma_{0}}{2\pi}\intop_{x_{1}}^{x_{2}}\frac{x-x_{0}}{\left(x-x_{0}\right)+z^{2}}\,\text{d}x_{0}=-\frac{\gamma_{0}}{2\pi}\ln\left(\frac{r_{1}}{r_{2}}\right)
+\end{gather}
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+For the case where 
+\begin_inset Formula $\left(x,z\right)$
+\end_inset
+
+ lies on the element and where 
+\begin_inset Formula $x$
+\end_inset
+
+ is the midpoint, 
+\begin_inset Formula $x_{m}=\frac{x_{1}+x_{2}}{2}$
+\end_inset
+
+,
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\Phi_{0}\left(x,\pm0\right) & =\pm\frac{\gamma_{0}}{2}\left(x-x_{2}\right) & \Phi_{0}\left(x_{m},\pm0\right) & =\pm\frac{\gamma_{0}}{4}\left(x_{1}-x_{2}\right)\\
+u_{0}\left(x,\pm0\right) & =\pm\frac{\gamma_{0}}{2} & u_{0}\left(x_{m},\pm0\right) & =\pm\frac{\gamma_{0}}{2}\\
+w_{0}\left(x,\pm0\right) & =\frac{\gamma_{0}}{2\pi}\ln\left(\frac{r_{2}}{r_{1}}\right) & w_{0}\left(x_{m},\pm0\right) & =0
+\end{align}
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Linear Vortex Distribution 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+10.3.3, add figure
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+In general,
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{gather}
+\Phi_{1}=-\frac{\gamma_{1}}{2\pi}\intop_{x_{1}}^{x_{2}}x_{0}\tan^{-1}\left(\frac{z}{x-x_{0}}\right)\,\text{d}x_{0}=-\frac{\gamma_{1}}{2\pi}\left[\frac{xz}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+\frac{z}{2}\left(x_{1}-x_{2}\right)+\frac{x^{2}-x_{1}^{2}-z^{2}}{2}\theta_{1}-\frac{x^{2}-x_{2}^{2}-z^{2}}{2}\theta_{2}\right]
+\end{gather}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+u_{1} & =\frac{\gamma_{1}}{2\pi}\intop_{x_{1}}^{x_{2}}\frac{x_{0}z}{\left(x-x_{0}\right)^{2}+z^{2}}\,\text{d}x_{0}=-\frac{\gamma_{1}}{2\pi}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]\\
+w_{1} & =-\frac{\gamma_{1}}{2\pi}\intop_{x_{1}}^{x_{2}}\frac{x_{0}\left(x-x_{0}\right)}{\left(x-x_{0}\right)+z^{2}}\,\text{d}x_{0}=-\frac{\gamma_{1}}{2\pi}\left[x\ln\left(\frac{r_{1}}{r_{2}}\right)+\left(x_{1}-x_{2}\right)+z\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align}
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+For the case where 
+\begin_inset Formula $\left(x,z\right)$
+\end_inset
+
+ lies on the element and where 
+\begin_inset Formula $x$
+\end_inset
+
+ is the midpoint, 
+\begin_inset Formula $x_{m}=\frac{x_{1}+x_{2}}{2}$
+\end_inset
+
+,
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\Phi_{1}\left(x,\pm0\right) & =\pm\frac{\gamma_{1}}{4}\left(x^{2}-x_{2}^{2}\right) & \Phi_{1}\left(x_{m},\pm0\right) & =\pm\frac{\gamma_{1}}{16}\left(x_{1}^{2}+2x_{1}x_{2}-3x_{2}^{2}\right)\\
+u_{1}\left(x,\pm0\right) & =\pm\frac{\gamma_{1}}{2}x & u_{1}\left(x_{m},\pm0\right) & =\pm\frac{\gamma_{1}}{4}\left(x_{1}+x_{2}\right)\\
+w_{1}\left(x,\pm0\right) & =\frac{\gamma_{1}}{2\pi}\left[x\ln\left(\frac{x-x_{1}}{\left|x-x_{2}\right|}\right)+\left(x_{1}-x_{2}\right)\right] & w_{1}\left(x_{m},\pm0\right) & =-\frac{\gamma_{1}}{2\pi}\left(x_{1}-x_{2}\right)
+\end{align}
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For a linearly varying vortex strength panel method, the sum of potential
+ flows should be used for 
+\begin_inset Formula $\gamma=\gamma_{0}+\gamma_{1}\left(x-x_{1}\right)$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+11.4.2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Derivation for velocity potential
+\end_layout
+
+\begin_layout Plain Layout
+Sum two potentials together
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{align*}
+\Phi_{p}=\Phi_{0}+\Phi_{1} & =-\frac{\gamma_{0}}{2\pi}\left[\left(x-x_{1}\right)\theta_{1}-\left(x-x_{2}\right)\theta_{2}+\frac{z}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\right]\\
+ & \qquad-\frac{\gamma_{1}}{2\pi}\left[\frac{xz}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)-\frac{z}{2}\left(x_{1}-x_{2}\right)+\frac{x^{2}-x_{1}^{2}-z^{2}}{2}\theta_{1}-\frac{x^{2}-x_{2}^{2}-z^{2}}{2}\theta_{2}\right]
+\end{align*}
+
+\end_inset
+
+NOTE: changed from +z/2(x1-x2) to -z/2(x1-x2) in Hugh's notes
+\end_layout
+
+\begin_layout Plain Layout
+Convert to a and b
+\begin_inset Formula 
+\begin{align*}
+\Phi_{p}= & -\frac{\gamma_{a}}{2\pi}\left[\left(x-x_{1}\right)\theta_{1}-\left(x-x_{2}\right)\theta_{2}+\frac{z}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\right]\\
+ & \qquad-\frac{\gamma_{b}-\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[\frac{xz}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+\frac{z}{2}\left(x_{1}-x_{2}\right)+\frac{x^{2}-x_{1}^{2}-z^{2}}{2}\theta_{1}-\frac{x^{2}-x_{2}^{2}-z^{2}}{2}\theta_{2}\right]
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\Phi_{p}= & -\frac{\gamma_{a}}{2\pi}\left[\left(x-x_{1}\right)\theta_{1}-\left(x-x_{2}\right)\theta_{2}+\frac{z}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\right]\\
+ & \qquad-\frac{\gamma_{a}}{2\pi}\left[-\frac{xz}{2\left(x_{2}-x_{1}\right)}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)-\frac{z}{2}\frac{\left(x_{1}-x_{2}\right)}{\left(x_{2}-x_{1}\right)}-\frac{x^{2}-x_{1}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\theta_{1}+\frac{x^{2}-x_{2}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\theta_{2}\right]\\
+ & \qquad-\frac{\gamma_{b}}{2\pi}\left[\frac{xz}{2\left(x_{2}-x_{1}\right)}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+\frac{z}{2}\frac{\left(x_{1}-x_{2}\right)}{\left(x_{2}-x_{1}\right)}+\frac{x^{2}-x_{1}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\theta_{1}-\frac{x^{2}-x_{2}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\theta_{2}\right]
+\end{align*}
+
+\end_inset
+
+Separate a and b
+\begin_inset Formula 
+\begin{align*}
+\Phi_{p}\left(\gamma_{a}\right) & =-\frac{1}{2\pi}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\left(\frac{z}{2}-\frac{xz}{2\left(x_{2}-x_{1}\right)}\right)+\frac{z}{2}\right]\\
+ & \qquad-\frac{1}{2\pi}\left[\theta_{1}\left(\left(x-x_{1}\right)-\frac{x^{2}-x_{1}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)-\theta_{2}\left(\left(x-x_{2}\right)-\frac{x^{2}-x_{2}^{2}-z}{2\left(x_{2}-x_{1}\right)}\right)\right]\\
+\Phi_{p}\left(\gamma_{b}\right) & =-\frac{1}{2\pi}\left[\frac{xz}{2\left(x_{2}-x_{1}\right)}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)-\frac{z}{2}\right]\\
+ & \qquad-\frac{1}{2\pi}\left[\frac{x^{2}-x_{1}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\theta_{1}-\frac{x^{2}-x_{2}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\theta_{2}\right]
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\Phi_{p}\left(\gamma_{a}\right) & =-\frac{z}{4\pi}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\left(1-\frac{x}{x_{2}-x_{1}}\right)+1\right]\\
+ & \qquad-\frac{1}{2\pi}\left[\theta_{1}\left(\left(x-x_{1}\right)-\frac{x^{2}-x_{1}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)-\theta_{2}\left(\left(x-x_{2}\right)-\frac{x^{2}-x_{2}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)\right]\\
+\Phi_{p}\left(\gamma_{b}\right) & =-\frac{z}{4\pi}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\frac{x}{x_{2}-x_{1}}-1\right]-\frac{1}{2\pi}\left[\theta_{1}\left(\frac{x^{2}-x_{1}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)-\theta_{2}\left(\frac{x^{2}-x_{2}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)\right]
+\end{align*}
+
+\end_inset
+
+Sub x1 = 0
+\begin_inset Formula 
+\begin{align*}
+\Phi_{p}\left(\gamma_{a}\right) & =-\frac{z}{4\pi}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\left(1-\frac{x}{x_{2}}\right)+1\right]\\
+ & \qquad-\frac{1}{2\pi}\left[\theta_{1}\left(x-\frac{x^{2}-z^{2}}{2x_{2}}\right)-\theta_{2}\left(\left(x-x_{2}\right)-\frac{x^{2}-x_{2}^{2}-z^{2}}{2x_{2}}\right)\right]\\
+\Phi_{p}\left(\gamma_{b}\right) & =-\frac{z}{4\pi}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\frac{x}{x_{2}}-1\right]-\frac{1}{2\pi}\left[\theta_{1}\left(\frac{x^{2}-z^{2}}{2x_{2}}\right)-\theta_{2}\left(\frac{x^{2}-x_{2}^{2}-z^{2}}{2x_{2}}\right)\right]
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\Phi_{p}\left(\gamma_{a}\right) & =-\frac{z}{4\pi x_{2}}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\left(x_{2}-x\right)+x_{2}\right]\\
+ & \qquad-\frac{1}{4\pi x_{2}}\left[\theta_{1}\left(-x^{2}+2xx_{2}+z^{2}\right)-\theta_{2}\left(-x^{2}+2xx_{2}+z^{2}-x_{2}^{2}\right)\right]\\
+\Phi_{p}\left(\gamma_{b}\right) & =-\frac{z}{4\pi x_{2}}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)x-x_{2}\right]-\frac{1}{4\pi x_{2}}\left[\theta_{1}\left(x^{2}-z^{2}\right)-\theta_{2}\left(x^{2}-x_{2}^{2}-z^{2}\right)\right]
+\end{align*}
+
+\end_inset
+
+Simplified result
+\begin_inset Formula 
+\begin{align*}
+\Phi_{p}\left(\gamma_{a}\right) & =-\frac{z}{4\pi x_{2}}\left[\left(x_{2}-x\right)\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+x_{2}\right]-\frac{1}{4\pi x_{2}}\left[\left(-x^{2}+2xx_{2}+z^{2}\right)\left(\theta_{1}-\theta_{2}\right)+x_{2}^{2}\theta_{2}\right]\\
+\Phi_{p}\left(\gamma_{b}\right) & =-\frac{z}{4\pi x_{2}}\left[x\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)-x_{2}\right]-\frac{1}{4\pi x_{2}}\left[\left(x^{2}-z^{2}\right)\left(\theta_{1}-\theta_{2}\right)+x_{2}^{2}\theta_{2}\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Derivation for u velocity
+\end_layout
+
+\begin_layout Plain Layout
+Sum two potentials together
+\begin_inset Formula 
+\[
+u_{p}=u_{0}+u_{1}=\frac{\gamma_{0}}{2\pi}\left(\theta_{2}-\theta_{1}\right)-\frac{\gamma_{1}}{2\pi}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]
+\]
+
+\end_inset
+
+Convert to a and b
+\begin_inset Formula 
+\[
+u_{p}=\frac{\gamma_{a}}{2\pi}\left(\theta_{2}-\theta_{1}\right)-\frac{\gamma_{b}-\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+u_{p}=\frac{\gamma_{a}}{2\pi}\left(\theta_{2}-\theta_{1}\right)+\frac{\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]-\frac{\gamma_{b}}{2\pi\left(x_{2}-x_{1}\right)}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+u_{p} & =\frac{\gamma_{a}}{2\pi}\left(\theta_{2}-\theta_{1}\right)+\frac{\gamma_{a}}{2\pi}\left[\frac{z}{x_{2}-x_{1}}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{x}{x_{2}-x_{1}}\left(\theta_{2}-\theta_{1}\right)\right]\\
+ & \qquad-\frac{\gamma_{b}}{2\pi}\left[\frac{z}{x_{2}-x_{1}}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{x}{x_{2}-x_{1}}\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+Separate a and b
+\begin_inset Formula 
+\begin{align*}
+u_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi}\left[\left(\theta_{2}-\theta_{1}\right)+\frac{z}{x_{2}-x_{1}}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{x}{x_{2}-x_{1}}\left(\theta_{2}-\theta_{1}\right)\right]\\
+u_{p}\left(\gamma_{b}\right) & =-\frac{1}{2\pi}\left[\frac{z}{x_{2}-x_{1}}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{x}{x_{2}-x_{1}}\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+Sub x1 = 0
+\begin_inset Formula 
+\begin{align*}
+u_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi}\left[\left(\theta_{2}-\theta_{1}\right)+\frac{z}{x_{2}}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{x}{x_{2}}\left(\theta_{2}-\theta_{1}\right)\right]\\
+u_{p}\left(\gamma_{b}\right) & =-\frac{1}{2\pi}\left[\frac{z}{x_{2}}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{x}{x_{2}}\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+Simplified result
+\begin_inset Formula 
+\begin{align*}
+u_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi x_{2}}\left[x_{2}\left(\theta_{2}-\theta_{1}\right)+z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]\\
+u_{p}\left(\gamma_{b}\right) & =-\frac{1}{2\pi x_{2}}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+u_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi x_{2}}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)+\left(\theta_{2}-\theta_{1}\right)\left(x_{2}-x\right)\right]\\
+u_{p}\left(\gamma_{b}\right) & =-\frac{1}{2\pi x_{2}}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+u_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi x_{2}}\left[-z\ln\left(\frac{r_{2}}{r_{1}}\right)+\left(x_{2}-x\right)\left(\theta_{2}-\theta_{1}\right)\right]\\
+u_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[z\ln\left(\frac{r_{2}}{r_{1}}\right)+x\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Derivation for v velocity
+\end_layout
+
+\begin_layout Plain Layout
+Sum two potentials together
+\begin_inset Formula 
+\[
+w_{p}=w_{0}+w_{1}=-\frac{\gamma_{0}}{2\pi}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{\gamma_{1}}{2\pi}\left[x\ln\left(\frac{r_{1}}{r_{2}}\right)+\left(x_{1}-x_{2}\right)+z\left(\theta_{2}-\theta_{1}\right)\right]
+\]
+
+\end_inset
+
+NOTE: had errors using +g0/2pi
+\end_layout
+
+\begin_layout Plain Layout
+Convert to a and b
+\begin_inset Formula 
+\[
+w_{p}=-\frac{\gamma_{a}}{2\pi}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{\gamma_{b}-\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[x\ln\left(\frac{r_{1}}{r_{2}}\right)+\left(x_{1}-x_{2}\right)+z\left(\theta_{2}-\theta_{1}\right)\right]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+w_{p} & =-\frac{\gamma_{a}}{2\pi}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[-x\ln\left(\frac{r_{1}}{r_{2}}\right)-\left(x_{1}-x_{2}\right)-z\left(\theta_{2}-\theta_{1}\right)\right]\\
+ & \qquad-\frac{\gamma_{b}}{2\pi\left(x_{2}-x_{1}\right)}\left[x\ln\left(\frac{r_{1}}{r_{2}}\right)+\left(x_{1}-x_{2}\right)+z\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+Separate a and b
+\begin_inset Formula 
+\begin{align*}
+w_{p}\left(\gamma_{a}\right) & =-\frac{1}{2\pi}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{1}{2\pi\left(x_{2}-x_{1}\right)}\left[-x\ln\left(\frac{r_{1}}{r_{2}}\right)-\left(x_{1}-x_{2}\right)-z\left(\theta_{2}-\theta_{1}\right)\right]\\
+w_{p}\left(\gamma_{b}\right) & =-\frac{1}{2\pi\left(x_{2}-x_{1}\right)}\left[x\ln\left(\frac{r_{1}}{r_{2}}\right)+\left(x_{1}-x_{2}\right)+z\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+Sub x1 = 0
+\begin_inset Formula 
+\begin{align*}
+w_{p}\left(\gamma_{a}\right) & =-\frac{1}{2\pi}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{1}{2\pi x_{2}}\left[-x\ln\left(\frac{r_{1}}{r_{2}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]\\
+w_{p}\left(\gamma_{b}\right) & =-\frac{1}{2\pi x_{2}}\left[x\ln\left(\frac{r_{1}}{r_{2}}\right)-x_{2}+z\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+Simplified result
+\begin_inset Formula 
+\begin{align*}
+w_{p}\left(\gamma_{a}\right) & =-\frac{1}{2\pi x_{2}}\left[x_{2}\ln\left(\frac{r_{1}}{r_{2}}\right)-x\ln\left(\frac{r_{1}}{r_{2}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]\\
+w_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[-x\ln\left(\frac{r_{1}}{r_{2}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+w_{p}\left(\gamma_{a}\right) & =-\frac{1}{2\pi x_{2}}\left[\left(x_{2}-x\right)\ln\left(\frac{r_{1}}{r_{2}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]\\
+w_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[-x\ln\left(\frac{r_{1}}{r_{2}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+w_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi x_{2}}\left[\left(x_{2}-x\right)\ln\left(\frac{r_{2}}{r_{1}}\right)-x_{2}+z\left(\theta_{2}-\theta_{1}\right)\right]\\
+w_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[x\ln\left(\frac{r_{2}}{r_{1}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Panel coordinate system in terms of 
+\begin_inset Formula $\gamma_{0}$
+\end_inset
+
+ (constant) and 
+\begin_inset Formula $\gamma_{1}$
+\end_inset
+
+ (linear)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\Phi_{p}=\Phi_{0}+\Phi_{1} & =-\frac{\gamma_{0}}{2\pi}\left[\left(x-x_{1}\right)\theta_{1}-\left(x-x_{2}\right)\theta_{2}+\frac{z}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\right]\nonumber \\
+ & \qquad-\frac{\gamma_{1}}{2\pi}\left[\frac{xz}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+\frac{z}{2}\left(x_{1}-x_{2}\right)+\frac{x^{2}-x_{1}^{2}-z^{2}}{2}\theta_{1}-\frac{x^{2}-x_{2}^{2}-z^{2}}{2}\theta_{2}\right]\\
+u_{p}=u_{0}+u_{1} & =\frac{\gamma_{0}}{2\pi}\left(\theta_{2}-\theta_{1}\right)-\frac{\gamma_{1}}{2\pi}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]\\
+w_{p}=w_{0}+w_{1} & =-\frac{\gamma_{0}}{2\pi}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{\gamma_{1}}{2\pi}\left[x\ln\left(\frac{r_{1}}{r_{2}}\right)+\left(x_{1}-x_{2}\right)+z\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align}
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Panel coordinate system in terms of 
+\begin_inset Formula $\gamma_{a}$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma_{b}$
+\end_inset
+
+ where
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\gamma_{a} & =\gamma_{0}\quad\text{and}\quad\gamma_{b}=\gamma_{0}+\gamma_{1}\left(x_{2}-x_{1}\right)\\
+\gamma_{0} & =\gamma_{a}\quad\text{and}\quad\gamma_{1}=\frac{\gamma_{b}-\gamma_{a}}{x_{2}-x_{1}}
+\end{align}
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+Rewriting in term of 
+\begin_inset Formula $\gamma_{a}$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma_{b}$
+\end_inset
+
+ yields
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\Phi_{p}= & -\frac{\gamma_{a}}{2\pi}\left[\left(x-x_{1}\right)\theta_{1}-\left(x-x_{2}\right)\theta_{2}+\frac{z}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\right]\nonumber \\
+ & \qquad-\frac{\gamma_{b}-\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[\frac{xz}{2}\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+\frac{z}{2}\left(x_{1}-x_{2}\right)+\frac{x^{2}-x_{1}^{2}-z^{2}}{2}\theta_{1}-\frac{x^{2}-x_{2}^{2}-z^{2}}{2}\theta_{2}\right]\\
+u_{p} & =\frac{\gamma_{a}}{2\pi}\left(\theta_{2}-\theta_{1}\right)-\frac{\gamma_{b}-\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[z\ln\left(\frac{r_{1}}{r_{2}}\right)-x\left(\theta_{2}-\theta_{1}\right)\right]\\
+w_{p} & =-\frac{\gamma_{a}}{2\pi}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{\gamma_{b}-\gamma_{a}}{2\pi\left(x_{2}-x_{1}\right)}\left[x\ln\left(\frac{r_{1}}{r_{2}}\right)+\left(x_{1}-x_{2}\right)+z\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align}
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Each of these expressions can now be written as functions of 
+\begin_inset Formula $\gamma_{a}$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma_{b}$
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\Phi_{p}\left(\gamma_{a}\right) & =-\frac{z}{4\pi}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\left(1-\frac{x}{x_{2}-x_{1}}\right)+1\right]-\frac{1}{2\pi}\left[\theta_{1}\left(\left(x-x_{1}\right)-\frac{x^{2}-x_{1}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)-\theta_{2}\left(\left(x-x_{2}\right)-\frac{x^{2}-x_{2}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)\right]\\
+\Phi_{p}\left(\gamma_{b}\right) & =-\frac{z}{4\pi}\left[\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)\frac{x}{x_{2}-x_{1}}-1\right]-\frac{1}{2\pi}\left[\theta_{1}\left(\frac{x^{2}-x_{1}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)-\theta_{2}\left(\frac{x^{2}-x_{2}^{2}-z^{2}}{2\left(x_{2}-x_{1}\right)}\right)\right]
+\end{align}
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+u_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi}\left[\left(\theta_{2}-\theta_{1}\right)+\frac{z}{x_{2}-x_{1}}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{x}{x_{2}-x_{1}}\left(\theta_{2}-\theta_{1}\right)\right]\\
+u_{p}\left(\gamma_{b}\right) & =-\frac{1}{2\pi}\left[\frac{z}{x_{2}-x_{1}}\ln\left(\frac{r_{1}}{r_{2}}\right)-\frac{x}{x_{2}-x_{1}}\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align}
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+w_{p}\left(\gamma_{a}\right) & =-\frac{1}{2\pi}\left[\left(1-\frac{x}{x_{2}-x_{1}}\right)\ln\left(\frac{r_{2}}{r_{1}}\right)+1-\frac{z}{x_{2}-x_{1}}\left(\theta_{2}-\theta_{1}\right)\right]\\
+w_{p}\left(\gamma_{b}\right) & =-\frac{1}{2\pi}\left[\frac{x}{x_{2}-x_{1}}\ln\left(\frac{r_{1}}{r_{2}}\right)-1+\frac{z}{x_{2}-x_{1}}\left(\theta_{2}-\theta_{1}\right)\right]
+\end{align}
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+In the local panel coordinates, define 
+\begin_inset Formula $\left(x_{1},y_{1}\right)=\left(0,0\right)$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+i.e.
+ use the transformation
+\begin_inset Formula 
+\begin{equation}
+\begin{bmatrix}x_{p}\\
+y_{p}
+\end{bmatrix}=\begin{bmatrix}\cos\left(\theta\right) & -\sin\left(\theta\right)\\
+\sin\left(\theta\right) & \cos\left(\theta\right)
+\end{bmatrix}\left(\begin{bmatrix}x\\
+y
+\end{bmatrix}-\begin{bmatrix}x_{1}\\
+y_{1}
+\end{bmatrix}\right)
+\end{equation}
+
+\end_inset
+
+Thus, the equations can be significantly simplified to
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\Phi_{p}\left(\gamma_{a}\right) & =-\frac{z}{4\pi x_{2}}\left[\left(x_{2}-x\right)\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)+x_{2}\right]-\frac{1}{4\pi x_{2}}\left[\left(-x^{2}+2xx_{2}+z^{2}\right)\left(\theta_{1}-\theta_{2}\right)+x_{2}^{2}\theta_{2}\right]\\
+\Phi_{p}\left(\gamma_{b}\right) & =-\frac{z}{4\pi x_{2}}\left[x\ln\left(\frac{r_{1}^{2}}{r_{2}^{2}}\right)-x_{2}\right]-\frac{1}{4\pi x_{2}}\left[\left(x^{2}-z^{2}\right)\left(\theta_{1}-\theta_{2}\right)+x_{2}^{2}\theta_{2}\right]
+\end{align}
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+u_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi x_{2}}\left[-z\ln\left(\frac{r_{2}}{r_{1}}\right)+\left(x_{2}-x\right)\left(\theta_{2}-\theta_{1}\right)\right]\label{eq:up ga}\\
+u_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[z\ln\left(\frac{r_{2}}{r_{1}}\right)+x\left(\theta_{2}-\theta_{1}\right)\right]\label{eq:up gb}
+\end{align}
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+w_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi x_{2}}\left[\left(x_{2}-x\right)\ln\left(\frac{r_{2}}{r_{1}}\right)-x_{2}+z\left(\theta_{2}-\theta_{1}\right)\right]\label{eq:wp ga}\\
+w_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[x\ln\left(\frac{r_{2}}{r_{1}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]\label{eq:wp gb}
+\end{align}
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Combine to form K matrix
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Steady Panel Method Validation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Screenshot of cylinder and screenshot of NACA0012 output vs K&C
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Shed Vortices
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+In the sample MATLAB file, Lamb-Oseen vortices are used 
+\end_layout
+
+\begin_layout Plain Layout
+https://en.wikipedia.org/wiki/Lamb%E2%80%93Oseen_vortex
+\end_layout
+
+\begin_layout Plain Layout
+MAJOR PROBLEM: 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ is defined into the page due to 
+\begin_inset Formula $\left(x,z\right)$
+\end_inset
+
+ but for me 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ is defined out of the page 
+\begin_inset Formula $\left(x,y\right)$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Two-Dimensional Point Vortex 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+10.1.3, add figure
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\Phi_{\bullet} & =-\frac{\Gamma_{\bullet}}{2\pi}\tan^{-1}\left(\frac{z-z_{0}}{x-x_{0}}\right)\\
+u_{\bullet} & =\frac{\Gamma_{\bullet}}{2\pi}\frac{z-z_{0}}{\left(x-x_{0}\right)^{2}+\left(z-z_{0}\right)^{2}}\\
+w_{\bullet} & =-\frac{\Gamma_{\bullet}}{2\pi}\frac{x-x_{0}}{\left(x-x_{0}\right)^{2}+\left(z-z_{0}\right)^{2}}
+\end{align}
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Movement of shed vortices defined as
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Unsteady Panel Method Formulation
+\end_layout
+
+\begin_layout Enumerate
+Constants for all time steps following the formulation in Katz and Plotkin
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Reference
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Determine panel collocation points 
+\begin_inset Formula $\left(x,y\right)_{i}$
+\end_inset
+
+, unit normal vectors 
+\begin_inset Formula $\vec{n}_{i}$
+\end_inset
+
+, unit tangent 
+\begin_inset Formula $\vec{t}_{i}$
+\end_inset
+
+ and panel lengths 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Determine the influence coefficients 
+\begin_inset Formula $K_{ij}$
+\end_inset
+
+ using the standard method for a linearly varying strength vortex sheet
+ panel method.
+ 
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{gather}
+K_{i,j}=\left(u,w\right)_{i,j}\cdot\vec{n}_{i}=\left[\left(u_{b},w_{b}\right)_{i,j-1}+\left(u_{a},w_{a}\right)_{i,j}\right]\cdot\vec{n}_{i},\quad j\ne1,N+1\\
+K_{i,1}=\left(u_{a},w_{a}\right)_{i,1}\cdot\vec{n}_{i}\quad\text{and}\quad K_{i,N+1}=\left(u_{b},w_{b}\right)_{i,N+1}\cdot\vec{n}_{i}
+\end{gather}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+where 
+\begin_inset Formula $\left(u_{a},w_{a}\right)=\left(u_{p}\left(\gamma_{a}\right),w_{p}\left(\gamma_{a}\right)\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(u_{b},w_{b}\right)=\left(u_{p}\left(\gamma_{b}\right),w_{p}\left(\gamma_{b}\right)\right)$
+\end_inset
+
+ as defined in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:up ga"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:wp ga"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:up gb"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:wp gb"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+There are 
+\begin_inset Formula $N+1$
+\end_inset
+
+ unknowns, 
+\begin_inset Formula $\gamma_{1},\gamma_{2},\ldots\gamma_{N+1}$
+\end_inset
+
+, and 
+\begin_inset Formula $N$
+\end_inset
+
+ equations for 
+\begin_inset Formula $K_{i,j}$
+\end_inset
+
+ panels 
+\begin_inset Formula $1,2,\ldots,N$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+At the start of time 
+\begin_inset Formula $t=t_{k}$
+\end_inset
+
+, denoted by 
+\begin_inset Formula $t=t_{k}^{+}$
+\end_inset
+
+, the strength of the point vortices 
+\begin_inset Formula $\Gamma_{1},\Gamma_{2},\ldots,\Gamma_{W}$
+\end_inset
+
+ are known from the previous time steps 
+\begin_inset Formula $t=1,2,\ldots,k-1$
+\end_inset
+
+ since 
+\begin_inset Formula $k=W$
+\end_inset
+
+.
+ A constant strength vortex panel, 
+\begin_inset Formula $\gamma_{c}$
+\end_inset
+
+, is introduced.
+ The length of the panel, 
+\begin_inset Formula $r_{w}$
+\end_inset
+
+, orientation, 
+\begin_inset Formula $\theta_{w}$
+\end_inset
+
+, and the influence coefficients 
+\begin_inset Formula $L_{i,k}$
+\end_inset
+
+ must be determined.
+\begin_inset Newline newline
+\end_inset
+
+The formulation in 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+reference is followed
+\end_layout
+
+\end_inset
+
+ is followed.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The strength of the panel 
+\begin_inset Formula $\gamma_{c}$
+\end_inset
+
+ is determined by considering 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+reference is followed
+\end_layout
+
+\end_inset
+
+ to arrive at 
+\begin_inset Formula $\gamma_{1}+\gamma_{N+1}=\gamma_{c}$
+\end_inset
+
+.
+ Kelvin's theorem is used to get to 
+\begin_inset Formula $\sum\left(C_{j}\gamma_{j}\right)+\sum\left(\Gamma_{k}\right)+C_{w}\gamma_{c}=0$
+\end_inset
+
+.
+ This is shown in matrix form below, however it is clear that the solution
+ depends on the 
+\begin_inset Formula $C_{w}$
+\end_inset
+
+.
+\begin_inset Formula 
+\begin{equation}
+\begin{bmatrix}1 & \cdots & 1 & 0 & \cdots & 0 & -1\\
+C_{1} & \cdots & C_{N+1} & 1 & \cdots & 1 & C_{W}
+\end{bmatrix}\begin{bmatrix}\gamma_{1}\\
+\vdots\\
+\gamma_{N+1}\\
+\Gamma_{1}\\
+\vdots\\
+\Gamma_{W}\\
+\gamma_{c}
+\end{bmatrix}=\begin{bmatrix}0\\
+0
+\end{bmatrix}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{gather}
+C_{j}=\frac{1}{2}\left(c_{j-1}+c_{j}\right),\quad j\ne1,N+1\\
+C_{1}=\frac{1}{2}c_{1}\quad\text{and}\quad C_{N+1}=\frac{1}{2}c_{N+1}
+\end{gather}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+To lie on the trailing edge streamline, the panel should be parallel to
+ the flow coming off the trailing edge and with a distance, 
+\begin_inset Formula $C_{w}$
+\end_inset
+
+, equal to 
+\begin_inset Formula $\sqrt{u^{2}+v^{2}}\times\left(t_{k+1}-t_{k}\right)$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{gather}
+\begin{bmatrix}C_{w}\cos\left(\theta_{w}\right)\\
+C_{w}\sin\left(\theta_{w}\right)
+\end{bmatrix}=\begin{bmatrix}u\cdot\left(t_{k+1}-t_{k}\right)\\
+v\cdot\left(t_{k+1}-t_{k}\right)
+\end{bmatrix}\qquad\nonumber \\
+\qquad=\begin{bmatrix}K_{u,1} & \cdots & K_{u,N+1} & L_{u,1} & \cdots & L_{u,W} & M_{u}\\
+K_{w,1} & \cdots & K_{w,N+1} & L_{w,1} & \cdots & L_{w,W} & M_{w}
+\end{bmatrix}\begin{bmatrix}\gamma_{1}\\
+\vdots\\
+\gamma_{N+1}\\
+\Gamma_{1}\\
+\vdots\\
+\Gamma_{W}\\
+\gamma_{c}
+\end{bmatrix}\times\left(t_{k+1}-t_{k}\right)
+\end{gather}
+
+\end_inset
+
+
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{gather}
+K_{u,j}=\left(u_{b}\right)_{i,j-1}+\left(u_{a}\right)_{i,j},\quad j\ne1,N+1\\
+K_{u,1}=\left(u_{a}\right)_{i,1}\quad\text{and}\quad K_{u,N+1}=\left(u_{b}\right)_{i,N+1}
+\end{gather}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{gather}
+K_{w,j}=\left(w_{b}\right)_{i,j-1}+\left(w_{a}\right)_{i,j},\quad j\ne1,N+1\\
+K_{w,1}=\left(w_{a}\right)_{i,1}\quad\text{and}\quad K_{w,N+1}=\left(w_{b}\right)_{i,N+1}
+\end{gather}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+It is immediately clear that 
+\begin_inset Formula $L_{u,k},L_{w,k},M_{u},M_{w}$
+\end_inset
+
+ depend on the location of 
+\begin_inset Formula $\Gamma_{1},\Gamma_{2},\ldots,\Gamma_{W}$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma_{c}$
+\end_inset
+
+ which have not been determined yet.
+ Thus, an iterative process is required.
+\end_layout
+
+\begin_layout Enumerate
+The movement of the vortices can be found as <> 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+To finish
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+For the shed panel, there are 3 unknowns 
+\begin_inset Formula $\gamma_{c},C_{w},\theta_{w}$
+\end_inset
+
+ and 4 equations
+\end_layout
+
+\begin_layout Itemize
+For the location of the point vortices, there are 
+\begin_inset Formula $2W$
+\end_inset
+
+ unknowns and 
+\begin_inset Formula $2W$
+\end_inset
+
+ equations
+\end_layout
+
+\begin_layout Itemize
+Thus, the complete formulation is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{bmatrix}K_{1,1} & K_{1,2} & \cdots & K_{1,N} & K_{1,N+1} & L_{1,1} & \cdots & L_{1,W} & M_{1}\\
+K_{2,1} & K_{2,2} & \cdots & K_{2,N} & K_{2,N+1} & L_{2,1} & \cdots & L_{2,W} & M_{2}\\
+\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
+K_{N,1} & K_{N,2} & \cdots & K_{N,N} & K_{N,N+1} & L_{N,N+1} & \cdots & L_{N,W} & M_{N}\\
+1 & 0 & \cdots & 0 & 1 & 0 & \cdots & 0 & -1\\
+C_{1} & C_{2} & \cdots & C_{N} & C_{N+1} & 1 & \cdots & 1 & C_{W}
+\end{bmatrix}\begin{bmatrix}\gamma_{1}\\
+\gamma_{2}\\
+\vdots\\
+\gamma_{N}\\
+\gamma_{N+1}\\
+\Gamma_{1}\\
+\vdots\\
+\Gamma_{W}\\
+\gamma_{c}
+\end{bmatrix}=\begin{bmatrix}-\vec{u}\cdot\vec{n}_{1}\\
+-\vec{u}\cdot\vec{n}_{2}\\
+\vdots\\
+-\vec{u}\cdot\vec{n}_{N}\\
+0\\
+0
+\end{bmatrix}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+M_{i}=\left(u,w\right)_{i}\cdot\vec{n}_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+At end of the period 
+\begin_inset Formula $\left(t_{k+1}-t_{k}\right)$
+\end_inset
+
+, denoted by 
+\begin_inset Formula $t_{k+1}^{-}$
+\end_inset
+
+, the panel sheet is replaced by a point vortex.
+ This is to reduce the computation time requirement and avoid the need to
+ calculate the change in vorticity due to stretching and compressing of
+ elements.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Determine the influence coefficients 
+\begin_inset Formula $L_{i,k}$
+\end_inset
+
+ for the point vortices of known strength (from the previous time period),
+ 
+\begin_inset Formula $\Gamma_{1},\Gamma_{2},\ldots\Gamma_{W}$
+\end_inset
+
+ where 
+\begin_inset Formula $\Gamma_{1}$
+\end_inset
+
+ indicates the first (
+\begin_inset Quotes eld
+\end_inset
+
+oldest
+\begin_inset Quotes erd
+\end_inset
+
+) point vortex.
+\begin_inset Formula 
+\[
+L_{i,k}=\left(u,w\right)_{i,k}\cdot\vec{n}_{i}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\left(u,w\right)_{i,k}$
+\end_inset
+
+ is 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Show the K matrix and revised Kutta condition
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{gather*}
+K_{i,j}=\left(u,w\right)_{i,j}\cdot\vec{n}_{i}=\left[\left(u_{b},w_{b}\right)_{i,j-1}+\left(u_{a},w_{a}\right)_{i,j}\right]\cdot\vec{n}_{i},\quad j\ne1,N+1\\
+L_{i,l}=\left(u,w\right)_{i,l}\cdot\vec{n}_{i}\quad\text{and}\quad M_{i}=\left(u,w\right)_{i}\cdot\vec{n}_{i}
+\end{gather*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+C_{j}=\frac{1}{2}\left(c_{j-1}+c_{j}\right),\quad j\ne1,N+1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Not sure why I added this: Separation in Unsteady Flows
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
-Separation in Unsteady Flows
+Post-Processing Scripts
+\end_layout
+
+\begin_layout Subsection
+Semtex Files
+\end_layout
+
+\begin_layout Subsubsection
+Add Vorticity Fields
+\end_layout
+
+\begin_layout Standard
+Four additional fields were required in order to determine the values of
+ 
+\begin_inset Formula $\omega,\frac{\partial\omega}{\partial x},\frac{\partial\omega}{\partial y},\frac{\partial p}{\partial x},\frac{\partial p}{\partial y}$
+\end_inset
+
+.
+ This was achieved by adding five additional 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+AuxField
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={C++},numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\ttfamily\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+// Add new flag case for command line
+\end_layout
+
+\begin_layout Plain Layout
+
+case 'G': flag[VORTGEN]      = true; break;
+\end_layout
+
+\begin_layout Plain Layout
+
+// Declare VortGen
+\end_layout
+
+\begin_layout Plain Layout
+
+  vector<AuxField*>          VortGen;
+\end_layout
+
+\begin_layout Plain Layout
+
+  vector<real_t*>            VortGenData;
+\end_layout
+
+\begin_layout Plain Layout
+
+// Handle flags from command line
+\end_layout
+
+\begin_layout Plain Layout
+
+ if (need[VORTGEN]) {
+\end_layout
+
+\begin_layout Plain Layout
+
+    VortGen    .resize (5);
+\end_layout
+
+\begin_layout Plain Layout
+
+    VortGenData.resize (5);
+\end_layout
+
+\begin_layout Plain Layout
+
+    for (i = 0; i < 5; i++) { 
+\end_layout
+
+\begin_layout Plain Layout
+
+      VortGenData[i]   = new real_t [allocSize];
+\end_layout
+
+\begin_layout Plain Layout
+
+      VortGen[i]       = new AuxField (VortGenData[i],nz,elmt,'k'+i);
+\end_layout
+
+\begin_layout Plain Layout
+
+      addField[iAdd++] = VortGen[i]; 
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+// while (getDump(D, file))
+\end_layout
+
+\begin_layout Plain Layout
+
+//  for(i = 0; i < allocSize; i++)
+\end_layout
+
+\begin_layout Plain Layout
+
+      if (need[VORTGEN]) { // Only for 2 dimensions 
+\end_layout
+
+\begin_layout Plain Layout
+
+        tensor3::vorticity (tensor, vort);
+\end_layout
+
+\begin_layout Plain Layout
+
+        VortGenData[4][i] = vort[2];          // o = omega
+\end_layout
+
+\begin_layout Plain Layout
+
+      }
+\end_layout
+
+\begin_layout Plain Layout
+
+//  finish looping over each point i
+\end_layout
+
+\begin_layout Plain Layout
+
+    if (need[VORTGEN]) { // Only for 2 dimensions 
+\end_layout
+
+\begin_layout Plain Layout
+
+      (*VortGen[0]  = *VortGen[4]).gradient(0); // k = do/dx
+\end_layout
+
+\begin_layout Plain Layout
+
+      (*VortGen[1]  = *VortGen[4]).gradient(1); // l = do/dy
+\end_layout
+
+\begin_layout Plain Layout
+
+      (*VortGen[2]  = *pressure)  .gradient(0); // m = dp/dx
+\end_layout
+
+\begin_layout Plain Layout
+
+      (*VortGen[3]  = *pressure)  .gradient(1); // n = dp/dy
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+// finish getDump
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Exerts of modifications to addfield.cpp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Wall Gradients
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={C++},numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\ttfamily\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+// static void printWalls (...)
+\end_layout
+
+\begin_layout Plain Layout
+
+  std::cout.precision(16);
+\end_layout
+
+\begin_layout Plain Layout
+
+  cout << 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    setw(24) << "x"  << setw(24) << "y"  << 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    setw(24) << "nx" << setw(24)     << "ny" << setw(24) << "area" << 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    setw(10) << "k"  << setw(10) << "s"  << endl;
+\end_layout
+
+\begin_layout Plain Layout
+
+  for (i = 0; i < Nedge; i++)
+\end_layout
+
+\begin_layout Plain Layout
+
+    if (strstr (bman -> groupInfo (edge[i] -> group), "wall")) {
+\end_layout
+
+\begin_layout Plain Layout
+
+      k = edge[i] -> elmt;
+\end_layout
+
+\begin_layout Plain Layout
+
+      s = edge[i] -> side;
+\end_layout
+
+\begin_layout Plain Layout
+
+      elmt[k] -> sideGeom(s, &xs[0], &ys[0], &nxs[0], &nys[0], &area[0]);
+\end_layout
+
+\begin_layout Plain Layout
+
+      for (j = 0; j < np; j++) {
+\end_layout
+
+\begin_layout Plain Layout
+
+	      cout << 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	        setw(24) << xs [j] << setw(24) << ys [j] << 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	        setw(24) << nxs[j] << setw(24) << nys[j] << 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	        setw(24) << area[j] << 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	        setw(10) << k + 1  << setw(10) << s + 1  << endl;
+\end_layout
+
+\begin_layout Plain Layout
+
+      }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Exerts of modifications to wallmesh.cpp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+NACA0012
+\end_layout
+
+\begin_layout Subsubsection
+NACA0012 Remesh
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Bash Scripts
+\end_layout
+
+\begin_layout Subsubsection
+Convergence Study
+\end_layout
+
+\begin_layout Standard
+This scripts takes all *.sesh files and copies them into a /results folder.
+ Semtex is called to perform DNS and Semtex utilities used to generate useful
+ output.
+ Important outputs include: 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+addvortfield
+\end_layout
+
+\end_inset
+
+ to create 
+\begin_inset Formula $\omega,\frac{\partial\omega}{\partial x},\frac{\partial\omega}{\partial y},\frac{\partial p}{\partial x},\frac{\partial p}{\partial y}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+wallgrad
+\end_layout
+
+\end_inset
+
+ to generate the wall surface and normals
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+convert
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+csplit
+\end_layout
+
+\end_inset
+
+ to output separate ASCII text files of the field dump for each time step
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=bash,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\ttfamily\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}},morekeywords={mkdir, cp, grep, mv, rm}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# Create required folders (if necessary)
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir -p results
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir -p images
+\end_layout
+
+\begin_layout Plain Layout
+
+# Create array of N_P to loop over
+\end_layout
+
+\begin_layout Plain Layout
+
+N_P=( 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 )
+\end_layout
+
+\begin_layout Plain Layout
+
+# Run dns on each N_P case
+\end_layout
+
+\begin_layout Plain Layout
+
+for i in $N_P[*]; do
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Set N_P in session file and move to new unique folder
+\end_layout
+
+\begin_layout Plain Layout
+
+  name=$(printf "%02d" i)
+\end_layout
+
+\begin_layout Plain Layout
+
+  echo N_P = $name
+\end_layout
+
+\begin_layout Plain Layout
+
+  mkdir -p results/NACA0012-N_P$name
+\end_layout
+
+\begin_layout Plain Layout
+
+  sed "s/N_P = X/N_P       = $i/g" 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    naca0012 >     results/NACA0012-N_P$name/naca0012-N_P$name.sesh
+\end_layout
+
+\begin_layout Plain Layout
+
+  cp bndry_prf.dat results/NACA0012-N_P$name/bndry_prf.dat
+\end_layout
+
+\begin_layout Plain Layout
+
+  cd results/NACA0012-N_P$name
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Run dns on session file
+\end_layout
+
+\begin_layout Plain Layout
+
+  for sessionfile in *.sesh; do
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Move setup files into unique folder
+\end_layout
+
+\begin_layout Plain Layout
+
+    f="${sessionfile%.*}"                   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    cp $sessionfile  $f                     &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Run semtex
+\end_layout
+
+\begin_layout Plain Layout
+
+    meshpr    $f > $f.msh                   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    meshpr -i $f > $f.mshi                  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    enumerate $f > $f.num                   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    dns $f | grep "Divergence Energy:"      &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Run semtex utilities
+\end_layout
+
+\begin_layout Plain Layout
+
+    addvortfield -G -s $f $f.fld > $f.Gfld  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    convert  $f.Gfld   > $f.flddump         &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    wallgrad $f $f.msh > $f.wallgrad        &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Create ASCII dump for post processing
+\end_layout
+
+\begin_layout Plain Layout
+
+    csplit -z "$f.flddump" /Session/ '{*}' >/dev/null &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    for i in [xx]*; do 
+\end_layout
+
+\begin_layout Plain Layout
+
+      mv $i "$f-${i#*xx}.dump"; done                  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    echo $sessionfile complete
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Finish
+\end_layout
+
+\begin_layout Plain Layout
+
+    rm $f.msh $f.num $f.fld $f.Gfld $f.mdl $f.flddump $f.his
+\end_layout
+
+\begin_layout Plain Layout
+
+  done
+\end_layout
+
+\begin_layout Plain Layout
+
+  cd ../..
+\end_layout
+
+\begin_layout Plain Layout
+
+done
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Bash script to perform DNS for convergence study
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Element-by-element Integration
+\end_layout
+
+\begin_layout Standard
+This scripts takes all *.sesh files and copies them into a /results folder.
+ Semtex is called to perform DNS and Semtex utilities used to generate useful
+ output.
+ Important outputs include:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+massmat
+\end_layout
+
+\end_inset
+
+ is used to create the system mass matrix for all points (element-by-element)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+integral
+\end_layout
+
+\end_inset
+
+ has been modified to output the integration per element
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=bash,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}},morekeywords={mkdir, cp, grep, mv, rm}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# Create required folders (if necessary)
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir -p results
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir -p images
+\end_layout
+
+\begin_layout Plain Layout
+
+# Run dns on each session file
+\end_layout
+
+\begin_layout Plain Layout
+
+for sessionfile in *.sesh; do
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Move setup files into results
+\end_layout
+
+\begin_layout Plain Layout
+
+  f="${sessionfile%.*}"                   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  cp $sessionfile  results/$sessionfile   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  cp bndry_prf.dat results/bndry_prf.dat  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  cd results                              &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  cp $sessionfile  $f                     &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Run semtex
+\end_layout
+
+\begin_layout Plain Layout
+
+  meshpr    $f > $f.msh                   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  meshpr -i $f > $f.mshi                  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  massmat   $f > $f.mass                  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  enumerate $f > $f.num                   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  dns $f | grep "Divergence Energy:"      &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Run semtex utilities
+\end_layout
+
+\begin_layout Plain Layout
+
+  addvortfield -G -s $f $f.fld > $f.Gfld  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  convert  $f.Gfld    > $f.flddump        &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  compare  $f $f.fld  > /dev/null         &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  wallmesh $f $f.msh  > $f.wallmsh        &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  wallgrad $f $f.msh  > $f.wallgrad       &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Create ASCII dump for post processing
+\end_layout
+
+\begin_layout Plain Layout
+
+  csplit -z "$f.flddump" /Session/ '{*}' >/dev/null   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  for i in [xx]*; do 
+\end_layout
+
+\begin_layout Plain Layout
+
+    mv $i "$f-${i#*xx}.dump";     done                &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Create integral ASCII dump to compare to massmat
+\end_layout
+
+\begin_layout Plain Layout
+
+  integral $f $f.Gfld > $f.integral       &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  csplit -z "$f.integral" /timestep/ '{*}' >/dev/null &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  for i in [xx]*; do 
+\end_layout
+
+\begin_layout Plain Layout
+
+    mv $i "$f-${i#*xx}.integral"; done                &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Finish
+\end_layout
+
+\begin_layout Plain Layout
+
+  echo 
+\begin_inset Quotes eld
+\end_inset
+
+$sessionfile complete
+\begin_inset Quotes eld
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  cd ..
+\end_layout
+
+\begin_layout Plain Layout
+
+done
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Bash script to integrate element-by-element across the domain
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Generating Tecplot Output
+\end_layout
+
+\begin_layout Standard
+This scripts takes all *.sesh files and copies them into a /results folder.
+ Semtex is called to perform DNS and Semtex utilities used to generate useful
+ output.
+ Tecplot *plt outputs are placed in a /tecplot folder.
+ Important outputs include:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+time=$(...)
+\end_layout
+
+\end_inset
+
+ reads in the time from the ASCII dump file
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+sem2tec
+\end_layout
+
+\end_inset
+
+ converts the ASCII dump to a (non-interpolated) Tecplot *dat format
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+preplot
+\end_layout
+
+\end_inset
+
+ converts the *dat file to a binary *plt file
+\end_layout
+
+\begin_layout Standard
+Note that 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+preplot
+\end_layout
+
+\end_inset
+
+ packaged with semtex came from 1993 and does not have the 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+SOLUTIONTIME
+\end_layout
+
+\end_inset
+
+ token.
+ Thus, the 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+preplot
+\end_layout
+
+\end_inset
+
+ program packaged with Tecplot (in /bin) was used instead.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=bash,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}},morekeywords={mkdir, cp, grep, mv, rm}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# Create required folders (if necessary)
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir -p results
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir -p images
+\end_layout
+
+\begin_layout Plain Layout
+
+# Run dns on each session file
+\end_layout
+
+\begin_layout Plain Layout
+
+for sessionfile in *.sesh; do
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Move setup files into results
+\end_layout
+
+\begin_layout Plain Layout
+
+  f="${sessionfile%.*}"                   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  cp $sessionfile  results/$sessionfile   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  cp bndry_prf.dat results/bndry_prf.dat  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  cd results                              &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  cp $sessionfile  $f                     &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Run semtex
+\end_layout
+
+\begin_layout Plain Layout
+
+  meshpr    $f > $f.msh                   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  meshpr -i $f > $f.mshi                  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  massmat   $f > $f.mass                  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  enumerate $f > $f.num                   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  dns $f | grep "Divergence Energy:"      &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Run semtex utilities
+\end_layout
+
+\begin_layout Plain Layout
+
+  addvortfield -G -s $f $f.fld > $f.Gfld  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  convert  $f.Gfld    > $f.flddump        &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  compare  $f $f.fld  > /dev/null         &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  wallmesh $f $f.msh  > $f.wallmsh        &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  wallgrad $f $f.msh  > $f.wallgrad       &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Create ASCII dump for post processing
+\end_layout
+
+\begin_layout Plain Layout
+
+  csplit -z "$f.flddump" /Session/ '{*}' >/dev/null   &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  for i in [xx]*; do 
+\end_layout
+
+\begin_layout Plain Layout
+
+    dump="$f-${i#*xx}"                    &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    mv $i $dump.dump                      &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Add SOLUTIONTIME and call preplot (tecplot360 2018 R1)
+\end_layout
+
+\begin_layout Plain Layout
+
+    time=$(sed -n '5p' $dump.dump | grep -Eo "[0-9]+
+\backslash
+.[0-9]+") &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    echo $time                            &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    sem2tec -n 0 -o $dump.dat -m $f.msh $dump.dump             &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    sed -i "/POINT/s/$/, SOLUTIONTIME=$time/" $dump.dat        &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    preplot $dump.dat > /dev/null         &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    rm $dump.dat                          &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    mv $dump.plt ../tecplot/$dump.plt     &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  done                                    &&
+\end_layout
+
+\begin_layout Plain Layout
+
+  echo $sessionfile complete
+\end_layout
+
+\begin_layout Plain Layout
+
+  cd ..
+\end_layout
+
+\begin_layout Plain Layout
+
+done
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Bash script to generate Tecplot files for each time step
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+R Scripts
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Bash script to integrate element-by-element across the domain
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body
