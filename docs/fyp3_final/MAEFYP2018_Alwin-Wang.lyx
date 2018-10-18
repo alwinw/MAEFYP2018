@@ -3429,7 +3429,7 @@ status open
 \begin_inset Formula 
 \begin{align}
 -\nu\vec{n}\cdot\nabla\vec{\omega} & =-\vec{n}\times\nabla\vec{P}-\vec{t}\cdot\vec{a}\left(t\right)\label{eq:VortGen}\\
--v\frac{\partial\omega}{\partial z} & =-\frac{1}{\rho}\frac{\partial p}{\partial s}-\frac{\text{d}V\left(t\right)}{\text{d}t}\cos\left(\theta\right)\label{eq:VortGenLegend}
+\underset{\text{"LHSG"}}{\underbrace{-v\frac{\partial\omega}{\partial z}}} & =\underset{\text{"RHSG"}}{\underbrace{-\frac{1}{\rho}\frac{\partial p}{\partial s}-\frac{\text{d}V\left(t\right)}{\text{d}t}\cos\left(\theta\right)}}\label{eq:VortGenLegend}
 \end{align}
 
 \end_inset
@@ -3762,11 +3762,15 @@ converged
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Velocity of the Trailing Edge
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Note Note
 status open
 
@@ -3784,6 +3788,11 @@ converged
 \end_inset
 
  mesh
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -4481,18 +4490,24 @@ Steady Panel Method Derivation
 \end_layout
 
 \begin_layout Standard
-This derivation follows the work of Katz & Plotkin and Kuethe & Chow.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-NEED TO ADD REFERENCES
-\end_layout
+This derivation follows the work of Katz & Plotkin 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "KatzPlotkin2001"
+literal "false"
 
 \end_inset
 
+ and Kuethe & Chow 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "KuetheChow1997"
+literal "false"
 
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -5589,16 +5604,14 @@ Unsteady Panel Method Formulation
 \begin_layout Enumerate
 Constants for all time steps following the formulation in Katz and Plotkin
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Reference
-\end_layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "KatzPlotkin2001"
+literal "false"
 
 \end_inset
 
-
+.
 \end_layout
 
 \begin_deeper
@@ -5767,13 +5780,20 @@ At the start of time
 \begin_inset Newline newline
 \end_inset
 
-The formulation in 
-\begin_inset Note Note
-status open
+The formulation by Wu et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Wu2004"
+literal "false"
 
-\begin_layout Plain Layout
-reference is followed
-\end_layout
+\end_inset
+
+ and Giesing 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Giesing1968"
+literal "false"
 
 \end_inset
 
@@ -5786,13 +5806,12 @@ The strength of the panel
 \begin_inset Formula $\gamma_{c}$
 \end_inset
 
- is determined by considering 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-reference is followed
-\end_layout
+ is determined by considering Wu et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Wu2004"
+literal "false"
 
 \end_inset
 
@@ -6716,6 +6735,11 @@ for i in $N_P[*]; do
 \begin_layout Plain Layout
 
     meshpr -i $f > $f.mshi                  &&
+\end_layout
+
+\begin_layout Plain Layout
+
+    massmat   $f > $f.mass                  &&
 \end_layout
 
 \begin_layout Plain Layout
