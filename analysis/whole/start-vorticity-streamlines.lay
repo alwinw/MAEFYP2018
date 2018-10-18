@@ -1,0 +1,745 @@
+#!MC 1410
+$!VarSet |LFDSFN1| = '"tecplot/NACA0012r-49.plt" "tecplot/NACA0012r-50.plt" "tecplot/NACA0012r-51.plt" "tecplot/NACA0012r-52.plt" "tecplot/NACA0012r-53.plt" "tecplot/NACA0012r-54.plt" "tecplot/NACA0012r-55.plt" "tecplot/NACA0012r-56.plt" "tecplot/NACA0012r-57.plt" "tecplot/NACA0012r-58.plt" "tecplot/NACA0012r-59.plt" "tecplot/NACA0012r-60.plt" "tecplot/NACA0012r-61.plt" "tecplot/NACA0012r-62.plt" "tecplot/NACA0012r-63.plt" "tecplot/NACA0012r-64.plt" "tecplot/NACA0012r-65.plt" "tecplot/NACA0012r-66.plt" "tecplot/NACA0012r-67.plt" "tecplot/NACA0012r-68.plt" "tecplot/NACA0012r-69.plt" "tecplot/NACA0012r-70.plt" "tecplot/NACA0012r-71.plt" "tecplot/NACA0012r-72.plt" "tecplot/NACA0012r-73.plt" "tecplot/NACA0012r-74.plt" "tecplot/NACA0012r-75.plt" "tecplot/NACA0012r-76.plt" "tecplot/NACA0012r-77.plt" "tecplot/NACA0012r-78.plt" "tecplot/NACA0012r-79.plt" "tecplot/NACA0012r-80.plt" "tecplot/NACA0012r-81.plt" "tecplot/NACA0012r-82.plt" "tecplot/NACA0012r-83.plt" "tecplot/NACA0012r-84.plt" "tecplot/NACA0012r-85.plt" "tecplot/NACA0012r-86.plt" "tecplot/NACA0012r-87.plt" "tecplot/NACA0012r-88.plt" "tecplot/NACA0012r-89.plt" "tecplot/NACA0012r-90.plt" "tecplot/NACA0012r-91.plt" "tecplot/NACA0012r-92.plt" "tecplot/NACA0012r-93.plt" "tecplot/NACA0012r-94.plt" "tecplot/NACA0012r-95.plt" "tecplot/NACA0012r-96.plt" "tecplot/NACA0012r-97.plt" "tecplot/NACA0012r-98.plt" "tecplot/NACA0012r-99.plt" "tecplot/NACA0012r-100.plt" "tecplot/NACA0012r-101.plt" "tecplot/NACA0012r-102.plt" "tecplot/NACA0012r-103.plt" "tecplot/NACA0012r-104.plt" "tecplot/NACA0012r-105.plt" "tecplot/NACA0012r-106.plt" "tecplot/NACA0012r-107.plt" "tecplot/NACA0012r-108.plt" "tecplot/NACA0012r-109.plt" "tecplot/NACA0012r-110.plt" "tecplot/NACA0012r-111.plt" "tecplot/NACA0012r-112.plt" "tecplot/NACA0012r-113.plt" "tecplot/NACA0012r-114.plt" "tecplot/NACA0012r-115.plt" "tecplot/NACA0012r-116.plt" "tecplot/NACA0012r-117.plt" "tecplot/NACA0012r-118.plt" "tecplot/NACA0012r-119.plt" "tecplot/NACA0012r-120.plt" "tecplot/NACA0012r-121.plt" "tecplot/NACA0012r-122.plt" "tecplot/NACA0012r-123.plt" "tecplot/NACA0012r-124.plt" "tecplot/NACA0012r-125.plt" "tecplot/NACA0012r-126.plt" "tecplot/NACA0012r-127.plt" "tecplot/NACA0012r-128.plt" "tecplot/NACA0012r-129.plt" "tecplot/NACA0012r-130.plt" "tecplot/NACA0012r-131.plt" "tecplot/NACA0012r-132.plt" "tecplot/NACA0012r-133.plt" "tecplot/NACA0012r-134.plt" "tecplot/NACA0012r-135.plt" "tecplot/NACA0012r-136.plt" "tecplot/NACA0012r-137.plt" "tecplot/NACA0012r-138.plt" "tecplot/NACA0012r-139.plt" "tecplot/NACA0012r-140.plt" "tecplot/NACA0012r-141.plt" "tecplot/NACA0012r-142.plt" "tecplot/NACA0012r-143.plt" "tecplot/NACA0012r-144.plt" "tecplot/NACA0012r-145.plt" "tecplot/NACA0012r-146.plt" "tecplot/NACA0012r-147.plt" "tecplot/NACA0012r-148.plt" "tecplot/NACA0012r-149.plt" "tecplot/NACA0012r-150.plt" "tecplot/NACA0012r-151.plt" "tecplot/NACA0012r-152.plt" "tecplot/NACA0012r-153.plt" "tecplot/NACA0012r-154.plt" "tecplot/NACA0012r-155.plt" "tecplot/NACA0012r-156.plt" "tecplot/NACA0012r-157.plt" "tecplot/NACA0012r-158.plt" "tecplot/NACA0012r-159.plt" "tecplot/NACA0012r-160.plt" "tecplot/NACA0012r-161.plt" "tecplot/NACA0012r-162.plt" "tecplot/NACA0012r-163.plt" "tecplot/NACA0012r-164.plt" "tecplot/NACA0012r-165.plt" "tecplot/NACA0012r-166.plt" "tecplot/NACA0012r-167.plt" "tecplot/NACA0012r-168.plt" "tecplot/NACA0012r-169.plt" "tecplot/NACA0012r-170.plt" "tecplot/NACA0012r-171.plt" "tecplot/NACA0012r-172.plt" "tecplot/NACA0012r-173.plt" "tecplot/NACA0012r-174.plt" "tecplot/NACA0012r-175.plt" "tecplot/NACA0012r-176.plt" "tecplot/NACA0012r-177.plt" "tecplot/NACA0012r-178.plt" "tecplot/NACA0012r-179.plt" "tecplot/NACA0012r-180.plt" "tecplot/NACA0012r-181.plt" "tecplot/NACA0012r-182.plt" "tecplot/NACA0012r-183.plt" "tecplot/NACA0012r-184.plt" "tecplot/NACA0012r-185.plt" "tecplot/NACA0012r-186.plt" "tecplot/NACA0012r-187.plt" "tecplot/NACA0012r-188.plt" "tecplot/NACA0012r-189.plt" "tecplot/NACA0012r-190.plt" "tecplot/NACA0012r-191.plt" "tecplot/NACA0012r-192.plt" "tecplot/NACA0012r-193.plt" "tecplot/NACA0012r-194.plt" "tecplot/NACA0012r-195.plt" "tecplot/NACA0012r-196.plt" "tecplot/NACA0012r-197.plt" "tecplot/NACA0012r-198.plt" "tecplot/NACA0012r-199.plt" "tecplot/NACA0012r-200.plt" "tecplot/NACA0012r-201.plt" "tecplot/NACA0012r-202.plt" "tecplot/NACA0012r-203.plt" "tecplot/NACA0012r-204.plt" "tecplot/NACA0012r-205.plt" "tecplot/NACA0012r-206.plt" "tecplot/NACA0012r-207.plt" "tecplot/NACA0012r-208.plt" "tecplot/NACA0012r-209.plt" "tecplot/NACA0012r-210.plt" "tecplot/NACA0012r-211.plt" "tecplot/NACA0012r-212.plt" "tecplot/NACA0012r-213.plt" "tecplot/NACA0012r-214.plt" "tecplot/NACA0012r-215.plt" "tecplot/NACA0012r-216.plt" "tecplot/NACA0012r-217.plt" "tecplot/NACA0012r-218.plt" "tecplot/NACA0012r-219.plt" "tecplot/NACA0012r-220.plt" "tecplot/NACA0012r-221.plt" "tecplot/NACA0012r-222.plt" "tecplot/NACA0012r-223.plt" "tecplot/NACA0012r-224.plt" "tecplot/NACA0012r-225.plt" "tecplot/NACA0012r-226.plt" "tecplot/NACA0012r-227.plt" "tecplot/NACA0012r-228.plt" "tecplot/NACA0012r-229.plt" "tecplot/NACA0012r-230.plt" "tecplot/NACA0012r-231.plt" "tecplot/NACA0012r-232.plt" "tecplot/NACA0012r-233.plt" "tecplot/NACA0012r-234.plt" "tecplot/NACA0012r-235.plt" "tecplot/NACA0012r-236.plt" "tecplot/NACA0012r-237.plt" "tecplot/NACA0012r-238.plt" "tecplot/NACA0012r-239.plt" "tecplot/NACA0012r-240.plt" "tecplot/NACA0012r-241.plt" "tecplot/NACA0012r-242.plt" "tecplot/NACA0012r-243.plt" "tecplot/NACA0012r-244.plt" "tecplot/NACA0012r-245.plt" "tecplot/NACA0012r-246.plt" "tecplot/NACA0012r-247.plt" "tecplot/NACA0012r-248.plt" "tecplot/NACA0012r-249.plt"'
+$!VarSet |LFDSVL1| = '"X" "Y" "u" "v" "p" "k" "l" "m" "n" "o"'
+$!SetStyleBase Factory
+$!GlobalPaper 
+  PaperSizeInfo
+    {
+    Letter
+      {
+      Width = 8.5
+      Height = 11
+      LeftHardClipOffset = 0.125
+      RightHardClipOffset = 0.125
+      TopHardClipOffset = 0.125
+      BottomHardClipOffset = 0.125
+      }
+    }
+$!Page 
+  Name = 'Untitled'
+  PaperAttributes
+    {
+    BackgroundColor = White
+    IsTransparent = Yes
+    OrientPortrait = No
+    ShowGrid = Yes
+    ShowRuler = No
+    ShowPaper = No
+    PaperSize = Letter
+    RulerSpacing = OneInch
+    PaperGridSpacing = HalfInch
+    RegionInWorkArea
+      {
+      X1 = 1
+      Y1 = 0.25
+      X2 = 10
+      Y2 = 8.25
+      }
+    }
+### Frame Number 1 ###
+$!ReadDataSet  '|LFDSFN1|'
+  InitialPlotType = Cartesian2D
+  IncludeText = No
+  IncludeGeom = No
+  AssignStrandIDs = Yes
+  VarLoadMode = ByName
+  VarNameList = '|LFDSVL1|'
+$!RemoveVar |LFDSVL1|
+$!RemoveVar |LFDSFN1|
+$!FrameLayout 
+  ShowHeader = No
+  HeaderColor = Red
+  XYPos
+    {
+    X = 1
+    Y = 0.25
+    }
+  Width = 9
+  Height = 8
+$!ThreeDAxis 
+  AspectRatioLimit = 25
+  BoxAspectRatioLimit = 25
+$!PlotType  = Cartesian2D
+$!FrameName  = 'Frame 001'
+$!GlobalTime 
+  SolutionTime = 0.25
+$!ActiveFieldMaps  =  [1-989]
+$!GlobalRGB 
+  RedChannelVar = 3
+  GreenChannelVar = 3
+  BlueChannelVar = 3
+  RangeMin = 0
+  RangeMax = 1
+$!GlobalContour  1
+  Var = 10
+  ColorMapName = 'Diverging - Blue/Red'
+  DefNumLevels = 31
+  Legend
+    {
+    Show = Yes
+    XYPos
+      {
+      X = 95
+      }
+    }
+  ColorCutoff
+    {
+    RangeMax = 0
+    }
+  ColorMapFilter
+    {
+    ContinuousColor
+      {
+      CMin = 0
+      CMax = 0
+      }
+    }
+$!ContourLevels New
+  ContourGroup = 1
+  RawData
+31
+-300
+-280
+-260
+-240
+-220
+-200
+-180
+-160
+-140
+-120
+-100
+-80
+-60
+-40
+-20
+0
+20
+40
+60
+80
+100
+120
+140
+160
+180
+200
+220
+240
+260
+280
+300
+$!GlobalContour  2
+  Var = 6
+  Legend
+    {
+    Show = Yes
+    XYPos
+      {
+      X = 95
+      }
+    }
+  ColorMapFilter
+    {
+    ContinuousColor
+      {
+      CMin = 0
+      CMax = 1
+      }
+    }
+$!ContourLevels New
+  ContourGroup = 2
+  RawData
+9
+-300000
+-250000
+-200000
+-150000
+-100000
+-50000
+0
+50000
+100000
+$!GlobalContour  3
+  Var = 7
+  Legend
+    {
+    Show = Yes
+    XYPos
+      {
+      X = 95
+      }
+    }
+  ColorMapFilter
+    {
+    ContinuousColor
+      {
+      CMin = 0
+      CMax = 1
+      }
+    }
+$!ContourLevels New
+  ContourGroup = 3
+  RawData
+15
+-140000
+-120000
+-100000
+-80000
+-60000
+-40000
+-20000
+0
+20000
+40000
+60000
+80000
+100000
+120000
+140000
+$!GlobalContour  4
+  Var = 8
+  Legend
+    {
+    Show = Yes
+    XYPos
+      {
+      X = 95
+      }
+    }
+  ColorMapFilter
+    {
+    ContinuousColor
+      {
+      CMin = 0
+      CMax = 1
+      }
+    }
+$!ContourLevels New
+  ContourGroup = 4
+  RawData
+11
+-25
+-20
+-15
+-10
+-5
+0
+5
+10
+15
+20
+25
+$!GlobalContour  5
+  Var = 9
+  Legend
+    {
+    Show = Yes
+    XYPos
+      {
+      X = 95
+      }
+    }
+  ColorMapFilter
+    {
+    ContinuousColor
+      {
+      CMin = 0
+      CMax = 1
+      }
+    }
+$!ContourLevels New
+  ContourGroup = 5
+  RawData
+10
+-30
+-25
+-20
+-15
+-10
+-5
+0
+5
+10
+15
+$!GlobalContour  6
+  Var = 10
+  Legend
+    {
+    Show = Yes
+    XYPos
+      {
+      X = 95
+      }
+    }
+  ColorMapFilter
+    {
+    ContinuousColor
+      {
+      CMin = 0
+      CMax = 1
+      }
+    }
+$!ContourLevels New
+  ContourGroup = 6
+  RawData
+10
+-600
+-500
+-400
+-300
+-200
+-100
+0
+100
+200
+300
+$!GlobalContour  7
+  Var = 5
+  Legend
+    {
+    Show = Yes
+    XYPos
+      {
+      X = 95
+      }
+    }
+  ColorMapFilter
+    {
+    ContinuousColor
+      {
+      CMin = 0
+      CMax = 1
+      }
+    }
+$!ContourLevels New
+  ContourGroup = 7
+  RawData
+19
+-0.4
+-0.35
+-0.3
+-0.25
+-0.2
+-0.15
+-0.1
+-0.05
+0
+0.05
+0.1
+0.15
+0.2
+0.25
+0.3
+0.35
+0.4
+0.45
+0.5
+$!GlobalContour  8
+  Var = 5
+  Legend
+    {
+    Show = Yes
+    XYPos
+      {
+      X = 95
+      }
+    }
+  ColorMapFilter
+    {
+    ContinuousColor
+      {
+      CMin = 0
+      CMax = 1
+      }
+    }
+$!ContourLevels New
+  ContourGroup = 8
+  RawData
+19
+-0.4
+-0.35
+-0.3
+-0.25
+-0.2
+-0.15
+-0.1
+-0.05
+0
+0.05
+0.1
+0.15
+0.2
+0.25
+0.3
+0.35
+0.4
+0.45
+0.5
+$!GlobalTwoDVector 
+  UVar = 3
+  VVar = 4
+  RelativeLength = 0.0006
+$!GlobalScatter 
+  Legend
+    {
+    XYPos
+      {
+      X = 95
+      }
+    }
+  RefScatSymbol
+    {
+    Color = Red
+    FillColor = Red
+    }
+$!FieldMap  [1-989]
+  Mesh
+    {
+    Color = Black
+    }
+  Contour
+    {
+    ContourType = Flood
+    Color = Black
+    UseLightingEffect = Yes
+    }
+  Vector
+    {
+    Color = Black
+    }
+  Scatter
+    {
+    Color = Black
+    }
+  Shade
+    {
+    Color = Custom2
+    }
+  EdgeLayer
+    {
+    Show = Yes
+    Color = Black
+    LineThickness = 0.1
+    }
+  Points
+    {
+    PointsToPlot = SurfaceNodes
+    }
+  Surfaces
+    {
+    SurfacesToPlot = KPlanes
+    IRange
+      {
+      Max = 1
+      }
+    }
+  VolumeMode
+    {
+    VolumeObjectsToPlot
+      {
+      ShowIsosurfaces = No
+      ShowSlices = No
+      ShowStreamtraces = No
+      }
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    }
+$!TwoDAxis 
+  XDetail
+    {
+    VarNum = 1
+    }
+  YDetail
+    {
+    VarNum = 2
+    }
+$!View Fit
+$!TwoDAxis 
+  DepXToYRatio = 1
+  ViewportPosition
+    {
+    Y2 = 86
+    }
+$!TwoDAxis 
+  XDetail
+    {
+    RangeMin = 0.59128270309564667784
+    RangeMax = 0.62572569243425479879
+    GRSpacing = 0.005
+    }
+$!TwoDAxis 
+  YDetail
+    {
+    RangeMin = -0.057846957987708669258
+    RangeMax = -0.027230967464501452946
+    GRSpacing = 0.005
+    }
+$!IsoSurfaceAttributes  1
+  IsoSurfaceSelection = OneSpecificValue
+  Isovalue1 = 0
+  Isovalue2 = 0
+  Isovalue3 = 0
+  Effects
+    {
+    LightingEffect = Gouraud
+    }
+$!IsoSurfaceAttributes  2
+  DefinitionContourGroup = 2
+  IsoSurfaceSelection = OneSpecificValue
+  Contour
+    {
+    LineContourGroup = 2
+    FloodColoring = Group2
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    }
+$!IsoSurfaceAttributes  3
+  DefinitionContourGroup = 3
+  IsoSurfaceSelection = OneSpecificValue
+  Contour
+    {
+    LineContourGroup = 3
+    FloodColoring = Group3
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    }
+$!IsoSurfaceAttributes  4
+  DefinitionContourGroup = 4
+  IsoSurfaceSelection = OneSpecificValue
+  Contour
+    {
+    LineContourGroup = 4
+    FloodColoring = Group4
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    }
+$!IsoSurfaceAttributes  5
+  DefinitionContourGroup = 5
+  IsoSurfaceSelection = OneSpecificValue
+  Contour
+    {
+    LineContourGroup = 5
+    FloodColoring = Group5
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    }
+$!IsoSurfaceAttributes  6
+  DefinitionContourGroup = 6
+  IsoSurfaceSelection = OneSpecificValue
+  Contour
+    {
+    LineContourGroup = 6
+    FloodColoring = Group6
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    }
+$!IsoSurfaceAttributes  7
+  DefinitionContourGroup = 7
+  IsoSurfaceSelection = OneSpecificValue
+  Contour
+    {
+    LineContourGroup = 7
+    FloodColoring = Group7
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    }
+$!IsoSurfaceAttributes  8
+  DefinitionContourGroup = 8
+  IsoSurfaceSelection = OneSpecificValue
+  Contour
+    {
+    LineContourGroup = 8
+    FloodColoring = Group8
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    }
+$!SliceAttributes  1
+  PrimaryPosition
+    {
+    X = 0
+    Y = 0
+    Z = 0
+    I = 1
+    J = 1
+    K = 1
+    }
+  EdgeLayer
+    {
+    Show = No
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    SurfaceTranslucency = 10
+    }
+  SliceConstraint
+    {
+    Include = No
+    Origin
+      {
+      X = 0
+      Y = 0
+      Z = 0
+      }
+    BoxDimension
+      {
+      X = 0
+      Y = 0
+      Z = 0
+      }
+    }
+$!SliceAttributes  2
+  SliceSurface = YPlanes
+  EdgeLayer
+    {
+    Show = No
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    SurfaceTranslucency = 10
+    }
+$!SliceAttributes  3
+  SliceSurface = ZPlanes
+  EdgeLayer
+    {
+    Show = No
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    SurfaceTranslucency = 10
+    }
+$!SliceAttributes  4
+  EdgeLayer
+    {
+    Show = No
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    SurfaceTranslucency = 10
+    }
+$!SliceAttributes  5
+  SliceSurface = YPlanes
+  EdgeLayer
+    {
+    Show = No
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    SurfaceTranslucency = 10
+    }
+$!SliceAttributes  6
+  SliceSurface = ZPlanes
+  EdgeLayer
+    {
+    Show = No
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    SurfaceTranslucency = 10
+    }
+$!SliceAttributes  7
+  EdgeLayer
+    {
+    Show = No
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    SurfaceTranslucency = 10
+    }
+$!SliceAttributes  8
+  SliceSurface = YPlanes
+  EdgeLayer
+    {
+    Show = No
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    SurfaceTranslucency = 10
+    }
+$!Streamtrace Add
+  StreamType = TwoDLine
+  StreamDirection = Both
+  StartPos
+    {
+    X = 0.604772635622948
+    Y = -0.0422992488041813
+    }
+  AltStartPos
+    {
+    X = 0.6047805675365709
+    Y = -0.0422935831515935
+    }
+$!Streamtrace Add
+  StreamType = TwoDLine
+  StreamDirection = Both
+  StartPos
+    {
+    X = 0.4714767239833463
+    Y = -0.01060791712157396
+    }
+  AltStartPos
+    {
+    X = 0.5899822381538873
+    Y = -0.0385915411277833
+    }
+$!Streamtrace SetTerminationLine
+  RawData
+2
+1.38569152468 0.291698365464
+1.38569152468 -0.392624032719
+$!StreamAttributes 
+  TermLine
+    {
+    IsActive = Yes
+    }
+  StreamTiming
+    {
+    MarkSize = 1
+    TimeDelta = 0.00106618249229
+    MarkSymbol
+      {
+      GeomShape = Sphere
+      }
+    }
+  RodRibbon
+    {
+    Effects
+      {
+      LightingEffect = Gouraud
+      }
+    }
+  MaxSteps = 10000
+$!FieldLayers 
+  ShowMesh = No
+  ShowContour = Yes
+  ShowShade = Yes
+  ShowEdge = No
+$!StreamtraceLayers 
+  Show = Yes
+$!FrameControl ActivateByNumber
+  Frame = 1
+$!SetStyleBase Config
