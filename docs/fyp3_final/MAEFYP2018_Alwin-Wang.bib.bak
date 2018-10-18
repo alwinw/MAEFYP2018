@@ -257,4 +257,79 @@
   url       = {https://www.ebook.de/de/product/11433137/m_d_zhou_hui_yang_ma_jie_zhi_wu_vorticity_and_vortex_dynamics.html},
 }
 
+@Article{Giesing1968,
+  author    = {J. P. Giesing},
+  title     = {Nonlinear two-dimensional unsteady potential flow with lift},
+  journal   = {Journal of Aircraft},
+  year      = {1968},
+  volume    = {5},
+  number    = {2},
+  pages     = {135--143},
+  month     = {mar},
+  doi       = {10.2514/3.43920},
+  publisher = {American Institute of Aeronautics and Astronautics ({AIAA})},
+}
+
+@Article{Theodorsen1940,
+  author  = {Theodorsen, T.},
+  title   = {General {T}heory of {A}erodynamic {I}nstability and the {M}echanism of {F}lutter},
+  journal = {NACA},
+  year    = {1940},
+  volume  = {496},
+}
+
+@Article{Wagner1925b,
+  author  = {Wagner, H.},
+  title   = {Dynamischer {A}uftrieb von {T}ragfliigeln},
+  journal = {Zeitschrift fuer Angewandte Mathematik und Mechanik},
+  year    = {1925},
+  volume  = {5},
+  pages   = {17},
+}
+
+@Article{Wu2004,
+  author    = {Fu-bing Wu and Nian-dong Zeng and Liang Zhang and De-ming Wu},
+  title     = {Numerical solutions for a two-dimensional airfoil undergoing unsteady motion},
+  journal   = {Journal of Marine Science and Application},
+  year      = {2004},
+  volume    = {3},
+  number    = {2},
+  pages     = {7--11},
+  month     = {dec},
+  doi       = {10.1007/bf02894326},
+  publisher = {Springer Nature},
+}
+
+@Book{KatzPlotkin2001,
+  title     = {Low-{S}peed {A}erodynamics ({C}ambridge {A}erospace {S}eries)},
+  publisher = {Cambridge University Press},
+  year      = {2001},
+  author    = {Joseph Katz and Allen Plotkin},
+  isbn      = {978-0-521-66219-2},
+  url       = {https://www.amazon.com/Low-Speed-Aerodynamics-Cambridge-Aerospace-Joseph-ebook/dp/B00IE6MQM2?SubscriptionId=AKIAIOBINVZYXZQZ2U3A&tag=chimbori05-20&linkCode=xm2&camp=2025&creative=165953&creativeASIN=B00IE6MQM2},
+}
+
+@Book{KuetheChow1997,
+  title     = {Foundations of {A}erodynamics},
+  publisher = {John Wiley \& Sons},
+  year      = {1997},
+  author    = {Arnold M. Kuethe and Chuen-Yen Chow},
+  isbn      = {0471129194},
+  date      = {1997-11-19},
+  ean       = {9780471129196},
+  pagetotal = {588},
+  url       = {https://www.ebook.de/de/product/2875866/arnold_m_kuethe_chuen_yen_chow_kuethe_foundations_of_aerodynamics.html},
+}
+
+@Book{Jean-JacquesChattot2015,
+  title     = {Theoretical and {A}pplied {A}erodynamics},
+  publisher = {Springer-Verlag GmbH},
+  year      = {2015},
+  author    = {Jean-Jacques Chattot, Mohamed Hafez},
+  isbn      = {9401798249},
+  date      = {2015-04-14},
+  ean       = {9789401798242},
+  url       = {https://www.ebook.de/de/product/23622315/jean_jacques_chattot_mohamed_hafez_theoretical_and_applied_aerodynamics.html},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
