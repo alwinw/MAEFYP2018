@@ -2836,8 +2836,7 @@ status open
 status open
 
 \begin_layout Plain Layout
-Boundary conditions imposed on the simulation during the starting and stopping
- phases
+Boundary conditions imposed on the simulation
 \end_layout
 
 \end_inset
@@ -3247,6 +3246,18 @@ status open
 Show how this changes with polynomial order and mesh
 \end_layout
 
+\begin_layout Plain Layout
+Show how this changes over time for the 
+\begin_inset Quotes eld
+\end_inset
+
+converged
+\begin_inset Quotes erd
+\end_inset
+
+ mesh
+\end_layout
+
 \end_inset
 
 
@@ -3262,6 +3273,18 @@ status open
 
 \begin_layout Plain Layout
 Show how this changes with polynomial order and mesh
+\end_layout
+
+\begin_layout Plain Layout
+Show how this changes over time for the 
+\begin_inset Quotes eld
+\end_inset
+
+converged
+\begin_inset Quotes erd
+\end_inset
+
+ mesh
 \end_layout
 
 \end_inset
@@ -3293,6 +3316,10 @@ Try to get the same kink in the streakline, use particle tracking of semtex
 Computationally more expensive, but different assumptions/BC
 \end_layout
 
+\begin_layout Plain Layout
+Use tecplot to analyse the output
+\end_layout
+
 \end_inset
 
 
@@ -3308,6 +3335,10 @@ status open
 
 \begin_layout Plain Layout
 Look at the separation points around the airfoil
+\end_layout
+
+\begin_layout Plain Layout
+Try apply the sum of nodes and saddles thing
 \end_layout
 
 \end_inset
@@ -3351,8 +3382,9 @@ Check that circulation is conserved
 \end_layout
 
 \begin_layout Plain Layout
-State that since massmat is being used, a more refined method that per element
- could be used
+State that since massmat is being used, define four regions: top, bottom,
+ airfoil and wake.
+ Also plot the total circulation vs timed
 \end_layout
 
 \end_inset
@@ -3367,6 +3399,19 @@ Stopping Phase
 \begin_layout Standard
 \begin_inset Note Note
 status open
+
+\begin_layout Plain Layout
+Maybe include a 
+\begin_inset Quotes eld
+\end_inset
+
+steady state
+\begin_inset Quotes erd
+\end_inset
+
+ phase? circulation should not be changing, but the distance between the
+ starting vortex and trailing vortex increases so change in vortical impulse
+\end_layout
 
 \begin_layout Plain Layout
 Look at the LE vortices, see how strong their circulation is
@@ -3436,7 +3481,8 @@ Vortex Panel Method
 status open
 
 \begin_layout Plain Layout
-Write and validate own code
+Write and validate own code - Should I have this in the literature review
+ somewhere?
 \end_layout
 
 \end_inset
@@ -4835,8 +4881,8 @@ begin{subequations}
 
 \begin_inset Formula 
 \begin{align}
-u_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi x_{2}}\left[-z\ln\left(\frac{r_{2}}{r_{1}}\right)+\left(x_{2}-x\right)\left(\theta_{2}-\theta_{1}\right)\right]\\
-u_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[z\ln\left(\frac{r_{2}}{r_{1}}\right)+x\left(\theta_{2}-\theta_{1}\right)\right]
+u_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi x_{2}}\left[-z\ln\left(\frac{r_{2}}{r_{1}}\right)+\left(x_{2}-x\right)\left(\theta_{2}-\theta_{1}\right)\right]\label{eq:up ga}\\
+u_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[z\ln\left(\frac{r_{2}}{r_{1}}\right)+x\left(\theta_{2}-\theta_{1}\right)\right]\label{eq:up gb}
 \end{align}
 
 \end_inset
@@ -4870,8 +4916,8 @@ begin{subequations}
 
 \begin_inset Formula 
 \begin{align}
-w_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi x_{2}}\left[\left(x_{2}-x\right)\ln\left(\frac{r_{2}}{r_{1}}\right)-x_{2}+z\left(\theta_{2}-\theta_{1}\right)\right]\\
-w_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[x\ln\left(\frac{r_{2}}{r_{1}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]
+w_{p}\left(\gamma_{a}\right) & =\frac{1}{2\pi x_{2}}\left[\left(x_{2}-x\right)\ln\left(\frac{r_{2}}{r_{1}}\right)-x_{2}+z\left(\theta_{2}-\theta_{1}\right)\right]\label{eq:wp ga}\\
+w_{p}\left(\gamma_{b}\right) & =\frac{1}{2\pi x_{2}}\left[x\ln\left(\frac{r_{2}}{r_{1}}\right)+x_{2}-z\left(\theta_{2}-\theta_{1}\right)\right]\label{eq:wp gb}
 \end{align}
 
 \end_inset
@@ -5026,8 +5072,508 @@ Movement of shed vortices defined as
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
 Unsteady Panel Method Formulation
+\end_layout
+
+\begin_layout Enumerate
+Constants for all time steps following the formulation in Katz and Plotkin
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Reference
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Determine panel collocation points 
+\begin_inset Formula $\left(x,y\right)_{i}$
+\end_inset
+
+, unit normal vectors 
+\begin_inset Formula $\vec{n}_{i}$
+\end_inset
+
+, unit tangent 
+\begin_inset Formula $\vec{t}_{i}$
+\end_inset
+
+ and panel lengths 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Determine the influence coefficients 
+\begin_inset Formula $K_{ij}$
+\end_inset
+
+ using the standard method for a linearly varying strength vortex sheet
+ panel method.
+ 
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{gather}
+K_{i,j}=\left(u,w\right)_{i,j}\cdot\vec{n}_{i}=\left[\left(u_{b},w_{b}\right)_{i,j-1}+\left(u_{a},w_{a}\right)_{i,j}\right]\cdot\vec{n}_{i},\quad j\ne1,N+1\\
+K_{i,1}=\left(u_{a},w_{a}\right)_{i,1}\cdot\vec{n}_{i}\quad\text{and}\quad K_{i,N+1}=\left(u_{b},w_{b}\right)_{i,N+1}\cdot\vec{n}_{i}
+\end{gather}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+where 
+\begin_inset Formula $\left(u_{a},w_{a}\right)=\left(u_{p}\left(\gamma_{a}\right),w_{p}\left(\gamma_{a}\right)\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(u_{b},w_{b}\right)=\left(u_{p}\left(\gamma_{b}\right),w_{p}\left(\gamma_{b}\right)\right)$
+\end_inset
+
+ as defined in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:up ga"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:wp ga"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:up gb"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:wp gb"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+There are 
+\begin_inset Formula $N+1$
+\end_inset
+
+ unknowns, 
+\begin_inset Formula $\gamma_{1},\gamma_{2},\ldots\gamma_{N+1}$
+\end_inset
+
+, and 
+\begin_inset Formula $N$
+\end_inset
+
+ equations for 
+\begin_inset Formula $K_{i,j}$
+\end_inset
+
+ panels 
+\begin_inset Formula $1,2,\ldots,N$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+At the start of time 
+\begin_inset Formula $t=t_{k}$
+\end_inset
+
+, denoted by 
+\begin_inset Formula $t=t_{k}^{+}$
+\end_inset
+
+, the strength of the point vortices 
+\begin_inset Formula $\Gamma_{1},\Gamma_{2},\ldots,\Gamma_{W}$
+\end_inset
+
+ are known from the previous time steps 
+\begin_inset Formula $t=1,2,\ldots,k-1$
+\end_inset
+
+ since 
+\begin_inset Formula $k=W$
+\end_inset
+
+.
+ A constant strength vortex panel, 
+\begin_inset Formula $\gamma_{c}$
+\end_inset
+
+, is introduced.
+ The length of the panel, 
+\begin_inset Formula $r_{w}$
+\end_inset
+
+, orientation, 
+\begin_inset Formula $\theta_{w}$
+\end_inset
+
+, and the influence coefficients 
+\begin_inset Formula $L_{i,k}$
+\end_inset
+
+ must be determined.
+\begin_inset Newline newline
+\end_inset
+
+The formulation in 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+reference is followed
+\end_layout
+
+\end_inset
+
+ is followed.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The strength of the panel 
+\begin_inset Formula $\gamma_{c}$
+\end_inset
+
+ is determined by considering 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+reference is followed
+\end_layout
+
+\end_inset
+
+ to arrive at 
+\begin_inset Formula $\gamma_{1}+\gamma_{N+1}=\gamma_{c}$
+\end_inset
+
+.
+ Kelvin's theorem is used to get to 
+\begin_inset Formula $\sum\left(C_{j}\gamma_{j}\right)+\sum\left(\Gamma_{k}\right)+C_{w}\gamma_{c}=0$
+\end_inset
+
+.
+ This is shown in matrix form below, however it is clear that the solution
+ depends on the 
+\begin_inset Formula $C_{w}$
+\end_inset
+
+.
+\begin_inset Formula 
+\begin{equation}
+\begin{bmatrix}1 & \cdots & 1 & 0 & \cdots & 0 & -1\\
+C_{1} & \cdots & C_{N+1} & 1 & \cdots & 1 & C_{W}
+\end{bmatrix}\begin{bmatrix}\gamma_{1}\\
+\vdots\\
+\gamma_{N+1}\\
+\Gamma_{1}\\
+\vdots\\
+\Gamma_{W}\\
+\gamma_{c}
+\end{bmatrix}=\begin{bmatrix}0\\
+0
+\end{bmatrix}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{gather}
+C_{j}=\frac{1}{2}\left(c_{j-1}+c_{j}\right),\quad j\ne1,N+1\\
+C_{1}=\frac{1}{2}c_{1}\quad\text{and}\quad C_{N+1}=\frac{1}{2}c_{N+1}
+\end{gather}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+To lie on the trailing edge streamline, the panel should be parallel to
+ the flow coming off the trailing edge and with a distance, 
+\begin_inset Formula $C_{w}$
+\end_inset
+
+, equal to 
+\begin_inset Formula $\sqrt{u^{2}+v^{2}}\times\left(t_{k+1}-t_{k}\right)$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{gather}
+\begin{bmatrix}C_{w}\cos\left(\theta_{w}\right)\\
+C_{w}\sin\left(\theta_{w}\right)
+\end{bmatrix}=\begin{bmatrix}u\cdot\left(t_{k+1}-t_{k}\right)\\
+v\cdot\left(t_{k+1}-t_{k}\right)
+\end{bmatrix}\qquad\nonumber \\
+\qquad=\begin{bmatrix}K_{u,1} & \cdots & K_{u,N+1} & L_{u,1} & \cdots & L_{u,W} & M_{u}\\
+K_{w,1} & \cdots & K_{w,N+1} & L_{w,1} & \cdots & L_{w,W} & M_{w}
+\end{bmatrix}\begin{bmatrix}\gamma_{1}\\
+\vdots\\
+\gamma_{N+1}\\
+\Gamma_{1}\\
+\vdots\\
+\Gamma_{W}\\
+\gamma_{c}
+\end{bmatrix}\times\left(t_{k+1}-t_{k}\right)
+\end{gather}
+
+\end_inset
+
+
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{gather}
+K_{u,j}=\left(u_{b}\right)_{i,j-1}+\left(u_{a}\right)_{i,j},\quad j\ne1,N+1\\
+K_{u,1}=\left(u_{a}\right)_{i,1}\quad\text{and}\quad K_{u,N+1}=\left(u_{b}\right)_{i,N+1}
+\end{gather}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{gather}
+K_{w,j}=\left(w_{b}\right)_{i,j-1}+\left(w_{a}\right)_{i,j},\quad j\ne1,N+1\\
+K_{w,1}=\left(w_{a}\right)_{i,1}\quad\text{and}\quad K_{w,N+1}=\left(w_{b}\right)_{i,N+1}
+\end{gather}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+It is immediately clear that 
+\begin_inset Formula $L_{u,k},L_{w,k},M_{u},M_{w}$
+\end_inset
+
+ depend on the location of 
+\begin_inset Formula $\Gamma_{1},\Gamma_{2},\ldots,\Gamma_{W}$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma_{c}$
+\end_inset
+
+ which have not been determined yet.
+ Thus, an iterative process is required.
+\end_layout
+
+\begin_layout Enumerate
+The movement of the vortices can be found as <> 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+To finish
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+For the shed panel, there are 3 unknowns 
+\begin_inset Formula $\gamma_{c},C_{w},\theta_{w}$
+\end_inset
+
+ and 4 equations
+\end_layout
+
+\begin_layout Itemize
+For the location of the point vortices, there are 
+\begin_inset Formula $2W$
+\end_inset
+
+ unknowns and 
+\begin_inset Formula $2W$
+\end_inset
+
+ equations
+\end_layout
+
+\begin_layout Itemize
+Thus, the complete formulation is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{bmatrix}K_{1,1} & K_{1,2} & \cdots & K_{1,N} & K_{1,N+1} & L_{1,1} & \cdots & L_{1,W} & M_{1}\\
+K_{2,1} & K_{2,2} & \cdots & K_{2,N} & K_{2,N+1} & L_{2,1} & \cdots & L_{2,W} & M_{2}\\
+\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
+K_{N,1} & K_{N,2} & \cdots & K_{N,N} & K_{N,N+1} & L_{N,N+1} & \cdots & L_{N,W} & M_{N}\\
+1 & 0 & \cdots & 0 & 1 & 0 & \cdots & 0 & -1\\
+C_{1} & C_{2} & \cdots & C_{N} & C_{N+1} & 1 & \cdots & 1 & C_{W}
+\end{bmatrix}\begin{bmatrix}\gamma_{1}\\
+\gamma_{2}\\
+\vdots\\
+\gamma_{N}\\
+\gamma_{N+1}\\
+\Gamma_{1}\\
+\vdots\\
+\Gamma_{W}\\
+\gamma_{c}
+\end{bmatrix}=\begin{bmatrix}-\vec{u}\cdot\vec{n}_{1}\\
+-\vec{u}\cdot\vec{n}_{2}\\
+\vdots\\
+-\vec{u}\cdot\vec{n}_{N}\\
+0\\
+0
+\end{bmatrix}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+M_{i}=\left(u,w\right)_{i}\cdot\vec{n}_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+At end of the period 
+\begin_inset Formula $\left(t_{k+1}-t_{k}\right)$
+\end_inset
+
+, denoted by 
+\begin_inset Formula $t_{k+1}^{-}$
+\end_inset
+
+, the panel sheet is replaced by a point vortex.
+ This is to reduce the computation time requirement and avoid the need to
+ calculate the change in vorticity due to stretching and compressing of
+ elements.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Determine the influence coefficients 
+\begin_inset Formula $L_{i,k}$
+\end_inset
+
+ for the point vortices of known strength (from the previous time period),
+ 
+\begin_inset Formula $\Gamma_{1},\Gamma_{2},\ldots\Gamma_{W}$
+\end_inset
+
+ where 
+\begin_inset Formula $\Gamma_{1}$
+\end_inset
+
+ indicates the first (
+\begin_inset Quotes eld
+\end_inset
+
+oldest
+\begin_inset Quotes erd
+\end_inset
+
+) point vortex.
+\begin_inset Formula 
+\[
+L_{i,k}=\left(u,w\right)_{i,k}\cdot\vec{n}_{i}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\left(u,w\right)_{i,k}$
+\end_inset
+
+ is 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5041,39 +5587,20 @@ Show the K matrix and revised Kutta condition
 \end_inset
 
 
-\begin_inset Formula 
-\[
-\begin{bmatrix}K_{1,1} & K_{1,2} & \cdots & K_{1,N} & K_{1,N+1} & L_{1,1} & \cdots & L_{1,W} & M_{1}\\
-K_{2,1} & K_{2,2} & \cdots & K_{2,N} & K_{2,N+1} & L_{2,1} & \cdots & L_{2,W} & M_{2}\\
-\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
-K_{N,1} & K_{N,2} & \cdots & K_{N,N} & K_{N,N+1} & L_{N,N+1} & \cdots & L_{N,W} & M_{N}\\
-1 & 0 & \cdots & 0 & 1 & 0 & \cdots & 0 & -1\\
-C_{1} & C_{2} & \cdots & C_{N} & C_{N+1} & 0 & \cdots & 0 & C_{W}
-\end{bmatrix}\begin{bmatrix}\gamma_{1}\\
-\gamma_{2}\\
-\vdots\\
-\gamma_{N}\\
-\gamma_{N+1}\\
-\Gamma_{1}\\
-\vdots\\
-\Gamma_{W}\\
-\gamma_{w}
-\end{bmatrix}=\begin{bmatrix}-\vec{u}\cdot\vec{n}_{1}\\
--\vec{u}\cdot\vec{n}_{2}\\
-\vdots\\
--\vec{u}\cdot\vec{n}_{N}\\
-0\\
-0
-\end{bmatrix}
-\]
+\end_layout
 
+\begin_layout Standard
+\begin_inset VSpace medskip
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \begin{gather*}
 K_{i,j}=\left(u,w\right)_{i,j}\cdot\vec{n}_{i}=\left[\left(u_{b},w_{b}\right)_{i,j-1}+\left(u_{a},w_{a}\right)_{i,j}\right]\cdot\vec{n}_{i},\quad j\ne1,N+1\\
-L_{i,k}=\left(u,w\right)_{i,k}\cdot\vec{n}_{i}\quad\text{and}\quad M_{i}=\left(u,w\right)_{i}\cdot\vec{n}_{i}
+L_{i,l}=\left(u,w\right)_{i,l}\cdot\vec{n}_{i}\quad\text{and}\quad M_{i}=\left(u,w\right)_{i}\cdot\vec{n}_{i}
 \end{gather*}
 
 \end_inset
@@ -5102,12 +5629,366 @@ Not sure why I added this: Separation in Unsteady Flows
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
-Post-Processing Files
+Post-Processing Scripts
 \end_layout
 
 \begin_layout Subsection
-Semtex Mesh and Input Files
+Semtex Files
+\end_layout
+
+\begin_layout Subsubsection
+Add Vorticity Fields
+\end_layout
+
+\begin_layout Standard
+Four additional fields were required in order to determine the values of
+ 
+\begin_inset Formula $\omega,\frac{\partial\omega}{\partial x},\frac{\partial\omega}{\partial y},\frac{\partial p}{\partial x},\frac{\partial p}{\partial y}$
+\end_inset
+
+.
+ This was achieved by adding five additional 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+AuxField
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={C++},numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\ttfamily\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+// Add new flag case for command line
+\end_layout
+
+\begin_layout Plain Layout
+
+case 'G': flag[VORTGEN]      = true; break;
+\end_layout
+
+\begin_layout Plain Layout
+
+// Declare VortGen
+\end_layout
+
+\begin_layout Plain Layout
+
+  vector<AuxField*>          VortGen;
+\end_layout
+
+\begin_layout Plain Layout
+
+  vector<real_t*>            VortGenData;
+\end_layout
+
+\begin_layout Plain Layout
+
+// Handle flags from command line
+\end_layout
+
+\begin_layout Plain Layout
+
+ if (need[VORTGEN]) {
+\end_layout
+
+\begin_layout Plain Layout
+
+    VortGen    .resize (5);
+\end_layout
+
+\begin_layout Plain Layout
+
+    VortGenData.resize (5);
+\end_layout
+
+\begin_layout Plain Layout
+
+    for (i = 0; i < 5; i++) { 
+\end_layout
+
+\begin_layout Plain Layout
+
+      VortGenData[i]   = new real_t [allocSize];
+\end_layout
+
+\begin_layout Plain Layout
+
+      VortGen[i]       = new AuxField (VortGenData[i],nz,elmt,'k'+i);
+\end_layout
+
+\begin_layout Plain Layout
+
+      addField[iAdd++] = VortGen[i]; 
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+// while (getDump(D, file))
+\end_layout
+
+\begin_layout Plain Layout
+
+//  for(i = 0; i < allocSize; i++)
+\end_layout
+
+\begin_layout Plain Layout
+
+      if (need[VORTGEN]) { // Only for 2 dimensions 
+\end_layout
+
+\begin_layout Plain Layout
+
+        tensor3::vorticity (tensor, vort);
+\end_layout
+
+\begin_layout Plain Layout
+
+        VortGenData[4][i] = vort[2];          // o = omega
+\end_layout
+
+\begin_layout Plain Layout
+
+      }
+\end_layout
+
+\begin_layout Plain Layout
+
+//  finish looping over each point i
+\end_layout
+
+\begin_layout Plain Layout
+
+    if (need[VORTGEN]) { // Only for 2 dimensions 
+\end_layout
+
+\begin_layout Plain Layout
+
+      (*VortGen[0]  = *VortGen[4]).gradient(0); // k = do/dx
+\end_layout
+
+\begin_layout Plain Layout
+
+      (*VortGen[1]  = *VortGen[4]).gradient(1); // l = do/dy
+\end_layout
+
+\begin_layout Plain Layout
+
+      (*VortGen[2]  = *pressure)  .gradient(0); // m = dp/dx
+\end_layout
+
+\begin_layout Plain Layout
+
+      (*VortGen[3]  = *pressure)  .gradient(1); // n = dp/dy
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+// finish getDump
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Exerts of modifications to addfield.cpp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Wall Gradients
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={C++},numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\ttfamily\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+// static void printWalls (...)
+\end_layout
+
+\begin_layout Plain Layout
+
+  std::cout.precision(16);
+\end_layout
+
+\begin_layout Plain Layout
+
+  cout << 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    setw(24) << "x"  << setw(24) << "y"  << 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    setw(24) << "nx" << setw(24)     << "ny" << setw(24) << "area" << 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    setw(10) << "k"  << setw(10) << "s"  << endl;
+\end_layout
+
+\begin_layout Plain Layout
+
+  for (i = 0; i < Nedge; i++)
+\end_layout
+
+\begin_layout Plain Layout
+
+    if (strstr (bman -> groupInfo (edge[i] -> group), "wall")) {
+\end_layout
+
+\begin_layout Plain Layout
+
+      k = edge[i] -> elmt;
+\end_layout
+
+\begin_layout Plain Layout
+
+      s = edge[i] -> side;
+\end_layout
+
+\begin_layout Plain Layout
+
+      elmt[k] -> sideGeom(s, &xs[0], &ys[0], &nxs[0], &nys[0], &area[0]);
+\end_layout
+
+\begin_layout Plain Layout
+
+      for (j = 0; j < np; j++) {
+\end_layout
+
+\begin_layout Plain Layout
+
+	      cout << 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	        setw(24) << xs [j] << setw(24) << ys [j] << 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	        setw(24) << nxs[j] << setw(24) << nys[j] << 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	        setw(24) << area[j] << 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	        setw(10) << k + 1  << setw(10) << s + 1  << endl;
+\end_layout
+
+\begin_layout Plain Layout
+
+      }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Exerts of modifications to wallmesh.cpp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -5207,7 +6088,7 @@ csplit
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language=bash,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\ttfamily\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}},morekeywords={mkdir, cp, grep, \&amp;}"
+lstparams "language=bash,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\ttfamily\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}},morekeywords={mkdir, cp, grep, mv, rm}"
 inline false
 status open
 
@@ -5480,7 +6361,7 @@ integral
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language=bash,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}},morekeywords={mkdir, cp, grep, \&amp;}"
+lstparams "language=bash,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}},morekeywords={mkdir, cp, grep, mv, rm}"
 inline false
 status open
 
@@ -5721,7 +6602,7 @@ time=$(...)
 
 \end_inset
 
- reads in the time from the ASCII time file
+ reads in the time from the ASCII dump file
 \end_layout
 
 \begin_layout Itemize
@@ -5797,7 +6678,7 @@ preplot
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language=bash,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}},morekeywords={mkdir, cp, grep, \&amp;}"
+lstparams "language=bash,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}},morekeywords={mkdir, cp, grep, mv, rm}"
 inline false
 status open
 
@@ -6004,7 +6885,7 @@ done
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Bash script to integrate element-by-element across the domain
+Bash script to generate Tecplot files for each time step
 \end_layout
 
 \end_inset
