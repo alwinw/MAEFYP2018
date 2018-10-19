@@ -1032,9 +1032,14 @@ g the contribution of added mass effects during the starting and stopping
 \begin_inset Formula $\text{Re}=10,000$
 \end_inset
 
- will be analysed using DNS and the potential theory case represents an
- infinite Reynolds number.
- A single airfoil, NACA0012, will be used.
+ (based on steady state velocity) will be analysed using DNS and the potential
+ theory case represents an infinite Reynolds number.
+ A single airfoil, NACA0012, of unit chord is used at an angle of attack
+ 
+\begin_inset Formula $4\text{\textdegree}$
+\end_inset
+
+ accelerated to unit velocity in a fluid of unity density.
 \end_layout
 
 \begin_layout Standard
@@ -2622,7 +2627,7 @@ This formulation is equal to and cite []
  
 \begin_inset Formula 
 \begin{equation}
-\vec{P}=\vec{P}_{v}+\vec{P}_{b}=\frac{1}{N-1}\intop_{V}\left(\vec{x}\times\vec{\omega}\right)\,\text{d}V-\vec{u}_{c}V_{b}
+\vec{P}=\vec{P}_{v}+\vec{P}_{b}=\frac{1}{N-1}\intop_{V}\left(\vec{x}\times\vec{\omega}\right)\,\text{d}V-\vec{u}_{c}V_{b}\label{eq:Limacher F2}
 \end{equation}
 
 \end_inset
@@ -6866,6 +6871,7 @@ literal "false"
 
 \begin_layout Standard
 \begin_inset Float figure
+placement p
 wide false
 sideways false
 status open
@@ -7124,6 +7130,94 @@ name "fig:vorticity start"
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+placement p
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_final-Re01000.png
+	lyxscale 30
+	width 8cm
+	BoundingBox 60bp 10bp 1450bp 740bp
+	clip
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_final-Re10000.png
+	lyxscale 30
+	width 8cm
+	BoundingBox 60bp 10bp 1450bp 740bp
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Vorticity field at 
+\begin_inset Formula $t=2.5\,\text{s}$
+\end_inset
+
+ for 
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+ and 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Vorticity field at 
+\begin_inset Formula $t=2.5\,\text{s}$
+\end_inset
+
+ for 
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+ (left) and 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+ (right) 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:vorticity final"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset VSpace medskip
 \end_inset
 
@@ -7218,93 +7312,6 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/Rslt_final-Re01000.png
-	lyxscale 30
-	width 8cm
-	BoundingBox 10bp 10bp 1490bp 740bp
-	clip
-
-\end_inset
-
-
-\begin_inset Graphics
-	filename images/Rslt_final-Re10000.png
-	lyxscale 30
-	width 8cm
-	BoundingBox 10bp 10bp 1490bp 740bp
-	clip
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-Vorticity field at 
-\begin_inset Formula $t=2.5\,\text{s}$
-\end_inset
-
- for 
-\begin_inset Formula $\text{Re}=1,000$
-\end_inset
-
- and 
-\begin_inset Formula $\text{Re}=10,000$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-Vorticity field at 
-\begin_inset Formula $t=2.5\,\text{s}$
-\end_inset
-
- for 
-\begin_inset Formula $\text{Re}=1,000$
-\end_inset
-
- (left) and 
-\begin_inset Formula $\text{Re}=10,000$
-\end_inset
-
- (right) 
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:vorticity final"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -7354,7 +7361,116 @@ Circulation of Airfoil and Shed Vortices
 \end_layout
 
 \begin_layout Subsubsection
-Starting Phase
+Circulation Regions
+\end_layout
+
+\begin_layout Standard
+In order to assess the circulation of shed vortices, regions around the
+ airfoil were defined shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Circ Regions"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The four regions are the elements adjacent but not behind the airfoil,
+ AF, elements behind the trailing edge, E, elements on the upper surface,
+ NW and elements on the lower surface, SW.
+ In the typical description of the circulation bound to an airfoil, the
+ sum of the 
+\begin_inset Formula $\Gamma_{\text{AF}}$
+\end_inset
+
+, 
+\begin_inset Formula $\Gamma_{\text{NW}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Gamma_{\text{SW}}$
+\end_inset
+
+ are taken.
+ In theory, this is equal and opposite to the circulation of the starting
+ vortex in E.
+ 
+\begin_inset Formula 
+\begin{equation}
+\Gamma=\Gamma_{\text{AF}}+\Gamma_{\text{NW}}+\Gamma_{\text{SW}}\equiv-\Gamma_{\text{E}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The primary issue with both figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Circ 1000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Circ 10000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is that the total circulation is not zero for all of time.
+ This indicates that vorticity must be leaving the solution domain, which
+ can only be fixed by increasing the solution size as the circulation was
+ determined to be converged already.
+ A clear difference is seen between 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Circ 1000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Circ 10000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ in the circulation of the airfoil, 
+\begin_inset Formula $\Gamma_{\text{AF}}$
+\end_inset
+
+.
+ This is due to the higher Reynolds number simulation having thinner vorticity
+ layers seen in previous figures.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Starting Phase and Steady State
 \end_layout
 
 \begin_layout Standard
@@ -7373,11 +7489,94 @@ State that since massmat is being used, define four regions: top, bottom,
 
 \end_inset
 
+As the airfoil initially gains velocity, 
+\begin_inset Formula $\Gamma_{\text{AF}}$
+\end_inset
+
+ rapidly increases, attributed to the large positive vorticity and BVF at
+ the trailing edge of the airfoil.
+ This is in contrast to the notion the bound circulation, 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+, must be negative for the total circulation to be conserved (note that
+ 
+\begin_inset Formula $\Gamma_{E}>\Gamma_{\text{Total}}$
+\end_inset
+
+ so 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ should be negative).
+ The negative circulation is seen to be in the NW region and is the largest
+ in magnitude of all the circulations.
+\end_layout
+
+\begin_layout Standard
+At higher Reynolds numbers, the vorticity is contained to a narrow region.
+ From figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Accel-1000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Accel-10000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ it was seen that 
+\begin_inset Formula $\sigma=\nu\frac{\partial\omega}{\partial z}$
+\end_inset
+
+ is approximately constant for both Reynolds number simulations.
+ Thus, 
+\begin_inset Formula $\frac{\partial\omega}{\partial z}\propto\frac{1}{\nu}$
+\end_inset
+
+ which indicates lower vorticity gradients for lower Reynolds numbers which
+ is consistent.
+ This is observed through a smaller values of 
+\begin_inset Formula $\Gamma_{\text{NW}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Gamma_{\text{SW}}$
+\end_inset
+
+ at higher Reynolds numbers (more vorticity in the elements on the surface).
+ For 
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+ there is a clear dip in 
+\begin_inset Formula $\Gamma_{\text{AF}}$
+\end_inset
+
+ during the steady state, but this is believed to be due to the definition
+ of circulation regions rather than a flow field phenomena.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
 
 \end_layout
 
 \begin_layout Subsubsection
-Stopping Phase
+Stopping Phase and Stopped State
 \end_layout
 
 \begin_layout Standard
@@ -7407,6 +7606,59 @@ Look at the LE vortices, see how strong their circulation is
 \end_layout
 
 \begin_layout Standard
+During the stopping phase, 
+\begin_inset Formula $\Gamma_{E}$
+\end_inset
+
+ is seen to be constant as the stopping vortex does move far from the trailing
+ edge (figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Deccel-1000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Deccel-10000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ Thus, 
+\begin_inset Formula $\Gamma_{E}$
+\end_inset
+
+ is approximately constant and so using 
+\begin_inset Formula $\Gamma\equiv-\Gamma_{E}$
+\end_inset
+
+ would lead to an incorrect value of lift using 
+\begin_inset Formula $L=\rho V\Gamma$
+\end_inset
+
+.
+ The circulation 
+\begin_inset Formula $\Gamma_{\text{NW}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Gamma_{\text{SW}}$
+\end_inset
+
+ are seen to decrease during the stopping and stopped state due to vorticity
+ of opposite sign being produced on the airfoil surface.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 placement p
 wide false
@@ -7416,7 +7668,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/Rslt_Circ-Regions.png
+	filename images/Rslt_Circ-Regions-Comp.png
 	lyxscale 30
 	width 12cm
 
@@ -7429,7 +7681,49 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
 Definition of circulation regions
+\end_layout
+
+\end_inset
+
+Definition of circulation regions.
+ AF indicates the airfoil, E indicates 
+\begin_inset Quotes eld
+\end_inset
+
+east
+\begin_inset Quotes erd
+\end_inset
+
+, NW indicates 
+\begin_inset Quotes eld
+\end_inset
+
+north west
+\begin_inset Quotes erd
+\end_inset
+
+ and SW indicates 
+\begin_inset Quotes eld
+\end_inset
+
+south west
+\begin_inset Quotes erd
+\end_inset
+
+ of the trailing edge.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Circ Regions"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -7470,6 +7764,13 @@ Circulation versus time
 
  for 
 \begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Circ 1000"
+
 \end_inset
 
 
@@ -7519,6 +7820,13 @@ Circulation versus time
 \begin_inset Formula $\text{Re}=10,000$
 \end_inset
 
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Circ 10000"
+
+\end_inset
+
 
 \end_layout
 
@@ -7548,6 +7856,198 @@ Lift, Drag and Added-Mass Forces
 \end_layout
 
 \begin_layout Standard
+Following Limacher, Morton and Wood's formulation 2 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Limacher2018"
+literal "false"
+
+\end_inset
+
+, equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Limacher F2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the vortex impulse was calculated.
+ This is shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Vortex impulse"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and it can be seen while the general shapes are the same there are big
+ differences between the two due to the thickness of vorticity layers.
+ For instance, 
+\begin_inset Formula $\text{oy}$
+\end_inset
+
+ is smaller for 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+ because narrower vorticity regions mean smaller values of 
+\begin_inset Formula $y$
+\end_inset
+
+ in the integrand of 
+\begin_inset Formula $\text{oy}=\intop\omega\times y\,\text{d}A$
+\end_inset
+
+.
+ Taking time derivatives, the force due to vortical impulse can be found
+\begin_inset Formula 
+\begin{gather}
+\vec{P}_{v}=\intop_{V}\left(\vec{x}\times\vec{\omega}\right)\,\text{d}V,\quad\left(\text{oy},\text{ox}\right)\equiv\left(\intop\omega y\,\text{d}A,-\intop\omega x\,\text{d}A\right)\\
+L_{v}=\frac{\text{d}}{\text{d}t}\left(\text{ox}\right),\quad D_{v}=\frac{\text{d}}{\text{d}t}\left(\text{oy}\right)
+\end{gather}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It is clear that figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Lift vs Time"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ indicates that the vortex impulse does not, alone, provide enough information
+ to explain the lift.
+ Notably, during the steady state 
+\begin_inset Formula $0.25\le t\le0.85$
+\end_inset
+
+ there is no added mass force so the discrepancy must be explained with
+ other means, for example using Limacher, Morton and Wood's formulation
+ 1 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Limacher2018"
+literal "false"
+
+\end_inset
+
+ which involves more terms.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+wiggles
+\begin_inset Quotes erd
+\end_inset
+
+ during steady-state are also of concern as no other results have indicated
+ large fluctuations in forces.
+ 
+\end_layout
+
+\begin_layout Standard
+On the other hand, figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Drag vs Time"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ indicates that the vortex impulse does a great deal to explain the drag
+ force.
+ The difference between the two can be determined as due to added mass terms
+ in equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Limacher F2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ which can be expressed as a coefficient of the acceleration, 
+\begin_inset Formula $F_{\text{am}}=-m\cdot a\left(t\right)$
+\end_inset
+
+.
+ The result for lift, figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:AddMassLift"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, is nonsensical as expected.
+ The result from drag, however, is promising as it is approximately constant.
+ According to equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Limacher F2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the value should be 
+\begin_inset Formula $V_{b}$
+\end_inset
+
+ which is the area enclosed by the NACA0012 airfoil, 
+\begin_inset Formula $0.0822$
+\end_inset
+
+.
+ The values shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:AddMassDrag"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ unfortunately are larger.
+ This also indicates that maybe formulation 1 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Limacher2018"
+literal "false"
+
+\end_inset
+
+ should be used or the domain not sufficiently large enough for circulation
+ to be conserved, or something else entirely.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
@@ -7557,8 +8057,9 @@ status open
 \align center
 \begin_inset Graphics
 	filename images/Rslt_Impu-Re01000.png
-	lyxscale 30
-	width 12cm
+	lyxscale 15
+	width 8cm
+	groupId addmass
 
 \end_inset
 
@@ -7569,11 +8070,6 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Vortex impulse versus time 
-\begin_inset Formula $0\le t\le2.5$
-\end_inset
-
- for 
 \begin_inset Formula $\text{Re}=1,000$
 \end_inset
 
@@ -7588,9 +8084,6 @@ Vortex impulse versus time
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -7600,8 +8093,9 @@ status open
 \align center
 \begin_inset Graphics
 	filename images/Rslt_Impu-Re10000.png
-	lyxscale 30
-	width 12cm
+	lyxscale 15
+	width 8cm
+	groupId addmass
 
 \end_inset
 
@@ -7612,11 +8106,6 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Vortex impulse versus time 
-\begin_inset Formula $0\le t\le2.5$
-\end_inset
-
- for 
 \begin_inset Formula $\text{Re}=10,000$
 \end_inset
 
@@ -7633,7 +8122,72 @@ Vortex impulse versus time
 
 \end_layout
 
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Vortex impulse vs time, 
+\begin_inset Formula $0\le t\le2.5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Vortex impulse vs time, 
+\begin_inset Formula $0\le t\le2.5$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\text{ox}$
+\end_inset
+
+ indicates 
+\begin_inset Formula $-\intop\omega x\,\text{d}A$
+\end_inset
+
+ and 
+\begin_inset Formula $\text{oy}$
+\end_inset
+
+ indicates 
+\begin_inset Formula $\intop\omega y\,\text{d}A$
+\end_inset
+
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Vortex impulse"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Float figure
 wide false
 sideways false
@@ -7643,8 +8197,9 @@ status open
 \align center
 \begin_inset Graphics
 	filename images/Rslt_Lift-Re01000.png
-	lyxscale 30
-	width 12cm
+	lyxscale 15
+	width 8cm
+	groupId addmass
 
 \end_inset
 
@@ -7655,11 +8210,6 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Lift versus time 
-\begin_inset Formula $0\le t\le2.5$
-\end_inset
-
- for 
 \begin_inset Formula $\text{Re}=1,000$
 \end_inset
 
@@ -7674,9 +8224,6 @@ Lift versus time
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -7686,8 +8233,9 @@ status open
 \align center
 \begin_inset Graphics
 	filename images/Rslt_Lift-Re10000.png
-	lyxscale 30
-	width 12cm
+	lyxscale 15
+	width 8cm
+	groupId addmass
 
 \end_inset
 
@@ -7698,12 +8246,62 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Lift versus time 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Lift versus time, 
 \begin_inset Formula $0\le t\le2.5$
 \end_inset
 
- for 
-\begin_inset Formula $\text{Re}=10,000$
+
+\end_layout
+
+\end_inset
+
+Lift versus time, 
+\begin_inset Formula $0\le t\le2.5$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\text{doxdt}$
+\end_inset
+
+ indicates 
+\begin_inset Formula $\frac{\text{d}}{\text{d}t}\left(-\intop\omega x\,\text{d}A\right)$
+\end_inset
+
+ and Ftot.y is the total of the pressure and viscous force in the 
+\begin_inset Formula $y$
+\end_inset
+
+ direction from DNS.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Lift vs Time"
+
 \end_inset
 
 
@@ -7727,10 +8325,18 @@ status open
 
 \begin_layout Plain Layout
 \align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename images/Rslt_Drag-Re01000.png
-	lyxscale 30
-	width 12cm
+	lyxscale 15
+	width 8cm
+	groupId addmass
 
 \end_inset
 
@@ -7741,11 +8347,6 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Drag versus time 
-\begin_inset Formula $0\le t\le2.5$
-\end_inset
-
- for 
 \begin_inset Formula $\text{Re}=1,000$
 \end_inset
 
@@ -7760,9 +8361,6 @@ Drag versus time
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -7772,8 +8370,9 @@ status open
 \align center
 \begin_inset Graphics
 	filename images/Rslt_Drag-Re10000.png
-	lyxscale 30
-	width 12cm
+	lyxscale 15
+	width 8cm
+	groupId addmass
 
 \end_inset
 
@@ -7784,12 +8383,316 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Drag versus time 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Drag versus time, 
 \begin_inset Formula $0\le t\le2.5$
 \end_inset
 
- for 
+
+\end_layout
+
+\end_inset
+
+Drag versus time, 
+\begin_inset Formula $0\le t\le2.5$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\text{doydt}$
+\end_inset
+
+ indicates 
+\begin_inset Formula $\frac{\text{d}}{\text{d}t}\left(-\intop\omega y\,\text{d}A\right)$
+\end_inset
+
+ and Ftot.x is the total of the pressure and viscous force in the 
+\begin_inset Formula $x$
+\end_inset
+
+ direction from DNS.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Drag vs Time"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_AddMassLift-Re01000.png
+	lyxscale 15
+	width 8cm
+	groupId addmass
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_AddMassLift-Re10000.png
+	lyxscale 15
+	width 8cm
+	groupId addmass
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
 \begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Added mass lift force coefficient, 
+\begin_inset Formula $0\le t\le2.5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Added mass lift force coefficient, 
+\begin_inset Formula $0\le t\le2.5$
+\end_inset
+
+, 
+\begin_inset Formula $\frac{\text{Ftot.y}-\text{doxdt}}{a\left(t\right)}$
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:AddMassLift"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_AddMassDrag-Re01000.png
+	lyxscale 15
+	width 8cm
+	groupId addmass
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_AddMassDrag-Re10000.png
+	lyxscale 15
+	width 8cm
+	groupId addmass
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Added mass drag force coefficient, 
+\begin_inset Formula $0\le t\le2.5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Added mass drag force coefficient, 
+\begin_inset Formula $0\le t\le2.5$
+\end_inset
+
+, 
+\begin_inset Formula $\frac{\text{Ftot.x}-\text{doydt}}{a\left(t\right)}$
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:AddMassDrag"
+
 \end_inset
 
 
@@ -7826,6 +8729,13 @@ Lift as a function of circulation of the airfoil
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Unsteady Vortex Sheet Methods
 \end_layout
@@ -7845,6 +8755,86 @@ Compare results to Karman paper
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:unsteady lift"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ compares the quasi-steady and apparent mass terms of equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:unsteady lift"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with the result from DNS (Ftot.y).
+ Immediately it is clear that apparent mass in Kármán and Sears' formulation
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Karman1938"
+literal "false"
+
+\end_inset
+
+  is the major contributor to the large lift force.
+ This is somewhat contradictory to the results in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Lift vs Time"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, if the vortex impulse method is taken to be true.
+ Limacher, Morton and Wood do show their general formula collapses into
+ the formulation by Kármán and Sears, so 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Limacher2018"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+At the end of the stopping phase, the DNS lift is approximately one half
+ of the quasi-steady lift which is in agreement with Saffman's statement
+ that the initial lift is one-half of the final steady-state lift 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Saffman1993"
+literal "false"
+
+\end_inset
+
+.
+ Even without the wake-effect term, it appears that equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:unsteady lift"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ well describes the lift force.
 \end_layout
 
 \begin_layout Standard
@@ -7914,6 +8904,116 @@ Vortex Panel Method
 \end_layout
 
 \begin_layout Standard
+In order to address the problems with determining the apparent lift, a linearly
+ varying strength vortex panel method was formulated following the classical
+ method outlined in Katz and Plotkin 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "KatzPlotkin2001"
+literal "false"
+
+\end_inset
+
+ and Kuethe and Chow 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "KuetheChow1997"
+literal "false"
+
+\end_inset
+
+.
+ To account for the unsteady nature of the problem, the unsteady Bernoulli
+ equation is required to determine pressure forces.
+ This means the velocity potential is needed which standard panel codes
+ do not calculate.
+ Results from Chattot and Hafez 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ChattotHafez2015"
+literal "false"
+
+\end_inset
+
+ is used to ensure the potentials are calculated correctly.
+\begin_inset Formula 
+\begin{equation}
+p=-\rho\left[\frac{\partial\Phi}{\partial t}+\frac{1}{2}\left|\nabla\Phi\right|^{2}\right]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The wake effect problem is tackled in the same manner as Giesing 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Giesing1968"
+literal "false"
+
+\end_inset
+
+ and Wu et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Wu2004"
+literal "false"
+
+\end_inset
+
+ by allocating a wake panel at the trailing edge and using point vortices.
+ The benchmark for the wake problem is the theoretical work of Wagner 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Wagner1925"
+literal "false"
+
+\end_inset
+
+ and Theodorsen 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Theodorsen1940"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Unfortunately, due to time restrictions and effort required to test and
+ debug such a program, the unsteady vortex panel method did not progress
+ past an unsteady formulation (presented in the appendix) and validation
+ of code for steady state problems.
+ It is hoped that work will continue in the future and will help resolve
+ the added mass force problems by calculating 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ for formulation 1 of Limacher, Morton and Wood 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Limacher2018"
+literal "false"
+
+\end_inset
+
+ and model the wake roll up ignored by Kármán and Sears' 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Karman1938"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -7974,6 +9074,119 @@ Closing Remarks
 
 \begin_layout Section
 Conclusion
+\end_layout
+
+\begin_layout Standard
+The first object of this project was to accurately calculate the vorticity
+ generation mechanisms and boundary vorticity flux.
+ This was achieved by modifying the source code of Semtex and writing custom
+ scripts to handle the outputs.
+ A single NACA0012 airfoil of unit chord and angle of attack 4 degrees was
+ used at two Reynolds numbers of 
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+ and 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+.
+ Convergence of the results was determined by considering the partial derivative
+s as well as primary variables 
+\begin_inset Formula $u$
+\end_inset
+
+, 
+\begin_inset Formula $v$
+\end_inset
+
+ and 
+\begin_inset Formula $p$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+A concerted effort to replicate the work of Zhu et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhu2015"
+literal "false"
+
+\end_inset
+
+ and Xu 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Xu2016"
+literal "false"
+
+\end_inset
+
+ was made.
+ The resolution of the grid was increased at the trailing edge, small time
+ steps were used and the polynomial order increased.
+ However, bubbles of alternate signed vorticity were not found during the
+ establishment of the Kutta condition.
+ This problem could be addressed by further increasing the resolution at
+ trailing edge, at the expense of computational time.
+ The boundary vorticity flux, however, was consistent with the findings
+ of Zhu et al.
+ 
+\end_layout
+
+\begin_layout Standard
+The lift and drag during the starting and stopping phases was analysed in
+ an attempt to explain their large values.
+ While the drag force was well explained using (no slip) formulation 2 by
+ Limacher, Morton and Wood 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Limacher2018"
+literal "false"
+
+\end_inset
+
+, the lift force was not.
+ The lift force was well explained by applying thin airfoil theory by Kármán
+ and Sears 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Karman1938"
+literal "false"
+
+\end_inset
+
+ but the result for the added mass force term was not consistent with formulatio
+n 2.
+ 
+\end_layout
+
+\begin_layout Standard
+In an attempt to reconcile these problems, work was started on an unsteady
+ linearly varying strength panel method that could approximate the velocity
+ potential required for formation 1 by Limacher, Morton and Wood 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Limacher2018"
+literal "false"
+
+\end_inset
+
+ and the wake roll up problem not present in unsteady thin airfoil theory
+ by Kármán and Sears 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Karman1938"
+literal "false"
+
+\end_inset
+
+.
+ Unfortunately, this solver was not completed in time as it was not part
+ of the original direction and objectives.
 \end_layout
 
 \begin_layout Standard
@@ -8226,7 +9439,7 @@ Unsteady Thin-Airfoil Theory
 status open
 
 \begin_layout Plain Layout
-Exerpts with description from Karman and Sears
+Exerpts with description from Kármán and Sears
 \end_layout
 
 \end_inset
@@ -8235,7 +9448,7 @@ Exerpts with description from Karman and Sears
 \end_layout
 
 \begin_layout Standard
-Karman and Sears 
+Kármán and Sears 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Karman1938"

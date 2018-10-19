@@ -227,7 +227,8 @@ ggplot(plot_lift, aes(time)) +
   annotate("rect", xmin=0.85, xmax=1.05, ymin=-Inf, ymax=Inf,
            fill = "grey90", alpha = 0.5) +
   geom_line(aes(y = doxdt,  colour = "doxdt")) +
-  geom_line(aes(y = Ftot.y, colour = "Ftot.y"))
+  geom_line(aes(y = Ftot.y, colour = "Ftot.y")) +
+  ylab("Lift Force")
 ggsave(paste0("Rslt_Lift-Re01000.png"),
        scale = 2, width = 10, height = 6, units = "cm", dpi = 300)
 
@@ -236,8 +237,9 @@ ggplot(plot_lift %>% filter(!is.nan(F.am) & abs(F.am) < 100), aes(time)) +
            fill = "grey90", alpha = 0.5) +
   annotate("rect", xmin=0.85, xmax=1.05, ymin=-Inf, ymax=Inf,
            fill = "grey90", alpha = 0.5) +
-  geom_line(aes(y = -F.am, colour = "F.am/a(t)")) +
-  ylab("Added Mass Force divided by Acceleration")
+  geom_point(aes(y = -F.am, colour = "Fy.am/a(t)"), alpha = 0.3)  +
+  ylim(0, 0.2) +
+  ylab("Lift Added Mass Force / Acceleration")
 ggsave(paste0("Rslt_AddMassLift-Re01000.png"),
        scale = 2, width = 10, height = 6, units = "cm", dpi = 300)
 
@@ -255,7 +257,8 @@ ggplot(plot_drag, aes(time)) +
   annotate("rect", xmin=0.85, xmax=1.05, ymin=-Inf, ymax=Inf,
            fill = "grey90", alpha = 0.5) +
   geom_line(aes(y = doydt,  colour = "doydt")) +
-  geom_line(aes(y = Ftot.x, colour = "Ftot.x"))
+  geom_line(aes(y = Ftot.x, colour = "Ftot.x")) +
+  ylab("Drag Force")
 ggsave(paste0("Rslt_Drag-Re01000.png"),
        scale = 2, width = 10, height = 6, units = "cm", dpi = 300)
 
@@ -264,8 +267,9 @@ ggplot(plot_drag %>% filter(!is.nan(F.am) & abs(F.am) < 100), aes(time)) +
            fill = "grey90", alpha = 0.5) +
   annotate("rect", xmin=0.85, xmax=1.05, ymin=-Inf, ymax=Inf,
            fill = "grey90", alpha = 0.5) +
-  geom_line(aes(y = -F.am, colour = "F.am/a(t)")) +
-  ylab("Added Mass Force divided by Acceleration")
+  geom_point(aes(y = -F.am, colour = "Fx.am/a(t)"), alpha = 0.3) +
+  ylim(0, 0.2) +
+  ylab("Drag Added Mass Force / Acceleration")
 ggsave(paste0("Rslt_AddMassDrag-Re01000.png"),
        scale = 2, width = 10, height = 6, units = "cm", dpi = 300)
 
