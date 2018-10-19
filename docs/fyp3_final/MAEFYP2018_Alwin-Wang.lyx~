@@ -352,6 +352,10 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset FloatList table
 
 \end_inset
@@ -359,8 +363,13 @@ LatexCommand tableofcontents
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
 \end_inset
 
 
@@ -4649,23 +4658,6 @@ Airfoil Boundary Properties
 \end_layout
 
 \begin_layout Subsubsection
-Vorticity Generation Mechanisms
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Show images of LHS vs RHS of N-S Eq for different time steps
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
 Integral of Boundary Vorticity Flux
 \end_layout
 
@@ -4732,6 +4724,1477 @@ converged
 
 \end_layout
 
+\begin_layout Subsubsection
+Vorticity Generation Mechanisms
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Show images of LHS vs RHS of N-S Eq for different time steps
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+difference is te vortex can see BVF effect
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+starting
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement p
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re01000-t0.05.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re01000-NS-t0.05.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re01000-t0.10.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re01000-NS-t0.10.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re01000-t0.15.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re01000-NS-t0.15.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re01000-t0.20.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re01000-NS-t0.20.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Acceleration stage for 
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+.
+ Top to bottom: 
+\begin_inset Formula $t=0.05,0.10,0.15,0.20$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re10000-t0.05.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re10000-NS-t0.05.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re10000-t0.10.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re10000-NS-t0.10.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re10000-t0.15.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re10000-NS-t0.15.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re10000-t0.20.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re10000-NS-t0.20.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Acceleration stage for 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+.
+ Top to bottom: 
+\begin_inset Formula $t=0.05,0.10,0.15,0.20$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+steady
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re01000-t0.25.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re01000-NS-t0.25.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re01000-t0.45.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re01000-NS-t0.45.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re01000-t0.65.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re01000-NS-t0.65.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re01000-t0.85.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re01000-NS-t0.85.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Steady-state stage for 
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+.
+ Top to bottom: 
+\begin_inset Formula $t=0.25,0.45,0.65,0.85$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re10000-t0.25.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re10000-NS-t0.25.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re10000-t0.45.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re10000-NS-t0.45.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re10000-t0.65.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re10000-NS-t0.65.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re10000-t0.85.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re10000-NS-t0.85.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Steady-state stage for 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+.
+ Top to bottom: 
+\begin_inset Formula $t=0.25,0.45,0.65,0.85$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+stopping
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re01000-t0.90.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re01000-NS-t0.90.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re01000-t0.95.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re01000-NS-t0.95.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re01000-t1.00.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re01000-NS-t1.00.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re01000-t1.05.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re01000-NS-t1.05.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Deceleration stage for 
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+.
+ Top to bottom: 
+\begin_inset Formula $t=0.90,0.95,1.00,1.05$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re10000-t0.90.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re10000-NS-t0.90.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re10000-t0.95.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re10000-NS-t0.95.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re10000-t1.00.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re10000-NS-t1.00.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re10000-t1.05.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re10000-NS-t1.05.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Deceleration stage for 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+.
+ Top to bottom: 
+\begin_inset Formula $t=0.90,0.95,1.00,1.05$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+stopped
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re01000-t1.25.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re01000-NS-t1.25.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re01000-t1.45.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re01000-NS-t1.45.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re01000-t1.65.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re01000-NS-t1.65.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re01000-t1.85.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re01000-NS-t1.85.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Stopped stage for 
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+.
+ Top to bottom: 
+\begin_inset Formula $t=1.25,1.45,1.65,1.85$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re10000-t1.25.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re10000-NS-t1.25.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re10000-t1.45.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re10000-NS-t1.45.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re10000-t1.65.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re10000-NS-t1.65.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Re10000-t1.85.png
+	lyxscale 20
+	height 4cm
+	BoundingBox 50bp 10bp 1490bp 740bp
+	clip
+	groupId tecplotaf
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_Re10000-NS-t1.85.png
+	lyxscale 20
+	height 4cm
+	groupId nsgraph
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Stopped stage for 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+.
+ Top to bottom: 
+\begin_inset Formula $t=1.25,1.45,1.65,1.85$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+vort and vortgen
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement p
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_LE_2.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_TE_2.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_LE_3.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_TE_3.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_LE_4.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_TE_4.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_LE_5.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_TE_5.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_LE_6.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_TE_6.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Vorticity on the airfoil surface at the leading and trailing edges
+\end_layout
+
+\end_inset
+
+Vorticity on the airfoil surface for the first 10% of the chord and last
+ 10% of the chord for 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:VStart"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I need letters/numbers per graph to caption
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement p
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_LE_1.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_TE_1.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_LE_2.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_TE_2.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_LE_3.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_TE_3.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_LE_4.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_TE_4.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_LE_5.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_TE_5.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Vorticity on the airfoil surface at the leading and trailing edges
+\end_layout
+
+\end_inset
+
+Vorticity production on the airfoil surface for the first 10% of the chord
+ and last 10% of the chord for 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:VGStart"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I need letters/numbers per graph to caption
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Establishment of the Kutta Condition
 \end_layout
@@ -4786,8 +6249,17 @@ Try apply the sum of nodes and saddles thing
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Comparison with Steady State BVF
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4805,8 +6277,141 @@ Run a few simulations at different u and see how BVF is different when no
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Circulation of Airfoil and Shed Vortices
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement p
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Circ-Regions.png
+	lyxscale 30
+	width 12cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Definition of circulation regions
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Circ-RE01000.png
+	lyxscale 30
+	width 12cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Circulation versus time 
+\begin_inset Formula $0\le t\le2.5$
+\end_inset
+
+ for 
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Circ-RE10000.png
+	lyxscale 30
+	width 12cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Circulation versus time 
+\begin_inset Formula $0\le t\le2.5$
+\end_inset
+
+ for 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -4857,6 +6462,13 @@ steady state
 Look at the LE vortices, see how strong their circulation is
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage clearpage
 \end_inset
 
 

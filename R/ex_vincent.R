@@ -220,6 +220,13 @@ plot_offs <- plot$offs
 plot_dump <- plot$dump
 plot_setup <- plot$setup
 
+plot_title <- paste0(
+  plot_data$airfoil, "\n",
+  paste("Time:",                sprintf("%05.3f",  plot_data$time  )), "   ",
+  paste("Acceleration:",        sprintf("%+07.4f", plot_data$a   )), "\n",
+  paste("Kinematic Viscosity:", sprintf("%.4f",   plot_data$kinvis))
+)
+
 
 plot_nstheme <- ggplot(plot_wall, aes(s)) + 
   geom_vline(xintercept = as.numeric(plot_setup$vlines),        # Vertical lines for LE, TE, LE

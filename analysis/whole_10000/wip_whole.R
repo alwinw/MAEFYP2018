@@ -211,4 +211,80 @@ plot_LD <- ggplot(outp$LD, aes(time)) +
   geom_line(aes(y = Ftot.y, colour = "Ftot.y"))
 ggsave(paste0("LD.png"), plot_LD,
        scale = 2, width = 10, height = 6, units = "cm", dpi = 300)
+
+# Plot N-S
+plot_t = 0.05
+
+
+PlotNS <- function(plot_t) {
+  plot_ns    <- filter(outp$wall, time == plot_t)
   
+  plot_setup <- PlotSetup(plot_ns, plot_ns[1,])
+  plot_setup$title <- paste0(
+    paste("Time:",                sprintf("%05.3f",  plot_ns$time  )), "   ",
+    paste("Acceleration:",        sprintf("%+07.4f", plot_ns$a   )) )
+  
+  plot_nstheme <- ggplot(plot_ns, aes(s)) + 
+    geom_vline(xintercept = as.numeric(plot_setup$vlines),        # Vertical lines for LE, TE, LE
+               colour = "grey", linetype = "dashed") +
+    geom_label(aes(x, y, label = labels), plot_setup$surf,        # Surface labels
+               # geom_label(aes(x, y+20, label = labels), plot_setup$surf,        # Surface labels
+               colour = "grey") +
+    xlab("s") + 
+    scale_x_continuous(breaks = plot_setup$xbreaks, 
+                       labels = function(x) sprintf("%.2f", x)) +
+    ylab(NULL) + ylim(c(-40, 30)) +
+    # ylab(NULL) + ylim(c(-20, 20)) +
+    scale_color_manual(
+      name = "Legend",
+      values = c("dp/ds" = "red", "dV/dt" = "blue", "LHS" = "purple", "RHS" = "purple"),
+      labels = c(
+        expression(-frac(1, rho)~frac(partialdiff*p, partialdiff*s)), 
+        expression(-frac(partialdiff*V, partialdiff*t)), 
+        expression(-bgroup("(",
+                           frac(1, rho)~frac(partialdiff*p, partialdiff*s) +
+                             frac(partialdiff*V, partialdiff*t), ")")),
+        expression(-nu~frac(partialdiff*omega, partialdiff*z))),
+      guide = guide_legend(
+        override.aes = list(
+          linetype = c(rep("solid", 2), "dashed", "blank"),
+          # shape = c(rep(NA, 3), "O"),
+          shape = c(rep(NA, 3), 20),
+          alpha = rep(1, 4)))) +
+    theme(legend.key.size = unit(2.25, "lines"),
+          legend.text.align = 0.5,
+          legend.direction = "vertical", 
+          legend.position = "right",
+          legend.background = element_rect(colour = "black", size = 0.3),
+          plot.title = element_text(size = 10))
+  
+  plot_nsG <- plot_nstheme +
+    geom_path(aes(y = -as, colour = "dV/dt")) +                   # Acceleration terms
+    geom_path(aes(y = + dpdsG, colour = "dp/ds")) +               # Pressure field
+    geom_path(aes(y = - as + dpdsG, colour = "LHS"),              # LHS, acceleration + pressure
+              linetype = "dashed") +
+    geom_point(aes(s, RHSG, colour = "RHS"), shape = 'o', alpha = 0.3) +
+    # geom_point(aes(s, -dodzG*plot_data$kinvis, colour = "RHS"),    # RHS, v * dw/dz
+               # plot_offs, shape = 20) +
+    # plot_offs, shape = "o", alpha = 0.3) +
+    ggtitle(plot_setup$title)
+  
+  print(plot_nsG)
+  
+  save = paste0("Rslt_Re", 
+                sprintf("%05d", round(1/plot_ns$kinvis[1])), 
+                "-NS-t", 
+                sprintf("%0.2f", plot_t),
+                ".png")
+  
+  ggsave(save, plot_nsG,
+         scale = 2, width = 10, height = 4.5, units = "cm", dpi = 200)
+  return(save)
+}
+
+for (i in c(0.05, 0.10, 0.15, 0.20,
+            0.25, 0.45, 0.65, 0.85,
+            0.90, 0.95, 1.00, 1.05,
+            1.25, 1.45, 1.65, 1.85)) {
+  PlotNS(i)
+}
