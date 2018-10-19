@@ -283,7 +283,17 @@ References: 1 Page or so
 \end_layout
 
 \begin_layout Standard
-<Beautiful Image Here>
+\align center
+\begin_inset Graphics
+	filename images/Cover.png
+	lyxscale 30
+	width 15cm
+	BoundingBox 70bp 10bp 1340bp 740bp
+	clip
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -376,22 +386,6 @@ status open
 \end_layout
 
 \begin_layout Standard
-\begin_inset CommandInset toc
-LatexCommand lstlistoflistings
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset VSpace medskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset ERT
 status collapsed
 
@@ -413,6 +407,22 @@ pagenumbering{arabic}
 
 
 \begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand lstlistoflistings
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
 \end_inset
 
 
@@ -887,6 +897,13 @@ literal "true"
 \end_inset
 
 
+\begin_inset Newpage cleardoublepage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
 
@@ -915,16 +932,109 @@ Research Objectives
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
 Background and Motivation
+\end_layout
+
+\begin_layout Standard
+The theory behind the generation of lift has been of interest long before
+ heavier-than-air flight.
+ With research into airfoils came many new theories on lift production mechanism
+s.
+ Early experiments demonstrated the formation of starting and stopping vortices
+ which are understood to be due to conservation of circulation.
+ Multiple formations for calculating the lift exist in current literature
+ and this project attempts to take a more novel approach by considering
+ the boundary vorticity flux to explain phenomena observed such as the Kutta
+ condition and added mass lift and drag force.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
 Need for Research
 \end_layout
 
+\begin_layout Standard
+The primary variables for describing and analysing a flow field are the
+ velocity and pressure components 
+\begin_inset Formula $u$
+\end_inset
+
+, 
+\begin_inset Formula $v$
+\end_inset
+
+ and 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ Vorticity is derived derived variable and so requires some justification
+ for its use.
+ As such, this project explores phenomena that are more difficult to understand
+ using primary variables.
+ Detailed investigation of flows around airfoils have been conducted, however
+ many attempt to reduce the complexity of the problem by using a different
+ solution formation of the problem such vorticity-stream function 
+\begin_inset Formula $\left(\omega-\psi\right)$
+\end_inset
+
+ to using conformal mapping around wedges.
+ This analysis will be using a direct numerical solver Semtex which solves
+ the problem directly.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
-Aims and Objectives
+Aims and Objectives 
+\end_layout
+
+\begin_layout Standard
+The first aim is to determine an accurate method of calculating the vorticity
+ generation around an airfoil.
+ As the vorticity generation is a boundary condition on the airfoil surface,
+ the next aim is to use the boundary vorticity flux to explain observations
+ in the flow field such as the establishment of the Kutta condition and
+ formation of starting vortices.
+\end_layout
+
+\begin_layout Standard
+Vorticity will also be used to predict the lift and drag as well as investigatin
+g the contribution of added mass effects during the starting and stopping
+ phases.
+ Time permitting, a comparison to unsteady potential theory will be performed
+ to determine the effect of Reynolds number.
+ Thus, two cases, 
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+ and 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+ will be analysed using DNS and the potential theory case represents an
+ infinite Reynolds number.
+ A single airfoil, NACA0012, will be used.
 \end_layout
 
 \begin_layout Standard
@@ -4662,6 +4772,134 @@ Integral of Boundary Vorticity Flux
 \end_layout
 
 \begin_layout Standard
+In theory, according to equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Integral BVF"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the boundary vorticity flux should integrate to zero around the surface
+ of the airfoil.
+ In the same manner as the convergence study, the integral of the BVF was
+ computed but now at varying time steps.
+ It can be seen below that again the LHS and RHS do not agree with large
+ discrepancies during the starting and stopping phases.
+ It is difficult to ascertain if this is due to numerical error indicating
+ insufficient convergence and/or the presence of a singularity of pressure
+ at the trailing edge as equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Integral BVF"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ assumes a continuous pressure field.
+ As this was used as the boundary condition for Zhu et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhu2015"
+literal "false"
+
+\end_inset
+
+, if this condition does not hold then it casts doubt on the results obtained.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_BVFa-Re01000.png
+	lyxscale 30
+	width 12cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Integral of BVF versus time 
+\begin_inset Formula $0\le t\le2.5$
+\end_inset
+
+ for 
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_BVFa-Re10000.png
+	lyxscale 30
+	width 12cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Integral of BVF versus time 
+\begin_inset Formula $0\le t\le2.5$
+\end_inset
+
+ for 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -4724,10 +4962,6 @@ converged
 
 \end_layout
 
-\begin_layout Subsubsection
-Vorticity Generation Mechanisms
-\end_layout
-
 \begin_layout Standard
 \begin_inset Note Note
 status open
@@ -4772,7 +5006,7 @@ starting
 placement p
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -4884,6 +5118,13 @@ Acceleration stage for
 \end_inset
 
 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Accel-1000"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -4904,7 +5145,7 @@ Acceleration stage for
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -5016,6 +5257,13 @@ Acceleration stage for
 \end_inset
 
 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Accel-10000"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -5045,7 +5293,7 @@ steady
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -5157,6 +5405,13 @@ Steady-state stage for
 \end_inset
 
 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Steady-1000"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -5173,7 +5428,7 @@ Steady-state stage for
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -5285,6 +5540,13 @@ Steady-state stage for
 \end_inset
 
 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Steady-10000"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -5314,7 +5576,7 @@ stopping
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -5426,6 +5688,13 @@ Deceleration stage for
 \end_inset
 
 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Deccel-1000"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -5442,7 +5711,7 @@ Deceleration stage for
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -5554,6 +5823,13 @@ Deceleration stage for
 \end_inset
 
 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Deccel-10000"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -5583,7 +5859,7 @@ stopped
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -5695,6 +5971,13 @@ Stopped stage for
 \end_inset
 
 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Stopped-1000"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -5711,7 +5994,7 @@ Stopped stage for
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -5823,6 +6106,13 @@ Stopped stage for
 \end_inset
 
 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Stopped-10000"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -5853,7 +6143,30 @@ vort and vortgen
 placement p
 wide false
 sideways false
-status collapsed
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_LE_1.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_TE_1.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
 
 \begin_layout Plain Layout
 \noindent
@@ -5991,7 +6304,7 @@ Vorticity on the airfoil surface for the first 10% of the chord and last
 
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:VStart"
+name "fig:vorticity"
 
 \end_inset
 
@@ -6023,7 +6336,7 @@ I need letters/numbers per graph to caption
 placement p
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -6195,6 +6508,166 @@ I need letters/numbers per graph to caption
 
 \end_layout
 
+\begin_layout Subsubsection
+Vorticity Generation Mechanisms
+\end_layout
+
+\begin_layout Standard
+The figures on the preceding pages illustrate the vorticity distribution
+ around the airfoil during each of the stages and the associated vorticity
+ generation mechanisms.
+ Blackburn and Henderson 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Blackburn1999"
+literal "false"
+
+\end_inset
+
+ noted that the two generation mechanisms are in competition and this can
+ be seen in both the acceleration and deceleration stages.
+ In both the acceleration and deceleration stages, the sign of the acceleration
+ mechanism term 
+\begin_inset Formula $\frac{\text{d}V}{\text{d}t}$
+\end_inset
+
+ is opposite to the boundary vorticity flux term, 
+\begin_inset Formula $\sigma$
+\end_inset
+
+.
+ This indicate that the surface-acceleration vorticity generation opposes
+ the pressure gradient vorticity generation but is not strong enough to
+ override which is similar to the results of Blackburn and Henderson 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Blackburn1999"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+As the pressure gradient vorticity generation can be understood through
+ roll-up of shear layers, it was hypothesised that reducing the viscosity
+ would lead a change in the acceleration and pressure gradient generation
+ mechanisms.
+ However, comparing figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Accel-1000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Accel-10000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Deccel-1000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Deccel-10000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ there is little difference between the vorticity generation curves (apart
+ from near the trailing edges) even though the higher Reynolds number simulation
+ has much thinner vorticity regions.
+\end_layout
+
+\begin_layout Standard
+When there is zero acceleration, seen in figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Steady-1000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Steady-10000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Deccel-1000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Deccel-10000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the BVF 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is approximately constant in both time and viscosity.
+ Since 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ can be integrated around the surface to determine the lift force (ignoring
+ viscosity) in equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Airfoil LiftDrag Steady"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ this is unsurprising as the lift force is not expected to greatly vary.
+ For 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+, 
+\end_layout
+
 \begin_layout Subsection
 Establishment of the Kutta Condition
 \end_layout
@@ -6228,8 +6701,609 @@ Use tecplot to analyse the output
 
 \end_layout
 
+\begin_layout Standard
+The initial objectives of this project, investigating the Kutta condition
+ was a objective.
+ However, even at high polynomial orders, low time steps and low Reynolds
+ numbers, it was not possible to recreate the visualisations by Zhu et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhu2015"
+literal "false"
+
+\end_inset
+
+.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:vorticity"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the vorticity on the upper and lower surfaces for the leading and
+ trailing edges.
+ 1b and 2b correspond to the starting phase and there is a change in sign
+ on vorticity on the upper surface at the trailing edge as suggested by
+ Zhu et al.
+ However, the corresponding flow visualisation, figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Accel-10000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, shows that the flow does not leave the trailing edge 
+\begin_inset Quotes eld
+\end_inset
+
+smoothly
+\begin_inset Quotes erd
+\end_inset
+
+ during the starting flow.
+ Rather, throughout the acceleration phase, the stagnation point appears
+ to stay on the upper surface rather than move to the trailing edge.
+\end_layout
+
+\begin_layout Standard
+In their paper, Zhu et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhu2015"
+literal "false"
+
+\end_inset
+
+ identified the critical event at 
+\begin_inset Formula $t=0.029\,\text{s}$
+\end_inset
+
+ (instantaneous 
+\begin_inset Formula $\text{Re}\left(t\right)=4554$
+\end_inset
+
+, steady state 
+\begin_inset Formula $\text{Re}=100,000$
+\end_inset
+
+) for an acceleration profile 
+\begin_inset Formula $\sin\left(\frac{\pi t}{2}\right),\,t<1.0\,\text{s}$
+\end_inset
+
+.
+ The boundary vorticity distribution for 
+\begin_inset Formula $t=0.020\,\text{s}$
+\end_inset
+
+ is also shown with a vortex bubble visible.
+ However, the visualisations from Semtex DNS at a similar time length and
+ Reynolds scale (
+\begin_inset Formula $t=0.144\,\text{s}$
+\end_inset
+
+, instantaneous 
+\begin_inset Formula $\text{Re}\left(t\right)=4554$
+\end_inset
+
+, steady state 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+) does not show any sign of a separation bubble (figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:vorticity start"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ The positive vorticity region merely appears to move downstream with the
+ white, irrotational sliver rotating from approximately 
+\begin_inset Formula $90\text{\textdegree}$
+\end_inset
+
+ to the 
+\begin_inset Formula $x$
+\end_inset
+
+-axis to parallel with the 
+\begin_inset Formula $x$
+\end_inset
+
+-axis.
+ This is consistent with the figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:vorticity"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ showing a small, single change in sign of vorticity not a double change
+ in sign for a vortex bubble.
+ 
+\end_layout
+
+\begin_layout Standard
+One explanation could be due to the solution not being fully converged or
+ insufficient mesh density at the trailing edge as vortex bubble cannot
+ be captured if it wholly exists between two mesh node points on the surface.
+ The vortex generation shown in 4a and 4b of figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:VGStart"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is similar to the results of Zhu et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhu2015"
+literal "false"
+
+\end_inset
+
+ showing a peak in the BVF at the trailing edge.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement p
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Formula $t=0.051\,\text{s}\qquad$
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Formula $t=0.052\,\text{s}$
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Formula $\qquad t=0.053\,\text{s}$
+\end_inset
+
+
+\begin_inset space \hspace*{\fill}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_start-t0.051.png
+	lyxscale 20
+	width 5cm
+	BoundingBox 10bp 20bp 1490bp 1200bp
+	clip
+	groupId start
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_start-t0.052.png
+	lyxscale 20
+	width 5cm
+	BoundingBox 10bp 20bp 1490bp 1200bp
+	clip
+	groupId start
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_start-t0.053.png
+	lyxscale 20
+	width 5cm
+	BoundingBox 10bp 20bp 1490bp 1200bp
+	clip
+	groupId start
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Formula $t=0.082\,\text{s}\qquad$
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Formula $t=0.103\,\text{s}$
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Formula $\qquad t=0.125\,\text{s}$
+\end_inset
+
+
+\begin_inset space \hspace*{\fill}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_start-t0.082.png
+	lyxscale 20
+	width 5cm
+	BoundingBox 10bp 20bp 1490bp 1200bp
+	clip
+	groupId start
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_start-t0.103.png
+	lyxscale 20
+	width 5cm
+	BoundingBox 10bp 20bp 1490bp 1200bp
+	clip
+	groupId start
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_start-t0.125.png
+	lyxscale 20
+	width 5cm
+	BoundingBox 10bp 20bp 1490bp 1200bp
+	clip
+	groupId start
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Formula $t=\boldsymbol{0.144}\,\text{s}\qquad$
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Formula $t=0.180\,\text{s}$
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Formula $\qquad t=0.280\,\text{s}$
+\end_inset
+
+
+\begin_inset space \hspace*{\fill}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_start-t0.144.png
+	lyxscale 20
+	width 5cm
+	BoundingBox 10bp 20bp 1490bp 1200bp
+	clip
+	groupId start
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_start-t0.180.png
+	lyxscale 20
+	width 5cm
+	BoundingBox 10bp 20bp 1490bp 1200bp
+	clip
+	groupId start
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_start-t0.280.png
+	lyxscale 20
+	width 5cm
+	BoundingBox 10bp 20bp 1490bp 1200bp
+	clip
+	groupId start
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Vorticity distribution around the trailing edge during the starting flow
+\end_layout
+
+\end_inset
+
+Vorticity distribution around the trailing edge during the starting flow
+ at various time steps.
+ Left to right: 
+\begin_inset Formula $t=0.051,0.052,0.053,0.082,0.103,0.125,0.144,0.180,0.280\,\text{s}$
+\end_inset
+
+.
+ Note that no interpolation has been performed and the black grid corresponds
+ to points in the original mesh.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:vorticity start"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement p
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_final-Re01000.png
+	lyxscale 30
+	width 8cm
+	BoundingBox 60bp 10bp 1450bp 740bp
+	clip
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/Rslt_final-Re10000.png
+	lyxscale 30
+	width 8cm
+	BoundingBox 60bp 10bp 1450bp 740bp
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Vorticity field at 
+\begin_inset Formula $t=2.5\,\text{s}$
+\end_inset
+
+ for 
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+ and 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Vorticity field at 
+\begin_inset Formula $t=2.5\,\text{s}$
+\end_inset
+
+ for 
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+ (left) and 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+ (right) 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:vorticity final"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
 Stopping Phase
+\end_layout
+
+\begin_layout Standard
+During the stopping phase, figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Deccel-1000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Deccel-10000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ show positive vorticity on the upper surface and negative vorticity on
+ the lower surface as the shear layers come to rest.
+ This new vorticity is of opposite sign to the existing vorticity which
+ is displaced instead of being reinforced.
+ The vorticity generation demonstrates this as the BVF is of opposite sign
+ to the existing vorticity.
+\end_layout
+
+\begin_layout Standard
+Even after the deceleration has finished, the vorticity field is still evolving.
+ In figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Stopped-1000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Stopped-10000"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the trailing vortex is just beginning to form and the pressure generation
+ mechanism is seen to be causing the generation of positive vorticity on
+ the lower trailing edge, displacing the negative vorticity of the stopping
+ vortex.
+ For 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+, leading edge vortices are formed as well, but these are not seen in 
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+ even after an additional 
+\begin_inset Formula $1.5\,\text{s}$
+\end_inset
+
+ (figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:vorticity final"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ This could be due to the vorticity diffusing away faster at lower viscosity
+ instead of forming concentrated vortices.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -6279,6 +7353,12 @@ Run a few simulations at different u and see how BVF is different when no
 
 \begin_layout Subsection
 Circulation of Airfoil and Shed Vortices
+\end_layout
+
+\begin_layout Standard
+In order to assess the circulation of shed vortices, regions around the
+ airfoil were defined.
+ 
 \end_layout
 
 \begin_layout Subsubsection
@@ -6476,6 +7556,264 @@ Lift, Drag and Added-Mass Forces
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Impu-Re01000.png
+	lyxscale 30
+	width 12cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Vortex impulse versus time 
+\begin_inset Formula $0\le t\le2.5$
+\end_inset
+
+ for 
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Impu-Re10000.png
+	lyxscale 30
+	width 12cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Vortex impulse versus time 
+\begin_inset Formula $0\le t\le2.5$
+\end_inset
+
+ for 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Lift-Re01000.png
+	lyxscale 30
+	width 12cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Lift versus time 
+\begin_inset Formula $0\le t\le2.5$
+\end_inset
+
+ for 
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Lift-Re10000.png
+	lyxscale 30
+	width 12cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Lift versus time 
+\begin_inset Formula $0\le t\le2.5$
+\end_inset
+
+ for 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Drag-Re01000.png
+	lyxscale 30
+	width 12cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Drag versus time 
+\begin_inset Formula $0\le t\le2.5$
+\end_inset
+
+ for 
+\begin_inset Formula $\text{Re}=1,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Rslt_Drag-Re10000.png
+	lyxscale 30
+	width 12cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Drag versus time 
+\begin_inset Formula $0\le t\le2.5$
+\end_inset
+
+ for 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -6517,6 +7855,68 @@ Compare results to Karman paper
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename ../afmc_full-paper/Unsteady.png
+	lyxscale 10
+	width 95col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset VSpace -1em
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Unsteady lift estimation using equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:unsteady lift"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Unsteady"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
 Vortex Panel Method
 \end_layout
@@ -6535,8 +7935,17 @@ Write and validate own code - Should I have this in the literature review
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Effect of Reynolds Number
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6991,7 +8400,7 @@ the vorticity,
 \begin_inset Formula $\gamma_{1}\left(x\right)$
 \end_inset
 
-, which is induced by the wake, as calculated in the preceding section
+, which is induced by the wake
 \end_layout
 
 \begin_layout Standard

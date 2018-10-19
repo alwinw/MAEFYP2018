@@ -211,7 +211,63 @@ plot_LD <- ggplot(outp$LD, aes(time)) +
   geom_line(aes(y = Ftot.y, colour = "Ftot.y"))
 ggsave(paste0("LD.png"), plot_LD,
        scale = 2, width = 10, height = 6, units = "cm", dpi = 300)
-  
+
+# Added Mass
+plot_lift <- outp$forc %>% 
+  select(time, doxdt, a) %>% 
+  arrange(time)
+plot_lift$Ftot.y <- outp$LD[outp$LD$time %in% plot_lift$time,]$Ftot.y
+
+plot_lift <- plot_lift %>% 
+  mutate(F.am = (Ftot.y - doxdt)/a)
+
+ggplot(plot_lift, aes(time)) +
+  annotate("rect", xmin=0.05, xmax=0.25, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  annotate("rect", xmin=0.85, xmax=1.05, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  geom_line(aes(y = doxdt,  colour = "doxdt")) +
+  geom_line(aes(y = Ftot.y, colour = "Ftot.y"))
+ggsave(paste0("Rslt_Lift-Re01000.png"),
+       scale = 2, width = 10, height = 6, units = "cm", dpi = 300)
+
+ggplot(plot_lift %>% filter(!is.nan(F.am) & abs(F.am) < 100), aes(time)) +
+  annotate("rect", xmin=0.05, xmax=0.25, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  annotate("rect", xmin=0.85, xmax=1.05, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  geom_line(aes(y = -F.am, colour = "F.am/a(t)")) +
+  ylab("Added Mass Force divided by Acceleration")
+ggsave(paste0("Rslt_AddMassLift-Re01000.png"),
+       scale = 2, width = 10, height = 6, units = "cm", dpi = 300)
+
+plot_drag <- outp$forc %>% 
+  select(time, doydt, a) %>% 
+  arrange(time)
+plot_drag$Ftot.x <- outp$LD[outp$LD$time %in% plot_drag$time,]$Ftot.x
+
+plot_drag <- plot_drag %>% 
+  mutate(F.am = (Ftot.x - doydt)/a)
+
+ggplot(plot_drag, aes(time)) +
+  annotate("rect", xmin=0.05, xmax=0.25, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  annotate("rect", xmin=0.85, xmax=1.05, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  geom_line(aes(y = doydt,  colour = "doydt")) +
+  geom_line(aes(y = Ftot.x, colour = "Ftot.x"))
+ggsave(paste0("Rslt_Drag-Re01000.png"),
+       scale = 2, width = 10, height = 6, units = "cm", dpi = 300)
+
+ggplot(plot_drag %>% filter(!is.nan(F.am) & abs(F.am) < 100), aes(time)) +
+  annotate("rect", xmin=0.05, xmax=0.25, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  annotate("rect", xmin=0.85, xmax=1.05, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  geom_line(aes(y = -F.am, colour = "F.am/a(t)")) +
+  ylab("Added Mass Force divided by Acceleration")
+ggsave(paste0("Rslt_AddMassDrag-Re01000.png"),
+       scale = 2, width = 10, height = 6, units = "cm", dpi = 300)
 
 # Plot N-S
 plot_t = 0.05
