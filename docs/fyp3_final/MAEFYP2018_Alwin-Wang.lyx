@@ -352,6 +352,10 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset FloatList table
 
 \end_inset
@@ -359,8 +363,13 @@ LatexCommand tableofcontents
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
 \end_inset
 
 
@@ -3219,7 +3228,7 @@ status open
 \begin_inset Graphics
 	filename images/Methd_BC-airfoil-accel.png
 	lyxscale 30
-	width 14cm
+	width 13cm
 
 \end_inset
 
@@ -3232,7 +3241,7 @@ status open
 \begin_inset Graphics
 	filename images/Methd_BC-inflow-vel.png
 	lyxscale 30
-	width 14cm
+	width 13cm
 
 \end_inset
 
@@ -3245,7 +3254,7 @@ status open
 \begin_inset Graphics
 	filename images/Methd_BC-airfoil-disp.png
 	lyxscale 30
-	width 14cm
+	width 13cm
 
 \end_inset
 
@@ -4384,9 +4393,9 @@ noprefix "false"
 .
  
 \begin_inset Formula 
-\[
+\begin{equation}
 \ointop-\nu\vec{n}\cdot\nabla\vec{\omega}\,\text{d}s=\ointop\underset{\text{"LHSG"}}{\underbrace{-\nu\frac{\partial\omega}{\partial n}}}\,\text{d}s=\ointop\underset{\text{"RHSG"}}{\underbrace{-\vec{n}\times\nabla\vec{P}-\vec{t}\cdot\vec{a}\left(t\right)}}\,\text{d}s=0
-\]
+\end{equation}
 
 \end_inset
 
