@@ -138,7 +138,7 @@ ggplot(outp$wall %>% filter(tokenvalue <= 10), aes(s, LHSG-RHSG, group = airfoil
   facet_wrap(~airfoilname) +
   ggtitle(expression("Numerical Error on Airfoil Surface, N_P" <= "10"))
 ggsave(paste0("NSErr-le10.png"),
-       scale = 2, width = 10, height = 6, units = "cm", dpi = 300)
+       scale = 2, width = 12, height = 6, units = "cm", dpi = 300)
 
 ggplot(outp$wall %>% filter(tokenvalue > 10), aes(s, LHSG-RHSG, group = airfoil)) +
   geom_line(aes(colour = tokenvalue)) +
@@ -150,7 +150,7 @@ ggplot(outp$wall %>% filter(tokenvalue > 10), aes(s, LHSG-RHSG, group = airfoil)
   facet_wrap(~airfoilname) +
   ggtitle(expression("Numerical Error on Airfoil Surface, N_P" > "10"))
 ggsave(paste0("NSErr-ge10.png"),
-       scale = 2, width = 10, height = 6, units = "cm", dpi = 300)
+       scale = 2, width = 12, height = 6, units = "cm", dpi = 300)
 
 ggplot(outp$wall %>% filter(tokenvalue == 10), aes(s, LHSG-RHSG, group = airfoil)) +
   geom_line(aes(colour = tokenvalue)) +
@@ -159,7 +159,7 @@ ggplot(outp$wall %>% filter(tokenvalue == 10), aes(s, LHSG-RHSG, group = airfoil
   facet_wrap(~airfoilname) +
   ggtitle("Numerical Error on Airfoil Surface, N_P = 10")
 ggsave(paste0("NSErr-eq10.png"),
-       scale = 2, width = 10, height = 6, units = "cm", dpi = 300)
+       scale = 2, width = 12, height = 6, units = "cm", dpi = 300)
 
 # Node
 conv <- list()
@@ -212,7 +212,7 @@ ggplot(conv$summary, aes(tokenvalue, norm_inf, group = interaction(var, airfoil)
   scale_x_continuous(breaks = seq(4, 20, 4))
 
 ggsave(paste0("node.png"),
-       scale = 2.5, width = 12, height = 4, units = "cm", dpi = 300)
+       scale = 2.5, width = 12, height = 5, units = "cm", dpi = 300)
 
 
 # BVFa
@@ -230,7 +230,7 @@ plot_bvf <- ggplot(plot_bvfa, aes(tokenvalue, Value,
   xlab("N_P Value") + ylab("Integral of BVF")
 
 ggsave(paste0("BVF.png"), plot_bvf,
-       scale = 2, width = 12, height = 4, units = "cm", dpi = 300)
+       scale = 2, width = 12, height = 5, units = "cm", dpi = 300)
 
 # Inte
 plot_inte <- outp$inte %>% 
@@ -249,7 +249,7 @@ ggplot(plot_inte,
   xlab("N_P Value") + ylab("Integral of Vorticity")
 
 ggsave(paste0("inte.png"),
-       scale = 2, width = 12, height = 4, units = "cm", dpi = 300)
+       scale = 2, width = 12, height = 5, units = "cm", dpi = 300)
 
 
 # Junk
