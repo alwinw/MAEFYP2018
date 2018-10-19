@@ -129,8 +129,6 @@ BatchLoadDump <- function(data_dump, outp_mesh, plot = "none", outp = "wall",
   #--- > Produce Plots if Required                                  ----
   # Last entry of plot needs to be saveplot
   if        ("none" %in% plot) {
-  } else if ("NS" %in% plot) {
-    
   } else {
     saveplot = plot[1]
     if        ("airfoil"  %in% plot) {
@@ -142,6 +140,9 @@ BatchLoadDump <- function(data_dump, outp_mesh, plot = "none", outp = "wall",
       plot_te = PlotTE(
         dump$dump, dump$wall, data_plot, scalearr = c(10, 4), saveplot) } 
     if ("LEstream" %in% plot) {
+      
+    }
+    if ("NS" %in% plot) {
       
     }
   } 

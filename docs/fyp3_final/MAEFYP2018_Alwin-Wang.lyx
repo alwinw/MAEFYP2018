@@ -693,6 +693,19 @@ literal "true"
 \begin_layout Standard
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
+prefix "poly"
+symbol "N\\_P"
+description "Polynomial order for SEM"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
 prefix "press1"
 symbol "$p$"
 description "Pressure (Pa)"
@@ -775,6 +788,19 @@ LatexCommand nomenclature
 prefix "vel3"
 symbol "$V_\\infty$"
 description "Freestream velocity (m/s)"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "reyn"
+symbol "Re"
+description "Reynolds number"
 literal "true"
 
 \end_inset
@@ -3552,7 +3578,7 @@ status open
 \begin_inset Graphics
 	filename images/Methd_Interpolation-Comp.png
 	lyxscale 30
-	width 12cm
+	width 11.5cm
 
 \end_inset
 
@@ -3613,7 +3639,183 @@ name "fig:PD Methods"
 
 \begin_layout Standard
 Initially, two different methods were attempted.
+ The first method used a finite difference method where four points normal
+ to a node on the surface to estimate 
+\begin_inset Formula $\left(\frac{\partial\boldsymbol{\omega}}{\partial z}\right)_{0}$
+\end_inset
+
+ using a one-sided finite difference method for five equally spaced points,
  
+\begin_inset Formula $z_{0},z_{+1},\ldots,z_{+4}$
+\end_inset
+
+ given by Fornberg 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Fornberg1988"
+literal "false"
+
+\end_inset
+
+.
+ Bicubic interpolate of points, 
+\begin_inset Formula $z_{0},z_{+1},\ldots,z_{+4}$
+\end_inset
+
+, was used as this would give an accuracy of similar order to the finite
+ difference used.
+ However, a triangulation algorithm was used to determine the interpolation
+ for irregularly spaced data.
+ As such, a point that lay in an element on the lower surface, e.g.
+ element 336, may use point(s) from the upper surface, e.g.
+ element 143, as part of the triangulation.
+ This lead to significant errors at the trailing edge.
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\boldsymbol{\omega}}{\partial z}\left(z_{0}\right)\approx\frac{-\frac{25}{12}\boldsymbol{\omega}\left(z_{0}\right)+4\boldsymbol{\omega}\left(z_{+1}\right)-3\boldsymbol{\omega}\left(z_{+2}\right)+\frac{4}{3}\boldsymbol{\omega}\left(z_{+3}\right)-\frac{1}{4}\boldsymbol{\omega}\left(z_{+4}\right)}{h}+O\left(h_{z}^{4}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The second method was to recast the problem in the 
+\begin_inset Formula $\left(x,y\right)$
+\end_inset
+
+ domain to one in the 
+\begin_inset Formula $\left(s,z\right)$
+\end_inset
+
+ domain.
+ Each point in 
+\begin_inset Formula $\left(x,y\right)$
+\end_inset
+
+ was mapped to the 
+\begin_inset Formula $\left(s,z\right)$
+\end_inset
+
+ domain forming a rectangular grid where the field properties could be interpola
+ted.
+ While the trailing edge problem was avoided, the coordinate transform introduce
+d such great errors that any benefit was lost.
+ This is seen in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:PD Methods"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ where neither method provides a smooth solution.
+\end_layout
+
+\begin_layout Standard
+Finally, an accurate method was determined by modifying 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+addfield
+\end_layout
+
+\end_inset
+
+ to determine the values of 
+\begin_inset Formula $\omega,\frac{\partial\omega}{\partial x},\frac{\partial\omega}{\partial y},\frac{\partial p}{\partial x},\frac{\partial p}{\partial y}$
+\end_inset
+
+.
+ The modification is shown in listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:addfield"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ By using the underlying GLL shape functions, 
+\begin_inset Formula $\nabla\vec{\omega}$
+\end_inset
+
+ and 
+\begin_inset Formula $\nabla\vec{p}$
+\end_inset
+
+ were determined by more accurately.
+\end_layout
+
+\begin_layout Standard
+In a similar approach of using GLL shape functions, integration performed
+ for the circulation, 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+, and vortex impulses, 
+\begin_inset Formula $\vec{P}$
+\end_inset
+
+, were calculated using 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+massmat
+\end_layout
+
+\end_inset
+
+ for element-by-element point-by-point weightings 
+\begin_inset Formula $m_{i}$
+\end_inset
+
+.
+ The output of this method was compared against Semtex's 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+integral
+\end_layout
+
+\end_inset
+
+ function for the circulation of each individual element.
+ The maximum per-element error was in the order of 
+\begin_inset Formula $10^{-7}$
+\end_inset
+
+ while the error for the total circulation of the field was in the order
+ of 
+\begin_inset Formula $10^{-10}$
+\end_inset
+
+.
+\begin_inset Formula 
+\begin{equation}
+\iintop_{\text{elem}}\left(\omega\times x\right)\,\text{d}A=\sum_{i=1}^{N_{P}^{2}}\left(\omega\times x\times m_{i}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -3622,6 +3824,17 @@ shown in figure, to finish, etc.
  Used semtex in the end
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
 \end_inset
 
 
@@ -3674,6 +3887,725 @@ It is clear that the convergence of second derivatives for
 \end_inset
 
 .
+ Several refinements were used in addition to testing different methods
+ for determining partial derivatives.
+ These included refining the mesh at the leading and trailing edges and
+ increasing the order of the tensor-product GLL shape functions used in
+ the spectral element, N_P.
+ For the following convergence study, a Reynolds number of 
+\begin_inset Formula $\text{Re}=10,000$
+\end_inset
+
+ is used, 
+\begin_inset Formula $\nu=0.0001$
+\end_inset
+
+, and it is assumed for lower Reynolds numbers, e.g.
+ 
+\begin_inset Formula $\nu=0.0001$
+\end_inset
+
+, the solution is well converged in space and time.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Mesh refinement images here
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The starting point for the mesh was the same mesh as Vincent and Blackburn
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vincent2014"
+literal "false"
+
+\end_inset
+
+ and two major modifications were made.
+ The first modification was the that upper and lower airfoil splines were
+ joined into a single spline to better represent the leading edge of the
+ airfoil.
+ The second modification was to increase the mesh density at the leading
+ and trailing edges.
+ The new mesh is referred to as 
+\begin_inset Quotes eld
+\end_inset
+
+NACA0012r
+\begin_inset Quotes erd
+\end_inset
+
+ and the original mesh is referred to as 
+\begin_inset Quotes eld
+\end_inset
+
+NACA0012
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Methd_Mesh.png
+	lyxscale 15
+	width 14cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Spectral element mesh of NACA0012 with unit chord at 
+\begin_inset Formula $\alpha=4^{\circ}$
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Mesh"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Methd_Mesh-le.png
+	lyxscale 15
+	width 7cm
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename images/Methd_Mesh-te.png
+	lyxscale 15
+	width 7cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Increased mesh density of the original NACA0012 mesh
+\end_layout
+
+\end_inset
+
+Increased mesh density shown in black for the leading edge (left) and trailing
+ edge (right).
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Refined Mesh"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To assess Semtex's convergence of derivatives of partial derivatives, the
+ test of case of planar steady Kovasznay flow was used from Blackburn and
+ Sherwin 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Blackburn2004"
+literal "false"
+
+\end_inset
+
+.
+ This is shown in equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:kovas"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ where 
+\begin_inset Formula $\lambda=\frac{\text{Re}}{2}-\left(\frac{\text{Re}^{2}}{4}+4\pi^{2}\right)$
+\end_inset
+
+.
+ The analytical solution for 
+\begin_inset Formula $\frac{\partial p}{\partial x},\frac{\partial p}{\partial y},\omega,\frac{\partial\omega}{\partial x},\frac{\partial\omega}{\partial y}$
+\end_inset
+
+ were determined and a convergence analysis performed.
+ The norm_inf, maximum absolute difference, is used to determine the error
+ between numerical and analytical solution.
+ It can be seen in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Kovas conv"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ that the convergence of the partial derivatives is approximately at the
+ same rate of the primary variables 
+\begin_inset Formula $u$
+\end_inset
+
+, 
+\begin_inset Formula $v$
+\end_inset
+
+ and 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ However, for the same norm_inf, a much higher N_P is required for higher
+ partial derivatives.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+u & =1-e^{\lambda x}\cos\left(2\pi y\right)\nonumber \\
+v & =\frac{2\pi}{\lambda}e^{\lambda x}\sin\left(2\pi x\right)\label{eq:kovas}\\
+p & =\frac{1}{2}\left(1-e^{\lambda x}\right)\nonumber 
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Methd_Conv-kovas.png
+	lyxscale 20
+	width 14cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $p$
+\end_inset
+
+-Convergence study of the variables of interest for a planar Kovasznay flow
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Kovas conv"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As such, numerical convergence of all variables for this problem must be
+ investigated, not just 
+\begin_inset Formula $u$
+\end_inset
+
+, 
+\begin_inset Formula $v$
+\end_inset
+
+ and 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ To determine an appropriate choice for N_P, tests were conduced at 
+\begin_inset Formula $t=0.15\,\text{s}$
+\end_inset
+
+ which corresponds to the maximum forwards (
+\begin_inset Formula $a\left(t\right)<0$
+\end_inset
+
+) acceleration of the airfoil.
+ A 
+\begin_inset Formula $p$
+\end_inset
+
+-convergence test where 
+\begin_inset Formula $p$
+\end_inset
+
+ is the order of the tensor-product (N_P) was performed.
+ Values between 
+\begin_inset Formula $3$
+\end_inset
+
+ and 
+\begin_inset Formula $18$
+\end_inset
+
+ were used and their values compared to 
+\begin_inset Formula $p=19$
+\end_inset
+
+ is shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p Conv"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ While the primary variables and first derivatives are well converged at
+ N_P 
+\begin_inset Formula $\ge$
+\end_inset
+
+ 9, it is seen that the second derivatives of 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+ are still highly variable.
+ In general, it is seen that NACA0012r has better convergence due to the
+ increased elements at the leading and trailing edges.
+\end_layout
+
+\begin_layout Standard
+For vorticity generation, it is seen in equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:VortGenLegend"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ that the 
+\begin_inset Quotes eld
+\end_inset
+
+LHSG
+\begin_inset Quotes erd
+\end_inset
+
+ vorticity derivative should be equal to the 
+\begin_inset Quotes eld
+\end_inset
+
+RHSG
+\begin_inset Quotes erd
+\end_inset
+
+ sum of pressure derivative and tangential acceleration.
+ The difference between these two can be attributed to numerical error and
+ should be minimised for accurate results of vorticity generation on the
+ surface.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:NS Err"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows that the increased leading edge and trailing edge greatly reduces
+ the numerical error.
+ However, at high N_P values, substantial 
+\begin_inset Quotes eld
+\end_inset
+
+wiggles
+\begin_inset Quotes erd
+\end_inset
+
+ are introduced.
+ Thus, a value of N_P = 10 was decided.
+ 
+\end_layout
+
+\begin_layout Standard
+The convergence of the integral of BVF, given in equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Integral BVF"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ was also checked.
+ The value of this integral should be zero, and can be evaluated based on
+ the 
+\begin_inset Quotes eld
+\end_inset
+
+RHSG
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+LHSG
+\begin_inset Quotes erd
+\end_inset
+
+ of equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:VortGenLegend"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Both of these integrals approach 
+\begin_inset Formula $0$
+\end_inset
+
+ as N_P is increased shown in figure 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:Conv BVF"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ which is expected.
+ The total circulation and the vortex impulse were also investigated and
+ their results shown in figure 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:Conv vortimp"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\begin_inset Formula 
+\[
+\ointop-\nu\vec{n}\cdot\nabla\vec{\omega}\,\text{d}s=\ointop\underset{\text{"LHSG"}}{\underbrace{-\nu\frac{\partial\omega}{\partial n}}}\,\text{d}s=\ointop\underset{\text{"RHSG"}}{\underbrace{-\vec{n}\times\nabla\vec{P}-\vec{t}\cdot\vec{a}\left(t\right)}}\,\text{d}s=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Methd_Conv-NSErr-le10.png
+	lyxscale 20
+	width 12cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Methd_Conv-NSErr-eq10.png
+	lyxscale 20
+	width 12cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Methd_Conv-NSErr-ge10.png
+	lyxscale 20
+	width 12cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Numerical error of 
+\begin_inset Formula $-\nu\vec{n}\cdot\nabla\vec{\omega}+\vec{n}\times\nabla\vec{P}+\vec{t}\cdot\vec{a}\left(t\right)=0$
+\end_inset
+
+ for 
+\begin_inset Formula $3\le p\le19$
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:NS Err"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Methd_Conv-node.png
+	lyxscale 20
+	width 14cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $p$
+\end_inset
+
+-Convergence study of the variables of interest for 
+\begin_inset Formula $3\le p\le18$
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p Conv"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Methd_Conv-BVF.png
+	lyxscale 20
+	width 14cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Convergence of the integral of the BVF around the airfoil for 
+\begin_inset Formula $3\le p\le19$
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Conv BVF"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/Methd_Conv-inte.png
+	lyxscale 20
+	width 14cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Convergence of the integral of the vorticity and vortex impulse for 
+\begin_inset Formula $3\le p\le19$
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Conv vortimp"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6359,6 +7291,13 @@ case 'G': flag[VORTGEN]      = true; break;
 
 \begin_layout Plain Layout
 Exerts of modifications to addfield.cpp
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:addfield"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -6519,12 +7458,408 @@ Exerts of modifications to wallmesh.cpp
 
 \end_layout
 
-\begin_layout Subsubsection
-NACA0012
+\begin_layout Standard
+\begin_inset VSpace smallskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
+Session File
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace -0.5em
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "numbers=left,breaklines=true,showstringspaces=false,tabsize=2,commentstyle={\itshape\ttfamily\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+<USER>
+\end_layout
+
+\begin_layout Plain Layout
+
+	u = 0.0
+\end_layout
+
+\begin_layout Plain Layout
+
+	v = 0.0
+\end_layout
+
+\begin_layout Plain Layout
+
+	p = 0.0
+\end_layout
+
+\begin_layout Plain Layout
+
+</USER>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<FIELDS>
+\end_layout
+
+\begin_layout Plain Layout
+
+	u v p
+\end_layout
+
+\begin_layout Plain Layout
+
+</FIELDS>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<TOKENS>
+\end_layout
+
+\begin_layout Plain Layout
+
+	KINVIS    = 1./10000.
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\end_layout
+
+\begin_layout Plain Layout
+
+	D_T       = 0.0001
+\end_layout
+
+\begin_layout Plain Layout
+
+	N_STEP    = 25000
+\end_layout
+
+\begin_layout Plain Layout
+
+	N_TIME    = 2
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	N_P       = 10
+\end_layout
+
+\begin_layout Plain Layout
+
+	N_Z       = 1
+\end_layout
+
+\begin_layout Plain Layout
+
+  LZ        = 1.0
+\end_layout
+
+\begin_layout Plain Layout
+
+	BETA      = TWOPI/LZ
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+ 	IO_CFL    = 50
+\end_layout
+
+\begin_layout Plain Layout
+
+ 	IO_FLD    = 10
+\end_layout
+
+\begin_layout Plain Layout
+
+ 	IO_HIS    = 1
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	AVERAGE   = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+ 	CHKPOINT  = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+	ITERATIVE = 1
+\end_layout
+
+\begin_layout Plain Layout
+
+	TBCS	    = 1
+\end_layout
+
+\begin_layout Plain Layout
+
+</TOKENS>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<FORCE>
+\end_layout
+
+\begin_layout Plain Layout
+
+	MOD_A_X = 1
+\end_layout
+
+\begin_layout Plain Layout
+
+	MOD_A_Y = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+	MOD_ALPHA_X = -((5*PI/2*sin(5*PI*(t-0.05)))*heav(t-0.05)+(-5*PI/2*sin(5*PI*(t-0.05
+)))*heav(t-0.25)+(-5*PI/2*sin(5*PI*(t-0.05)))*heav(t-0.85)+(5*PI/2*sin(5*PI*(t-0.05)
+))*heav(t-1.05))
+\end_layout
+
+\begin_layout Plain Layout
+
+	MOD_ALPHA_Y = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+</FORCE>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<GROUPS NUMBER=5>
+\end_layout
+
+\begin_layout Plain Layout
+
+     1     o     outflow
+\end_layout
+
+\begin_layout Plain Layout
+
+     2     p     wall
+\end_layout
+
+\begin_layout Plain Layout
+
+     3     w     group_name
+\end_layout
+
+\begin_layout Plain Layout
+
+     4     s     group_name
+\end_layout
+
+\begin_layout Plain Layout
+
+     5     v     inflow
+\end_layout
+
+\begin_layout Plain Layout
+
+</GROUPS>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<BCS NUMBER=5>
+\end_layout
+
+\begin_layout Plain Layout
+
+     1     o     3
+\end_layout
+
+\begin_layout Plain Layout
+
+                 <N>     u = 0      </N>
+\end_layout
+
+\begin_layout Plain Layout
+
+                 <N>     v = 0      </N>
+\end_layout
+
+\begin_layout Plain Layout
+
+                 <D>     p = 0      </D>
+\end_layout
+
+\begin_layout Plain Layout
+
+     2     p     3
+\end_layout
+
+\begin_layout Plain Layout
+
+                 <D>     u = 0      </D>
+\end_layout
+
+\begin_layout Plain Layout
+
+                 <D>     v = 0      </D>
+\end_layout
+
+\begin_layout Plain Layout
+
+                 <H>     p = 0      </H>
+\end_layout
+
+\begin_layout Plain Layout
+
+     3     w     3
+\end_layout
+
+\begin_layout Plain Layout
+
+                 <N>     u = 0      </N>
+\end_layout
+
+\begin_layout Plain Layout
+
+                 <D>     v = 0      </D>
+\end_layout
+
+\begin_layout Plain Layout
+
+                 <H>     p = 0      </H>
+\end_layout
+
+\begin_layout Plain Layout
+
+     4     s     3
+\end_layout
+
+\begin_layout Plain Layout
+
+                 <N>     u = 0      </N>
+\end_layout
+
+\begin_layout Plain Layout
+
+                 <D>     v = 0      </D>
+\end_layout
+
+\begin_layout Plain Layout
+
+                 <H>     p = 0      </H>
+\end_layout
+
+\begin_layout Plain Layout
+
+     5     v     3
+\end_layout
+
+\begin_layout Plain Layout
+
+                 <D>     u = (1/2-1/2*cos(5*PI*(t-0.05)))*heav(t-0.05)+(1/2-1/2*co
+s(5*PI*(t-0.05)+PI))*heav(t-0.25)+(-1/2-1/2*cos(5*PI*(t-0.05)+PI))*heav(t-0.85)+(-1/
+2-1/2*cos(5*PI*(t-0.05)))*heav(t-1.05)   </D>
+\end_layout
+
+\begin_layout Plain Layout
+
+                 <D>     v = 0      </D>
+\end_layout
+
+\begin_layout Plain Layout
+
+                 <H>     p = 0      </H>
+\end_layout
+
+\begin_layout Plain Layout
+
+</BCS>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Header of session file for Re = 10,000
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+NACA0012
+\end_layout
+
+\begin_layout Plain Layout
 NACA0012 Remesh
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -7447,10 +8782,1302 @@ R Scripts
 \end_layout
 
 \begin_layout Standard
+Some selected R scripts are presented below to give an overview of the post
+ processing methodology.
+\end_layout
+
+\begin_layout Standard
 \begin_inset listings
-lstparams "numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\color{commentgreen}},keywordstyle={\bfseries\color{weborange}},stringstyle={\color{frenchplum}}"
+lstparams "language=R,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\color{commentgreen}},stringstyle={\color{frenchplum}},keywordstyle={\color{black}}"
 inline false
 status open
+
+\begin_layout Plain Layout
+
+#============================#
+\end_layout
+
+\begin_layout Plain Layout
+
+# Analysis of Whole Time Domain
+\end_layout
+
+\begin_layout Plain Layout
+
+# Alwin Wang
+\end_layout
+
+\begin_layout Plain Layout
+
+#----------------------------#
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+#--- Set Up                                                       ----
+\end_layout
+
+\begin_layout Plain Layout
+
+# Use rstudioapi to get saved location of this file
+\end_layout
+
+\begin_layout Plain Layout
+
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+\end_layout
+
+\begin_layout Plain Layout
+
+#--- * Scripts                                                    ----
+\end_layout
+
+\begin_layout Plain Layout
+
+# Source Required Scripts
+\end_layout
+
+\begin_layout Plain Layout
+
+srcpath = "../../R/"
+\end_layout
+
+\begin_layout Plain Layout
+
+source(paste0(srcpath, "src_library-manager.R"))
+\end_layout
+
+\begin_layout Plain Layout
+
+source(paste0(srcpath, "src_batch-functions.R"))
+\end_layout
+
+\begin_layout Plain Layout
+
+source(paste0(srcpath, "src_helper-functions.R"))
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+#--- Batch Process                                                ----
+\end_layout
+
+\begin_layout Plain Layout
+
+# Batch list to process
+\end_layout
+
+\begin_layout Plain Layout
+
+batchfolder = "results"
+\end_layout
+
+\begin_layout Plain Layout
+
+df_batch <- ListSesh(batchfolder, c("airfoil"))
+\end_layout
+
+\begin_layout Plain Layout
+
+# List of unique airfoils & N_P
+\end_layout
+
+\begin_layout Plain Layout
+
+li_airfoil   <- split (df_batch, df_batch$airfoil)
+\end_layout
+
+\begin_layout Plain Layout
+
+li_airfoil   <- lapply(li_airfoil, function(df) df[1,])
+\end_layout
+
+\begin_layout Plain Layout
+
+outp_airfoil <- pblapply(li_airfoil, BatchLoadAirfoil, srcpath)
+\end_layout
+
+\begin_layout Plain Layout
+
+# List of meshs
+\end_layout
+
+\begin_layout Plain Layout
+
+tokenwords = list("N_P")
+\end_layout
+
+\begin_layout Plain Layout
+
+df_mesh <- df_batch %>%
+\end_layout
+
+\begin_layout Plain Layout
+
+  rowwise() %>%
+\end_layout
+
+\begin_layout Plain Layout
+
+  do(data.frame(
+\end_layout
+
+\begin_layout Plain Layout
+
+    ., LoadSeshTokenWords(.$seshpath, tokenwords), 
+\end_layout
+
+\begin_layout Plain Layout
+
+    stringsAsFactors = FALSE)) %>%
+\end_layout
+
+\begin_layout Plain Layout
+
+  filter(!is.na(tokenvalue)) %>% 
+\end_layout
+
+\begin_layout Plain Layout
+
+  mutate(
+\end_layout
+
+\begin_layout Plain Layout
+
+    ID = paste0(airfoil))      
+\end_layout
+
+\begin_layout Plain Layout
+
+li_mesh   <- split (df_mesh, df_mesh$ID)
+\end_layout
+
+\begin_layout Plain Layout
+
+li_mesh   <- lapply(li_mesh, function(x) x[1,])
+\end_layout
+
+\begin_layout Plain Layout
+
+outp_mesh <- pblapply(li_mesh, BatchLoadMesh, outp_airfoil, srcpath)
+\end_layout
+
+\begin_layout Plain Layout
+
+# List of dumps
+\end_layout
+
+\begin_layout Plain Layout
+
+df_dump <- df_mesh %>% 
+\end_layout
+
+\begin_layout Plain Layout
+
+  rowwise() %>% 
+\end_layout
+
+\begin_layout Plain Layout
+
+  do(data.frame(., dumpfile = ListDump(.$folder, .$seshname),
+\end_layout
+
+\begin_layout Plain Layout
+
+                stringsAsFactors = FALSE)) %>%
+\end_layout
+
+\begin_layout Plain Layout
+
+  mutate(dumppath = paste0(folder, dumpfile))
+\end_layout
+
+\begin_layout Plain Layout
+
+li_dump   <- split(df_dump, df_dump$dumppath)
+\end_layout
+
+\begin_layout Plain Layout
+
+# Use cluster
+\end_layout
+
+\begin_layout Plain Layout
+
+cl <- makeCluster(detectCores() - 1)
+\end_layout
+
+\begin_layout Plain Layout
+
+outp_dump <- pblapply(li_dump, BatchLoadDump, outp_mesh, 
+\end_layout
+
+\begin_layout Plain Layout
+
+                      plot = c("none"), 
+\end_layout
+
+\begin_layout Plain Layout
+
+                      outp = "wall", srcpath,
+\end_layout
+
+\begin_layout Plain Layout
+
+                      cl = cl)
+\end_layout
+
+\begin_layout Plain Layout
+
+stopCluster(cl)
+\end_layout
+
+\begin_layout Plain Layout
+
+save(outp_dump, file="outp_dump.RData")
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+#--- Batch Calc Output                                          ----
+\end_layout
+
+\begin_layout Plain Layout
+
+outp <- list()
+\end_layout
+
+\begin_layout Plain Layout
+
+# Wall
+\end_layout
+
+\begin_layout Plain Layout
+
+outp$wall <- lapply(outp_dump, function(dump) cbind(
+\end_layout
+
+\begin_layout Plain Layout
+
+  dump$wall, 
+\end_layout
+
+\begin_layout Plain Layout
+
+  select(dump$data_plot, airfoil, seshname, tokenvalue, ID, time, kinvis,
+ a) ))
+\end_layout
+
+\begin_layout Plain Layout
+
+outp$wall <- bind_rows(outp$wall)
+\end_layout
+
+\begin_layout Plain Layout
+
+# BVFa
+\end_layout
+
+\begin_layout Plain Layout
+
+outp$BVFa <- lapply(outp_dump, function(dump) cbind(
+\end_layout
+
+\begin_layout Plain Layout
+
+  dump$bvfa,
+\end_layout
+
+\begin_layout Plain Layout
+
+  select(dump$data_plot, airfoil, seshname, time, kinvis, a) ))
+\end_layout
+
+\begin_layout Plain Layout
+
+outp$BVFa <- bind_rows(outp$BVFa)
+\end_layout
+
+\begin_layout Plain Layout
+
+# Circulation
+\end_layout
+
+\begin_layout Plain Layout
+
+outp$circ <- lapply(outp_dump, function(dump) cbind(
+\end_layout
+
+\begin_layout Plain Layout
+
+  rbind(select(dump$inte, regn, o),
+\end_layout
+
+\begin_layout Plain Layout
+
+        data.frame(regn = "W", o = sum(dump$inte[c(1,3,4),2]))),
+\end_layout
+
+\begin_layout Plain Layout
+
+  select(dump$data_plot, airfoil, seshname, time, kinvis, a) ))
+\end_layout
+
+\begin_layout Plain Layout
+
+outp$circ <- bind_rows(outp$circ)
+\end_layout
+
+\begin_layout Plain Layout
+
+# Vortex Impulse
+\end_layout
+
+\begin_layout Plain Layout
+
+outp$impl <- lapply(outp_dump, function(dump) cbind(
+\end_layout
+
+\begin_layout Plain Layout
+
+  select(dump$inte, regn, ox, oy),
+\end_layout
+
+\begin_layout Plain Layout
+
+  select(dump$data_plot, airfoil, seshname, time, kinvis, a) ))
+\end_layout
+
+\begin_layout Plain Layout
+
+outp$impl <- bind_rows(outp$impl)
+\end_layout
+
+\begin_layout Plain Layout
+
+outp$impl <- outp$impl %>% 
+\end_layout
+
+\begin_layout Plain Layout
+
+  arrange(time)
+\end_layout
+
+\begin_layout Plain Layout
+
+# Vortex Force
+\end_layout
+
+\begin_layout Plain Layout
+
+outp$forc <- outp$impl %>% 
+\end_layout
+
+\begin_layout Plain Layout
+
+  filter(regn == "Total") %>% 
+\end_layout
+
+\begin_layout Plain Layout
+
+  mutate(doxdt = (lead(ox)-ox)/(lead(time)-time),
+\end_layout
+
+\begin_layout Plain Layout
+
+         doydt = (lead(oy)-oy)/(lead(time)-time) )
+\end_layout
+
+\begin_layout Plain Layout
+
+# Lift and Drag Force
+\end_layout
+
+\begin_layout Plain Layout
+
+outp$LD <- read.table(
+\end_layout
+
+\begin_layout Plain Layout
+
+  paste0(df_batch$seshpath, ".flx"), skip = 3 )
+\end_layout
+
+\begin_layout Plain Layout
+
+colnames(outp$LD) <- c(
+\end_layout
+
+\begin_layout Plain Layout
+
+  "step", "time", 
+\end_layout
+
+\begin_layout Plain Layout
+
+  "Fpre.x", "Fvis.x", "Ftot.x",
+\end_layout
+
+\begin_layout Plain Layout
+
+  "Fpre.y", "Fvis.y", "Ftot.y",
+\end_layout
+
+\begin_layout Plain Layout
+
+  "Fpre.z", "Fvis.z", "Ftot.z" )
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+R script to batch process session and dump files
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=R,numbers=left,showstringspaces=false,tabsize=2,commentstyle={\itshape\color{commentgreen}},stringstyle={\color{frenchplum}},keywordstyle={\color{black}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+#============================#
+\end_layout
+
+\begin_layout Plain Layout
+
+# Batch Functions
+\end_layout
+
+\begin_layout Plain Layout
+
+# Alwin Wang
+\end_layout
+
+\begin_layout Plain Layout
+
+#----------------------------#
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+#--- Airfoil Calculation                                          ----
+\end_layout
+
+\begin_layout Plain Layout
+
+# Determine things like spline distance once per unique airfoil
+\end_layout
+
+\begin_layout Plain Layout
+
+BatchLoadAirfoil <- function(data_airfoil, srcpath = "") {
+\end_layout
+
+\begin_layout Plain Layout
+
+  source(paste0(srcpath, "src_library-manager.R"))
+\end_layout
+
+\begin_layout Plain Layout
+
+  source(paste0(srcpath, "src_helper-functions.R"))
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- * Boundary Data                                              ----
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Not sure this is actually used anywhere...
+\end_layout
+
+\begin_layout Plain Layout
+
+  bndry <- LoadBndry(data_airfoil$folder)
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- * Wall Mesh Data                                             ----
+\end_layout
+
+\begin_layout Plain Layout
+
+  wallmesh <- LoadWallGrad(data_airfoil$seshpath)
+\end_layout
+
+\begin_layout Plain Layout
+
+  long_wall <- AirfoilLongWall(wallmesh)
+\end_layout
+
+\begin_layout Plain Layout
+
+  long_wall <- AirfoilSpline(long_wall)
+\end_layout
+
+\begin_layout Plain Layout
+
+  long_wall <- AirfoilNorm  (long_wall)
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- > Airfoil Calc Output                                        ----
+\end_layout
+
+\begin_layout Plain Layout
+
+  list_airfoil <- list(
+\end_layout
+
+\begin_layout Plain Layout
+
+    airfoil   = data_airfoil,
+\end_layout
+
+\begin_layout Plain Layout
+
+    bndry     = bndry,
+\end_layout
+
+\begin_layout Plain Layout
+
+    long_wall = long_wall)
+\end_layout
+
+\begin_layout Plain Layout
+
+  rm(data_airfoil, bndry, long_wall, wallmesh)
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Output
+\end_layout
+
+\begin_layout Plain Layout
+
+  return(list_airfoil)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+#--- Session and Mesh Calculation                                 ----
+\end_layout
+
+\begin_layout Plain Layout
+
+BatchLoadMesh <- function(data_mesh, outp_airfoil, srcpath = "") {
+\end_layout
+
+\begin_layout Plain Layout
+
+  source(paste0(srcpath, "src_library-manager.R"))
+\end_layout
+
+\begin_layout Plain Layout
+
+  source(paste0(srcpath, "src_helper-functions.R"))
+\end_layout
+
+\begin_layout Plain Layout
+
+  list_airfoil <- outp_airfoil[[data_mesh$airfoil]]
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- * Airfoil Data                                               ----
+\end_layout
+
+\begin_layout Plain Layout
+
+  long <- list()
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- * Session Data                                               ----
+\end_layout
+
+\begin_layout Plain Layout
+
+  session   <- LoadSeshFileKeywords(data_mesh$seshpath)
+\end_layout
+
+\begin_layout Plain Layout
+
+  long$sesh <- LongSesh(session)
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- * Mesh Data                                                  ----
+\end_layout
+
+\begin_layout Plain Layout
+
+  long$mesh <- LoadMesh(data_mesh$seshpath)
+\end_layout
+
+\begin_layout Plain Layout
+
+  long$mesh <- LongMesh(long$mesh, long$sesh)
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- * Mass Data
+\end_layout
+
+\begin_layout Plain Layout
+
+  long$mass <- LoadMass(data_mesh$seshpath)
+\end_layout
+
+\begin_layout Plain Layout
+
+  long$mesh <- LongMass(long$mesh, long$mass)
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- * Wall Data                                                  ----
+\end_layout
+
+\begin_layout Plain Layout
+
+  long$wall <- list_airfoil$long_wall
+\end_layout
+
+\begin_layout Plain Layout
+
+  long$wall <- LongWall(long$wall, long$mesh)
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- * Local Data                                                 ----
+\end_layout
+
+\begin_layout Plain Layout
+
+  long$mesh <- LocalMesh(long$mesh, long$wall)
+\end_layout
+
+\begin_layout Plain Layout
+
+  long$enum <- LocalEnum(long$mesh, long$wall)
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- > Sesh & Mesh Calc Output                                    ----
+\end_layout
+
+\begin_layout Plain Layout
+
+  list_mesh <- list(
+\end_layout
+
+\begin_layout Plain Layout
+
+    wall = long$wall,
+\end_layout
+
+\begin_layout Plain Layout
+
+    mesh = long$mesh,
+\end_layout
+
+\begin_layout Plain Layout
+
+    enum = long$enum)
+\end_layout
+
+\begin_layout Plain Layout
+
+  rm(data_mesh, long, session)
+\end_layout
+
+\begin_layout Plain Layout
+
+  # output
+\end_layout
+
+\begin_layout Plain Layout
+
+  return(list_mesh)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+#--- Dump File Calculation                                        ----
+\end_layout
+
+\begin_layout Plain Layout
+
+BatchLoadDump <- function(data_dump, outp_mesh, plot = "none", 
+\end_layout
+
+\begin_layout Plain Layout
+
+                          outp = "wall", srcpath = "", addscr = NULL) {
+\end_layout
+
+\begin_layout Plain Layout
+
+  source(paste0(srcpath, "src_library-manager.R"))
+\end_layout
+
+\begin_layout Plain Layout
+
+  source(paste0(srcpath, "src_helper-functions.R"))
+\end_layout
+
+\begin_layout Plain Layout
+
+  source(paste0(srcpath, "src_plotting-functions.R"))
+\end_layout
+
+\begin_layout Plain Layout
+
+  list_mesh <- outp_mesh[[data_dump$ID]]
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- * Dump Data                                                  ----
+\end_layout
+
+\begin_layout Plain Layout
+
+  dump      <- LoadGradFieldDump(data_dump$folder, data_dump$dumpfile)
+\end_layout
+
+\begin_layout Plain Layout
+
+  dump$dump <- DumpMesh(list_mesh$mesh, dump$dump)
+\end_layout
+
+\begin_layout Plain Layout
+
+  dump$wall <- DumpWall(list_mesh$wall, dump$dump)
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- * Accleration Data                                           ----
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Note that tangent direction based on spline calc
+\end_layout
+
+\begin_layout Plain Layout
+
+  LoadSeshBCEq(data_dump$seshpath, "MOD_ALPHA_X")
+\end_layout
+
+\begin_layout Plain Layout
+
+  dump$a    <- BC_mod_alpha_x(dump$time)
+\end_layout
+
+\begin_layout Plain Layout
+
+  dump$wall <- DumpAccel(dump$a, dump$wall)
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- * Pressure Data                                              ----
+\end_layout
+
+\begin_layout Plain Layout
+
+  dump$wall <- DumpPres(dump$wall, interp = FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- * Vorticity Data                                             ----
+\end_layout
+
+\begin_layout Plain Layout
+
+  dump$wall <- DumpVortOnly(dump$wall, dump$kinvis)
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- * Dump Calc Output                                           ----
+\end_layout
+
+\begin_layout Plain Layout
+
+  data_plot <- bind_rows(dump[c("time", "kinvis", "a")])
+\end_layout
+
+\begin_layout Plain Layout
+
+  data_plot <- cbind(data_dump, data_plot) %>% 
+\end_layout
+
+\begin_layout Plain Layout
+
+    mutate(plotname = paste0(
+\end_layout
+
+\begin_layout Plain Layout
+
+      airfoil, "-v", sprintf("%0.4f", kinvis), "-t", 
+\end_layout
+
+\begin_layout Plain Layout
+
+      sprintf("%06.4f", time)))
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- * Integral Output                                            ----
+\end_layout
+
+\begin_layout Plain Layout
+
+  dump$bvfa <- DumpBVFa(dump$wall)
+\end_layout
+
+\begin_layout Plain Layout
+
+  dump$flow <- DumpFlow(dump$dump)
+\end_layout
+
+\begin_layout Plain Layout
+
+  dump$inte <- DumpInte(dump$dump, list_mesh$enum)
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- * Create Output                                              ----
+\end_layout
+
+\begin_layout Plain Layout
+
+  if (outp == "wall") {
+\end_layout
+
+\begin_layout Plain Layout
+
+    list_dump <- c(
+\end_layout
+
+\begin_layout Plain Layout
+
+      data_plot = list(data_plot), 
+\end_layout
+
+\begin_layout Plain Layout
+
+      dump = dump[c("wall")],
+\end_layout
+
+\begin_layout Plain Layout
+
+      bvfa = dump[c("bvfa")],
+\end_layout
+
+\begin_layout Plain Layout
+
+      flow = dump[c("flow")],
+\end_layout
+
+\begin_layout Plain Layout
+
+      inte = dump[c("inte")])
+\end_layout
+
+\begin_layout Plain Layout
+
+    names(list_dump) <- c("data_plot", "wall", 
+\end_layout
+
+\begin_layout Plain Layout
+
+                          "bvfa", "flow", "inte")
+\end_layout
+
+\begin_layout Plain Layout
+
+  } else if (outp == "node") {
+\end_layout
+
+\begin_layout Plain Layout
+
+    dump$node <- filter(dump$dump, node)
+\end_layout
+
+\begin_layout Plain Layout
+
+    list_dump <- c(
+\end_layout
+
+\begin_layout Plain Layout
+
+      data_plot = list(data_plot), 
+\end_layout
+
+\begin_layout Plain Layout
+
+      dump = dump[c("wall")],
+\end_layout
+
+\begin_layout Plain Layout
+
+      node = dump[c("node")],
+\end_layout
+
+\begin_layout Plain Layout
+
+      bvfa = dump[c("bvfa")],
+\end_layout
+
+\begin_layout Plain Layout
+
+      flow = dump[c("flow")],
+\end_layout
+
+\begin_layout Plain Layout
+
+      inte = dump[c("inte")])
+\end_layout
+
+\begin_layout Plain Layout
+
+    names(list_dump) <- c("data_plot", "wall", "node", 
+\end_layout
+
+\begin_layout Plain Layout
+
+                          "bvfa", "flow", "inte")
+\end_layout
+
+\begin_layout Plain Layout
+
+  } else if (outp == "te") {
+\end_layout
+
+\begin_layout Plain Layout
+
+    xvec = c( 0.595,  0.615)
+\end_layout
+
+\begin_layout Plain Layout
+
+    yvec = c(-0.046, -0.030)
+\end_layout
+
+\begin_layout Plain Layout
+
+    xveci = xvec + c(-0.1*(xvec[2]-xvec[1]), 0.1*(xvec[2]-xvec[1]))
+\end_layout
+
+\begin_layout Plain Layout
+
+    yveci = yvec + c(-0.1*(yvec[2]-yvec[1]), 0.1*(yvec[2]-yvec[1]))
+\end_layout
+
+\begin_layout Plain Layout
+
+    dump$te <- filter(dump$dump, x >= xveci[1], x <= xveci[2], 
+\end_layout
+
+\begin_layout Plain Layout
+
+                                 y >= yveci[1], y <= yveci[2]) %>% 
+\end_layout
+
+\begin_layout Plain Layout
+
+      select(x, y, u, v, p, o) %>% 
+\end_layout
+
+\begin_layout Plain Layout
+
+      unique(.)
+\end_layout
+
+\begin_layout Plain Layout
+
+    list_dump <- c(
+\end_layout
+
+\begin_layout Plain Layout
+
+      data_plot = list(data_plot), 
+\end_layout
+
+\begin_layout Plain Layout
+
+      dump = dump[c("wall")],
+\end_layout
+
+\begin_layout Plain Layout
+
+      node = dump[c("te"  )],
+\end_layout
+
+\begin_layout Plain Layout
+
+      bvfa = dump[c("bvfa")],
+\end_layout
+
+\begin_layout Plain Layout
+
+      flow = dump[c("flow")],
+\end_layout
+
+\begin_layout Plain Layout
+
+      inte = dump[c("inte")])
+\end_layout
+
+\begin_layout Plain Layout
+
+    names(list_dump) <- c("data_plot", "wall", "te", 
+\end_layout
+
+\begin_layout Plain Layout
+
+                          "bvfa", "flow", "inte")
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- > Produce Plots if Required                                  ----
+\end_layout
+
+\begin_layout Plain Layout
+
+  # Last entry of plot needs to be saveplot
+\end_layout
+
+\begin_layout Plain Layout
+
+  if        ("none" %in% plot) {
+\end_layout
+
+\begin_layout Plain Layout
+
+  } else {
+\end_layout
+
+\begin_layout Plain Layout
+
+    saveplot = plot[1]
+\end_layout
+
+\begin_layout Plain Layout
+
+    if        ("airfoil"  %in% plot) {
+\end_layout
+
+\begin_layout Plain Layout
+
+      # Plot the airfoil
+\end_layout
+
+\begin_layout Plain Layout
+
+      plot_af = PlotAirfoil(
+\end_layout
+
+\begin_layout Plain Layout
+
+        dump$dump, dump$wall, data_plot, scalearr = c(10, 4), saveplot)
+ } 
+\end_layout
+
+\begin_layout Plain Layout
+
+    if ("TEstream" %in% plot) {
+\end_layout
+
+\begin_layout Plain Layout
+
+      # Plot the trailing edge
+\end_layout
+
+\begin_layout Plain Layout
+
+      plot_te = PlotTE(
+\end_layout
+
+\begin_layout Plain Layout
+
+        dump$dump, dump$wall, data_plot, scalearr = c(10, 4), saveplot)
+ } 
+\end_layout
+
+\begin_layout Plain Layout
+
+    if ("LEstream" %in% plot) {
+\end_layout
+
+\begin_layout Plain Layout
+
+      # Plot the leading edge
+\end_layout
+
+\begin_layout Plain Layout
+
+      plot_le = PlotLE(
+\end_layout
+
+\begin_layout Plain Layout
+
+        dump$dump, dump$wall, data_plot, scalearr = c(10, 4), saveplot)
+ } 
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+  } 
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  #--- > Run additional scripts if called                           ----
+\end_layout
+
+\begin_layout Plain Layout
+
+  if (!is.null(addscr))
+\end_layout
+
+\begin_layout Plain Layout
+
+    for (i in 1:length(addscr)) source(addscr[i])
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  rm(data_dump, data_plot, dump)
+\end_layout
+
+\begin_layout Plain Layout
+
+  # output
+\end_layout
+
+\begin_layout Plain Layout
+
+  return(list_dump)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
 
 \begin_layout Plain Layout
 
@@ -7461,7 +10088,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Bash script to integrate element-by-element across the domain
+R script calculations of the session, mesh and batch files
 \end_layout
 
 \end_inset

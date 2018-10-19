@@ -54,11 +54,22 @@ for (result in resultslist) {
 norminf <- filter(convergence, num == "Max.") %>%
   select(-x, -y, -num, -name) %>%
   gather(var, norm_inf, -N_P) %>%
-  mutate(pressure = var %in% c("p", "m", "n"))
+  mutate(pressure = var %in% c("p", "m", "n")) %>% 
+  mutate(pressure = ifelse(pressure, "Pressure", "Velocity")) %>% 
+  mutate(var = ifelse(var == "k", "dodx", var),
+         var = ifelse(var == "l", "dody", var),
+         var = ifelse(var == "m", "dpdx", var),
+         var = ifelse(var == "n", "dpdy", var) )
+
+norminf$var = factor(norminf$var, levels = c("p", "dpdx", "dpdy", "u", "v", "o", "dodx", "dody"))
 
 ggplot(norminf, aes(N_P, norm_inf, group = var, colour = var)) +
   geom_line(aes(linetype = var)) +
   geom_point(aes(shape = var)) +
   scale_y_continuous(trans='log10') +
+  # scale_colour_discrete(name = "Var", )
   facet_wrap(~pressure, scales = "free_y") +
   ggtitle("Kovasznay Flow Convergence")
+
+ggsave(paste0("kovas.png"),
+       scale = 2.5, width = 10, height = 6, units = "cm", dpi = 300)

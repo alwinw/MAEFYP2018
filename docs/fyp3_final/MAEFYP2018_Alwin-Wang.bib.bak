@@ -321,11 +321,11 @@
   url       = {https://www.ebook.de/de/product/2875866/arnold_m_kuethe_chuen_yen_chow_kuethe_foundations_of_aerodynamics.html},
 }
 
-@Book{Jean-JacquesChattot2015,
+@Book{ChattotHafez2015,
   title     = {Theoretical and {A}pplied {A}erodynamics},
   publisher = {Springer-Verlag GmbH},
   year      = {2015},
-  author    = {Jean-Jacques Chattot, Mohamed Hafez},
+  author    = {Jean-Jacques Chattot and Mohamed Hafez},
   isbn      = {9401798249},
   date      = {2015-04-14},
   ean       = {9789401798242},

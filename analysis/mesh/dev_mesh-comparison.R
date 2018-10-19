@@ -58,11 +58,15 @@ plot_mesh <- ggplot() +
         panel.grid.minor = element_blank())
 
 plot_mesh + coord_fixed(                                        # Trailing edge
-  xlim = c(0.40, 0.70), ylim = c(-0.15, 0.06), expand = FALSE) +
+  xlim = c(0.40, 0.70), ylim = c(-0.16, 0.06), expand = FALSE) +
   scale_size(guide="none", range=c(1*1, 6*8))
+ggsave(paste0("mesh-te.png"),
+       scale = 2, width = 10, height = 8, units = "cm", dpi = 300)
 plot_mesh + coord_fixed(                                        # Leading edge
-  xlim = c(-0.5, -0.2), ylim = c(-0.10, 0.13), expand = FALSE) +
+  xlim = c(-0.5, -0.2), ylim = c(-0.11, 0.13), expand = FALSE) +
   scale_size(guide="none", range=c(1*1, 6*8))
+ggsave(paste0("mesh-le.png"),
+       scale = 2, width = 10, height = 8, units = "cm", dpi = 300)
 plot_mesh + coord_fixed(                                        # Airfoil
   xlim = c(-0.475, 0.675), ylim = c(-0.4, 0.4), expand = FALSE) +
   scale_size(guide="none", range=c(1*0.4, 6*4))
