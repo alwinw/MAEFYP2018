@@ -3,7 +3,8 @@
 # Alwin Wang
 #----------------------------#
 
-source("plot_BCs.R")
+# source("plot_BCs.R")
+source("../../R/plot_BCs.R")
 
 # t = seq(0, D_T*N_STEP, length.out = N_STEP + 1)
 t = seq(0, D_T*N_STEP, length.out = 10)
@@ -19,7 +20,8 @@ alpha = 4*pi/180
 # Needs to be a discretised problem ugh. Back to Gamma and x
 
 
-flx <- read.table(file = "../src-example/NACA0012_remesh_afmc/results/NACA0012_remesh.flx")
+flx <- read.table(file = "../analysis/whole_10000/results/NACA0012r.flx")
+# flx <- read.table(file = "results/NACA0012r.flx")
 colnames(flx) <- c("step", "t", 
                    paste0(c("Fpre", "Fvis", "Ftot"), "x"),
                    paste0(c("Fpre", "Fvis", "Ftot"), "y"),
@@ -34,6 +36,10 @@ flx <- flx %>%
     am = (lead(Gammax) - lag(Gammax))/(lead(t) - lag(t)))
 
 ggplot(flx, aes(t)) +
+  annotate("rect", xmin=0.05, xmax=0.25, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  annotate("rect", xmin=0.85, xmax=1.05, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
   geom_line(aes(y = Ftoty, colour = "DNS Lift"), size = 0.8) +
   geom_line(aes(y = qs, colour = "Quasi-Steady"), linetype = "dashed") +
   geom_line(aes(y = am, colour = "Apparent Mass")) +
@@ -41,10 +47,13 @@ ggplot(flx, aes(t)) +
   # geom_hline(aes(colour = "Thin Airfoil", yintercept = 2*pi*alpha))
   ylab("Lift Force") +
   xlab("Time (s)") +
-  scale_x_continuous(breaks = c(0, seq(0.05, 2.05, 0.2)),
-                     minor_breaks = c(0, seq(0.05, 2.05, 0.1)),
-                     labels = function(x) ifelse(x==0, "", sprintf("%.2f", x)),
-                     limits = c(0, 2))
+  scale_x_continuous(breaks = c(0, seq(0.05, 1.5, 0.2), 1.5),
+                     minor_breaks = c(0, seq(0.05, 1.5, 0.1), 1.5),
+                     labels = function(x) ifelse(x==0 | x==1.5, "", sprintf("%.2f", x)),
+                     limits = c(0, 1.5))
+ggsave("Unsteady.png", scale = 1,
+       width = 15, height = 7, units = "cm", dpi = 300)
+
 ggsave("Unsteady.png", scale = 1.5,
        width = 15, height = 6, units = "cm", dpi = 600)
 
@@ -59,5 +68,5 @@ ggplot(flx, aes(t)) +
                      labels = function(x) ifelse(x==0, "", sprintf("%.2f", x)),
                      limits = c(0, 2))
 ggsave("Viscous Lift.png", scale = 1.5,
-       width = 15, height = 6, units = "cm", dpi = 600)
+       width = 15, height = 7, units = "cm", dpi = 600)
              

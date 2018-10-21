@@ -1438,6 +1438,13 @@ status open
 
 \begin_layout Plain Layout
 Airfoil during the starting and stopping phases.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:BC_airfoil"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1470,8 +1477,8 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename images/Methd_Conv-node.png
-	lyxscale 15
+	filename images/node_small.png
+	lyxscale 30
 	width 98col%
 
 \end_inset
@@ -1577,8 +1584,8 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename ../afmc_full-paper/Unsteady.png
-	lyxscale 10
+	filename images/Unsteady.png
+	lyxscale 30
 	width 95col%
 
 \end_inset
@@ -1639,8 +1646,8 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename images/Rslt_Drag-Re10000.png
-	lyxscale 20
+	filename images/Drag.png
+	lyxscale 30
 	width 95col%
 
 \end_inset
@@ -1723,7 +1730,6 @@ literal "false"
  .
  This can be used to determine the lift and drag forces and may explain
  the high values observed.
- 
 \begin_inset Note Note
 status open
 
@@ -1872,6 +1878,59 @@ shear layer and acceleration are analogous to an accelerating cylinder Ref
 
 \begin_layout Subsection
 Unsteady Thin-Airfoil Theory
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:unsteady lift"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ compares the quasi-steady and apparent mass terms of equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:unsteady lift"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with the result from DNS.
+ Immediately it is clear that apparent mass is the major contributor to
+ the large lift force during the starting and stopping phases.
+ At the end of the stopping phase, the DNS lift is approximately one half
+ of the quasi-steady lift which is in agreement with Saffman's statement
+ that the initial lift is one-half of the final steady-state lift 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Saffman1993"
+literal "false"
+
+\end_inset
+
+.
+ Even without the wake-effect term, it appears that equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:unsteady lift"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ well describes the phenomena observed.
+ 
+\end_layout
+
+\begin_layout Subsection
+Added Mass Force
 \end_layout
 
 \begin_layout Standard

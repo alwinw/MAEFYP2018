@@ -262,6 +262,47 @@ ggplot(plot_drag, aes(time)) +
 ggsave(paste0("Rslt_Drag-Re10000.png"),
        scale = 2, width = 10, height = 6, units = "cm", dpi = 300)
 
+
+ggplot(plot_drag, aes(time)) +
+  annotate("rect", xmin=0.05, xmax=0.25, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  annotate("rect", xmin=0.85, xmax=1.05, ymin=-Inf, ymax=Inf,
+           fill = "grey90", alpha = 0.5) +
+  geom_line(aes(y = Ftot.x, colour = "a")) +
+  geom_line(aes(y = doydt,  colour = "b"), linetype = "dashed") +
+  geom_line(aes(y = -a*0.08218746, colour = "c")) +
+  # geom_point(aes(y = doydt - a*0.08218746, colour = "d"), shape = "o", alpha = 0.2) +
+  ylab("Drag Force") +
+  xlab("Time (s)") +
+  scale_x_continuous(breaks = c(0, seq(0.05, 1.5, 0.2), 1.5),
+                     minor_breaks = c(0, seq(0.05, 1.5, 0.1), 1.5),
+                     labels = function(x) ifelse(x==0 | x==1.5, "", sprintf("%.2f", x)),
+                     limits = c(0, 1.5)) +
+  scale_color_manual(
+    name = "colour",
+    values = c("a" = "#00BA38", "b" = "#619CFF", "c" = "#F8766D"),
+    labels = c(
+      "DNS Drag",
+      expression(frac(d, dt)~integral(omega%.%y~dV)), 
+      expression(u[c]%.%V[b]) ),
+    guide = guide_legend(
+      override.aes = list(
+        linetype = c("solid", "dashed", "solid")))) +
+  theme(legend.position = "right",
+        legend.text.align = 0.5)
+ggsave("Drag.png", scale = 1,
+       width = 15, height = 7, units = "cm", dpi = 300)
+
+
+  theme(legend.key.size = unit(2.25, "lines"),
+        legend.text.align = 0.5,
+        legend.direction = "vertical", 
+        legend.position = "right")
+  
+
+
+
+
 ggplot(plot_drag %>% filter(!is.nan(F.am) & abs(F.am) < 100), aes(time)) +
   annotate("rect", xmin=0.05, xmax=0.25, ymin=-Inf, ymax=Inf,
            fill = "grey90", alpha = 0.5) +

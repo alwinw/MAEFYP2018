@@ -1288,17 +1288,7 @@ where
 \end_inset
 
  are the vortex sheet strength and circulation respectively, calculated
- from thin airfoil theory, equation 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:gamma theta"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
+ from thin airfoil theory.
  
 \begin_inset Formula $\gamma\left(\varepsilon\right)$
 \end_inset
@@ -1438,6 +1428,13 @@ status open
 
 \begin_layout Plain Layout
 Airfoil during the starting and stopping phases.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:BC_airfoil"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1470,8 +1467,8 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename images/Methd_Conv-node.png
-	lyxscale 15
+	filename images/node_small.png
+	lyxscale 30
 	width 98col%
 
 \end_inset
@@ -1577,8 +1574,8 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename ../afmc_full-paper/Unsteady.png
-	lyxscale 10
+	filename images/Unsteady.png
+	lyxscale 30
 	width 95col%
 
 \end_inset
@@ -1639,8 +1636,8 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename images/Rslt_Drag-Re10000.png
-	lyxscale 20
+	filename images/Drag.png
+	lyxscale 30
 	width 95col%
 
 \end_inset

@@ -191,14 +191,14 @@ conv$summo <- summarise_all(conv$diffo, funs(max)) %>% mutate(airfoil = "naca001
 conv$summary <- rbind(conv$summo, conv$summr) %>% 
   gather(var, norm_inf, -tokenvalue, -airfoil) %>%
   mutate(order = ifelse(var %in% c("u", "v", "p"), "Primary (u, v, p)", "Derivative (o, dpdx, dpdy)")) %>%
-  mutate(order = ifelse(var %in% c("dodx", "dody"), "Second Derivative (dodx, dody)", order))
+  mutate(order = ifelse(var %in% c("dodx", "dody"), "2nd Derivative (dodx, dody)", order))
 
 conv$summary$airfoil <- factor(conv$summary$airfoil, 
                                levels = c("naca0012r", "naca0012"))
 conv$summary$var <- factor(conv$summary$var, 
                            levels = c("u", "v", "p", "o", "dpdx", "dpdy", "dodx", "dody"))
 conv$summary$order <- factor(conv$summary$order, 
-                             levels = c("Primary (u, v, p)", "Derivative (o, dpdx, dpdy)", "Second Derivative (dodx, dody)"))
+                             levels = c("Primary (u, v, p)", "Derivative (o, dpdx, dpdy)", "2nd Derivative (dodx, dody)"))
 
 ggplot(conv$summary, aes(tokenvalue, norm_inf, group = interaction(var, airfoil), colour = var)) +
   geom_line(aes(linetype = airfoil)) + 
@@ -214,6 +214,8 @@ ggplot(conv$summary, aes(tokenvalue, norm_inf, group = interaction(var, airfoil)
 ggsave(paste0("node.png"),
        scale = 2.5, width = 12, height = 5, units = "cm", dpi = 300)
 
+ggsave(paste0("node_small.png"),
+       scale = 1.8, width = 12, height = 5, units = "cm", dpi = 300)
 
 # BVFa
 plot_bvfa <- outp$BVFa %>% 
