@@ -1036,7 +1036,7 @@ g the contribution of added mass effects during the starting and stopping
  theory case represents an infinite Reynolds number.
  A single airfoil, NACA0012, of unit chord is used at an angle of attack
  
-\begin_inset Formula $4\text{\textdegree}$
+\begin_inset Formula $4\text{°}$
 \end_inset
 
  accelerated to unit velocity in a fluid of unity density.
@@ -6154,7 +6154,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_LE_1.png
+	filename images/V_LE_1.png
 	lyxscale 20
 	height 3cm
 	groupId VGOut
@@ -6163,30 +6163,7 @@ status open
 
 
 \begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_TE_1.png
-	lyxscale 20
-	height 3cm
-	groupId VGOut
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_LE_2.png
-	lyxscale 20
-	height 3cm
-	groupId VGOut
-
-\end_inset
-
-
-\begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_TE_2.png
+	filename images/V_TE_1.png
 	lyxscale 20
 	height 3cm
 	groupId VGOut
@@ -6200,7 +6177,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_LE_3.png
+	filename images/V_LE_2.png
 	lyxscale 20
 	height 3cm
 	groupId VGOut
@@ -6209,30 +6186,7 @@ status open
 
 
 \begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_TE_3.png
-	lyxscale 20
-	height 3cm
-	groupId VGOut
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_LE_4.png
-	lyxscale 20
-	height 3cm
-	groupId VGOut
-
-\end_inset
-
-
-\begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_TE_4.png
+	filename images/V_TE_2.png
 	lyxscale 20
 	height 3cm
 	groupId VGOut
@@ -6246,7 +6200,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_LE_5.png
+	filename images/V_LE_3.png
 	lyxscale 20
 	height 3cm
 	groupId VGOut
@@ -6255,7 +6209,7 @@ status open
 
 
 \begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_TE_5.png
+	filename images/V_TE_3.png
 	lyxscale 20
 	height 3cm
 	groupId VGOut
@@ -6269,7 +6223,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_LE_6.png
+	filename images/V_LE_4.png
 	lyxscale 20
 	height 3cm
 	groupId VGOut
@@ -6278,7 +6232,53 @@ status open
 
 
 \begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/V_TE_6.png
+	filename images/V_TE_4.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename images/V_LE_5.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/V_TE_5.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename images/V_LE_6.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/V_TE_6.png
 	lyxscale 20
 	height 3cm
 	groupId VGOut
@@ -6347,7 +6347,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_LE_1.png
+	filename images/VG_LE_1.png
 	lyxscale 20
 	height 3cm
 	groupId VGOut
@@ -6356,30 +6356,7 @@ status open
 
 
 \begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_TE_1.png
-	lyxscale 20
-	height 3cm
-	groupId VGOut
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_LE_2.png
-	lyxscale 20
-	height 3cm
-	groupId VGOut
-
-\end_inset
-
-
-\begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_TE_2.png
+	filename images/VG_TE_1.png
 	lyxscale 20
 	height 3cm
 	groupId VGOut
@@ -6393,7 +6370,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_LE_3.png
+	filename images/VG_LE_2.png
 	lyxscale 20
 	height 3cm
 	groupId VGOut
@@ -6402,30 +6379,7 @@ status open
 
 
 \begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_TE_3.png
-	lyxscale 20
-	height 3cm
-	groupId VGOut
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_LE_4.png
-	lyxscale 20
-	height 3cm
-	groupId VGOut
-
-\end_inset
-
-
-\begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_TE_4.png
+	filename images/VG_TE_2.png
 	lyxscale 20
 	height 3cm
 	groupId VGOut
@@ -6439,7 +6393,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_LE_5.png
+	filename images/VG_LE_3.png
 	lyxscale 20
 	height 3cm
 	groupId VGOut
@@ -6448,7 +6402,53 @@ status open
 
 
 \begin_inset Graphics
-	filename /home/alwin/Git/MAEFYP2018/docs/afmc_full-paper/VG_TE_5.png
+	filename images/VG_TE_3.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename images/VG_LE_4.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/VG_TE_4.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename images/VG_LE_5.png
+	lyxscale 20
+	height 3cm
+	groupId VGOut
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/VG_TE_5.png
 	lyxscale 20
 	height 3cm
 	groupId VGOut
@@ -6816,7 +6816,7 @@ noprefix "false"
 ).
  The positive vorticity region merely appears to move downstream with the
  white, irrotational sliver rotating from approximately 
-\begin_inset Formula $90\text{\textdegree}$
+\begin_inset Formula $90\text{°}$
 \end_inset
 
  to the 
