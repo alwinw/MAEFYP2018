@@ -181,8 +181,8 @@ This paper presents a numerical study of vorticity generation around a 2D
 
  angle of attack where the two-dimensional Navier-Stokes equations are solved
  using a spectral element DNS code.
- Peaks in the boundary vorticity flux on trailing edge surface support recent
- arguments of how the Kutta condition is established.
+ Peaks in the boundary vorticity flux on the trailing edge surface support
+ recent findings about the establishment of the Kutta condition.
  The peaks in lift force during the starting and stopping phases appear
  to be well-explained by thin airfoil theory for non-uniform motion while
  the peaks in the drag force appear well-explained by vortex impulse and
@@ -223,7 +223,7 @@ status collapsed
 \begin_layout Standard
 Around 1930, Prandtl, Tietjens and Müller recorded the motion of fine particles
  around an airfoil in the starting and stopping phases of motion to observe
- transient, unsteady flows
+ transient, unsteady flows 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Prandtl1934"
@@ -241,7 +241,7 @@ literal "false"
 
 \end_inset
 
- and the starting and stopping vortices still remains of interest.
+ and the starting and stopping vortices still remain of interest.
 \end_layout
 
 \begin_layout Standard
@@ -253,7 +253,7 @@ literal "false"
 
 \end_inset
 
- showed the formation of these vorticies by performing a direct numerical
+ showed the formation of these vortices by performing a direct numerical
  simulation (DNS) of transient flow over a NACA0012 airfoil at 
 \begin_inset Formula $\text{Re}=10,000$
 \end_inset
@@ -351,8 +351,8 @@ https://journals.aps.org/prfluids/abstract/10.1103/PhysRevFluids.3.014701
 \end_inset
 
 It is recognised that the sources of vorticity must occur at the boundary
- of the fluid regions and for the starting and starting phases of motion.
- Morton 
+ of the fluid regions.
+ For the starting and starting phases of motion, Morton 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Morton1984"
@@ -360,9 +360,7 @@ literal "false"
 
 \end_inset
 
- outlines two production mechanisms for vorticity: tangential pressure gradients
- from the fluid side, and the acceleration of the surface from the wall
- side, shown in equation 
+ outlines two production mechanisms for vorticity as shown in equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:Morton Full VortGen"
@@ -372,7 +370,8 @@ noprefix "false"
 
 \end_inset
 
-.
+: tangential pressure gradients from the fluid side and the acceleration
+ of the surface from the wall side.
  These contributions were investigated by Blackburn and Henderson 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -410,9 +409,9 @@ literal "false"
 \end_inset
 
 , instead of boundary-layer theory.
- Additionally, the realisation of the Kutta condition and creation of starting
- vortex were determined through a complex chain of processes which were
- also explained by considering boundary vorticity flux, 
+ The realisation of the Kutta condition and creation of starting vortex
+ were determined through a complex chain of processes explained by considering
+ the vorticity and boundary vorticity flux, 
 \begin_inset Formula $\sigma$
 \end_inset
 
@@ -483,7 +482,7 @@ lift deficiency
 \end_inset
 
  term from the effect of wake vorticity sheet generated during acceleration.
- This behaviour was also detailed in Saffman explaining latency in lift
+ This behaviour was also detailed by Saffman explaining latency in lift
  production known as the 
 \begin_inset Quotes eld
 \end_inset
@@ -668,7 +667,7 @@ Some reference by Fox et al in the Agro paper
 
 \end_inset
 
- The boundary conditions at prescribed velocity boundaries are set as 
+ The velocity boundary condition was set as 
 \begin_inset Formula $\boldsymbol{u}=-V\left(t\right)$
 \end_inset
 
@@ -701,7 +700,7 @@ For motion of a two-dimensional plane boundary moving in its own plane with
 \end_inset
 
 , the diffusive flux density (flow per unit length per unit time) of positive
- vorticity outwards from the wall is given as:
+ vorticity outwards from the wall was given as:
 \begin_inset Note Note
 status collapsed
 
@@ -723,19 +722,19 @@ where
 \begin_inset Formula $\vec{\omega}$
 \end_inset
 
- is the vorticity, 
+ was the vorticity, 
 \begin_inset Formula $\vec{n}$
 \end_inset
 
- is the unit wall-normal vector, 
+ was the unit wall-normal vector, 
 \begin_inset Formula $z$
 \end_inset
 
- is the distance normal to the surface and 
+ was the distance normal to the surface and 
 \begin_inset Formula $\vec{a}$
 \end_inset
 
- is the local wall acceleration 
+ was the local wall acceleration 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Morton1984"
@@ -761,8 +760,8 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-It is assumed that a local section of airfoil can be modelled as an infinite
- plane with negligible curvature and the acceleration of the plane is given
+It was assumed that a local section of airfoil could be modelled as an infinite
+ plane with negligible curvature and the acceleration of the plane was given
  by 
 \begin_inset Formula $\vec{t}\cdot\vec{a}$
 \end_inset
@@ -771,7 +770,7 @@ It is assumed that a local section of airfoil can be modelled as an infinite
 \begin_inset Formula $\vec{t}$
 \end_inset
 
- is a unit tangent vector as shown in figure 
+ was a unit tangent vector as shown in figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Coordinate-system-used"
@@ -782,7 +781,7 @@ noprefix "false"
 \end_inset
 
 .
- Thus, the vorticity production around the airfoil is given by equation
+ Thus, the vorticity production around the airfoil was given by equation
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -841,7 +840,7 @@ Check the -ve signs AND the definition of dV(t)/dt etc for acceleration
 
 \end_inset
 
-It is clear that the convergence of second derivatives for 
+It was clear that the convergence of second derivatives for 
 \begin_inset Formula $u$
 \end_inset
 
@@ -849,13 +848,13 @@ It is clear that the convergence of second derivatives for
 \begin_inset Formula $v$
 \end_inset
 
- are required to accurately determine 
+ were required to accurately determine 
 \begin_inset Formula $\nabla\vec{\omega}$
 \end_inset
 
 .
- The acceleration profile for the airfoil was chosen to be the same as Vincent
- and Blackburn 
+ The acceleration profile for the airfoil was chosen to be the same as that
+ of Vincent and Blackburn 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vincent2014"
@@ -863,7 +862,7 @@ literal "false"
 
 \end_inset
 
- which represents non-impulsively started flow to unity free-stream velocity
+ which represents non-impulsively started flow to a unity free-stream velocity
  (figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1056,8 +1055,7 @@ To determine an appropriate choice for the order of the tensor-product GLL
 \begin_inset Formula $p=19$
 \end_inset
 
-.
- The result is shown in figure 
+ and the result is shown in figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Convergence"
@@ -1072,7 +1070,7 @@ noprefix "false"
 \begin_inset Formula $p=10$
 \end_inset
 
- was chosen .
+ was chosen.
  
 \begin_inset Note Note
 status collapsed
@@ -1164,7 +1162,7 @@ th
 \end_inset
 
 -order tensor-product nodal basis functions were used in each element, giving
- a total of 98, 900 independent mesh nodes.
+ a total of 98,900 independent mesh nodes.
 \end_layout
 
 \begin_layout Subsection
@@ -1184,7 +1182,7 @@ literal "false"
 \begin_inset Formula $\gamma\left(\xi\right)$
 \end_inset
 
-, can be determined as
+, could be determined as
 \begin_inset VSpace -0.5em*
 \end_inset
 
@@ -1220,7 +1218,7 @@ literal "false"
 \begin_inset Formula $\frac{\text{d}z}{\text{d}x}=0$
 \end_inset
 
- in this analysis as the NACA0012 is a symmetric airfoil.
+ in this analysis for a symmetric airfoil.
 \begin_inset Note Note
 status collapsed
 
@@ -1259,7 +1257,7 @@ where
 
 \end_inset
 
- This can be applied to Kármán and Sears 
+ This could be applied to Kármán and Sears 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Karman1938"
@@ -1287,18 +1285,18 @@ where
 \begin_inset Formula $\Gamma_{0}$
 \end_inset
 
- are the vortex sheet strength and circulation respectively, calculated
+ were the vortex sheet strength and circulation respectively, calculated
  from thin airfoil theory.
  
 \begin_inset Formula $\gamma\left(\varepsilon\right)$
 \end_inset
 
- is the vorticity of the wake assumed to be on the airfoil plane a distance
+ was the vorticity of the wake assumed to be on the airfoil plane a distance
  
 \begin_inset Formula $\varepsilon$
 \end_inset
 
- from the mid chord (
+ from the mid-chord (
 \begin_inset Formula $x=0$
 \end_inset
 
@@ -1315,8 +1313,8 @@ literal "false"
 
 \end_inset
 
- present a solution for the wake effect term, from PIV by Willert and Kompenhans
- 
+ presented a solution for the wake effect term, from PIV by Willert and
+ Kompenhans 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Willert2010"
@@ -1334,8 +1332,8 @@ if I add an image, reference it here
 
 \end_inset
 
- it is clear the assumption of the wake remaining in the same plane as the
- airfoil does not hold as wake vortex sheet rolls up to form the starting
+ it was clear the assumption of the wake remaining in the same plane as
+ the airfoil did not hold as wake vortex sheet rolls up to form the starting
  vortex.
  Thus, only the first two terms, quasi-steady state, 
 \begin_inset Formula $L_{0}$
@@ -1345,7 +1343,7 @@ if I add an image, reference it here
 \begin_inset Formula $L_{1}$
 \end_inset
 
-, are investigated.
+, were investigated.
 \begin_inset Note Note
 status collapsed
 
@@ -1427,7 +1425,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Airfoil during the starting and stopping phases.
+Airfoil during the starting and stopping phases 
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:BC_airfoil"
@@ -1544,7 +1542,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Spectral Element Mesh 
+Spectral element mesh used
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Mesh"
@@ -1708,18 +1706,29 @@ literal "false"
 
 \end_inset
 
- state that 
+ stated that 
 \begin_inset Formula $\vec{P}_{i}+\vec{P}_{\Phi}=0$
 \end_inset
 
- which leads to their second, no slip formulation for vortex impulse where
- 
+, which led to their second expression for vortex impulse 
+\begin_inset Formula $\vec{P}$
+\end_inset
+
+, where 
 \begin_inset Formula $\vec{F}=-\rho\frac{\text{d}\vec{P}}{\text{d}t}$
 \end_inset
 
  .
- This can be used to determine the lift and drag forces and may explain
- the high values observed.
+ This could be used to determine the lift and drag forces based on the shed-vort
+icity impulse, 
+\begin_inset Formula $\vec{P}_{v}$
+\end_inset
+
+, and the body-volume impulse, 
+\begin_inset Formula $\vec{P}_{b}$
+\end_inset
+
+, and could explain the high values observed.
 \begin_inset Note Note
 status open
 
@@ -1735,6 +1744,10 @@ This formulation is equal to and cite []
 \vec{P}=\vec{P}_{v}+\vec{P}_{b}=\intop_{V}\left(\vec{x}\times\vec{\omega}\right)\,\text{d}V-\vec{u}_{c}V_{b}\label{eq:addedmass}
 \end{equation}
 
+\end_inset
+
+
+\begin_inset VSpace -2.5em*
 \end_inset
 
 
@@ -1759,24 +1772,26 @@ noprefix "false"
 
 \end_inset
 
- it can be seen that in second half of the starting phase, 
-\begin_inset Formula $t\in\left[0.15,0.25\right]\,\text{s}$
+ it can be seen that in the second half of the starting phase, 
+\begin_inset Formula $t\in\left[0.15,0.25\right]\text{s}$
 \end_inset
 
 , the vorticity on the upper and lower surfaces are not equal.
  When 
-\begin_inset Formula $t\in\left[0.25,0.85\right]\,\text{s}$
+\begin_inset Formula $t\in\left[0.25,0.85\right]\text{s}$
 \end_inset
 
  it can be seen that the vorticity on the upper and lower surfaces approach
- each other and, given sufficient time, will be equal at the trailing edge
- and satisfy the Kutta condition.
+ each other and, given sufficient time, are equal at the trailing edge satisfyin
+g the Kutta condition.
  In comparison, it is noted that the leading edge vorticity appears to have
- reached a steady-state much faster.
+ reached a steady-state value much faster.
 \end_layout
 
 \begin_layout Standard
-When analysing the key stages in establishing the Kutta condition, Zhu 
+When analysing the key stages in establishing the Kutta condition, Zhu et
+ al.
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Zhu2015"
@@ -1785,7 +1800,9 @@ literal "false"
 \end_inset
 
  recognised the importance of sharp BVF peaks on both sides of the trailing
- edge as shown in figure 
+ edge.
+ These peaks are also present in this non-impulsively-started flow as shown
+ in figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:VGplots"
@@ -1795,21 +1812,60 @@ noprefix "false"
 
 \end_inset
 
-.
- These peaks are also present in this non-impulsively-started flow which
- supports this argument.
+ which supports this argument.
  
 \end_layout
 
 \begin_layout Standard
-It is noticed that the leading edge also has sharp BVF peaks that vary with
- time during the stopping phase, 
-\begin_inset Formula $t\in\left[0.85,1.05\right]\,\text{s}$
+However, the BVF in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:VGplots"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
- in a similar fashion to the trailing edge.
+ does not alternate signs which would indicate the formation of a vortex
+ bubble at the trailing edge.
+ Zhu et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhu2015"
+literal "false"
+
+\end_inset
+
+ and Xu 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Xu2016"
+literal "false"
+
+\end_inset
+
+ identified the vortex bubble as a key stage in the development of non-impulsive
+ly started flows which suggests there is insufficient resolution at the
+ trailing edge in this DNS.
+ Both Zhu and Xu used alternate solvers.
+\end_layout
+
+\begin_layout Standard
+The leading edge also has sharp BVF peaks that vary with time during the
+ stopping phase, 
+\begin_inset Formula $t\in\left[0.85,1.05\right]\text{s}$
+\end_inset
+
+, in a similar fashion to the trailing edge.
  This could contribute to the formation of leading edge stopping vortices
- observed by Vincent and Blackburn 
+ observed
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+ by Vincent and Blackburn 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vincent2014"
@@ -1818,6 +1874,11 @@ literal "false"
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -1874,7 +1935,7 @@ Unsteady Thin-Airfoil Theory
 Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:unsteady lift"
+reference "fig:Unsteady"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1895,8 +1956,9 @@ noprefix "false"
  Immediately it is clear that apparent mass is the major contributor to
  the large lift force during the starting and stopping phases.
  At the end of the stopping phase, the DNS lift is approximately one half
- of the quasi-steady lift which is in agreement with Saffman's statement
- that the initial lift is one-half of the final steady-state lift 
+ of the quasi-steady lift.
+ This is in agreement with Saffman's statement that the initial lift is
+ one-half of the final steady-state lift 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Saffman1993"
@@ -1905,7 +1967,12 @@ literal "false"
 \end_inset
 
 .
- Even without the wake-effect term, it appears that equation 
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Even without the wake-effect term, it appears that equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:unsteady lift"
@@ -1919,56 +1986,60 @@ noprefix "false"
  
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Added Mass Force
 \end_layout
 
 \begin_layout Standard
-Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:unsteady lift"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- compares the quasi-steady and apparent mass terms of equation 
+Applying equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:unsteady lift"
+reference "eq:addedmass"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- with the result from DNS.
- Immediately it is clear that apparent mass is the major contributor to
- the large lift force during the starting and stopping phases.
- At the end of the stopping phase, the DNS lift is approximately one half
- of the quasi-steady lift which is in agreement with Saffman's statement
- that the initial lift is one-half of the final steady-state lift 
+ to the flow field at each time step yields figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:addedmass"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ for the drag force.
+ It is clear that the majority of the drag force is due to the shed-vorticity
+ impulse, 
+\begin_inset Formula $\vec{P}_{v}$
+\end_inset
+
+, with the body-volume impulse, 
+\begin_inset Formula $\vec{P}_{b}$
+\end_inset
+
+, only having an effect during the starting and stopping motions.
+ This is consistent with Limacher, Morton and Wood 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Saffman1993"
+key "Limacher2018"
 literal "false"
 
 \end_inset
 
-.
- Even without the wake-effect term, it appears that equation 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:unsteady lift"
-plural "false"
-caps "false"
-noprefix "false"
-
+ as 
+\begin_inset Formula $\vec{P}_{b}$
 \end_inset
 
- well describes the phenomena observed.
+ is an added-mass force which should only be present in non-steady flow.
  
 \end_layout
 
@@ -1994,8 +2065,9 @@ This paper further develops the study of vorticity generation mechanisms
  by applying them to the starting and stopping phases of airfoil motion.
  The results corroborate phenomena observed by other authors in a non-impulsivel
 y-started flow.
- Unsteady thin airfoil theory was also applied to explain the vertical forces
+ Unsteady thin airfoil theory was also applied to explain the lift forces
  observed during the starting and stopping phases.
+ The added mass force was used to explain the peaks in drag.
 \end_layout
 
 \begin_layout Standard
@@ -2079,8 +2151,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Vorticity on the airfoil surface for the first 10% of the chord and last
- 10% of the chord
+Vorticity on the airfoil surface for the first and last 10% of the chord
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Vplots"
@@ -2235,8 +2306,8 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Vorticity production on the airfoil surface for the first 10% of the chord
- and last 10% of the chord
+Vorticity production on the airfoil surface for the first and last 10% of
+ the chord
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:VGplots"
