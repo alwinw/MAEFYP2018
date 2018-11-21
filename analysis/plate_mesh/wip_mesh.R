@@ -98,10 +98,6 @@ dfy = dfy[nrow(dfy):1,]
 dfyd <- data.frame(
   y   = -rev(dfy$y),
   bcy = dfy$bcy )
-# Node numbering
-nx = nrow(dfx)
-ny = nrow(dfy)
-matnnum <- matrix(1:(nx*ny), nrow = ny, ncol = nx, byrow = TRUE)
 # flags
 # FD (use dfy) | BD (use rev(dfy))
 # CD (need to interpolate between dfy and rev(dfy))
@@ -114,21 +110,29 @@ flags <- function(n1, i, j) {
   }
   return(n1)
 }
-
-bc = function(bcm, bcn) {
-  if (bcm == bcn) {
-    bc = as.character(bcm)
-    if (bc %in% c("FD", "BD", "LO", "UP")) bc = NA
-    if (bc %in% c("LE", "TE", "CD")) bc = "p"
-  } else {
-    bc = NA
-  }
-  return(bc)
+# Node numbering
+nx = nrow(dfx)
+ny = nrow(dfy)
+matnnum <- matrix(1:(nx*ny), nrow = ny, ncol = nx, byrow = TRUE)
+dfnode <- data.frame()
+for (j in 1:ny) {
+  for (i in 1:nx) {
+    dfrow = data.frame(
+      nnum = matnnum[j, i], x = dfx$x[i], y = dfy$y[j], z = 0, bcx = dfx$bcx[i])
+    dfrow = flags(dfrow, i, j)
+    dfnode = rbind(dfnode, dfrow)
+  } 
 }
+
+ggplot(dfnode, aes(x, y, colour = nnum)) +
+  geom_point() + 
+  scale_colour_gradientn(colours = spectralpalette(10))
 
 # Elements
 dfelem <- data.frame()
 enum = 0
+dfsurf <- data.frame()
+surf = 0
 for (j in 1:(ny - 1)) {
   for (i in 1:(nx - 1)) {
     enum = enum + 1
@@ -142,29 +146,80 @@ for (j in 1:(ny - 1)) {
     n2 = flags(n2, i+1, j  )
     n3 = flags(n3, i+1, j+1)
     n4 = flags(n4, i  , j+1)
-    # Determine bcs
-    bc1 = bc(n1$bcy, n2$bcy)
-    bc2 = bc(n2$bcx, n3$bcx)
-    bc3 = bc(n3$bcy, n4$bcy)
-    bc4 = bc(n4$bcx, n1$bcx)
+    # Determine wall bcs
+    bc1 = NA; bc2 = NA; bc3 = NA; bc4 = NA;
+    if (j == 1) { # TOP
+      bc1 = "s"; surf = surf + 1
+      dfsurf = rbind(dfsurf, data.frame(
+        i = i, j = j, surf = surf, enum = enum, side = 1, bc = bc1, nnum1 = n1$nnum, nnum2 = n2$nnum)) }
+    if (i == (nx - 1)) { # RIGHT
+      bc2 = "o"; surf = surf + 1
+      dfsurf = rbind(dfsurf, data.frame(
+        i = i, j = j, surf = surf, enum = enum, side = 2, bc = bc2, nnum1 = n2$nnum, nnum2 = n3$nnum)) }
+    if (j == (ny - 1)) { # BOTTOM
+      bc3 = "w"; surf = surf + 1
+      dfsurf = rbind(dfsurf, data.frame(
+        i = i, j = j, surf = surf, enum = enum, side = 3, bc = bc3, nnum1 = n3$nnum, nnum2 = n4$nnum)) }
+    if (i == 1) { # LEFT
+      bc4 = "v"; surf = surf + 1
+      dfsurf = rbind(dfsurf, data.frame(
+        i = i, j = j, surf = surf, enum = enum, side = 4, bc = bc4, nnum1 = n4$nnum, nnum2 = n1$nnum)) }
+
+    # Side 3 airfoil bc
+    if (n3$bcy == "CD" & n4$bcy == "CD") { # BOTTOM
+      if (n3$bcx %in% c("CD", "TE")) {
+        bc3 = "p"; surf = surf + 1
+        dfsurf = rbind(dfsurf, data.frame(
+          i = i, j = j, surf = surf, enum = enum, side = 3, bc = bc3, nnum1 = n3$nnum, nnum2 = n4$nnum)) }
+    }
+    # Side 1 airfoil bc
+    if (n1$bcy == "CD" & n2$bcy == "CD") {
+      if (n2$bcx %in% c("CD", "TE")) { # TOP
+        bc1 = "p"; surf = surf + 1
+        # Add extra nodes as required
+        if (n2$bcx == "CD") {
+          nnum = nrow(dfnode) + 1
+          dfnode <- rbind(dfnode, data.frame(
+            nnum = nnum,
+            x = n2$x, y = n2$y, z = 0, bcx = "padd") )
+          n2$nnum = nnum
+          if (n1$bcx == "CD") {
+            n1$nnum = nnum - 1
+          }
+        } else if (n2$bcx == "TE") {
+          n1$nnum = nrow(dfnode)
+        }
+        dfsurf = rbind(dfsurf, data.frame(
+          i = i, j = j, surf = surf, enum = enum, side = 1, bc = bc1, nnum1 = n1$nnum, nnum2 = n2$nnum))
+      }
+    }
     
+    # Result
     dfrow = data.frame(
       enum    = enum,
+      i       = c(i, i+1, i+1, i  ),
+      j       = c(j, j  , j+1, j+1),
+      nnum    = c(n1$nnum, n2$nnum, n3$nnum, n4$nnum),
       ncorner = c("n1", "n2", "n3", "n4"),
       x       = c(n1$x, n2$x, n3$x, n4$x),
       y       = c(n1$y, n2$y, n3$y, n4$y),
-      bc      = c(bc1, bc2, bc3, bc4)
-    )
+      bc      = c(bc1, bc2, bc3, bc4) )
     dfelem <- rbind(dfelem, dfrow)
   }
 }
 
 plotmesh <- ggplot(dfelem, aes(x, y, group = enum)) +
-  geom_polygon(aes(), colour = "grey90", fill = NA) +
-  # geom_path(aes(colour = bc, group = bc), filter(dfelem, !is.na(bc))) +
+  geom_polygon(aes(colour = enum), fill = NA) +
+  # geom_path(aes(colour = bc, group = bc), dfelem %>% filter(!is.na(bc))) +
   geom_point(data = mutate(c, x = -x)) +
-  geom_point(data = mutate(c, y = -y))
+  geom_point(data = mutate(c, y = -y)) + 
+  scale_colour_gradientn(colours = spectralpalette(10))
   
 plotmesh + coord_fixed()
-plotmesh + coord_cartesian(xlim = c(-0.6, 0.6), ylim = c(-0.1, 0.1))
+plotmesh + coord_cartesian(xlim = c(-0.6,  0.6), ylim = c(-0.1, 0.1))
 plotmesh + coord_cartesian(xlim = c(-0.6, -0.4), ylim = c(-0.1, 0.1))
+plotmesh + coord_cartesian(xlim = c( 0.4,  0.6), ylim = c(-0.1, 0.1))
+
+
+
+
