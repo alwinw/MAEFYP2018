@@ -37,6 +37,24 @@ LoadSeshMesh <- function(session) {
   return(mesh)
 }
 
+LoadSeshBC <- function(session, mesh) {
+  bc <- LoadSeshFileKeywords(session)$surfaces
+  bc <- bc %>% 
+    select(element, bc) %>% 
+    rename(enum = element)
+  mesh <- left_join(mesh, bc, by = "enum")
+  
+  ggplot(mesh, aes(x, y, group = enum)) + 
+    geom_polygon(aes(fill = bc), colour = "white") +
+    coord_fixed(expand = FALSE)
+  
+  ggplot(filter(mesh, bc == "p"), aes(x, y, group = enum)) + 
+    geom_polygon(aes(fill = bc), colour = "white") +
+    coord_fixed(expand = FALSE)
+  
+  return(mesh)
+}
+
 naca0012  <- LoadSeshMesh("naca0012" )
 naca0012r <- LoadSeshMesh("naca0012r")
 
