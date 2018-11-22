@@ -220,6 +220,65 @@ plotmesh + coord_cartesian(xlim = c(-0.6,  0.6), ylim = c(-0.1, 0.1))
 plotmesh + coord_cartesian(xlim = c(-0.6, -0.4), ylim = c(-0.1, 0.1))
 plotmesh + coord_cartesian(xlim = c( 0.4,  0.6), ylim = c(-0.1, 0.1))
 
+# Double check the BCs are correct
+plotsurf <- data.frame()
+for (i in 1:nrow(dfsurf)) {
+  dfrow = data.frame(
+    bc   = as.character(dfsurf$bc[i]),
+    side = dfsurf$side[i],
+    node = c(dfsurf$nnum1[i], dfsurf$nnum2[i]),
+    x    = c(filter(dfnode, nnum == dfsurf$nnum1[i])$x, filter(dfnode, nnum == dfsurf$nnum2[i])$x),
+    y    = c(filter(dfnode, nnum == dfsurf$nnum1[i])$y, filter(dfnode, nnum == dfsurf$nnum2[i])$y),
+    stringsAsFactors = FALSE)
+  plotsurf <- rbind(plotsurf, dfrow)
+}
+plotsurf$side <- as.factor(plotsurf$side)
+plotsurf <- plotsurf %>% arrange(node)
+plotsurf <- plotsurf %>%  mutate(
+  y  = ifelse(node > max(matnnum), y - 0.01, y))
+
+plotsurf <- rbind(plotsurf %>% filter(node <= max(matnnum)),
+                  plotsurf %>% filter(node > max(matnnum)) %>% arrange(-node))
 
 
+plotbc <- ggplot(plotsurf, aes(x, y, group = bc, colour = bc)) + 
+  geom_polygon(fill = NA) +
+  geom_point(aes(shape = bc))
+
+plotbc + coord_fixed()
+plotbc + coord_fixed(xlim = c(-0.6,  0.6), ylim = c(-0.1, 0.1))
+
+plotside <- ggplot(plotsurf, aes(x, y, group = bc, colour = side)) + 
+  geom_polygon(fill = NA) +
+  geom_point(aes(shape = side))
+
+plotside + coord_fixed()
+plotside + coord_fixed(xlim = c(-0.6,  0.6), ylim = c(-0.1, 0.1))
+
+
+#--- Print the Output ----
+name = "plate.sesh"
+# Nodes
+cat(paste0("<NODES NUMBER=", nrow(dfnode), ">\n"), file = name, append = FALSE)
+for (n in 1:nrow(dfnode)) {
+  cat(sprintf("%6d%16.10f%16.10f%16.10f\n", dfnode[n, 1], dfnode[n,2], dfnode[n,3], dfnode[n,4]), 
+      file = name, append = TRUE)
+}
+cat("</NODES>\n\n", file = name, append = TRUE)
+# Elements
+cat(paste0("<ELEMENTS NUMBER=", nrow(dfelem)/4, ">\n"), file = name, append = TRUE)
+for (n in 1:(nrow(dfelem)/4)) {
+  cat(sprintf("%6d   <Q>%6d%6d%6d%6d   </Q>\n", dfelem[4*n, 1], 
+              dfelem[4*n-3,4], dfelem[4*n-2,4], dfelem[4*n-1,4], dfelem[4*n,4]),
+      file = name, append = TRUE)
+}
+cat("</ELEMENTS>\n\n", file = name, append = TRUE)
+# Surfaces
+dfsurf <- dfsurf %>% arrange(bc, enum, side)
+cat(paste0("<SURFACES NUMBER=", nrow(dfsurf), ">\n"), file = name, append = TRUE)
+for (n in 1:nrow(dfsurf)) {
+  cat(sprintf("%6d%6d%6d   <B>%9s      </B>\n", dfsurf[n, 3], dfsurf[n,4], dfsurf[n,5], dfsurf[n,6]), 
+      file = name, append = TRUE)
+}
+cat("</SURFACES>", file = name, append = TRUE)
 
