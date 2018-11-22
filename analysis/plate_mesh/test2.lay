@@ -1,0 +1,732 @@
+#!MC 1410
+$!VarSet |LFDSFN1| = '"tecplot/plate-50.plt" "tecplot/plate-51.plt" "tecplot/plate-52.plt" "tecplot/plate-53.plt" "tecplot/plate-54.plt" "tecplot/plate-55.plt" "tecplot/plate-56.plt" "tecplot/plate-57.plt" "tecplot/plate-58.plt" "tecplot/plate-59.plt" "tecplot/plate-60.plt" "tecplot/plate-61.plt" "tecplot/plate-62.plt" "tecplot/plate-63.plt" "tecplot/plate-64.plt" "tecplot/plate-65.plt" "tecplot/plate-66.plt" "tecplot/plate-67.plt" "tecplot/plate-68.plt" "tecplot/plate-69.plt" "tecplot/plate-70.plt" "tecplot/plate-71.plt" "tecplot/plate-72.plt" "tecplot/plate-73.plt" "tecplot/plate-74.plt" "tecplot/plate-75.plt" "tecplot/plate-76.plt" "tecplot/plate-77.plt" "tecplot/plate-78.plt" "tecplot/plate-79.plt" "tecplot/plate-80.plt" "tecplot/plate-81.plt" "tecplot/plate-82.plt" "tecplot/plate-83.plt" "tecplot/plate-84.plt" "tecplot/plate-85.plt" "tecplot/plate-86.plt" "tecplot/plate-87.plt" "tecplot/plate-88.plt" "tecplot/plate-89.plt" "tecplot/plate-90.plt" "tecplot/plate-91.plt" "tecplot/plate-92.plt" "tecplot/plate-93.plt" "tecplot/plate-94.plt" "tecplot/plate-95.plt" "tecplot/plate-96.plt" "tecplot/plate-97.plt" "tecplot/plate-98.plt" "tecplot/plate-99.plt" "tecplot/plate-100.plt" "tecplot/plate-101.plt" "tecplot/plate-102.plt" "tecplot/plate-103.plt" "tecplot/plate-104.plt" "tecplot/plate-105.plt" "tecplot/plate-106.plt" "tecplot/plate-107.plt" "tecplot/plate-108.plt" "tecplot/plate-109.plt" "tecplot/plate-110.plt" "tecplot/plate-111.plt" "tecplot/plate-112.plt" "tecplot/plate-113.plt" "tecplot/plate-114.plt" "tecplot/plate-115.plt" "tecplot/plate-116.plt" "tecplot/plate-117.plt" "tecplot/plate-118.plt" "tecplot/plate-119.plt" "tecplot/plate-120.plt" "tecplot/plate-121.plt" "tecplot/plate-122.plt" "tecplot/plate-123.plt" "tecplot/plate-124.plt" "tecplot/plate-125.plt" "tecplot/plate-126.plt" "tecplot/plate-127.plt" "tecplot/plate-128.plt" "tecplot/plate-129.plt" "tecplot/plate-130.plt" "tecplot/plate-131.plt" "tecplot/plate-132.plt" "tecplot/plate-133.plt" "tecplot/plate-134.plt" "tecplot/plate-135.plt" "tecplot/plate-136.plt" "tecplot/plate-137.plt" "tecplot/plate-138.plt" "tecplot/plate-139.plt" "tecplot/plate-140.plt" "tecplot/plate-141.plt" "tecplot/plate-142.plt" "tecplot/plate-143.plt" "tecplot/plate-144.plt" "tecplot/plate-145.plt" "tecplot/plate-146.plt" "tecplot/plate-147.plt" "tecplot/plate-148.plt" "tecplot/plate-149.plt" "tecplot/plate-150.plt" "tecplot/plate-151.plt" "tecplot/plate-152.plt" "tecplot/plate-153.plt" "tecplot/plate-154.plt" "tecplot/plate-155.plt" "tecplot/plate-156.plt" "tecplot/plate-157.plt" "tecplot/plate-158.plt" "tecplot/plate-159.plt" "tecplot/plate-160.plt" "tecplot/plate-161.plt" "tecplot/plate-162.plt" "tecplot/plate-163.plt" "tecplot/plate-164.plt" "tecplot/plate-165.plt" "tecplot/plate-166.plt" "tecplot/plate-167.plt" "tecplot/plate-168.plt" "tecplot/plate-169.plt" "tecplot/plate-170.plt" "tecplot/plate-171.plt" "tecplot/plate-172.plt" "tecplot/plate-173.plt" "tecplot/plate-174.plt" "tecplot/plate-175.plt" "tecplot/plate-176.plt" "tecplot/plate-177.plt" "tecplot/plate-178.plt" "tecplot/plate-179.plt" "tecplot/plate-180.plt" "tecplot/plate-181.plt" "tecplot/plate-182.plt" "tecplot/plate-183.plt" "tecplot/plate-184.plt" "tecplot/plate-185.plt" "tecplot/plate-186.plt" "tecplot/plate-187.plt" "tecplot/plate-188.plt" "tecplot/plate-189.plt" "tecplot/plate-190.plt" "tecplot/plate-191.plt" "tecplot/plate-192.plt" "tecplot/plate-193.plt" "tecplot/plate-194.plt" "tecplot/plate-195.plt" "tecplot/plate-196.plt" "tecplot/plate-197.plt" "tecplot/plate-198.plt" "tecplot/plate-199.plt" "tecplot/plate-200.plt" "tecplot/plate-201.plt" "tecplot/plate-202.plt" "tecplot/plate-203.plt" "tecplot/plate-204.plt" "tecplot/plate-205.plt" "tecplot/plate-206.plt" "tecplot/plate-207.plt" "tecplot/plate-208.plt" "tecplot/plate-209.plt" "tecplot/plate-210.plt" "tecplot/plate-211.plt" "tecplot/plate-212.plt" "tecplot/plate-213.plt" "tecplot/plate-214.plt" "tecplot/plate-215.plt" "tecplot/plate-216.plt" "tecplot/plate-217.plt" "tecplot/plate-218.plt" "tecplot/plate-219.plt" "tecplot/plate-220.plt" "tecplot/plate-221.plt" "tecplot/plate-222.plt" "tecplot/plate-223.plt" "tecplot/plate-224.plt" "tecplot/plate-225.plt" "tecplot/plate-226.plt" "tecplot/plate-227.plt" "tecplot/plate-228.plt" "tecplot/plate-229.plt" "tecplot/plate-230.plt" "tecplot/plate-231.plt" "tecplot/plate-232.plt" "tecplot/plate-233.plt" "tecplot/plate-234.plt" "tecplot/plate-235.plt" "tecplot/plate-236.plt" "tecplot/plate-237.plt" "tecplot/plate-238.plt" "tecplot/plate-239.plt" "tecplot/plate-240.plt" "tecplot/plate-241.plt" "tecplot/plate-242.plt" "tecplot/plate-243.plt" "tecplot/plate-244.plt" "tecplot/plate-245.plt" "tecplot/plate-246.plt" "tecplot/plate-247.plt" "tecplot/plate-248.plt" "tecplot/plate-249.plt" "tecplot/plate-250.plt" "tecplot/plate-251.plt" "tecplot/plate-252.plt" "tecplot/plate-253.plt" "tecplot/plate-254.plt" "tecplot/plate-255.plt" "tecplot/plate-256.plt" "tecplot/plate-257.plt" "tecplot/plate-258.plt" "tecplot/plate-259.plt" "tecplot/plate-260.plt" "tecplot/plate-261.plt" "tecplot/plate-262.plt" "tecplot/plate-263.plt" "tecplot/plate-264.plt" "tecplot/plate-265.plt" "tecplot/plate-266.plt" "tecplot/plate-267.plt" "tecplot/plate-268.plt" "tecplot/plate-269.plt" "tecplot/plate-270.plt" "tecplot/plate-271.plt" "tecplot/plate-272.plt" "tecplot/plate-273.plt" "tecplot/plate-274.plt" "tecplot/plate-275.plt" "tecplot/plate-276.plt" "tecplot/plate-277.plt" "tecplot/plate-278.plt" "tecplot/plate-279.plt" "tecplot/plate-280.plt" "tecplot/plate-281.plt" "tecplot/plate-282.plt" "tecplot/plate-283.plt" "tecplot/plate-284.plt" "tecplot/plate-285.plt" "tecplot/plate-286.plt" "tecplot/plate-287.plt" "tecplot/plate-288.plt" "tecplot/plate-289.plt" "tecplot/plate-290.plt" "tecplot/plate-291.plt" "tecplot/plate-292.plt" "tecplot/plate-293.plt" "tecplot/plate-294.plt" "tecplot/plate-295.plt" "tecplot/plate-296.plt" "tecplot/plate-297.plt" "tecplot/plate-298.plt" "tecplot/plate-299.plt" "tecplot/plate-300.plt" "tecplot/plate-301.plt" "tecplot/plate-302.plt" "tecplot/plate-303.plt" "tecplot/plate-304.plt" "tecplot/plate-305.plt" "tecplot/plate-306.plt" "tecplot/plate-307.plt" "tecplot/plate-308.plt" "tecplot/plate-309.plt" "tecplot/plate-310.plt" "tecplot/plate-311.plt" "tecplot/plate-312.plt" "tecplot/plate-313.plt" "tecplot/plate-314.plt" "tecplot/plate-315.plt" "tecplot/plate-316.plt" "tecplot/plate-317.plt" "tecplot/plate-318.plt" "tecplot/plate-319.plt" "tecplot/plate-320.plt" "tecplot/plate-321.plt" "tecplot/plate-322.plt" "tecplot/plate-323.plt" "tecplot/plate-324.plt" "tecplot/plate-325.plt" "tecplot/plate-326.plt" "tecplot/plate-327.plt" "tecplot/plate-328.plt" "tecplot/plate-329.plt" "tecplot/plate-330.plt" "tecplot/plate-331.plt" "tecplot/plate-332.plt" "tecplot/plate-333.plt"'
+$!VarSet |LFDSVL1| = '"X" "Y" "u" "v" "p" "k" "l" "m" "n" "o"'
+$!SetStyleBase Factory
+$!GlobalPaper 
+  PaperSizeInfo
+    {
+    Letter
+      {
+      Width = 8.5
+      Height = 11
+      LeftHardClipOffset = 0.125
+      RightHardClipOffset = 0.125
+      TopHardClipOffset = 0.125
+      BottomHardClipOffset = 0.125
+      }
+    }
+$!Page 
+  Name = 'Untitled'
+  PaperAttributes
+    {
+    BackgroundColor = White
+    IsTransparent = Yes
+    OrientPortrait = No
+    ShowGrid = Yes
+    ShowRuler = No
+    ShowPaper = No
+    PaperSize = Letter
+    RulerSpacing = OneInch
+    PaperGridSpacing = HalfInch
+    RegionInWorkArea
+      {
+      X1 = 1
+      Y1 = 0.25
+      X2 = 11
+      Y2 = 6.25
+      }
+    }
+### Frame Number 1 ###
+$!ReadDataSet  '|LFDSFN1|'
+  InitialPlotType = Cartesian2D
+  IncludeText = No
+  IncludeGeom = No
+  AssignStrandIDs = Yes
+  VarLoadMode = ByName
+  VarNameList = '|LFDSVL1|'
+$!RemoveVar |LFDSVL1|
+$!RemoveVar |LFDSFN1|
+$!FrameLayout 
+  ShowHeader = No
+  HeaderColor = Red
+  XYPos
+    {
+    X = 1
+    Y = 0.25
+    }
+  Width = 10
+  Height = 6
+$!ThreeDAxis 
+  AspectRatioLimit = 25
+  BoxAspectRatioLimit = 25
+$!PlotType  = Cartesian2D
+$!FrameName  = 'Frame 001'
+$!GlobalTime 
+  SolutionTime = 0.143999999999999989
+$!ActiveFieldMaps  =  [1-920]
+$!GlobalRGB 
+  RedChannelVar = 3
+  GreenChannelVar = 3
+  BlueChannelVar = 3
+  RangeMin = 0
+  RangeMax = 1
+$!GlobalContour  1
+  Var = 10
+  ColorMapName = 'Diverging - Blue/Red'
+  DefNumLevels = 21
+  Legend
+    {
+    Show = Yes
+    XYPos
+      {
+      X = 96.584
+      Y = 82.97
+      }
+    LabelIncrement = 111.2
+    }
+  ColorCutoff
+    {
+    RangeMin = -287.84135
+    RangeMax = 268.22795
+    }
+  ColorMapFilter
+    {
+    ContinuousColor
+      {
+      CMin = -565.876
+      CMax = 546.2626
+      }
+    }
+$!ContourLevels New
+  ContourGroup = 1
+  RawData
+21
+-100
+-90
+-80
+-70
+-60
+-50
+-40
+-30
+-20
+-10
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+$!GlobalContour  2
+  Var = 6
+  Legend
+    {
+    Show = Yes
+    XYPos
+      {
+      X = 95
+      }
+    }
+  ColorMapFilter
+    {
+    ContinuousColor
+      {
+      CMin = 0
+      CMax = 1
+      }
+    }
+$!GlobalContour  3
+  Var = 7
+  Legend
+    {
+    Show = Yes
+    XYPos
+      {
+      X = 95
+      }
+    }
+  ColorMapFilter
+    {
+    ContinuousColor
+      {
+      CMin = 0
+      CMax = 1
+      }
+    }
+$!GlobalContour  4
+  Var = 8
+  Legend
+    {
+    Show = Yes
+    XYPos
+      {
+      X = 95
+      }
+    }
+  ColorMapFilter
+    {
+    ContinuousColor
+      {
+      CMin = 0
+      CMax = 1
+      }
+    }
+$!GlobalContour  5
+  Var = 9
+  Legend
+    {
+    Show = Yes
+    XYPos
+      {
+      X = 95
+      }
+    }
+  ColorMapFilter
+    {
+    ContinuousColor
+      {
+      CMin = 0
+      CMax = 1
+      }
+    }
+$!GlobalContour  6
+  Var = 10
+  Legend
+    {
+    Show = Yes
+    XYPos
+      {
+      X = 95
+      }
+    }
+  ColorMapFilter
+    {
+    ContinuousColor
+      {
+      CMin = 0
+      CMax = 1
+      }
+    }
+$!GlobalContour  7
+  Var = 5
+  Legend
+    {
+    Show = Yes
+    XYPos
+      {
+      X = 95
+      }
+    }
+  ColorMapFilter
+    {
+    ContinuousColor
+      {
+      CMin = 0
+      CMax = 1
+      }
+    }
+$!GlobalContour  8
+  Var = 5
+  Legend
+    {
+    Show = Yes
+    XYPos
+      {
+      X = 95
+      }
+    }
+  ColorMapFilter
+    {
+    ContinuousColor
+      {
+      CMin = 0
+      CMax = 1
+      }
+    }
+$!GlobalTwoDVector 
+  UVar = 3
+  VVar = 4
+  RelativeLength = 1.5E-05
+$!GlobalScatter 
+  Legend
+    {
+    XYPos
+      {
+      X = 95
+      }
+    }
+  RefScatSymbol
+    {
+    Color = Red
+    FillColor = Red
+    }
+$!FieldMap  [1-920]
+  Mesh
+    {
+    Color = Black
+    }
+  Contour
+    {
+    ContourType = Flood
+    Color = Black
+    UseLightingEffect = Yes
+    }
+  Vector
+    {
+    Color = Black
+    }
+  Scatter
+    {
+    Color = Black
+    }
+  Shade
+    {
+    Color = Custom2
+    }
+  EdgeLayer
+    {
+    Show = Yes
+    Color = Black
+    LineThickness = 0.1
+    }
+  Points
+    {
+    PointsToPlot = SurfaceNodes
+    }
+  Surfaces
+    {
+    SurfacesToPlot = KPlanes
+    IRange
+      {
+      Max = 1
+      }
+    }
+  VolumeMode
+    {
+    VolumeObjectsToPlot
+      {
+      ShowIsosurfaces = No
+      ShowSlices = No
+      ShowStreamtraces = No
+      }
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    }
+$!TwoDAxis 
+  XDetail
+    {
+    VarNum = 1
+    }
+  YDetail
+    {
+    VarNum = 2
+    }
+$!View Fit
+$!TwoDAxis 
+  DepXToYRatio = 1
+$!TwoDAxis 
+  XDetail
+    {
+    RangeMin = 0.49829247180459707023
+    RangeMax = 0.49927174939938823162
+    GRSpacing = 0.0002
+    }
+$!TwoDAxis 
+  YDetail
+    {
+    RangeMin = -0.035178446631204979278
+    RangeMax = -0.034575211632813622475
+    GRSpacing = 0.0001
+    }
+$!IsoSurfaceAttributes  1
+  IsoSurfaceSelection = OneSpecificValue
+  Isovalue1 = -287.84135
+  Isovalue2 = -9.8067
+  Isovalue3 = 268.22795
+  Effects
+    {
+    LightingEffect = Gouraud
+    }
+$!IsoSurfaceAttributes  2
+  DefinitionContourGroup = 2
+  IsoSurfaceSelection = OneSpecificValue
+  Contour
+    {
+    LineContourGroup = 2
+    FloodColoring = Group2
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    }
+$!IsoSurfaceAttributes  3
+  DefinitionContourGroup = 3
+  IsoSurfaceSelection = OneSpecificValue
+  Contour
+    {
+    LineContourGroup = 3
+    FloodColoring = Group3
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    }
+$!IsoSurfaceAttributes  4
+  DefinitionContourGroup = 4
+  IsoSurfaceSelection = OneSpecificValue
+  Contour
+    {
+    LineContourGroup = 4
+    FloodColoring = Group4
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    }
+$!IsoSurfaceAttributes  5
+  DefinitionContourGroup = 5
+  IsoSurfaceSelection = OneSpecificValue
+  Contour
+    {
+    LineContourGroup = 5
+    FloodColoring = Group5
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    }
+$!IsoSurfaceAttributes  6
+  DefinitionContourGroup = 6
+  IsoSurfaceSelection = OneSpecificValue
+  Contour
+    {
+    LineContourGroup = 6
+    FloodColoring = Group6
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    }
+$!IsoSurfaceAttributes  7
+  DefinitionContourGroup = 7
+  IsoSurfaceSelection = OneSpecificValue
+  Contour
+    {
+    LineContourGroup = 7
+    FloodColoring = Group7
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    }
+$!IsoSurfaceAttributes  8
+  DefinitionContourGroup = 8
+  IsoSurfaceSelection = OneSpecificValue
+  Contour
+    {
+    LineContourGroup = 8
+    FloodColoring = Group8
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    }
+$!SliceAttributes  1
+  PrimaryPosition
+    {
+    X = 0
+    Y = 0
+    Z = 0
+    I = 1
+    J = 1
+    K = 1
+    }
+  EdgeLayer
+    {
+    Show = No
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    SurfaceTranslucency = 10
+    }
+  SliceConstraint
+    {
+    Include = No
+    Origin
+      {
+      X = 0
+      Y = 0
+      Z = 0
+      }
+    BoxDimension
+      {
+      X = 0
+      Y = 0
+      Z = 0
+      }
+    }
+$!SliceAttributes  2
+  SliceSurface = YPlanes
+  EdgeLayer
+    {
+    Show = No
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    SurfaceTranslucency = 10
+    }
+$!SliceAttributes  3
+  SliceSurface = ZPlanes
+  EdgeLayer
+    {
+    Show = No
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    SurfaceTranslucency = 10
+    }
+$!SliceAttributes  4
+  EdgeLayer
+    {
+    Show = No
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    SurfaceTranslucency = 10
+    }
+$!SliceAttributes  5
+  SliceSurface = YPlanes
+  EdgeLayer
+    {
+    Show = No
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    SurfaceTranslucency = 10
+    }
+$!SliceAttributes  6
+  SliceSurface = ZPlanes
+  EdgeLayer
+    {
+    Show = No
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    SurfaceTranslucency = 10
+    }
+$!SliceAttributes  7
+  EdgeLayer
+    {
+    Show = No
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    SurfaceTranslucency = 10
+    }
+$!SliceAttributes  8
+  SliceSurface = YPlanes
+  EdgeLayer
+    {
+    Show = No
+    }
+  Effects
+    {
+    LightingEffect = Gouraud
+    SurfaceTranslucency = 10
+    }
+$!Streamtrace Add
+  StreamType = TwoDLine
+  StreamDirection = Both
+  StartPos
+    {
+    X = 0.4990759369729534
+    Y = -0.03486386259171127
+    }
+  AltStartPos
+    {
+    X = 0.4987739310347125
+    Y = -0.03487476645852162
+    }
+$!Streamtrace Add
+  StreamType = TwoDLine
+  StreamDirection = Both
+  StartPos
+    {
+    X = 0.4990776606738904
+    Y = -0.03486951250033787
+    }
+  AltStartPos
+    {
+    X = 0.4987739310347125
+    Y = -0.03487476645852162
+    }
+$!Streamtrace Add
+  StreamType = TwoDLine
+  StreamDirection = Both
+  StartPos
+    {
+    X = 0.4990793843748273
+    Y = -0.03487516240896445
+    }
+  AltStartPos
+    {
+    X = 0.4987739310347125
+    Y = -0.03487476645852162
+    }
+$!Streamtrace Add
+  StreamType = TwoDLine
+  StreamDirection = Both
+  StartPos
+    {
+    X = 0.4990811080757642
+    Y = -0.03488081231759105
+    }
+  AltStartPos
+    {
+    X = 0.4987739310347125
+    Y = -0.03487476645852162
+    }
+$!Streamtrace Add
+  StreamType = TwoDLine
+  StreamDirection = Both
+  StartPos
+    {
+    X = 0.4990828317767012
+    Y = -0.03488646222621763
+    }
+  AltStartPos
+    {
+    X = 0.4987739310347125
+    Y = -0.03487476645852162
+    }
+$!Streamtrace Add
+  StreamType = TwoDLine
+  StreamDirection = Both
+  StartPos
+    {
+    X = 0.4990845554776381
+    Y = -0.03489211213484423
+    }
+  AltStartPos
+    {
+    X = 0.4987739310347125
+    Y = -0.03487476645852162
+    }
+$!Streamtrace Add
+  StreamType = TwoDLine
+  StreamDirection = Both
+  StartPos
+    {
+    X = 0.499086279178575
+    Y = -0.03489776204347082
+    }
+  AltStartPos
+    {
+    X = 0.4987739310347125
+    Y = -0.03487476645852162
+    }
+$!Streamtrace Add
+  StreamType = TwoDLine
+  StreamDirection = Both
+  StartPos
+    {
+    X = 0.4990880028795119
+    Y = -0.03490341195209741
+    }
+  AltStartPos
+    {
+    X = 0.4987739310347125
+    Y = -0.03487476645852162
+    }
+$!Streamtrace Add
+  StreamType = TwoDLine
+  StreamDirection = Both
+  StartPos
+    {
+    X = 0.4990897265804489
+    Y = -0.034909061860724
+    }
+  AltStartPos
+    {
+    X = 0.4987739310347125
+    Y = -0.03487476645852162
+    }
+$!Streamtrace Add
+  StreamType = TwoDLine
+  StreamDirection = Both
+  StartPos
+    {
+    X = 0.4990914502813858
+    Y = -0.03491471176935059
+    }
+  AltStartPos
+    {
+    X = 0.4987739310347125
+    Y = -0.03487476645852162
+    }
+$!Streamtrace SetTerminationLine
+  RawData
+5
+0.498191925783 -0.0345770631749
+0.498189593383 -0.0352091437396
+0.499333635881 -0.0352021465378
+0.499283489268 -0.0345957223798
+0.498221080791 -0.0345654011719
+$!StreamAttributes 
+  TermLine
+    {
+    IsActive = Yes
+    }
+  StreamTiming
+    {
+    MarkSize = 1
+    TimeDelta = 4.5248593843E-05
+    MarkSymbol
+      {
+      GeomShape = Sphere
+      }
+    }
+  RodRibbon
+    {
+    Effects
+      {
+      LightingEffect = Gouraud
+      }
+    }
+  CellFraction = 0.001
+  MinCellFraction = 1E-06
+  MaxSteps = 10000
+$!FieldLayers 
+  ShowMesh = No
+  ShowContour = Yes
+  ShowShade = Yes
+$!StreamtraceLayers 
+  Show = Yes
+$!AttachText 
+  AnchorPos
+    {
+    X = 45.34653465346535
+    Y = 90.86908690869078
+    }
+  TextShape
+    {
+    IsBold = No
+    }
+  Text = 't = &(SOLUTIONTIME)s'
+$!FrameControl ActivateByNumber
+  Frame = 1
+$!SetStyleBase Config

@@ -11,8 +11,8 @@
 <TOKENS>
   KINVIS    = 1./10000.
   
-  D_T       = 0.0001 
-  N_STEP    = 2000
+  D_T       = 0.00003 
+  N_STEP    = 10000
   N_TIME    = 2
   
   N_P       = 8
@@ -20,8 +20,8 @@
   LZ        = 1.0
   BETA      = TWOPI/LZ
   
-  IO_CFL    = 50
-  IO_FLD    = 10
+  IO_CFL    = 150
+  IO_FLD    = 30
   IO_HIS    = 1
   
   AVERAGE   = 0
