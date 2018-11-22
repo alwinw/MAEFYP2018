@@ -29,7 +29,7 @@ c = data.frame(x = 0.5*cos(input$alpha*pi/180),
 dx = (input$x$max - input$x$min)/input$x$n
 listx = list(
   LE = seq(input$x$min, -c$x, length.out = round((-c$x - input$x$min)/dx) + 1),
-  CD = seq(-c$x, c$x, length.out = 2*round(c$x*2/dx) + 1),
+  CD = seq(-c$x, c$x, length.out = 3*round(c$x*2/dx) + 1),
   TE = seq(c$x, -input$x$min, length.out = round((-input$x$min - c$x)/dx) + 1) )
 polyx = list(
   LE = polypow(c(1,  c$x), input$polyn + 1), 
@@ -277,7 +277,7 @@ cat(paste0(
   "  KINVIS    = 1./10000.\n",
   "  \n",
   "  D_T       = 0.0001 \n",
-  "  N_STEP    = 1000\n",
+  "  N_STEP    = 2000\n",
   "  N_TIME    = 2\n",
   "  \n",
   "  N_P       = 8\n",

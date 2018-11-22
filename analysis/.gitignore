@@ -2,6 +2,7 @@
 # Custom
 #--------------------------------------
 *.png
+*.mp4
 */results/*
 **/results/*
 */tecplot/*
