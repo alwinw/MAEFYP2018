@@ -19,7 +19,7 @@ input <- list(
   x = data.frame(min = -1.75, max = 5.4375, n = 51),
   y = data.frame(min = -1.25, max = 1.25,   n = 21),
   alpha = 4, # degrees
-  polyn = 2
+  polyn = 3
 )
 
 #--- Polynomial ----
@@ -135,62 +135,65 @@ dfsurf <- data.frame()
 surf = 0
 for (j in 1:(ny - 1)) {
   for (i in 1:(nx - 1)) {
+    # 1 ---- 4
+    # | enum |
+    # 2 ---- 3
     enum = enum + 1
     # Determine node corners
     n1 = data.frame(x = dfx$x[i  ], y = dfy$y[j  ], nnum = matnnum[j  , i  ], bcx = dfx$bcx[i  ], bcy = dfy$bcy[j  ])
-    n2 = data.frame(x = dfx$x[i+1], y = dfy$y[j  ], nnum = matnnum[j  , i+1], bcx = dfx$bcx[i+1], bcy = dfy$bcy[j  ])
+    n2 = data.frame(x = dfx$x[i  ], y = dfy$y[j+1], nnum = matnnum[j+1, i  ], bcx = dfx$bcx[i  ], bcy = dfy$bcy[j+1])
     n3 = data.frame(x = dfx$x[i+1], y = dfy$y[j+1], nnum = matnnum[j+1, i+1], bcx = dfx$bcx[i+1], bcy = dfy$bcy[j+1])
-    n4 = data.frame(x = dfx$x[i  ], y = dfy$y[j+1], nnum = matnnum[j+1, i  ], bcx = dfx$bcx[i  ], bcy = dfy$bcy[j+1])
+    n4 = data.frame(x = dfx$x[i+1], y = dfy$y[j  ], nnum = matnnum[j  , i+1], bcx = dfx$bcx[i+1], bcy = dfy$bcy[j  ])
     # Determine y values based on bcx
     n1 = flags(n1, i  , j  )
-    n2 = flags(n2, i+1, j  )
+    n2 = flags(n2, i  , j+1)
     n3 = flags(n3, i+1, j+1)
-    n4 = flags(n4, i  , j+1)
+    n4 = flags(n4, i+1, j  )
     # Determine wall bcs
     bc1 = NA; bc2 = NA; bc3 = NA; bc4 = NA;
-    if (j == 1) { # TOP
-      bc1 = "s"; surf = surf + 1
-      dfsurf = rbind(dfsurf, data.frame(
-        i = i, j = j, surf = surf, enum = enum, side = 1, bc = bc1, nnum1 = n1$nnum, nnum2 = n2$nnum)) }
-    if (i == (nx - 1)) { # RIGHT
-      bc2 = "o"; surf = surf + 1
-      dfsurf = rbind(dfsurf, data.frame(
-        i = i, j = j, surf = surf, enum = enum, side = 2, bc = bc2, nnum1 = n2$nnum, nnum2 = n3$nnum)) }
-    if (j == (ny - 1)) { # BOTTOM
-      bc3 = "w"; surf = surf + 1
-      dfsurf = rbind(dfsurf, data.frame(
-        i = i, j = j, surf = surf, enum = enum, side = 3, bc = bc3, nnum1 = n3$nnum, nnum2 = n4$nnum)) }
-    if (i == 1) { # LEFT
-      bc4 = "v"; surf = surf + 1
+    if (j == 1) { # TOP | side 4
+      bc4 = "s"; surf = surf + 1
       dfsurf = rbind(dfsurf, data.frame(
         i = i, j = j, surf = surf, enum = enum, side = 4, bc = bc4, nnum1 = n4$nnum, nnum2 = n1$nnum)) }
+    if (i == (nx - 1)) { # RIGHT | side 3
+      bc3 = "o"; surf = surf + 1
+      dfsurf = rbind(dfsurf, data.frame(
+        i = i, j = j, surf = surf, enum = enum, side = 3, bc = bc3, nnum1 = n3$nnum, nnum2 = n4$nnum)) }
+    if (j == (ny - 1)) { # BOTTOM | side 2
+      bc2 = "w"; surf = surf + 1
+      dfsurf = rbind(dfsurf, data.frame(
+        i = i, j = j, surf = surf, enum = enum, side = 2, bc = bc2, nnum1 = n2$nnum, nnum2 = n3$nnum)) }
+    if (i == 1) { # LEFT | side 1
+      bc1 = "v"; surf = surf + 1
+      dfsurf = rbind(dfsurf, data.frame(
+        i = i, j = j, surf = surf, enum = enum, side = 1, bc = bc1, nnum1 = n1$nnum, nnum2 = n2$nnum)) }
 
     # Side 3 airfoil bc
-    if (n3$bcy == "CD" & n4$bcy == "CD") { # BOTTOM
+    if (n2$bcy == "CD" & n3$bcy == "CD") { # Element above plate | side 2
       if (n3$bcx %in% c("CD", "TE")) {
-        bc3 = "p"; surf = surf + 1
+        bc2 = "p"; surf = surf + 1
         dfsurf = rbind(dfsurf, data.frame(
-          i = i, j = j, surf = surf, enum = enum, side = 3, bc = bc3, nnum1 = n3$nnum, nnum2 = n4$nnum)) }
+          i = i, j = j, surf = surf, enum = enum, side = 2, bc = bc2, nnum1 = n2$nnum, nnum2 = n3$nnum)) }
     }
     # Side 1 airfoil bc
-    if (n1$bcy == "CD" & n2$bcy == "CD") {
-      if (n2$bcx %in% c("CD", "TE")) { # TOP
-        bc1 = "p"; surf = surf + 1
+    if (n4$bcy == "CD" & n1$bcy == "CD") {
+      if (n4$bcx %in% c("CD", "TE")) { # Element below plote | side 4
+        bc4 = "p"; surf = surf + 1
         # Add extra nodes as required
-        if (n2$bcx == "CD") {
+        if (n4$bcx == "CD") {
           nnum = nrow(dfnode) + 1
           dfnode <- rbind(dfnode, data.frame(
             nnum = nnum,
-            x = n2$x, y = n2$y, z = 0, bcx = "padd") )
-          n2$nnum = nnum
+            x = n4$x, y = n4$y, z = 0, bcx = "padd") )
+          n4$nnum = nnum
           if (n1$bcx == "CD") {
             n1$nnum = nnum - 1
           }
-        } else if (n2$bcx == "TE") {
+        } else if (n4$bcx == "TE") {
           n1$nnum = nrow(dfnode)
         }
         dfsurf = rbind(dfsurf, data.frame(
-          i = i, j = j, surf = surf, enum = enum, side = 1, bc = bc1, nnum1 = n1$nnum, nnum2 = n2$nnum))
+          i = i, j = j, surf = surf, enum = enum, side = 4, bc = bc4, nnum1 = n4$nnum, nnum2 = n1$nnum))
       }
     }
     
@@ -258,8 +261,81 @@ plotside + coord_fixed(xlim = c(-0.6,  0.6), ylim = c(-0.1, 0.1))
 
 #--- Print the Output ----
 name = "plate.sesh"
+# Header
+cat(paste0(
+  "<USER>\n", 
+  "  u = 0.0\n",
+  "  v = 0.0\n",
+  "  p = 0.0\n",
+  "</USER>\n",
+  "\n",
+  "<FIELDS>\n",
+  "  u v p\n",
+  "</FIELDS>\n",
+  "\n",
+  "<TOKENS>\n",
+  "  KINVIS    = 1./10000.\n",
+  "  \n",
+  "  D_T       = 0.0001 \n",
+  "  N_STEP    = 1000\n",
+  "  N_TIME    = 2\n",
+  "  \n",
+  "  N_P       = 8\n",
+  "  N_Z       = 1\n",
+  "  LZ        = 1.0\n",
+  "  BETA      = TWOPI/LZ\n",
+  "  \n",
+  "  IO_CFL    = 50\n",
+  "  IO_FLD    = 10\n",
+  "  IO_HIS    = 1\n",
+  "  \n",
+  "  AVERAGE   = 0\n",
+  "  CHKPOINT  = 0\n",
+  "  ITERATIVE = 1\n",
+  "  TBCS      = 1\n",
+  "</TOKENS>\n",
+  "\n",
+  "<FORCE>\n",
+  "  MOD_A_X = 1\n",
+  "  MOD_A_Y = 0\n",
+  "  MOD_ALPHA_X = -((5*PI/2*sin(5*PI*(t-0.05)))*heav(t-0.05)+(-5*PI/2*sin(5*PI*(t-0.05)))*heav(t-0.25)+(-5*PI/2*sin(5*PI*(t-0.05)))*heav(t-0.85)+(5*PI/2*sin(5*PI*(t-0.05)))*heav(t-1.05)) \n",
+  "  MOD_ALPHA_Y = 0\n",
+  "</FORCE>\n",
+  "  \n",
+  "<GROUPS NUMBER=5>\n",
+  "  1     o     outflow\n",
+  "  2     p     wall\n",
+  "  3     w     group_name\n",
+  "  4     s     group_name\n",
+  "  5     v     inflow\n",
+  "</GROUPS>\n",
+  "  \n",
+  "<BCS NUMBER=5>\n",
+  "  1     o     3\n",
+  "              <N>     u = 0      </N>\n",
+  "              <N>     v = 0      </N>\n",
+  "              <D>     p = 0      </D>\n",
+  "  2     p     3\n",
+  "              <D>     u = 0      </D>\n",
+  "              <D>     v = 0      </D>\n",
+  "              <H>     p = 0      </H>\n",
+  "  3     w     3\n",
+  "              <N>     u = 0      </N>\n",
+  "              <D>     v = 0      </D>\n",
+  "              <H>     p = 0      </H>\n",
+  "  4     s     3\n",
+  "              <N>     u = 0      </N>\n",
+  "              <D>     v = 0      </D>\n",
+  "              <H>     p = 0      </H>\n",
+  "  5     v     3\n",
+  "              <D>     u = (1/2-1/2*cos(5*PI*(t-0.05)))*heav(t-0.05)+(1/2-1/2*cos(5*PI*(t-0.05)+PI))*heav(t-0.25)+(-1/2-1/2*cos(5*PI*(t-0.05)+PI))*heav(t-0.85)+(-1/2-1/2*cos(5*PI*(t-0.05)))*heav(t-1.05)   </D>\n",
+  "              <D>     v = 0      </D>\n",
+  "              <H>     p = 0      </H>\n",
+  "</BCS>\n",
+  "\n"),
+  file = name, append = FALSE)
 # Nodes
-cat(paste0("<NODES NUMBER=", nrow(dfnode), ">\n"), file = name, append = FALSE)
+cat(paste0("<NODES NUMBER=", nrow(dfnode), ">\n"), file = name, append = TRUE)
 for (n in 1:nrow(dfnode)) {
   cat(sprintf("%6d%16.10f%16.10f%16.10f\n", dfnode[n, 1], dfnode[n,2], dfnode[n,3], dfnode[n,4]), 
       file = name, append = TRUE)
