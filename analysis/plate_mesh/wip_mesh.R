@@ -17,9 +17,9 @@ spectralpalette <-                                              # Custom spectra
 #--- Inputs ----
 input <- list(
   x = data.frame(min = -1.75, max = 5.4375, n = 51),
-  y = data.frame(min = -1.25, max = 1.25,   n = 21),
+  y = data.frame(min = -1.25, max = 1.25,   n = 22),
   alpha = 4, # degrees
-  polyn = 3
+  polyn = 4
 )
 
 #--- Polynomial ----
@@ -29,7 +29,7 @@ c = data.frame(x = 0.5*cos(input$alpha*pi/180),
 dx = (input$x$max - input$x$min)/input$x$n
 listx = list(
   LE = seq(input$x$min, -c$x, length.out = round((-c$x - input$x$min)/dx) + 1),
-  CD = seq(-c$x, c$x, length.out = 3*round(c$x*2/dx) + 1),
+  CD = seq(-c$x, c$x, length.out = 4*round(c$x*2/dx) + 1),
   TE = seq(c$x, -input$x$min, length.out = round((-input$x$min - c$x)/dx) + 1) )
 polyx = list(
   LE = polypow(c(1,  c$x), input$polyn + 1), 
@@ -222,6 +222,7 @@ plotmesh + coord_fixed()
 plotmesh + coord_cartesian(xlim = c(-0.6,  0.6), ylim = c(-0.1, 0.1))
 plotmesh + coord_cartesian(xlim = c(-0.6, -0.4), ylim = c(-0.1, 0.1))
 plotmesh + coord_cartesian(xlim = c( 0.4,  0.6), ylim = c(-0.1, 0.1))
+plotmesh + coord_fixed(xlim = c(0.49855, 0.49910), ylim = c(-0.03505, -0.03470))
 
 # Double check the BCs are correct
 plotsurf <- data.frame()
@@ -276,17 +277,17 @@ cat(paste0(
   "<TOKENS>\n",
   "  KINVIS    = 1./10000.\n",
   "  \n",
-  "  D_T       = 0.00003 \n",
-  "  N_STEP    = 10000\n",
-  "  N_TIME    = 2\n",
+  "  D_T       = 0.00001 \n",
+  "  N_STEP    = 25000\n",
+  "  N_TIME    = 3\n",
   "  \n",
-  "  N_P       = 8\n",
+  "  N_P       = 3\n",
   "  N_Z       = 1\n",
   "  LZ        = 1.0\n",
   "  BETA      = TWOPI/LZ\n",
   "  \n",
-  "  IO_CFL    = 150\n",
-  "  IO_FLD    = 30\n",
+  "  IO_CFL    = 250\n",
+  "  IO_FLD    = 50\n",
   "  IO_HIS    = 1\n",
   "  \n",
   "  AVERAGE   = 0\n",
