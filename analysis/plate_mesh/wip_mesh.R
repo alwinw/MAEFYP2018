@@ -17,9 +17,9 @@ spectralpalette <-                                              # Custom spectra
 #--- Inputs ----
 input <- list(
   x = data.frame(min = -1.75, max = 5.4375, n = 51),
-  y = data.frame(min = -1.25, max = 1.25,   n = 22),
+  y = data.frame(min = -1.25, max = 1.25,   n = 23),
   alpha = 4, # degrees
-  polyn = 4
+  polyn = 3
 )
 
 #--- Polynomial ----
@@ -281,13 +281,13 @@ cat(paste0(
   "  N_STEP    = 25000\n",
   "  N_TIME    = 3\n",
   "  \n",
-  "  N_P       = 3\n",
+  "  N_P       = 8\n",
   "  N_Z       = 1\n",
   "  LZ        = 1.0\n",
   "  BETA      = TWOPI/LZ\n",
   "  \n",
-  "  IO_CFL    = 250\n",
-  "  IO_FLD    = 50\n",
+  "  IO_CFL    = 200\n",
+  "  IO_FLD    = 100\n",
   "  IO_HIS    = 1\n",
   "  \n",
   "  AVERAGE   = 0\n",
